@@ -1,5 +1,5 @@
 import json
-
+#the path of contents
 path="G:/fxDreema/venv/contents"
 
 input_dic = {}
