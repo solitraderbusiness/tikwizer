@@ -1,0 +1,5 @@
+{
+	"field_body" : "string            symbol;\n   int               timeframe;\n   int               jaw_period;\n   int               jaw_shift;\n   int               teeth_period;\n   int               teeth_shift;\n   int               lips_period;\n   int               lips_shift;\n   int               ma_method;\n   int               applied_price;\n   int               mode;\n   int               shift;"
+}
+
+

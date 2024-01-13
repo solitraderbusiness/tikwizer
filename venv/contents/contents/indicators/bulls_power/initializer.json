@@ -1,0 +1,4 @@
+{
+  "initializer": "BullsPower_id bulls_power_id;\n   bulls_power_id.init();\n   double valueBullsPower_id = bulls_power_id.calc();",
+  "variable_name": "valueBullsPower_id"
+}

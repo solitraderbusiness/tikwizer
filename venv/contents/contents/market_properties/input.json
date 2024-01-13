@@ -1,0 +1,12 @@
+{
+      "symbol" : "NULL",
+      "timeframe" : 0,
+      "find_method" : "CANDLE_PERIOD",
+      "price_mode" : "LOWEST_PRICE",
+      "what_to_get" : "GET_PRICE",
+      "timestr_start" : "\"2023.11.23 7:30:30\"",
+      "timestr_end"   : "\"2023.11.23 5:30:00\"",
+      "day_offset" : 2,
+      "range_start" : 50,
+      "range_end"   : 100
+}

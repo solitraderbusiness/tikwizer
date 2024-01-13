@@ -1,0 +1,4 @@
+{
+  "initializer": "task = new Task_id();",
+  "variable_name": "task"
+}

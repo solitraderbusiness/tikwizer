@@ -1,0 +1,9 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "ma_period":10,
+  "ma_shift":0,
+  "ma_method":"MODE_EMA",
+  "applied_price":"PRICE_CLOSE",
+  "shift":0
+}

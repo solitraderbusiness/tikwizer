@@ -1,0 +1,4 @@
+{
+  "initializer": "RVI_id rvi_id;\n   rvi_id.init();\n   double valueRVI_id = rvi_id.calc();",
+  "variable_name": "valueRVI_id"
+}

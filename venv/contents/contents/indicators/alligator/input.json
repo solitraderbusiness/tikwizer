@@ -1,0 +1,14 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "jaw_period":13,
+  "jaw_shift":8,
+  "teeth_period":8,
+  "teeth_shift":5,
+  "lips_period":5,
+  "lips_shift":3,
+  "ma_method":"MODE_SMMA",
+  "applied_price":"PRICE_MEDIAN",
+  "mode":"MODE_GATORJAW",
+  "shift":1
+}

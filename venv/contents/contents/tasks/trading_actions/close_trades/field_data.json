@@ -1,0 +1,3 @@
+{
+	"field_data" : "string            symbol;\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n   double            older_than;//in minutes\n   color             arrow_color;\n   double            slippage;\n\n   int               retryCount;\n   string            msymbol;"
+}

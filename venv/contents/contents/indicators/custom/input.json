@@ -1,0 +1,12 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "name": "ZigZag",
+
+  "Depth":12,
+  "Deviation":5,
+  "Backstep":3,
+
+  "mode":"MODE_MAIN",
+  "shift":0
+}

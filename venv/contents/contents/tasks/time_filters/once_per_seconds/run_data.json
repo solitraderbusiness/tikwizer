@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n      datetime now = TimeCurrent();\n\n      if(now >= timenext)\n        {\n         while(true)\n           {\n            if(now >= timenext)\n              {\n               if(timenext == 0)\n                 {\n                  timenext = (datetime)(MathFloor(now / 86400.0) * 86400.0); //Using this we get 00:00 at today\n                 }\n\n               timenext = timenext + n;\n              }\n            else\n              {\n               break;\n              }\n           }\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

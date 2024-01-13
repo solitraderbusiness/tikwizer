@@ -1,0 +1,3 @@
+{
+	"field_body" : "string            symbol;\r\n   int               timeframe;\r\n   int               period;\r\n   int               mode;\r\n   int               shift;"
+}

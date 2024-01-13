@@ -1,0 +1,3 @@
+{
+	"field_data" : "   int               weekdays[]; //0 sunday, 1 monday, ...\n   string            time_mode;"
+}

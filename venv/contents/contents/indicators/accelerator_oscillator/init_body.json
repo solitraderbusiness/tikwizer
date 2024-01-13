@@ -1,0 +1,3 @@
+{
+	"init_body" : "symbol = symbol_val;\n      timeframe = timeframe_val;\n      shift = shift_val;"
+}

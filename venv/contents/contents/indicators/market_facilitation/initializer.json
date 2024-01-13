@@ -1,0 +1,4 @@
+{
+  "initializer": "   MARKET_FACILITATION_id market_facilitation_id;\n   market_facilitation_id.init();\n   double valueMARKET_FACILITATION_id = market_facilitation_id.calc();",
+  "variable_name": "valueMARKET_FACILITATION_id"
+}

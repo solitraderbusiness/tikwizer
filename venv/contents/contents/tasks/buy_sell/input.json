@@ -1,0 +1,13 @@
+{
+	"symbol" : "NULL",
+	"cmd" : "OP_SELL",
+	"volume" : 1,
+	"price" : "Bid",
+	"slippage" : 2,
+	"stoploss" : 50,
+	"takeprofit": 50,
+	"comment" : "\"This is my trade\"",
+	"magic" : 2154,
+	"expiration" : 0,
+	"arrow_color" : "clrNONE"
+}

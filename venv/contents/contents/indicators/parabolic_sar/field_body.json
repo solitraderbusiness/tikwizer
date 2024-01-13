@@ -1,0 +1,3 @@
+{
+	"field_body" : "string            symbol;\n   int               timeframe;\n   double            step;\n   double            maximum;\n   int               shift;"
+}

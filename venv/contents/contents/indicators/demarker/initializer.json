@@ -1,0 +1,4 @@
+{
+  "initializer": "DeMarker_id demarker_id;\n   demarker_id.init();\n   double valueDeMarker_id = demarker_id.calc();",
+  "variable_name": "valueDeMarker_id"
+}

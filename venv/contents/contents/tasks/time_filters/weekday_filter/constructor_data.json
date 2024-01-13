@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "int mweekdays[]  = weekdays_val;\n      ArrayCopy(weekdays, mweekdays, 0, 0, WHOLE_ARRAY);\n      time_mode = time_mode_val;"
+}

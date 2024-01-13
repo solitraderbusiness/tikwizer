@@ -1,0 +1,3 @@
+{
+	"field_data" : "   //specified by user\n   string            symbol;\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n   int               count_limit;\n   int               price_mode;\n   int               range_mode;\n   int               range_position;\n   double            range_value;\n\n"
+}

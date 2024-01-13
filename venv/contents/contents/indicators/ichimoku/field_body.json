@@ -1,0 +1,3 @@
+{
+	"field_body" : "\r\n   string            symbol;\r\n   int               timeframe;\r\n   int               tenkan_sen;\r\n   int               kijun_sen;\r\n   int               senkou_span_b;\r\n   int               mode;\r\n   int               shift;"
+}

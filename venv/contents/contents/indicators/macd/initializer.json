@@ -1,0 +1,4 @@
+{
+  "initializer": "   MACD_id macd_id;\n   macd_id.init();\n   double valueMACD_id = macd_id.calc();",
+  "variable_name": "valueMACD_id"
+}

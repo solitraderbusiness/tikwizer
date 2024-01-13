@@ -1,0 +1,4 @@
+{
+  "initializer": "MarketProperties_id marketproperties_id;\n   marketproperties_id.init();\n   MarketPropertiesResult mp_result_id;\n   marketproperties_id.calc(mp_result_id);",
+  "variable_name": "marketproperties_id.what_to_get == GET_PRICE ? mp_result_id.price : marketproperties_id.what_to_get == GET_CANDLE_ID ? mp_result_id.index : mp_result_id.time"
+}

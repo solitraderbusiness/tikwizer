@@ -1,0 +1,11 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "k_period":5,
+  "d_period":3,
+  "slowing":3,
+  "method":"MODE_SMA",
+  "price_field":0,
+  "mode":"MODE_MAIN",
+  "shift":0
+}

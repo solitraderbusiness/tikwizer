@@ -1,0 +1,2 @@
+{
+	"class_template" : "class Task\n  {\npublic:\n   string            name;\npublic:\n                     Task(string name)\n     {\n        this.name = name;\n     }\n\n   virtual void               run(int block_id, BlockParent &block)\n     {\n\n     }\n\n   virtual void      reset(int level) = NULL;\n\n  };\n"}

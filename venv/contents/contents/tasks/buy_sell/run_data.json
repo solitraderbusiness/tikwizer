@@ -1,0 +1,3 @@
+{
+  "run_data": "Task::run(block_id, block);\n     calc();\n       if(!initialized)\n        {\n         printf(\"Not initialized\");\n         block.onResult(ROUTE_2_PASSED);\n         return;\n        }\n\n      ticket=OrderSend(symbol,cmd,volume,price,slippage,slPrice,tpPrice,comment,magic,expiration,arrow_color);\n\n      if(ticket == ERR_NO_ERROR)\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

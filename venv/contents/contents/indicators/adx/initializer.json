@@ -1,0 +1,4 @@
+{
+  "initializer": "   ADX_id adx_id;\n   adx_id.init();\n   double valueADX_id = adx_id.calc();",
+  "variable_name": "valueADX_id"
+}

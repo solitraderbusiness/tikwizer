@@ -1,0 +1,4 @@
+{
+  "initializer": "Momentum_id momentum_id;\n   momentum_id.init();\n   double valueMomentum_id = momentum_id.calc();",
+  "variable_name": "valueMomentum_id"
+}

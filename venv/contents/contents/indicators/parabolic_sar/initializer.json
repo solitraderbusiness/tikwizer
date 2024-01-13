@@ -1,0 +1,4 @@
+{
+  "initializer": "Parabolic_SAR_id parabolic_sar_id;\n   parabolic_sar_id.init();\n   double valueParabolic_SAR_id = parabolic_sar_id.calc();",
+  "variable_name": "valueParabolic_SAR_id"
+}

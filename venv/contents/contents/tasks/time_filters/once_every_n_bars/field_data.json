@@ -1,0 +1,3 @@
+{
+	"field_data" : "string            symbol;\n   int               timeframe;\n   int               n;\n\n   datetime          lastSavedTime;\n   int               count;"
+}

@@ -1,0 +1,13 @@
+{
+	"symbol" : "NULL",
+	"group_mode" : "ORDER_GROUP_MODE_NUMBER",
+	"group_number" : 25,
+	"type" : [1,2],
+	"count_limit" : 0,
+	"operator": ">",
+
+    "price_mode": "PRICE_AUTO",
+    "range_mode": "RANGE_MODE_PIPS",
+    "range_position": "RANGE_POSITION_AROUND",
+    "range_value": 10
+}

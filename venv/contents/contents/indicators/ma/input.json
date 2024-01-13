@@ -1,0 +1,9 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "ma_period":13,
+  "ma_shift":8,
+  "ma_method":"MODE_SMMA",
+  "applied_price":"PRICE_MEDIAN",
+  "shift":0
+}

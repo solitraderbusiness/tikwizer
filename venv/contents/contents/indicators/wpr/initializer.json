@@ -1,0 +1,4 @@
+{
+  "initializer": "   WPR_id wpr_id;\n   wpr_id.init();\n   double valueWPR_id = wpr_id.calc();",
+  "variable_name": "valueWPR_id"
+}

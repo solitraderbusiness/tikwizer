@@ -1,0 +1,4 @@
+{
+  "initializer": "   ForceIndex_id forceindex_id;\n   forceindex_id.init();\n   double valueForceIndex_id = forceindex_id.calc();",
+  "variable_name": "valueForceIndex_id"
+}

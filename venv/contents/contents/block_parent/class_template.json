@@ -1,0 +1,3 @@
+{
+	"class_template" : "class BlockParent\n  {\npublic:\n   int               current_source_id;\n   int               nexts_true[];//static, filled by generator\n   int               nexts_false[];//static, filled by generator\n   int               prevs_true[];//static, filled by generator\n   int               prevs_false[];//static, filled by generator\n\npublic:\n   virtual void      onResult(int result) = NULL;\n  };\n"
+}

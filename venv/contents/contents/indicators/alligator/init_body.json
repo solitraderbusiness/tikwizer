@@ -1,0 +1,3 @@
+{
+	"init_body" : "symbol = symbol_val;\n      timeframe = timeframe_val;\n      jaw_period = jaw_period_val;\n      jaw_shift = jaw_shift_val;\n      teeth_period = teeth_period_val;\n      teeth_shift = teeth_shift_val;\n      lips_period = lips_period_val;\n      lips_shift = lips_shift_val;\n      ma_method = ma_method_val;\n      applied_price = applied_price_val;\n      mode = mode_val;\n      shift = shift_val;"
+}

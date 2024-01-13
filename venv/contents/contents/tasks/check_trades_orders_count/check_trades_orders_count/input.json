@@ -1,0 +1,8 @@
+{
+	"symbol" : "NULL",
+	"group_mode" : "ORDER_GROUP_MODE_NUMBER",
+	"group_number" : 25,
+	"type" : [1,2],
+	"count_limit" : 0,
+	"operator": ">"
+}

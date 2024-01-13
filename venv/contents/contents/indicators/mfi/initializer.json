@@ -1,0 +1,4 @@
+{
+  "initializer": "   MFI_id mfi_id;\n   mfi_id.init();\n   double valueMFI_id = mfi_id.calc();",
+  "variable_name": "valueMFI_id"
+}

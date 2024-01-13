@@ -1,0 +1,10 @@
+{
+  "symbol": "NULL",
+  "group_mode": "ORDER_GROUP_MODE_NONE",
+  "group_number": 15,
+  "type": [0,1],
+  "loop_direction": "LOOP_DIRECTION_OLDEST_TO_NEWEST",
+  "skip_n": 1,
+  "not_more_than_n": 5,
+  "every_n": 3
+}

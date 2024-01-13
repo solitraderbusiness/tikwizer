@@ -1,0 +1,3 @@
+{
+	"field_body" : "   string            symbol;\n   int               timeframe;\n   int               find_method;\n   int               price_mode;\n   int               time_mode;\n   //what to return\n   int               what_to_get;\n   //used for time period\n   string            timestr_start;\n   string            timestr_end;\n   int               day_offset;\n   //used for candle period\n   int               range_start;\n   int               range_end;\n\n   string msymbol;\n   int mtimeframe;"
+}

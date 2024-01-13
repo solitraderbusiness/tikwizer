@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "int mmonths[]  = months_val;\n      ArrayCopy(months, mmonths, 0, 0, WHOLE_ARRAY);"
+}

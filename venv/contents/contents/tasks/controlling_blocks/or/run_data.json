@@ -1,0 +1,3 @@
+{
+	"run_data" : "        if(firstBlockMet)\n        {\n         printf(\"task \"+block_id+\" didn't pass cuz first block already met!\");\n         block.onResult(ROUTE_2_PASSED);\n         return;\n        }\n      Task::run(block_id, block);\n\n\n      printf(\"task \"+block_id+\" passed!\");\n      firstBlockMet = true;\n      block.onResult(ROUTE_1_PASSED);"
+}

@@ -1,0 +1,4 @@
+{
+  "initializer": "   BOLLINGER_BAND_id bollinger_band_id;\n   bollinger_band_id.init();\n   double valueBOLLINGER_BAND_id = bollinger_band_id.calc();",
+  "variable_name": "valueBOLLINGER_BAND_id"
+}

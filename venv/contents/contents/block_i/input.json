@@ -1,0 +1,10 @@
+{
+  "id":"\"fdsnsldifkdsl\"",
+  "id_by_user":4,
+  "name":"\"Condition1\"",
+  "enabled":true,
+  "nexts_true": [8,5],
+  "nexts_false": [10],
+  "prevs_true": [1],
+  "prevs_false": [2]
+}

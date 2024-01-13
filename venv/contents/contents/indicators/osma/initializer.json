@@ -1,0 +1,4 @@
+{
+  "initializer": "   OsMA_id osma_id;\n   osma_id.init();\n   double valueOsMA_id = osma_id.calc();",
+  "variable_name": "valueOsMA_id"
+}

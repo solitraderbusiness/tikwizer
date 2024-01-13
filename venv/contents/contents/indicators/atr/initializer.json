@@ -1,0 +1,4 @@
+{
+  "initializer": "   ATR_id atr_id;\n   atr_id.init();\n   double valueATR_id = atr_id.calc();",
+  "variable_name": "valueATR_id"
+}
