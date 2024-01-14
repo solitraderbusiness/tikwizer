@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=G:\fxDreema\venv"
+set "VIRTUAL_ENV=C:\Users\asus\PycharmProjects\mql-generator\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
