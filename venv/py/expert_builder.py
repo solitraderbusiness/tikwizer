@@ -9,9 +9,10 @@ import market_properties_class_constructor
 
 header = ""
 properties = []
-constants = []
-inputs = []
-variables = []
+consts_system = []
+consts_user = []
+vars_system = []
+vars_user = []
 structs = []
 classes = []
 functions = []
@@ -27,11 +28,17 @@ def process_input(data):
     #process global functions
     add_global_functions(data)
 
-    #process constants
-    add_consts()
+    #process system constants
+    add_consts_system()
 
-    #process globalr vars
-    add_global_vars()
+    #process user constants (inputs)
+    add_consts_user(data.get("constants"))
+
+    #process system vars
+    add_vars_system()
+
+    #process user vars
+    add_vars_user(data.get("variables"))
 
     process_tick_blocks(data.get("events").get("on_tick"))
     # process on init blocks
@@ -84,18 +91,31 @@ def process_tick_blocks(data):
         on_tick.append(call_run_block)
 
 
-def add_global_vars ():
+def add_vars_system ():
     # blocks_tick var
     blocks_tick_var = global_vars.get__blocks_tick()
-    variables.append(blocks_tick_var)
+    vars_system.append(blocks_tick_var)
 
     # overriding_symbol
     overriding_symbol = global_vars.get__overriding_symbol()
-    variables.append(overriding_symbol)
+    vars_system.append(overriding_symbol)
 
     # overriding_timeframe
     overriding_timeframe = global_vars.get__overriding_timeframe()
-    variables.append(overriding_timeframe)
+    vars_system.append(overriding_timeframe)
+
+def add_vars_user (vars):
+    for var in vars:
+        var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get("description") + "\n"
+        vars_user.append(var_str)
+
+def add_consts_system ():
+    consts_system.extend(constants_constructor.get_constants())
+
+def add_consts_user (const_inputs): # Defined by user
+    for input in const_inputs:
+        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + input.get("value") + "; // " + input.get("description") + "\n"
+        consts_user.append(input_str)
 
 def add_global_functions (data):
     # AddToArray function
@@ -154,23 +174,22 @@ def add_global_functions (data):
     fun_reverse_list = global_functions.get_fun__reverse_list()
     functions.append(fun_reverse_list)
 
-def add_consts ():
-    constants.extend(constants_constructor.get_constants())
-
 def build():
     expert = ""
     expert += header
     for prop in properties:
-        expert += prop + "\n"
-    for const in constants:
-        expert += const + "\n"
-    for inp in inputs:
-        expert += inp + "\n"
+        expert += prop
+    for const in consts_system:
+        expert += const
+    for const in consts_user:
+        expert += const
+    for var in vars_user:
+        expert += var
     for struct in structs:
         expert += struct
     for cls in classes:
         expert += cls
-    for var in variables:
+    for var in vars_system:
         expert += var
     for fun in functions:
         expert += fun

@@ -1,6 +1,6 @@
-TEMPLATE_BLOCKS_TICK = "Block *blocks_tick[];"
-TEMPLATE_OVERRIDING_SYMBOL = "string overriding_symbol = \"\";"
-TEMPLATE_OVERRIDING_TIMEFRAME = "int overriding_timeframe = -1;"
+TEMPLATE_BLOCKS_TICK = "Block *blocks_tick[];\n"
+TEMPLATE_OVERRIDING_SYMBOL = "string overriding_symbol = \"\";\n"
+TEMPLATE_OVERRIDING_TIMEFRAME = "int overriding_timeframe = -1;\n"
 
 
 

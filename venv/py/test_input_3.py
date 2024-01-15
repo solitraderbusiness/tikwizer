@@ -14134,9 +14134,35 @@ input_data_17 = {
         }
     ],
     "constants": [
-
+        {
+            "id": 0,
+            "type": "int",
+            "name": "bbbbbbb",
+            "value": "21",
+            "description": ""
+        },
+        {
+            "id": 1,
+            "type": "int",
+            "name": "rsishort",
+            "value": "7",
+            "description": ""
+        },
+        {
+            "id": 2,
+            "type": "double",
+            "name": "lot",
+            "value": "0.1",
+            "description": ""
+        }
     ],
     "variables": [
-
+        {
+            "id": 0,
+            "type": "double",
+            "name": "aaaaaaa",
+            "value": "78",
+            "description": ""
+        }
     ]
 }
