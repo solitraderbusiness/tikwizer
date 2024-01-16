@@ -1,0 +1,7 @@
+{
+  "type": "VALUE_TYPE_PIPS",
+  "value": 10,
+  "adjust": "20",
+  "pips_type": "CANDLE_LOW",
+  "symbol":"NULL"
+}
