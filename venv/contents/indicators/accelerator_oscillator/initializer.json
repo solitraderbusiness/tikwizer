@@ -1,4 +1,0 @@
-{
-  "initializer": "   ACCELERATOR_OSCILLATOR_id accelerator_oscillator_id;\n   accelerator_oscillator_id.init();\n   double valueACCELERATOR_OSCILLATOR_id = accelerator_oscillator_id.calc();",
-  "variable_name": "valueACCELERATOR_OSCILLATOR_id"
-}

@@ -1,4 +1,1 @@
-{
-  "initializer": "   Alligator_id alligator_id;\n   alligator_id.init();\n   double valueAlligator_id = alligator_id.calc();",
-  "variable_name": "valueAlligator_id"
-}
+{"initializer": "   Alligator_id alligator_id;\n   alligator_id.init();\n   double valueAlligator_id = alligator_id.calc();", "initializer_split": ["   Alligator_id alligator_id;\n", "   alligator_id.init();\n", "   double valueAlligator_id = alligator_id.calc();\n"], "variable_name": "valueAlligator_id"}

@@ -1,4 +1,1 @@
-{
-  "initializer": "   MovingAverage_id movingaverage_id;\n   movingaverage_id.init();\n   double valueMovingAverage_id = movingaverage_id.calc();",
-  "variable_name": "valueMovingAverage_id"
-}
+{"initializer": "   MovingAverage_id movingaverage_id;\n   movingaverage_id.init();\n   double valueMovingAverage_id = movingaverage_id.calc();", "initializer_split": ["   MovingAverage_id movingaverage_id;\n", "   movingaverage_id.init();\n", "   double valueMovingAverage_id = movingaverage_id.calc();\n"], "variable_name": "valueMovingAverage_id"}

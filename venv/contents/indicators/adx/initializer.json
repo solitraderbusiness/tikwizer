@@ -1,4 +1,1 @@
-{
-  "initializer": "   ADX_id adx_id;\n   adx_id.init();\n   double valueADX_id = adx_id.calc();",
-  "variable_name": "valueADX_id"
-}
+{"initializer": "   ADX_id adx_id;\n   adx_id.init();\n   double valueADX_id = adx_id.calc();", "initializer_split": ["   ADX_id adx_id;\n", "   adx_id.init();\n", "   double valueADX_id = adx_id.calc();\n"], "variable_name": "valueADX_id"}

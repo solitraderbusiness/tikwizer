@@ -1,4 +1,1 @@
-{
-  "initializer": "   ACCUMULATION_DISTRIBUTION_id accumulation_distribution_id;\n   accumulation_distribution_id.init();\n   double valueACCUMULATION_DISTRIBUTION_id = accumulation_distribution_id.calc();",
-  "variable_name": "valueACCUMULATION_DISTRIBUTION_id"
-}
+{"initializer": "   ACCUMULATION_DISTRIBUTION_id accumulation_distribution_id;\n   accumulation_distribution_id.init();\n   double valueACCUMULATION_DISTRIBUTION_id = accumulation_distribution_id.calc();", "initializer_split": ["   ACCUMULATION_DISTRIBUTION_id accumulation_distribution_id;\n", "   accumulation_distribution_id.init();\n", "   double valueACCUMULATION_DISTRIBUTION_id = accumulation_distribution_id.calc();\n"], "variable_name": "valueACCUMULATION_DISTRIBUTION_id"}

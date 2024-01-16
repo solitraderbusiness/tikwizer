@@ -1,4 +1,1 @@
-{
-  "initializer": "   CustomIndicator_id customindicator_id;\n   customindicator_id.init();\n   double valueCustomIndicator_id = customindicator_id.calc();",
-  "variable_name": "valueCustomIndicator_id"
-}
+{"initializer": "   CustomIndicator_id customindicator_id;\n   customindicator_id.init();\n   double valueCustomIndicator_id = customindicator_id.calc();", "initializer_split": ["   CustomIndicator_id customindicator_id;\n", "   customindicator_id.init();\n", "   double valueCustomIndicator_id = customindicator_id.calc();\n"], "variable_name": "valueCustomIndicator_id"}

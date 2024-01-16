@@ -1,4 +1,1 @@
-{
-  "initializer": "   Fractals_id fractals_id;\n   fractals_id.init();\n   double valueFractals_id = fractals_id.calc();",
-  "variable_name": "valueFractals_id"
-}
+{"initializer": "   Fractals_id fractals_id;\n   fractals_id.init();\n   double valueFractals_id = fractals_id.calc();", "initializer_split": ["   Fractals_id fractals_id;\n", "   fractals_id.init();\n", "   double valueFractals_id = fractals_id.calc();\n"], "variable_name": "valueFractals_id"}

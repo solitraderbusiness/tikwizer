@@ -1,4 +1,1 @@
-{
-  "initializer": "   OBV_id obv_id;\n   obv_id.init();\n   double valueOBV_id = obv_id.calc();",
-  "variable_name": "valueOBV_id"
-}
+{"initializer": "   OBV_id obv_id;\n   obv_id.init();\n   double valueOBV_id = obv_id.calc();", "initializer_split": ["   OBV_id obv_id;\n", "   obv_id.init();\n", "   double valueOBV_id = obv_id.calc();\n"], "variable_name": "valueOBV_id"}

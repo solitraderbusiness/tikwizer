@@ -1,4 +1,1 @@
-{
-  "initializer": "   AWESOME_OSCILLATOR_id awesome_oscillator_id;\n   awesome_oscillator_id.init();\n   double valueAWESOME_OSCILLATOR_id = awesome_oscillator_id.calc();",
-  "variable_name": "valueAWESOME_OSCILLATOR_id"
-}
+{"initializer": "   AWESOME_OSCILLATOR_id awesome_oscillator_id;\n   awesome_oscillator_id.init();\n   double valueAWESOME_OSCILLATOR_id = awesome_oscillator_id.calc();", "initializer_split": ["   AWESOME_OSCILLATOR_id awesome_oscillator_id;\n", "   awesome_oscillator_id.init();\n", "   double valueAWESOME_OSCILLATOR_id = awesome_oscillator_id.calc();\n"], "variable_name": "valueAWESOME_OSCILLATOR_id"}
