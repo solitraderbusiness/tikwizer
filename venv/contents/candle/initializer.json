@@ -1,4 +1,5 @@
 {
   "initializer": "Candle_id candle_id;\n   candle_id.init();\n   double valueCandle_id = candle_id.calc();",
+  "initializer_split": ["Candle_id candle_id;\n", "candle_id.init();\n", "double valueCandle_id = candle_id.calc();\n"],
   "variable_name": "valueCandle_id"
 }

@@ -1,5 +1,6 @@
 import block_constructor
 import task_constructor
+import task_dynamic_constructor
 import global_functions
 import constants_constructor
 import global_vars
@@ -253,7 +254,7 @@ def get_on_deinit_items():
 
 
 def get_task_child(node):
-    return task_constructor.get_task_child(node)
+    return task_dynamic_constructor.get_task_child(node)
 
 
 def get_block_child(input_dic, id_block):

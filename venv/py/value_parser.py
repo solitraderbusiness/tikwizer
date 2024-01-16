@@ -75,61 +75,101 @@ class value_data:
     initializer = ""
     var_name = ""
 
-data = value_data()
 
 
 
-def parse_value(value):
+
+def get_value_fetch_class(value, suffix):
     row1 = value.get("row1")
     match row1:
         case "Indicator":
-            return parse_indicator(value)
+            return get_indicator_class(value, suffix)
         case "Market Properties":
-            return parse_market_properties(value)
+            return get_market_properties_class(value, suffix)
         case "Candle":
-            return parse_candle(value)
+            return get_candle_class(value, suffix)
         case "Value":
-            return parse_value(value)
+            return get_value_class(value, suffix)
 
 
-def parse_indicator (value, suffix):
+def get_indicator_class (value, suffix):
     name = value.get("row2").get("name")
     mclass = indicator_class_constructor.get_class(name, value.get("input_dic"), suffix)
     initializer = indicator_class_constructor.get_initializer(name, suffix)
     var_name =  indicator_class_constructor.get_var_name(name, suffix)
 
+    data = value_data()
     data.classes = mclass
     data.initializer = initializer
     data.var_name = var_name
     return data
 
-def parse_market_properties (value, suffix):
+def get_indicator_class (value, suffix):
+    name = value.get("row2").get("name")
+    mclass = indicator_class_constructor.get_class(name, value.get("input_dic"), suffix)
+    initializer = indicator_class_constructor.get_initializer(name, suffix)
+    var_name =  indicator_class_constructor.get_var_name(name, suffix)
+
+    data = value_data()
+    data.classes = mclass
+    data.initializer = initializer
+    data.var_name = var_name
+    return data
+
+def get_indicator_class (value, suffix):
+    name = value.get("row2").get("name")
+    mclass = indicator_class_constructor.get_class(name, value.get("input_dic"), suffix)
+    initializer = indicator_class_constructor.get_initializer(name, suffix)
+    var_name =  indicator_class_constructor.get_var_name(name, suffix)
+
+    data = value_data()
+    data.classes = mclass
+    data.initializer = initializer
+    data.var_name = var_name
+    return data
+
+def get_indicator_class (value, suffix):
+    name = value.get("row2").get("name")
+    mclass = indicator_class_constructor.get_class(name, value.get("input_dic"), suffix)
+    initializer = indicator_class_constructor.get_initializer(name, suffix)
+    var_name =  indicator_class_constructor.get_var_name(name, suffix)
+
+    data = value_data()
+    data.classes = mclass
+    data.initializer = initializer
+    data.var_name = var_name
+    return data
+
+def get_market_properties_class (value, suffix):
     mclass = market_properties_class_constructor.get_class(value.get("input_dic"), suffix)
     initializer = market_properties_class_constructor.get_initializer(suffix)
     var_name = market_properties_class_constructor.get_var_name(suffix)
     structs = market_properties_class_constructor.get_structs()
 
+    data = value_data()
     data.classes = mclass
     data.initializer = initializer
     data.var_name = var_name
     data.structs = structs
     return data
 
-def parse_candle (value, suffix):
+def get_candle_class (value, suffix):
     mclass = candle_class_constructor.get_class(value.get("input_dic"), suffix)
     initializer = candle_class_constructor.get_initializer(suffix)
     var_name = candle_class_constructor.get_var_name(suffix)
 
+    data = value_data()
     data.classes = mclass
     data.initializer = initializer
     data.var_name = var_name
     return data
 
-def parse_value (value, suffix):
+def get_value_class (value, suffix):
     mclass = value_class_constructor.get_class(value.get("input_dic"), suffix)
     initializer = value_class_constructor.get_initializer(suffix)
     var_name = value_class_constructor.get_var_name(suffix)
 
+    data = value_data()
     data.classes = mclass
     data.initializer = initializer
     data.var_name = var_name
