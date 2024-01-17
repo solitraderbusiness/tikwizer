@@ -1,3 +1,3 @@
 {
-	"field_body" : "   int               type;\n   int               value;\n   string               adjust;\n   //for pips\n   int               pips_type;\n   string            symbol;\n   //for time (phase 2)\n   \n   string            msymbol;"
+	"field_body" : "   int               type;\n   int               value;\n   string               adjust;\n   //for pips\n   int               pips_mode;\n   string            symbol;\n   //for time (phase 2)\n   \n   string            msymbol;"
 }

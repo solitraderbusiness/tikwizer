@@ -20,7 +20,7 @@ public:
    int               value;
    string               adjust;
    //for pips
-   int               pips_type;
+   int               pips_mode;
    string            symbol;
    //for time (phase 2)
 
@@ -35,8 +35,8 @@ public:
       value = 10;
       adjust = 20;
       //for pips
-      pips_type = CANDLE_LOW;
-      symbol = "2023.4.26 13:40:30";
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = "NULL";
       //for time (phase 2)
      }
 
@@ -57,12 +57,12 @@ public:
             return "\"" + value + "\"";
 
          case VALUE_TYPE_PIPS:
-            if(pips_type == VALUE_PIPS_AS_IS)
+            if(pips_mode == VALUE_PIPS_AS_IS)
               {
                return (string) value;
               }
             else
-               if(pips_type == VALUE_PIPS_AS_PRICE_FRACTION)
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                  {
                   double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
                   return (string)(point*10*value);  //STest, *10 works for all symbols?

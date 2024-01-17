@@ -1,0 +1,3 @@
+{
+  "run_data": "Task::run(block_id, block);\n\n      modify_variables\n    \n      block.onResult(ROUTE_1_PASSED);"
+}

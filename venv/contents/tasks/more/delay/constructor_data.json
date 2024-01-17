@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "sleep_seconds = sleep_seconds_val;\n      sleep_tester_normal = sleep_tester_normal_val;\n      sleep_tester_visual = sleep_tester_visual_val;"
+}

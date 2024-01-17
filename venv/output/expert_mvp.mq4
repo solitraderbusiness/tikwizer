@@ -63,6 +63,10 @@
 #define VALUE_TYPE_TIME 7
 #define VALUE_PIPS_AS_IS 1
 #define VALUE_PIPS_AS_PRICE_FRACTION 2
+extern int bbbbbbb = 21; // 
+extern int rsishort = 7; // 
+extern double lot = 0.1; // 
+double aaaaaaa = 78; // 
 class BlockParent
   {
 public:
@@ -94,7 +98,7 @@ public:
 
   };
 
-class RSI1_left1
+class RSI1_left
   {
    string            symbol;
    int               timeframe;
@@ -123,397 +127,67 @@ public:
       return result;
      }
 
-  };
-class RSI1_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               period;
-   int               applied_price;
-   int               shift;
-    
-   int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
-      shift = 2;
-      buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
-  };class Candle1_right1
-
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int            mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = FIND_BY_ID;
-      price_mode = CANDLE_HIGH;
-      timestr = "2023.4.26 13:40:30";
-      shift = 1;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
-
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(symbol, timeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
   };
-class Candle1_right2
-
+class Value1_right
   {
-
 public:
-
+       int               type;
+   int               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
    string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
+   //for time (phase 2)
+   
    string            msymbol;
-   int            mtimeframe;
 
 public:
 
    void              init()
 
      {
+      type = VALUE_TYPE_PIPS;
+      value = 10;
+      adjust = 20;
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
-      timeframe = 0;
-      find_method = FIND_BY_ID;
-      price_mode = CANDLE_HIGH;
-      timestr = "2023.4.26 13:40:30";
-      shift = 2;
+      //for time (phase 2)
      }
 
-
-
-   double            calc()
-
+   string              calc()
      {
+
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
 
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
+      switch(type)
         {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(symbol, timeframe, date, false);
+         case VALUE_TYPE_NUMERIC:
+         case VALUE_TYPE_BOOLEAN:
+         case VALUE_TYPE_COLOR:
+         case VALUE_TYPE_TEXT:
+            return (string)value;
+
+         case VALUE_TYPE_TEXT_CODE_INPUT:
+            return "\"" + value + "\"";
+
+         case VALUE_TYPE_PIPS:
+            if(pips_mode == VALUE_PIPS_AS_IS)
+              {
+               return (string) value;
+              }
+            else
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                 {
+                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                  return (string)(point*10*value);  //STest, *10 works for all symbols?
+                 }
+            return "";
+
+         case VALUE_TYPE_TIME:
+            return "";
         }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
      }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
   };
 
 class RSI2_left
@@ -545,7 +219,69 @@ public:
       return result;
      }
 
-  };
+  };
+class Value2_right
+  {
+public:
+       int               type;
+   int               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
+   string            symbol;
+   //for time (phase 2)
+   
+   string            msymbol;
+
+public:
+
+   void              init()
+
+     {
+      type = VALUE_TYPE_PIPS;
+      value = 10;
+      adjust = 20;
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = NULL;
+      //for time (phase 2)
+     }
+
+   string              calc()
+     {
+
+      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+
+      switch(type)
+        {
+         case VALUE_TYPE_NUMERIC:
+         case VALUE_TYPE_BOOLEAN:
+         case VALUE_TYPE_COLOR:
+         case VALUE_TYPE_TEXT:
+            return (string)value;
+
+         case VALUE_TYPE_TEXT_CODE_INPUT:
+            return "\"" + value + "\"";
+
+         case VALUE_TYPE_PIPS:
+            if(pips_mode == VALUE_PIPS_AS_IS)
+              {
+               return (string) value;
+              }
+            else
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                 {
+                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                  return (string)(point*10*value);  //STest, *10 works for all symbols?
+                 }
+            return "";
+
+         case VALUE_TYPE_TIME:
+            return "";
+        }
+     }
+  };
+
 class MACD3_left1
   {
    string            symbol;
@@ -795,51 +531,34 @@ public:
 
   };class Task0 : public Task
   {
-      //specified by user
-   string            symbol;
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
+      int               sleep_seconds;
+   bool              sleep_tester_normal;
+   bool              sleep_tester_visual;
 public:
                      Task0(string name):Task(name)
      {
-         //specified by user
-      symbol = NULL;
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 25;
-      int mtype[] = {1, 2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      count_limit = 0;
+         sleep_seconds = sleep_seconds_val;
+      sleep_tester_normal = sleep_tester_normal_val;
+      sleep_tester_visual = sleep_tester_visual_val;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
-      string msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
+      Task::run(block_id, block);
+      if(MQLInfoInteger(MQL_TESTER) == false)
         {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            bool con1 = msymbol==NULL || msymbol==OrderSymbol();
-            bool con2 = sameOrderType(type, OrderType());
-            bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-            bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
-            if(con1 && con2 && con3 && con4)
-               count++;
-           }
-        }
-
-      bool result = count > count_limit;
-      if(result)
-        {
-         block.onResult(ROUTE_1_PASSED);
+         Sleep(sleep_seconds*1000);
         }
       else
         {
-         block.onResult(ROUTE_2_PASSED);
+         if(
+            (sleep_tester_visual == true && MQLInfoInteger(MQL_VISUAL_MODE) == true)
+            || (sleep_tester_normal == true && MQLInfoInteger(MQL_VISUAL_MODE) == false)
+         )
+           {
+            SleepEx(sleep_seconds*1000,false);
+           }
         }
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level) {
       
@@ -858,20 +577,14 @@ public:
      {
       Task::run(block_id, block);
 
-      RSI1_left1 rsi1_left1;
-   rsi1_left1.init();
-   double valueRSI1_left1 = rsi1_left1.calc();
-      RSI1_left2 rsi1_left2;
-   rsi1_left2.init();
-   double valueRSI1_left2 = rsi1_left2.calc();
-      Candle1_right1 candle1_right1;
-   candle1_right1.init();
-   double valueCandle1_right1 = candle1_right1.calc();
-      Candle1_right2 candle1_right2;
-   candle1_right2.init();
-   double valueCandle1_right2 = candle1_right2.calc();
-      
-      if(valueRSI1_left1 < valueCandle1_right1 && valueRSI1_left2 > valueCandle1_right2)
+      RSI1_left rsi1_left;
+   rsi1_left.init();
+   double valueRSI1_left = rsi1_left.calc();
+      Value1_right value1_right;
+   value1_right.init();
+   double valueValue1_right = value1_right.calc();
+
+      if(valueRSI1_left > valueValue1_right)
         {
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -902,9 +615,11 @@ public:
       RSI2_left rsi2_left;
    rsi2_left.init();
    double valueRSI2_left = rsi2_left.calc();
-      
+      Value2_right value2_right;
+   value2_right.init();
+   double valueValue2_right = value2_right.calc();
 
-      if(valueRSI2_left < 40)
+      if(valueRSI2_left < valueValue2_right)
         {
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1294,7 +1009,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "check_trades_orders_count";
+      name = "delay";
       enabled = True;
 
       int mnexts_true[] = {1, 2};
@@ -1316,7 +1031,7 @@ public:
      {
       id = 1;
       id_by_user = 1;
-      name = "condition_1_cross";
+      name = "condition_1_normal";
       enabled = True;
 
       int mnexts_true[] = {4};
@@ -1569,6 +1284,10 @@ void ReverseList(int &arr[])
       arr[size - 1 - i] = temp;
      }
   }
+#import "kernel32.dll"
+bool SleepEx(int ms, bool bAlertable);
+#import
+
 int init(){
 addBlocksTick();
 }

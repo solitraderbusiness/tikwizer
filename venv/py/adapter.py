@@ -154,6 +154,8 @@ def add_category (nodes):
                 node["category"] = "trading_actions"
             case "check_profit_unrealized":
                 node["category"] = "check_trading_conditions"
+            case "delay":
+                node["category"] = "more"
             case _:
                 node["category"] = "not_specified"
 

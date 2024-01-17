@@ -2,6 +2,6 @@
   "type": "VALUE_TYPE_PIPS",
   "value": 10,
   "adjust": "20",
-  "pips_type": "CANDLE_LOW",
+  "pips_mode": "VALUE_PIPS_AS_IS",
   "symbol":"NULL"
 }

@@ -1,5 +1,5 @@
 {
   "initializer": "Value_id value_id;\n   value_id.init();\n   double valueValue_id = value_id.calc();",
-  "initializer": ["Value_id value_id;\n", "value_id.init();\n", "double valueValue_id = value_id.calc();\n"],
+  "initializer_split": ["Value_id value_id;\n", "value_id.init();\n", "double valueValue_id = value_id.calc();\n"],
   "variable_name": "valueValue_id"
 }

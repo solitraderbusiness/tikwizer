@@ -1,0 +1,5 @@
+{
+	"sleep_seconds": 5,
+	"sleep_tester_normal" : true,
+	"sleep_tester_visual" : true
+}

@@ -87,5 +87,8 @@ def get_fun__is_automated ():
 
 def get_fun__reverse_list ():
     result = "void ReverseList(int &arr[])\n  {\n   int size = ArraySize(arr);\n   ArraySetAsSeries(arr, true);\n\n   for(int i = 0; i < size / 2; i++)\n     {\n      int temp = arr[i];\n      arr[i] = arr[size - 1 - i];\n      arr[size - 1 - i] = temp;\n     }\n  }\n"
-    return result;
+    return result
 
+def get_fun__sleepex ():
+    result = "#import \"kernel32.dll\"\nbool SleepEx(int ms, bool bAlertable);\n#import\n\n"
+    return result

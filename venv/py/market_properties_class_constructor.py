@@ -45,7 +45,16 @@ def get_initializer(var_id):
             initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
             return initializer_body
 
-
+def get_initializer_split(var_id):
+    mpath = path + path_sub
+    with open(mpath + "initializer.json") as initializer_file:
+        if initializer_file:
+            initializer_str = initializer_file.read()
+            initializer_dic = json.loads(initializer_str)
+            initializer_list = initializer_dic.get("initializer_split")
+            for i in range(len(initializer_list)):
+                initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
+            return initializer_list
 def get_var_name(var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
@@ -63,6 +72,7 @@ def get_structs():
             structs_dic = json.loads(structs_str)
             structs = structs_dic.get("structs")
             return structs
+
 
 # Test
 # input = {

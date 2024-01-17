@@ -39,6 +39,13 @@ def set_task_input_dic(nodes):
             case _:
                 default(node)
 
+def delay(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["sleep_seconds"] = more.get("sleep_seconds").get("value")
+    input_dic["sleep_tester_normal"] = more.get("sleep_tester_normal").get("value")
+    input_dic["sleep_tester_visual"] = more.get("sleep_tester_visual").get("value")
+    node["input_dic_task"] = input_dic
 def for_each_trade(node):
     more = node.get("more")
     input_dic = {}
@@ -188,7 +195,7 @@ def condition_1_normal(node):
         # STest, below input item should be placed in input_item
         input_dic_left["shift"] = more.get("candleIDLeft").get("value")
         # STest, remove when no need
-        input_dic_left = expert_helper.correct_input(indicator_name_left, input_dic_left)
+        input_dic_left = expert_helper.correct_input_indicator(indicator_name_left, input_dic_left)
         node["input_dic_left"] = input_dic_left
     elif left == "Candle":
         input_dic_left = {}
@@ -208,6 +215,14 @@ def condition_1_normal(node):
         # STest, below input item should be placed in input_item
         input_dic_left["shift"] = more.get("candleIDLeft").get("value")
         node["input_dic_left"] = input_dic_left
+    elif left == "Value":
+        input_dic_left = {}
+        input_items_left = more.get("left")
+        for item in input_items_left:
+            input_dic_left[item.get("optionName").lower().replace(" ", "_")] = item.get("value").get(
+                "value")  # STest, should be lowercase
+        input_dic_left = expert_helper.correct_input_value(input_dic_left)
+        node["input_dic_left"] = input_dic_left
 
     # right data
     right = more.get("right1").get("label")
@@ -225,7 +240,7 @@ def condition_1_normal(node):
         # STest, below input item should be placed in input_item
         input_dic_right["shift"] = more.get("candleIDRight").get("value")
         # STest, remove when no need
-        input_dic_right = expert_helper.correct_input(indicator_name_right, input_dic_right)
+        input_dic_right = expert_helper.correct_input_indicator(indicator_name_right, input_dic_right)
         node["input_dic_right"] = input_dic_right
     elif right == "Candle":
         input_dic_right = {}
@@ -244,6 +259,14 @@ def condition_1_normal(node):
                 "value")  # STest, should be lowercase
         # STest, below input item should be placed in input_item
         input_dic_right["shift"] = more.get("candleIDRight").get("value")
+        node["input_dic_right"] = input_dic_right
+    elif right == "Value":
+        input_dic_right = {}
+        input_items_right = more.get("right")
+        for item in input_items_right:
+            input_dic_right[item.get("optionName").lower().replace(" ", "_")] = item.get("value").get(
+                "value")  # STest, should be lowercase
+        input_dic_right = expert_helper.correct_input_value(input_dic_right)
         node["input_dic_right"] = input_dic_right
 
 
@@ -275,7 +298,7 @@ def condition_1_cross(node):
         # STest, below input item should be placed in input_item
         input_dic_left_1["shift"] = more.get("candleIDLeft").get("value")
         # STest, remove when no need
-        input_dic_left_1 = expert_helper.correct_input(indicator_name_left, input_dic_left_1)
+        input_dic_left_1 = expert_helper.correct_input_indicator(indicator_name_left, input_dic_left_1)
         input_dic_left_2 = input_dic_left_1.copy()
         input_dic_left_2["shift"] = str(int(input_dic_left_2["shift"]) + more.get("cross_width").get("value"))
         # Assign the input dic
@@ -305,6 +328,16 @@ def condition_1_cross(node):
         input_dic_left_2 = input_dic_left_1.copy()
         node["input_dic_left_1"] = input_dic_left_1
         node["input_dic_left_2"] = input_dic_left_2
+    elif left == "Value":
+        input_dic_left_1 = {}
+        input_items_left = more.get("left")
+        for item in input_items_left:
+            input_dic_left_1[item.get("optionName").lower().replace(" ", "_")] = item.get("value").get(
+                "value")  # STest, should be lowercase
+        input_dic_left_1 = expert_helper.correct_input_value(input_dic_left_1)
+        input_dic_left_2 = input_dic_left_1.copy()
+        node["input_dic_left_1"] = input_dic_left_1
+        node["input_dic_left_2"] = input_dic_left_2
 
     # right data
     right = more.get("right1").get("label")
@@ -322,7 +355,7 @@ def condition_1_cross(node):
         # STest, below input item should be placed in input_item
         input_dic_right_1["shift"] = more.get("candleIDRight").get("value")
         # STest, remove when no need
-        input_dic_right_1 = expert_helper.correct_input(indicator_name_right, input_dic_right_1)
+        input_dic_right_1 = expert_helper.correct_input_indicator(indicator_name_right, input_dic_right_1)
         input_dic_right_2 = input_dic_right_1.copy()
         input_dic_right_2["shift"] = str(int(input_dic_right_2["shift"]) + more.get("cross_width").get("value"))
         # Assign the input dic
@@ -349,6 +382,16 @@ def condition_1_cross(node):
                 "value")  # STest, should be lowercase
         # STest, below input item should be placed in input_item
         input_dic_right_1["shift"] = more.get("candleIDRight").get("value")
+        input_dic_right_2 = input_dic_right_1.copy()
+        node["input_dic_right_1"] = input_dic_right_1
+        node["input_dic_right_2"] = input_dic_right_2
+    elif right == "Value":
+        input_dic_right_1 = {}
+        input_items_right = more.get("right")
+        for item in input_items_right:
+            input_dic_right_1[item.get("optionName").lower().replace(" ", "_")] = item.get("value").get(
+                "value")  # STest, should be lowercase
+        input_dic_right_1 = expert_helper.correct_input_value(input_dic_right_1)
         input_dic_right_2 = input_dic_right_1.copy()
         node["input_dic_right_1"] = input_dic_right_1
         node["input_dic_right_2"] = input_dic_right_2

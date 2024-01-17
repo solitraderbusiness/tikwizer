@@ -1,0 +1,3 @@
+{
+	"run_data" : "Task::run(block_id, block);\n      if(MQLInfoInteger(MQL_TESTER) == false)\n        {\n         Sleep(sleep_seconds*1000);\n        }\n      else\n        {\n         if(\n            (sleep_tester_visual == true && MQLInfoInteger(MQL_VISUAL_MODE) == true)\n            || (sleep_tester_normal == true && MQLInfoInteger(MQL_VISUAL_MODE) == false)\n         )\n           {\n            SleepEx(sleep_seconds*1000,false);\n           }\n        }\n      block.onResult(ROUTE_1_PASSED);"
+}

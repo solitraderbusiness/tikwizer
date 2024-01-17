@@ -4,6 +4,7 @@ import collections.abc
 import indicator_class_constructor
 import candle_class_constructor
 import market_properties_class_constructor
+import value_class_constructor
 
 path = path_root.get()
 path_sub = "/contents/"
@@ -103,11 +104,14 @@ def run_data_static_fun(path_task_id, input_dic):
 
 def run_data_dynamic_fun(node, run_data_static):
     task_name = node.get("data").get("blockName")
+    run_data = run_data_static
     if task_name == "condition_1_normal":
-        run_data_static = condition_1_run_data_normal(node, run_data_static)
+        run_data = condition_1_run_data_normal(node, run_data_static)
     elif task_name == "condition_1_cross":
-        run_data_static = condition_1_run_data_cross(node, run_data_static)
-    return run_data_static
+        run_data = condition_1_run_data_cross(node, run_data_static)
+    elif task_name == "modify_variables":
+        run_data = modify_variable_run_data(node, run_data_static)
+    return run_data
 
 
 def reset_data_static_fun(path_task_id):
@@ -147,7 +151,8 @@ def replace_input_values(data, input_dic):
     return data
 
 
-def modify_variable_run_data(node):
+def modify_variable_run_data(node, rundata):
+    modify_variables = ""
     for item in node.get("items"):
         row1 = item.get("row1").get("label")
         row2 = item.get("row2").get("name")
@@ -155,15 +160,9 @@ def modify_variable_run_data(node):
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-
-
-
-
-    run_data = run_data.replace("initializer_1", init_1) \
-        .replace("initializer_2", init_2) \
-        .replace("var_name_1", str(val_1)) \
-        .replace("var_name_2", str(val_2)) \
-        .replace("operator", operator)
+        modify_variables += init + "\n"
+        modify_variables += item.get("vairable_name") + " = " + val + ";\n\n"
+    rundata = rundata.repace("modify_variables", modify_variables)
     return run_data
 
 
@@ -175,7 +174,7 @@ def condition_1_run_data_normal(node, run_data):
     row2_left = more.get("left2").get("name")
     id_val_1 = str(node.get("id")) + "_" + "left"
 
-    init1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
+    init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
 
     # Right data
@@ -183,7 +182,7 @@ def condition_1_run_data_normal(node, run_data):
     row2_right = more.get("right2").get("name")
     id_val_2 = str(node.get("id")) + "_" + "right"
 
-    init2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
+    init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
     operator = node.get("more").get("operator").get("label")

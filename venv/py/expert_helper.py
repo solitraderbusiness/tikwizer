@@ -59,8 +59,18 @@ def get_comparator_call(id):
             return initializer_body
 
 
-def correct_input(indicator_name, input_dic):
+def correct_input_indicator(indicator_name, input_dic):
     with open(path + "/contents/indicators/" + indicator_name + "/input.json") as file:
+        if file:
+            str = file.read()
+            dic = json.loads(str)
+            for key in dic:
+                if not key in input_dic:
+                    input_dic[key] = dic.get(key)
+            return input_dic
+
+def correct_input_value(input_dic):
+    with open(path + "/contents/value/input.json") as file:
         if file:
             str = file.read()
             dic = json.loads(str)

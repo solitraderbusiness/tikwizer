@@ -6,6 +6,7 @@ import constants_constructor
 import global_vars
 import indicator_class_constructor
 import candle_class_constructor
+import value_class_constructor
 import market_properties_class_constructor
 
 header = ""
@@ -175,6 +176,10 @@ def add_global_functions (data):
     fun_reverse_list = global_functions.get_fun__reverse_list()
     functions.append(fun_reverse_list)
 
+    # sleepex function
+    fun_sleepex = global_functions.get_fun__sleepex()
+    functions.append(fun_sleepex)
+
 def build():
     expert = ""
     expert += header
@@ -335,6 +340,9 @@ def condition_1_normal_elements(node):
     elif left == "Market Properties":
         market_properties_class_left = market_properties_class_constructor.get_class(node.get("input_dic_left"), id_val_left)
         classes.append(market_properties_class_left)
+    elif left == "Value":
+        value_class_left = value_class_constructor.get_class(node.get("input_dic_left"), id_val_left)
+        classes.append(value_class_left)
 
     right = more.get("right1").get("label")
     id_val_right = str(node.get("id")) + "_" + "right"
@@ -347,7 +355,9 @@ def condition_1_normal_elements(node):
     elif right == "Market Properties":
         market_properties_class_right = market_properties_class_constructor.get_class(node.get("input_dic_right"), id_val_right)
         classes.append(market_properties_class_right)
-
+    elif right == "Value":
+        value_class_right = value_class_constructor.get_class(node.get("input_dic_right"), id_val_right)
+        classes.append(value_class_right)
 
 def condition_1_cross_elements(node):
     more = node.get("more")
@@ -371,6 +381,11 @@ def condition_1_cross_elements(node):
         market_properties_class_left_2 = market_properties_class_constructor.get_class(node.get("input_dic_left_2"), id_val_left_2)
         classes.append(market_properties_class_left_1)
         classes.append(market_properties_class_left_2)
+    elif left == "Value":
+        value_class_left_1 = value_class_constructor.get_class(node.get("input_dic_left_1"), id_val_left_1)
+        value_class_left_2 = value_class_constructor.get_class(node.get("input_dic_left_2"), id_val_left_2)
+        classes.append(value_class_left_1)
+        classes.append(value_class_left_2)
 
     right = more.get("right1").get("label")
     id_val_right = str(node.get("id")) + "_" + "right"
@@ -391,3 +406,8 @@ def condition_1_cross_elements(node):
         market_properties_class_right_2 = market_properties_class_constructor.get_class(node.get("input_dic_right_2"), id_val_right_2)
         classes.append(market_properties_class_right_1)
         classes.append(market_properties_class_right_2)
+    elif right == "Value":
+        value_class_right_1 = value_class_constructor.get_class(node.get("input_dic_right_1"), id_val_right_1)
+        value_class_right_2 = value_class_constructor.get_class(node.get("input_dic_right_2"), id_val_right_2)
+        classes.append(value_class_right_1)
+        classes.append(value_class_right_2)

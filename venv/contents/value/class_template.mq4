@@ -29,12 +29,12 @@ public:
             return "\"" + value + "\"";
 
          case VALUE_TYPE_PIPS:
-            if(pips_type == VALUE_PIPS_AS_IS)
+            if(pips_mode == VALUE_PIPS_AS_IS)
               {
                return (string) value;
               }
             else
-               if(pips_type == VALUE_PIPS_AS_PRICE_FRACTION)
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                  {
                   double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
                   return (string)(point*10*value);  //STest, *10 works for all symbols?
