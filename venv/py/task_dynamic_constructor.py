@@ -154,15 +154,15 @@ def replace_input_values(data, input_dic):
 def modify_variable_run_data(node, run_data):
     modify_variables = ""
     for item in node.get("items"):
-        row1 = item.get("row1").get("label")
-        row2 = item.get("row2").get("name")
+        row1 = item.get("value").get("row1").get("label")
+        row2 = item.get("value").get("row2").get("name")
         id_val = str(node.get("id"))
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         modify_variables += init + "\n"
         modify_variables += item.get("vairable_name") + " = " + val + ";\n\n"
-    run_data = run_data.repace("modify_variables", modify_variables)
+    run_data = run_data.replace("modify_variables", modify_variables)
     return run_data
 
 

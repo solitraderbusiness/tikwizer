@@ -330,6 +330,18 @@ def add_task_elements_specific(nodes):
             condition_1_normal_elements(node)
         elif task_name == "condition_1_cross":
             condition_1_cross_elements(node)
+        elif task_name == "modify_variables":
+            modify_variables(node)
+
+
+def modify_variables (node):
+    for item in node.get("items"):
+        input_dic = item.get("input_dic")
+        value = item.get("value")
+        row1 = value.get("row1").get("label")
+        row2 = value.get("row2").get("name")
+        id_val = str(node.get("id"))
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
 
 def condition_1_normal_elements(node):

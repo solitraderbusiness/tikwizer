@@ -156,6 +156,8 @@ def add_category (nodes):
                 node["category"] = "check_trading_conditions"
             case "delay":
                 node["category"] = "more"
+            case "modify_variables":
+                node["category"] = "variables"
             case _:
                 node["category"] = "not_specified"
 

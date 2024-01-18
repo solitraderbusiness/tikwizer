@@ -98,6 +98,67 @@ public:
 
   };
 
+class RSI0
+  {
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
+      shift = 3;
+      buy_threshold = 70;
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
+class MACD0
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 0;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
 class RSI1_left
   {
    string            symbol;
@@ -531,33 +592,28 @@ public:
 
   };class Task0 : public Task
   {
-      int               sleep_seconds;
-   bool              sleep_tester_normal;
-   bool              sleep_tester_visual;
+   
 public:
                      Task0(string name):Task(name)
      {
-         sleep_seconds = 7;
-      sleep_tester_normal = True;
-      sleep_tester_visual = True;
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      if(MQLInfoInteger(MQL_TESTER) == false)
-        {
-         Sleep(sleep_seconds*1000);
-        }
-      else
-        {
-         if(
-            (sleep_tester_visual == true && MQLInfoInteger(MQL_VISUAL_MODE) == true)
-            || (sleep_tester_normal == true && MQLInfoInteger(MQL_VISUAL_MODE) == false)
-         )
-           {
-            SleepEx(sleep_seconds*1000,false);
-           }
-        }
+
+      RSI0 rsi0;
+   rsi0.init();
+   double valueRSI0 = rsi0.calc();
+aaaaaaa = valueRSI0;
+
+   MACD0 macd0;
+   macd0.init();
+   double valueMACD0 = macd0.calc();
+aaaaaaa = valueMACD0;
+
+
+    
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level) {
@@ -1009,7 +1065,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "delay";
+      name = "modify_variables";
       enabled = True;
 
       int mnexts_true[] = {1, 2};

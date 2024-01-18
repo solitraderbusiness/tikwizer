@@ -38,8 +38,8 @@ def set_task_input_dic(nodes):
                 for_each_trade(node)
             case "delay":
                 delay(node)
-            case "modify_variable":
-                modify_variable(node)
+            case "modify_variables":
+                modify_variables(node)
             case _:
                 default(node)
 
@@ -193,12 +193,13 @@ def buy_sell(node):
     node.get("data")["blockName"] = "buy_sell"
 
 
-def modify_variable(node):
+def modify_variables(node):
     node["input_dic_task"] = {}
     for item in node.get("items"):
         value = item.get("value")
         params = value.get("params")
-        item["input_dic"] = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        item["input_dic"] = input_dic
 
 
 
