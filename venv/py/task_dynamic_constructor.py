@@ -151,7 +151,7 @@ def replace_input_values(data, input_dic):
     return data
 
 
-def modify_variable_run_data(node, rundata):
+def modify_variable_run_data(node, run_data):
     modify_variables = ""
     for item in node.get("items"):
         row1 = item.get("row1").get("label")
@@ -162,7 +162,7 @@ def modify_variable_run_data(node, rundata):
         val = get_value_fetch_val(row1, row2, id_val)
         modify_variables += init + "\n"
         modify_variables += item.get("vairable_name") + " = " + val + ";\n\n"
-    rundata = rundata.repace("modify_variables", modify_variables)
+    run_data = run_data.repace("modify_variables", modify_variables)
     return run_data
 
 

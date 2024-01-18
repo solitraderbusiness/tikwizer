@@ -27,19 +27,19 @@ on_deinit = []
 
 
 def process_input(data):
-    #process global functions
+    # process global functions
     add_global_functions(data)
 
-    #process system constants
+    # process system constants
     add_consts_system()
 
-    #process user constants (inputs)
+    # process user constants (inputs)
     add_consts_user(data.get("constants"))
 
-    #process system vars
+    # process system vars
     add_vars_system()
 
-    #process user vars
+    # process user vars
     add_vars_user(data.get("variables"))
 
     process_tick_blocks(data.get("events").get("on_tick"))
@@ -69,7 +69,6 @@ def process_tick_blocks(data):
         task = get_task_child(node)
         classes.append(task)
 
-
     # Add block blueprint
     block_blue_print = block_constructor.get_block()
     classes.append(block_blue_print)
@@ -93,7 +92,7 @@ def process_tick_blocks(data):
         on_tick.append(call_run_block)
 
 
-def add_vars_system ():
+def add_vars_system():
     # blocks_tick var
     blocks_tick_var = global_vars.get__blocks_tick()
     vars_system.append(blocks_tick_var)
@@ -106,20 +105,26 @@ def add_vars_system ():
     overriding_timeframe = global_vars.get__overriding_timeframe()
     vars_system.append(overriding_timeframe)
 
-def add_vars_user (vars):
+
+def add_vars_user(vars):
     for var in vars:
-        var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get("description") + "\n"
+        var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get(
+            "description") + "\n"
         vars_user.append(var_str)
 
-def add_consts_system ():
+
+def add_consts_system():
     consts_system.extend(constants_constructor.get_constants())
 
-def add_consts_user (const_inputs): # Defined by user
+
+def add_consts_user(const_inputs):  # Defined by user
     for input in const_inputs:
-        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + input.get("value") + "; // " + input.get("description") + "\n"
+        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + input.get(
+            "value") + "; // " + input.get("description") + "\n"
         consts_user.append(input_str)
 
-def add_global_functions (data):
+
+def add_global_functions(data):
     # AddToArray function
     fun_add_to_array = global_functions.get_fun__add_to_array()
     functions.append(fun_add_to_array)
@@ -160,15 +165,15 @@ def add_global_functions (data):
     fun_time_from_string = global_functions.get_fun__time_from_string()
     functions.append(fun_time_from_string)
 
-     # getGroupNumber function
+    # getGroupNumber function
     fun_get_group_number = global_functions.get_fun__get_group_number()
     functions.append(fun_get_group_number)
 
-     # sameOrderType function
+    # sameOrderType function
     fun_same_order_type = global_functions.get_fun__same_order_type()
     functions.append(fun_same_order_type)
 
-     # isAutomated function
+    # isAutomated function
     fun_is_automated = global_functions.get_fun__is_automated()
     functions.append(fun_is_automated)
 
@@ -179,6 +184,7 @@ def add_global_functions (data):
     # sleepex function
     fun_sleepex = global_functions.get_fun__sleepex()
     functions.append(fun_sleepex)
+
 
 def build():
     expert = ""
@@ -310,7 +316,7 @@ def add_task_elements_common(nodes):
             case "condition_1_normal" | "condition_1_cross":
                 left_label = node.get("more").get("left1").get("label")
                 right_label = node.get("more").get("right1").get("label")
-                if (left_label=="Market Properties" or right_label=="Market Properties"):
+                if (left_label == "Market Properties" or right_label == "Market Properties"):
                     if market_properties_done: continue
                     structs_data = market_properties_class_constructor.get_structs()
                     structs.append(structs_data)
@@ -328,86 +334,52 @@ def add_task_elements_specific(nodes):
 
 def condition_1_normal_elements(node):
     more = node.get("more")
-    #left data
-    left = more.get("left1").get("label")
+    # left data
+    row1_left = more.get("left1").get("label")
+    row2_left = more.get("left2").get("name")
     id_val_left = str(node.get("id")) + "_" + "left"
-    if left == "Indicator":
-        indicator_class_left = indicator_class_constructor.get_class(more.get("left2").get("name"), node.get("input_dic_left"), id_val_left)
-        classes.append(indicator_class_left)
-    elif left == "Candle":
-        candle_class_left = candle_class_constructor.get_class(node.get("input_dic_left"), id_val_left)
-        classes.append(candle_class_left)
-    elif left == "Market Properties":
-        market_properties_class_left = market_properties_class_constructor.get_class(node.get("input_dic_left"), id_val_left)
-        classes.append(market_properties_class_left)
-    elif left == "Value":
-        value_class_left = value_class_constructor.get_class(node.get("input_dic_left"), id_val_left)
-        classes.append(value_class_left)
+    input_dic_left = node.get("input_dic_left")
+    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left, id_val_left))
 
-    right = more.get("right1").get("label")
+    # right data
+    row1_right = more.get("right1").get("label")
+    row2_right = more.get("right2").get("name")
     id_val_right = str(node.get("id")) + "_" + "right"
-    if right == "Indicator":
-        indicator_class_right = indicator_class_constructor.get_class(more.get("right2").get("name"), node.get("input_dic_right"), id_val_right)
-        classes.append(indicator_class_right)
-    elif right == "Candle":
-        candle_class_right = candle_class_constructor.get_class(node.get("input_dic_right"), id_val_right)
-        classes.append(candle_class_right)
-    elif right == "Market Properties":
-        market_properties_class_right = market_properties_class_constructor.get_class(node.get("input_dic_right"), id_val_right)
-        classes.append(market_properties_class_right)
-    elif right == "Value":
-        value_class_right = value_class_constructor.get_class(node.get("input_dic_right"), id_val_right)
-        classes.append(value_class_right)
+    input_dic_right = node.get("input_dic_right")
+    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right, id_val_right))
+
 
 def condition_1_cross_elements(node):
     more = node.get("more")
-    #left data
-    left = more.get("left1").get("label")
-    id_val_left = str(node.get("id")) + "_" + "left"
-    id_val_left_1 = id_val_left + "1"
-    id_val_left_2 = id_val_left + "2"
-    if left == "Indicator":
-        indicator_class_left_1 = indicator_class_constructor.get_class(more.get("left2").get("name"), node.get("input_dic_left_1"), id_val_left_1)
-        indicator_class_left_2 = indicator_class_constructor.get_class(more.get("left2").get("name"), node.get("input_dic_left_2"), id_val_left_2)
-        classes.append(indicator_class_left_1)
-        classes.append(indicator_class_left_2)
-    elif left == "Candle":
-        candle_class_left_1 = candle_class_constructor.get_class(node.get("input_dic_left_1"), id_val_left_1)
-        candle_class_left_2 = candle_class_constructor.get_class(node.get("input_dic_left_2"), id_val_left_2)
-        classes.append(candle_class_left_1)
-        classes.append(candle_class_left_2)
-    elif left == "Market Properties":
-        market_properties_class_left_1 = market_properties_class_constructor.get_class(node.get("input_dic_left_1"), id_val_left_1)
-        market_properties_class_left_2 = market_properties_class_constructor.get_class(node.get("input_dic_left_2"), id_val_left_2)
-        classes.append(market_properties_class_left_1)
-        classes.append(market_properties_class_left_2)
-    elif left == "Value":
-        value_class_left_1 = value_class_constructor.get_class(node.get("input_dic_left_1"), id_val_left_1)
-        value_class_left_2 = value_class_constructor.get_class(node.get("input_dic_left_2"), id_val_left_2)
-        classes.append(value_class_left_1)
-        classes.append(value_class_left_2)
+    # left data
+    row1_left = more.get("left1").get("label")
+    row2_left = more.get("left2").get("name")
+    id_val_left_1 = str(node.get("id")) + "_" + "left1"
+    id_val_left_2 = str(node.get("id")) + "_" + "left2"
+    input_dic_left_1 = node.get("input_dic_left_1")
+    input_dic_left_2 = node.get("input_dic_left_2")
+    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left_1, id_val_left_1))
+    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left_2, id_val_left_2))
 
-    right = more.get("right1").get("label")
-    id_val_right = str(node.get("id")) + "_" + "right"
-    id_val_right_1 = id_val_right + "1"
-    id_val_right_2 = id_val_right + "2"
-    if right == "Indicator":
-        indicator_class_right_1 = indicator_class_constructor.get_class(more.get("right2").get("name"), node.get("input_dic_right_1"), id_val_right_1)
-        indicator_class_right_2 = indicator_class_constructor.get_class(more.get("right2").get("name"), node.get("input_dic_right_2"), id_val_right_2)
-        classes.append(indicator_class_right_1)
-        classes.append(indicator_class_right_2)
-    elif right == "Candle":
-        candle_class_right_1 = candle_class_constructor.get_class(node.get("input_dic_right_1"), id_val_right_1)
-        candle_class_right_2 = candle_class_constructor.get_class(node.get("input_dic_right_2"), id_val_right_2)
-        classes.append(candle_class_right_1)
-        classes.append(candle_class_right_2)
-    elif right == "Market Properties":
-        market_properties_class_right_1 = market_properties_class_constructor.get_class(node.get("input_dic_right_1"), id_val_right_1)
-        market_properties_class_right_2 = market_properties_class_constructor.get_class(node.get("input_dic_right_2"), id_val_right_2)
-        classes.append(market_properties_class_right_1)
-        classes.append(market_properties_class_right_2)
-    elif right == "Value":
-        value_class_right_1 = value_class_constructor.get_class(node.get("input_dic_right_1"), id_val_right_1)
-        value_class_right_2 = value_class_constructor.get_class(node.get("input_dic_right_2"), id_val_right_2)
-        classes.append(value_class_right_1)
-        classes.append(value_class_right_2)
+    # right data
+    row1_right = more.get("right1").get("label")
+    row2_right = more.get("right2").get("name")
+    id_val_right_1 = str(node.get("id")) + "_" + "right1"
+    id_val_right_2 = str(node.get("id")) + "_" + "right2"
+    input_dic_right_1 = node.get("input_dic_right_1")
+    input_dic_right_2 = node.get("input_dic_right_2")
+    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right_1, id_val_right_1))
+    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right_2, id_val_right_2))
+
+
+def value_fetch_class(row1, row2, input_dic, id_val):
+    mclass = ""
+    if row1 == "Indicator":
+        mclass = indicator_class_constructor.get_class(row2, input_dic, id_val)
+    elif row1 == "Candle":
+        mclass = candle_class_constructor.get_class(input_dic, id_val)
+    elif row1 == "Market Properties":
+        mclass = market_properties_class_constructor.get_class(input_dic, id_val)
+    elif row1 == "Value":
+        mclass = value_class_constructor.get_class(input_dic, id_val)
+    return mclass
