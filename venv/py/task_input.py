@@ -36,8 +36,31 @@ def set_task_input_dic(nodes):
                 check_profit_unrealized(node)
             case "for_each_trade":
                 for_each_trade(node)
+            case "delay":
+                delay(node)
+            case "modify_variable":
+                modify_variable(node)
             case _:
                 default(node)
+
+
+def modify_variable(node):
+    items = node.get("items")
+    # input_dic = {}
+    # for item in items:
+    #     row1 = item.get("value").get("row1")
+    #     match row1:
+    #         case "Indicator":
+
+
+
+
+
+    input_dic["sleep_seconds"] = more.get("sleep_seconds").get("value")
+    input_dic["sleep_tester_normal"] = more.get("sleep_tester_normal").get("value")
+    input_dic["sleep_tester_visual"] = more.get("sleep_tester_visual").get("value")
+    node["input_dic_task"] = input_dic
+
 
 def delay(node):
     more = node.get("more")
@@ -46,6 +69,8 @@ def delay(node):
     input_dic["sleep_tester_normal"] = more.get("sleep_tester_normal").get("value")
     input_dic["sleep_tester_visual"] = more.get("sleep_tester_visual").get("value")
     node["input_dic_task"] = input_dic
+
+
 def for_each_trade(node):
     more = node.get("more")
     input_dic = {}
@@ -58,6 +83,7 @@ def for_each_trade(node):
     input_dic["not_more_than_n"] = more.get("not_more_than_n").get("value")
     input_dic["every_n"] = more.get("every_n").get("value")
     node["input_dic_task"] = input_dic
+
 
 def check_profit_unrealized(node):
     more = node.get("more")
@@ -73,6 +99,7 @@ def check_profit_unrealized(node):
     input_dic["profit_comparison_operator"] = more.get("profit_comparison_operator").get("value")
     node["input_dic_task"] = input_dic
 
+
 def close_trades(node):
     more = node.get("more")
     input_dic = {}
@@ -85,6 +112,7 @@ def close_trades(node):
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
     node["input_dic_task"] = input_dic
 
+
 def check_trades_orders_count(node):
     more = node.get("more")
     input_dic = {}
@@ -95,6 +123,7 @@ def check_trades_orders_count(node):
     input_dic["count_limit"] = more.get("count_limit").get("value")
     input_dic["operator"] = more.get("operator").get("value")
     node["input_dic_task"] = input_dic
+
 
 def check_trades_orders_nearby(node):
     more = node.get("more")
@@ -113,11 +142,13 @@ def check_trades_orders_nearby(node):
 
     node["input_dic_task"] = input_dic
 
+
 def months_filter(node):
     more = node.get("more")
     input_dic = {}
     input_dic["months"] = more.get("months").get("value")
     node["input_dic_task"] = input_dic
+
 
 def weekday_filter(node):
     more = node.get("more")
@@ -125,6 +156,7 @@ def weekday_filter(node):
     input_dic["time_mode"] = more.get("time_mode").get("value")
     input_dic["weekdays"] = more.get("weekdays").get("value")
     node["input_dic_task"] = input_dic
+
 
 def in_hour_min_sec(node):
     more = node.get("more")
@@ -140,11 +172,13 @@ def in_hour_min_sec(node):
     input_dic["end_hour_4"] = more.get("end_hour_4").get("value")
     node["input_dic_task"] = input_dic
 
+
 def once_per_seconds(node):
     more = node.get("more")
     input_dic = {}
     input_dic["n"] = more.get("n").get("value")
     node["input_dic_task"] = input_dic
+
 
 def every_n_ticks(node):
     more = node.get("more")
@@ -152,6 +186,7 @@ def every_n_ticks(node):
     input_dic["symbol"] = more.get("symbol").get("value")
     input_dic["n"] = more.get("n").get("value")
     node["input_dic_task"] = input_dic
+
 
 def buy_sell(node):
     more = node.get("more")
@@ -169,12 +204,13 @@ def buy_sell(node):
     input_dic["stoploss"] = more.get("inPipStop").get("value")
     input_dic["takeprofit"] = more.get("inPipTake").get("value")
     input_dic["comment"] = more.get("comment").get("value")
-    input_dic["magic"] = 10203015 #STest
-    input_dic["expiration"] = 0 #STest
+    input_dic["magic"] = 10203015  # STest
+    input_dic["expiration"] = 0  # STest
     input_dic["arrow_color"] = more.get("arrowColor").get("label")
 
     node["input_dic_task"] = input_dic
     node.get("data")["blockName"] = "buy_sell"
+
 
 def condition_1_normal(node):
     node["input_dic_task"] = {}
@@ -406,12 +442,13 @@ def pass_n_times(node):
 
 def once_every_n_bars(node):
     input_dic = {}
-    input_dic["symbol"] = "NULL" #node.get("more").get("symbol").get("value")
-    input_dic["timeframe"] = 0 #node.get("more").get("timeframe").get("value")
-    input_dic["n"] = 1 #node.get("more").get("n").get("value")
+    input_dic["symbol"] = "NULL"  # node.get("more").get("symbol").get("value")
+    input_dic["timeframe"] = 0  # node.get("more").get("timeframe").get("value")
+    input_dic["n"] = 1  # node.get("more").get("n").get("value")
     # set input dic
     node["input_dic_task"] = input_dic
     node.get("data")["blockName"] = "once_every_n_bars"
+
 
 def default(node):
     node["input_dic_task"] = {}

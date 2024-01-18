@@ -1,5 +1,5 @@
-{
-    "id":24,
+var = {
+    "id": 24,
     "items": [
         {
             "vairable_name": "my_var",

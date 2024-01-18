@@ -537,9 +537,9 @@ public:
 public:
                      Task0(string name):Task(name)
      {
-         sleep_seconds = sleep_seconds_val;
-      sleep_tester_normal = sleep_tester_normal_val;
-      sleep_tester_visual = sleep_tester_visual_val;
+         sleep_seconds = 7;
+      sleep_tester_normal = True;
+      sleep_tester_visual = True;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
