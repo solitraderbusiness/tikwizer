@@ -185,6 +185,21 @@ def add_global_functions(data):
     fun_sleepex = global_functions.get_fun__sleepex()
     functions.append(fun_sleepex)
 
+    # delete order function
+    delete_order = global_functions.get_fun__delete_order()
+    functions.append(delete_order)
+
+    # wait trade context if busy function
+    wait_trade_context_if_busy = global_functions.get_fun__wait_trade_context_if_busy()
+    functions.append(wait_trade_context_if_busy)
+
+    # check for trading error function
+    check_for_trading_error = global_functions.get_fun__check_for_trading_error()
+    functions.append(check_for_trading_error)
+
+    # error message function
+    error_message = global_functions.get_fun__error_message()
+    functions.append(error_message)
 
 def build():
     expert = ""
@@ -313,7 +328,7 @@ def add_task_elements_common(nodes):
                 var_data = task_constructor.get_var_data(task_name)
                 variables.append(var_data)
                 pass_n_times_done = True
-            case "condition_1_normal" | "condition_1_cross":
+            case "condition_1_normal" | "condition_1_cross" | "formula":
                 left_label = node.get("more").get("left1").get("label")
                 right_label = node.get("more").get("right1").get("label")
                 if (left_label == "Market Properties" or right_label == "Market Properties"):
@@ -333,7 +348,7 @@ def add_task_elements_common(nodes):
 def add_task_elements_specific(nodes):
     for node in nodes:
         task_name = node.get("data").get("blockName")
-        if task_name == "condition_1_normal":
+        if task_name == "condition_1_normal" or task_name == "formula": #formula also use the same function as condition 1 normal
             condition_1_normal_elements(node)
         elif task_name == "condition_1_cross":
             condition_1_cross_elements(node)

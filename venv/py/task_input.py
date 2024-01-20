@@ -22,6 +22,8 @@ def set_task_input_dic(nodes):
                 condition_1_normal(node)
             case "condition_1_cross":
                 condition_1_cross(node)
+            case "formula":
+                formula(node)
             case "Buy now":
                 buy_sell(node)
             case "Sell now":
@@ -32,6 +34,8 @@ def set_task_input_dic(nodes):
                 check_trades_orders_nearby(node)
             case "close_trades":
                 close_trades(node)
+            case "delete_pending_orders":
+                delete_pending_orders(node)
             case "check_profit_unrealized":
                 check_profit_unrealized(node)
             case "for_each_trade":
@@ -93,6 +97,16 @@ def close_trades(node):
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
     node["input_dic_task"] = input_dic
 
+def delete_pending_orders(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["group_mode"] = more.get("group_mode").get("value")
+    input_dic["group_number"] = more.get("group_number").get("value")
+    input_dic["type"] = more.get("type").get("value")
+    input_dic["arrow_color"] = more.get("arrow_color").get("value")
+
+    node["input_dic_task"] = input_dic
 
 def check_trades_orders_count(node):
     more = node.get("more")
@@ -202,6 +216,11 @@ def modify_variables(node):
         item["input_dic"] = input_dic
 
 
+def formula(node):
+    node["input_dic_task"] = {}
+    more = node.get("more")
+    node["input_dic_left"] = value_fetch(node, more.get("left"), more.get("left1").get("label"), more.get("left2").get("name"))
+    node["input_dic_right"] = value_fetch(node, more.get("right"), more.get("right1").get("label"), more.get("right2").get("name"))
 
 
 def condition_1_normal(node):

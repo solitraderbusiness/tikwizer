@@ -1,0 +1,3 @@
+{
+  "run_data": "Task::run(block_id, block);\n\n      msymbol = overriding_symbol==\"\" ? symbol : overriding_symbol;\n\n      for(int i = OrdersTotal() ; i >= 0 ; i--)\n        {\n         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))\n           {\n            if(!filterGeneral())\n               continue;\n            DeleteOrder(OrderTicket(), arrow_color);\n           }\n        }\n      block.onResult(ROUTE_1_PASSED);"
+}

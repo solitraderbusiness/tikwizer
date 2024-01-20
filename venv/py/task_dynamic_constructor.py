@@ -109,6 +109,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = condition_1_run_data_normal(node, run_data_static)
     elif task_name == "condition_1_cross":
         run_data = condition_1_run_data_cross(node, run_data_static)
+    elif task_name == "formula":
+        run_data = formula(node, run_data_static)
     elif task_name == "modify_variables":
         run_data = modify_variable_run_data(node, run_data_static)
     return run_data
@@ -161,10 +163,40 @@ def modify_variable_run_data(node, run_data):
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         modify_variables += init + "\n"
-        modify_variables += item.get("vairable_name") + " = " + val + ";\n\n"
+        modify_variables += item.get("variable_name") + " = " + val + ";\n\n"
     run_data = run_data.replace("modify_variables", modify_variables)
     return run_data
 
+def formula(node, run_data):
+    more = node.get("more")
+
+    # Left data
+    row1_left = more.get("left1").get("label")
+    row2_left = more.get("left2").get("name")
+    id_val_1 = str(node.get("id")) + "_" + "left"
+
+    init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
+    val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
+
+    # Right data
+    row1_right = more.get("right1").get("label")
+    row2_right = more.get("right2").get("name")
+    id_val_2 = str(node.get("id")) + "_" + "right"
+
+    init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
+    val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
+
+    operator = more.get("operator").get("label")
+
+    variable_name = more.get("variable").get("name")
+
+    run_data = run_data.replace("initializer_1", init_1) \
+        .replace("initializer_2", init_2) \
+        .replace("var_name_1", str(val_1)) \
+        .replace("var_name_2", str(val_2)) \
+        .replace("variable_name", variable_name) \
+        .replace("operator", operator)
+    return run_data
 
 def condition_1_run_data_normal(node, run_data):
     more = node.get("more")
@@ -185,7 +217,7 @@ def condition_1_run_data_normal(node, run_data):
     init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
-    operator = node.get("more").get("operator").get("label")
+    operator = more.get("operator").get("label")
 
     run_data = run_data.replace("initializer_1", init_1) \
         .replace("initializer_2", init_2) \

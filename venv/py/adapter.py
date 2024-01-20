@@ -79,13 +79,6 @@ def get_nexts_true(node, nodes, edges):
         if edge.get("source") == node.get("id"):
             if edge.get("sourceHandle") == "blue":
                 result.append(edge.get("target"))
-
-    # if len(result)>2:
-    #     for i1 in range(result):
-    #         for i2 in range(result):
-    #             if i1>i2:
-    #                 result[i1], result[i2] = result[i2], result[i1]
-
     return result
 
 
@@ -120,6 +113,8 @@ def add_category (nodes):
         match node.get("data").get("blockName"):
             case "condition1":
                 node["category"] = "condition_formula"
+            case "formula":
+                node["category"] = "condition_formula"
             case "Once per bar":
                 node["category"] = "time_filters"
             case "once_every_n_bars":
@@ -150,7 +145,7 @@ def add_category (nodes):
                 node["category"] = ""
             case "check_trades_orders_count" | "check_trades_orders_nearby":
                 node["category"] = "check_trades_orders_count"
-            case "close_trades":
+            case "close_trades" | "delete_pending_orders":
                 node["category"] = "trading_actions"
             case "check_profit_unrealized":
                 node["category"] = "check_trading_conditions"

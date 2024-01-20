@@ -2,7 +2,7 @@ var = {
     "id": 24,
     "items": [
         {
-            "vairable_name": "my_var",
+            "variable_name": "my_var",
             "value": {
                 "row1": {
                     "label": "Indicator"

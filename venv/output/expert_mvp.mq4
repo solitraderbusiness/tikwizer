@@ -63,18 +63,6 @@
 #define VALUE_TYPE_TIME 7
 #define VALUE_PIPS_AS_IS 1
 #define VALUE_PIPS_AS_PRICE_FRACTION 2
-extern int bbbbbbb = 21; // 
-extern int rsishort = 7; // 
-extern double lot = 0.1; // 
-double aaaaaaa = 78; // 
-double cccccccc = 55; // 
-struct MarketPropertiesResult
-  {
-   double            price;
-   int               index;
-   datetime          time;
-  };
-
 class BlockParent
   {
 public:
@@ -103,403 +91,6 @@ public:
      }
 
    virtual void      reset(int level) = NULL;
-
-  };
-
-class RSI0
-  {
-   string            symbol;
-   int               timeframe;
-   int               period;
-   int               applied_price;
-   int               shift;
-    
-   int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
-      shift = 3;
-      buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
-  };
-class MACD0
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 3;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class Value0
-  {
-public:
-       int               type;
-   int               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      type = VALUE_TYPE_PIPS;
-      value = 29;
-      adjust = 9;
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-     }
-
-   string              calc()
-     {
-
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
-      switch(type)
-        {
-         case VALUE_TYPE_NUMERIC:
-         case VALUE_TYPE_BOOLEAN:
-         case VALUE_TYPE_COLOR:
-         case VALUE_TYPE_TEXT:
-            return (string)value;
-
-         case VALUE_TYPE_TEXT_CODE_INPUT:
-            return "\"" + value + "\"";
-
-         case VALUE_TYPE_PIPS:
-            if(pips_mode == VALUE_PIPS_AS_IS)
-              {
-               return (string) value;
-              }
-            else
-               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                 {
-                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                  return (string)(point*10*value);  //STest, *10 works for all symbols?
-                 }
-            return "";
-
-         case VALUE_TYPE_TIME:
-            return "";
-        }
-     }
-  };
-
-
-class MarketProperties0
-
-  {
-
-public:
-       string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   int               time_mode;
-   //what to return
-   int               what_to_get;
-   //used for time period
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-   //used for candle period
-   int               range_start;
-   int               range_end;
-
-   string msymbol;
-   int mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = CANDLE_PERIOD;
-      price_mode = LOWEST_PRICE;
-      what_to_get = GET_PRICE;
-      timestr_start = "2023.11.23 7:30:30";
-      timestr_end   = timestr_end;
-      day_offset = 0;
-      range_start = 50;
-      range_end   = 100;
-     }
-
-
-
-   int               calc(MarketPropertiesResult &result)
-     {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
-
-      //In time mode, first calc range start and range end, then calc the result just like range mode
-      //STest, what is the effect of time mode? For now, it is ignored.
-      //STest, in iBarsShift, exact = false?
-      if(find_method == TIME_PERIOD)
-        {
-         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
-         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
-        }
-      getHiLo(result);
-
-     }
-
-
-   void              getHiLo(MarketPropertiesResult &result)
-     {
-      if(price_mode == HIGHEST_PRICE)
-         getHighest(result);
-      else
-         if(price_mode == LOWEST_PRICE)
-            getLowest(result);
-     }
-
-
-
-   void              getHighest(MarketPropertiesResult &result)
-     {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
-      result.price = iHigh(msymbol, mtimeframe, hi);
-      result.index = hi;
-      result.time = iTime(msymbol, mtimeframe, hi);
-     }
-
-
-   void              getLowest(MarketPropertiesResult &result)
-     {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
-      result.price = iLow(msymbol, mtimeframe, li);
-      result.index = li;
-      result.time = iTime(msymbol, mtimeframe, li);
-     }
-
-  };
-class Candle0
-
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int            mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = FIND_BY_ID;
-      price_mode = CANDLE_HIGH;
-      timestr = "2023.4.26 13:40:30";
-      shift = 3;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
-
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(symbol, timeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
 
   };
 
@@ -936,50 +527,53 @@ public:
 
   };class Task0 : public Task
   {
-   
+   //defined by user
+   string            symbol;
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   color             arrow_color;
+   //defined by system
+   string            msymbol;
 public:
                      Task0(string name):Task(name)
      {
-         
+         //specified by user
+      symbol = NULL;
+      group_mode = ORDER_GROUP_MODE_NONE;
+      group_number = 25;
+      int mtype[] = {5, 6}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+      arrow_color = Red;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      RSI0 rsi0;
-   rsi0.init();
-   double valueRSI0 = rsi0.calc();
-aaaaaaa = valueRSI0;
+      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
-   MACD0 macd0;
-   macd0.init();
-   double valueMACD0 = macd0.calc();
-aaaaaaa = valueMACD0;
-
-Value0 value0;
-   value0.init();
-   double valueValue0 = value0.calc();
-bbbbbbb = valueValue0;
-
-MarketProperties0 marketproperties0;
-   marketproperties0.init();
-   MarketPropertiesResult mp_result0;
-   marketproperties0.calc(mp_result0);
-bbbbbbb = marketproperties0.what_to_get == GET_PRICE ? mp_result0.price : marketproperties0.what_to_get == GET_CANDLE_ID ? mp_result0.index : mp_result0.time;
-
-Candle0 candle0;
-   candle0.init();
-   double valueCandle0 = candle0.calc();
-cccccccc = valueCandle0;
-
-
-    
+      for(int i = OrdersTotal() ; i >= 0 ; i--)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(!filterGeneral())
+               continue;
+            DeleteOrder(OrderTicket(), arrow_color);
+           }
+        }
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level) {
       
    }
-   
+   bool              filterGeneral()
+     {
+      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
   };
 class Task1 : public Task
   {
@@ -1425,7 +1019,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "modify_variables";
+      name = "delete_pending_orders";
       enabled = True;
 
       int mnexts_true[] = {1, 2};
@@ -1704,7 +1298,711 @@ void ReverseList(int &arr[])
 bool SleepEx(int ms, bool bAlertable);
 #import
 
-int init(){
+bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
+  {
+   bool success=false;
+   if(!OrderSelect((int)ticket,SELECT_BY_TICKET,MODE_TRADES))
+     {
+      return(false);
+     }
+
+   while(true)
+     {
+      //-- wait if needed -----------------------------------------------
+      WaitTradeContextIfBusy();
+      //-- delete -------------------------------------------------------
+      success=OrderDelete((int)ticket,arrowcolor);
+      //-- error check --------------------------------------------------
+      int erraction=CheckForTradingError(GetLastError(), "Deleting order #"+(string)ticket+" error");
+      switch(erraction)
+        {
+         case 0:
+            break;    // no error
+         case 1:
+            continue; // overcomable error
+         case 2:
+            break;    // fatal error
+        }
+      break;
+     }
+   return(false);
+  }
+
+void WaitTradeContextIfBusy()
+  {
+   if(IsTradeContextBusy())
+     {
+      while(true)
+        {
+         Sleep(1);
+         if(!IsTradeContextBusy())
+           {
+            RefreshRates();
+            break;
+           }
+        }
+     }
+   return;
+  }
+int CheckForTradingError(int error_code=-1, string msg_prefix="")
+  {
+// return 0 -> no error
+// return 1 -> overcomable error
+// return 2 -> fatal error
+
+   if(error_code<0)
+     {
+      error_code=GetLastError();
+     }
+
+   int retval=0;
+   static int tryouts=0;
+
+//-- error check -----------------------------------------------------
+   switch(error_code)
+     {
+      //-- no error
+      case 0:
+         retval=0;
+         break;
+      //-- overcomable errors
+      case 1: // No error returned
+         RefreshRates();
+         retval=1;
+         break;
+      case 4: //ERR_SERVER_BUSY
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         Sleep(1000);
+         RefreshRates();
+         retval=1;
+         break;
+      case 6: //ERR_NO_CONNECTION
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         while(!IsConnected())
+           {
+            Sleep(100);
+           }
+         while(IsTradeContextBusy())
+           {
+            Sleep(50);
+           }
+         RefreshRates();
+         retval=1;
+         break;
+      case 128: //ERR_TRADE_TIMEOUT
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         RefreshRates();
+         retval=1;
+         break;
+      case 129: //ERR_INVALID_PRICE
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         if(!IsTesting())
+           {
+            while(RefreshRates()==false)
+              {
+               Sleep(1);
+              }
+           }
+         retval=1;
+         break;
+      case 130: //ERR_INVALID_STOPS
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Waiting for a new tick to retry.."));
+           }
+         if(!IsTesting())
+           {
+            while(RefreshRates()==false)
+              {
+               Sleep(1);
+              }
+           }
+         retval=1;
+         break;
+      case 135: //ERR_PRICE_CHANGED
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Waiting for a new tick to retry.."));
+           }
+         if(!IsTesting())
+           {
+            while(RefreshRates()==false)
+              {
+               Sleep(1);
+              }
+           }
+         retval=1;
+         break;
+      case 136: //ERR_OFF_QUOTES
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Waiting for a new tick to retry.."));
+           }
+         if(!IsTesting())
+           {
+            while(RefreshRates()==false)
+              {
+               Sleep(1);
+              }
+           }
+         retval=1;
+         break;
+      case 137: //ERR_BROKER_BUSY
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         Sleep(1000);
+         retval=1;
+         break;
+      case 138: //ERR_REQUOTE
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Waiting for a new tick to retry.."));
+           }
+         if(!IsTesting())
+           {
+            while(RefreshRates()==false)
+              {
+               Sleep(1);
+              }
+           }
+         retval=1;
+         break;
+      case 142: //This code should be processed in the same way as error 128.
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         RefreshRates();
+         retval=1;
+         break;
+      case 143: //This code should be processed in the same way as error 128.
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         RefreshRates();
+         retval=1;
+         break;
+      /*case 145: //ERR_TRADE_MODIFY_DENIED
+         if (msg_prefix!="") {Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Waiting for a new tick to retry.."));}
+         while(RefreshRates()==false) {Sleep(1);}
+         return(1);
+      */
+      case 146: //ERR_TRADE_CONTEXT_BUSY
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code),". Retrying.."));
+           }
+         while(IsTradeContextBusy())
+           {
+            Sleep(50);
+           }
+         RefreshRates();
+         retval=1;
+         break;
+      //-- critical errors
+      default:
+         if(msg_prefix!="")
+           {
+            Print(StringConcatenate(msg_prefix,": ",ErrorMessage(error_code)));
+           }
+         retval=2;
+         break;
+     }
+
+   if(retval==0)
+     {
+      tryouts=0;
+     }
+   else
+      if(retval==1)
+        {
+         tryouts++;
+         if(tryouts>=10)
+           {
+            tryouts=0;
+            retval=2;
+           }
+         else
+           {
+            Print("retry #"+(string)tryouts+" of 10");
+           }
+        }
+
+   return(retval);
+  }
+string ErrorMessage(int error_code=-1)
+  {
+   string e = "";
+
+   if(error_code < 0)
+     {
+      error_code = GetLastError();
+     }
+
+   switch(error_code)
+     {
+      //-- codes returned from trade server
+      case 0:
+         return("");
+      case 1:
+         e = "No error returned";
+         break;
+      case 2:
+         e = "Common error";
+         break;
+      case 3:
+         e = "Invalid trade parameters";
+         break;
+      case 4:
+         e = "Trade server is busy";
+         break;
+      case 5:
+         e = "Old version of the client terminal";
+         break;
+      case 6:
+         e = "No connection with trade server";
+         break;
+      case 7:
+         e = "Not enough rights";
+         break;
+      case 8:
+         e = "Too frequent requests";
+         break;
+      case 9:
+         e = "Malfunctional trade operation (never returned error)";
+         break;
+      case 64:
+         e = "Account disabled";
+         break;
+      case 65:
+         e = "Invalid account";
+         break;
+      case 128:
+         e = "Trade timeout";
+         break;
+      case 129:
+         e = "Invalid price";
+         break;
+      case 130:
+         e = "Invalid Sl or TP";
+         break;
+      case 131:
+         e = "Invalid trade volume";
+         break;
+      case 132:
+         e = "Market is closed";
+         break;
+      case 133:
+         e = "Trade is disabled";
+         break;
+      case 134:
+         e = "Not enough money";
+         break;
+      case 135:
+         e = "Price changed";
+         break;
+      case 136:
+         e = "Off quotes";
+         break;
+      case 137:
+         e = "Broker is busy (never returned error)";
+         break;
+      case 138:
+         e = "Requote";
+         break;
+      case 139:
+         e = "Order is locked";
+         break;
+      case 140:
+         e = "Only long trades allowed";
+         break;
+      case 141:
+         e = "Too many requests";
+         break;
+      case 145:
+         e = "Modification denied because order too close to market";
+         break;
+      case 146:
+         e = "Trade context is busy";
+         break;
+      case 147:
+         e = "Expirations are denied by broker";
+         break;
+      case 148:
+         e = "Amount of open and pending orders has reached the limit";
+         break;
+      case 149:
+         e = "Hedging is prohibited";
+         break;
+      case 150:
+         e = "Prohibited by FIFO rules";
+         break;
+
+      //-- mql4 errors
+      case 4000:
+         e = "No error";
+         break;
+      case 4001:
+         e = "Wrong function pointer";
+         break;
+      case 4002:
+         e = "Array index is out of range";
+         break;
+      case 4003:
+         e = "No memory for function call stack";
+         break;
+      case 4004:
+         e = "Recursive stack overflow";
+         break;
+      case 4005:
+         e = "Not enough stack for parameter";
+         break;
+      case 4006:
+         e = "No memory for parameter string";
+         break;
+      case 4007:
+         e = "No memory for temp string";
+         break;
+      case 4008:
+         e = "Not initialized string";
+         break;
+      case 4009:
+         e = "Not initialized string in array";
+         break;
+      case 4010:
+         e = "No memory for array string";
+         break;
+      case 4011:
+         e = "Too long string";
+         break;
+      case 4012:
+         e = "Remainder from zero divide";
+         break;
+      case 4013:
+         e = "Zero divide";
+         break;
+      case 4014:
+         e = "Unknown command";
+         break;
+      case 4015:
+         e = "Wrong jump";
+         break;
+      case 4016:
+         e = "Not initialized array";
+         break;
+      case 4017:
+         e = "dll calls are not allowed";
+         break;
+      case 4018:
+         e = "Cannot load library";
+         break;
+      case 4019:
+         e = "Cannot call function";
+         break;
+      case 4020:
+         e = "Expert function calls are not allowed";
+         break;
+      case 4021:
+         e = "Not enough memory for temp string returned from function";
+         break;
+      case 4022:
+         e = "System is busy";
+         break;
+      case 4050:
+         e = "Invalid function parameters count";
+         break;
+      case 4051:
+         e = "Invalid function parameter value";
+         break;
+      case 4052:
+         e = "String function internal error";
+         break;
+      case 4053:
+         e = "Some array error";
+         break;
+      case 4054:
+         e = "Incorrect series array using";
+         break;
+      case 4055:
+         e = "Custom indicator error";
+         break;
+      case 4056:
+         e = "Arrays are incompatible";
+         break;
+      case 4057:
+         e = "Global variables processing error";
+         break;
+      case 4058:
+         e = "Global variable not found";
+         break;
+      case 4059:
+         e = "Function is not allowed in testing mode";
+         break;
+      case 4060:
+         e = "Function is not confirmed";
+         break;
+      case 4061:
+         e = "Send mail error";
+         break;
+      case 4062:
+         e = "String parameter expected";
+         break;
+      case 4063:
+         e = "Integer parameter expected";
+         break;
+      case 4064:
+         e = "Double parameter expected";
+         break;
+      case 4065:
+         e = "Array as parameter expected";
+         break;
+      case 4066:
+         e = "Requested history data in update state";
+         break;
+      case 4099:
+         e = "End of file";
+         break;
+      case 4100:
+         e = "Some file error";
+         break;
+      case 4101:
+         e = "Wrong file name";
+         break;
+      case 4102:
+         e = "Too many opened files";
+         break;
+      case 4103:
+         e = "Cannot open file";
+         break;
+      case 4104:
+         e = "Incompatible access to a file";
+         break;
+      case 4105:
+         e = "No order selected";
+         break;
+      case 4106:
+         e = "Unknown symbol";
+         break;
+      case 4107:
+         e = "Invalid price parameter for trade function";
+         break;
+      case 4108:
+         e = "Invalid ticket";
+         break;
+      case 4109:
+         e = "Trade is not allowed in the expert properties";
+         break;
+      case 4110:
+         e = "Longs are not allowed in the expert properties";
+         break;
+      case 4111:
+         e = "Shorts are not allowed in the expert properties";
+         break;
+
+      //-- objects errors
+      case 4200:
+         e = "Object is already exist";
+         break;
+      case 4201:
+         e = "Unknown object property";
+         break;
+      case 4202:
+         e = "Object is not exist";
+         break;
+      case 4203:
+         e = "Unknown object type";
+         break;
+      case 4204:
+         e = "No object name";
+         break;
+      case 4205:
+         e = "Object coordinates error";
+         break;
+      case 4206:
+         e = "No specified subwindow";
+         break;
+      case 4207:
+         e = "Graphical object error";
+         break;
+      case 4210:
+         e = "Unknown chart property";
+         break;
+      case 4211:
+         e = "Chart not found";
+         break;
+      case 4212:
+         e = "Chart subwindow not found";
+         break;
+      case 4213:
+         e = "Chart indicator not found";
+         break;
+      case 4220:
+         e = "Symbol select error";
+         break;
+      case 4250:
+         e = "Notification error";
+         break;
+      case 4251:
+         e = "Notification parameter error";
+         break;
+      case 4252:
+         e = "Notifications disabled";
+         break;
+      case 4253:
+         e = "Notification send too frequent";
+         break;
+
+      //-- ftp errors
+      case 4260:
+         e = "FTP server is not specified";
+         break;
+      case 4261:
+         e = "FTP login is not specified";
+         break;
+      case 4262:
+         e = "FTP connection failed";
+         break;
+      case 4263:
+         e = "FTP connection closed";
+         break;
+      case 4264:
+         e = "FTP path not found on server";
+         break;
+      case 4265:
+         e = "File not found in the MQL4\\Files directory to send on FTP server";
+         break;
+      case 4266:
+         e = "Common error during FTP data transmission";
+         break;
+
+      //-- filesystem errors
+      case 5001:
+         e = "Too many opened files";
+         break;
+      case 5002:
+         e = "Wrong file name";
+         break;
+      case 5003:
+         e = "Too long file name";
+         break;
+      case 5004:
+         e = "Cannot open file";
+         break;
+      case 5005:
+         e = "Text file buffer allocation error";
+         break;
+      case 5006:
+         e = "Cannot delete file";
+         break;
+      case 5007:
+         e = "Invalid file handle (file closed or was not opened)";
+         break;
+      case 5008:
+         e = "Wrong file handle (handle index is out of handle table)";
+         break;
+      case 5009:
+         e = "File must be opened with FILE_WRITE flag";
+         break;
+      case 5010:
+         e = "File must be opened with FILE_READ flag";
+         break;
+      case 5011:
+         e = "File must be opened with FILE_BIN flag";
+         break;
+      case 5012:
+         e = "File must be opened with FILE_TXT flag";
+         break;
+      case 5013:
+         e = "File must be opened with FILE_TXT or FILE_CSV flag";
+         break;
+      case 5014:
+         e = "File must be opened with FILE_CSV flag";
+         break;
+      case 5015:
+         e = "File read error";
+         break;
+      case 5016:
+         e = "File write error";
+         break;
+      case 5017:
+         e = "String size must be specified for binary file";
+         break;
+      case 5018:
+         e = "Incompatible file (for string arrays-TXT, for others-BIN)";
+         break;
+      case 5019:
+         e = "File is directory, not file";
+         break;
+      case 5020:
+         e = "File does not exist";
+         break;
+      case 5021:
+         e = "File cannot be rewritten";
+         break;
+      case 5022:
+         e = "Wrong directory name";
+         break;
+      case 5023:
+         e = "Directory does not exist";
+         break;
+      case 5024:
+         e = "Specified file is not directory";
+         break;
+      case 5025:
+         e = "Cannot delete directory";
+         break;
+      case 5026:
+         e = "Cannot clean directory";
+         break;
+
+      //-- other errors
+      case 5027:
+         e = "Array resize error";
+         break;
+      case 5028:
+         e = "String resize error";
+         break;
+      case 5029:
+         e = "Structure contains strings or dynamic arrays";
+         break;
+
+      //-- http request
+      case 5200:
+         e = "Invalid URL";
+         break;
+      case 5201:
+         e = "Failed to connect to specified URL";
+         break;
+      case 5202:
+         e = "Timeout exceeded";
+         break;
+      case 5203:
+         e = "HTTP request failed";
+         break;
+
+      default:
+         e = "Unknown error";
+     }
+
+   e = StringConcatenate(e, " (", error_code, ")");
+
+   return e;
+  }int init(){
 addBlocksTick();
 }
 void OnTimer(){
