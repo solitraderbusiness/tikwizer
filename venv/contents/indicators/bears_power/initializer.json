@@ -1,1 +1,9 @@
-{"initializer": "   BearsPower_id bears_power_id;\n   bears_power_id.init();\n   double valueBearsPower_id = bears_power_id.calc();", "initializer_split": ["   BearsPower_id bears_power_id;\n", "   bears_power_id.init();\n", "   double valueBearsPower_id = bears_power_id.calc();\n"], "variable_name": "valueBearsPower_id"}
+{
+  "initializer": "   BearsPower_id bears_power_id;\n   bears_power_id.init();\n   double valueBearsPower_id = bears_power_id.calc();",
+  "initializer_split": [
+    "   BearsPower_id bears_power_id;\n",
+    "   bears_power_id.init();\n",
+    "   double valueBearsPower_id = bears_power_id.calc();\n"
+  ],
+  "variable_name": "valueBearsPower_id"
+}

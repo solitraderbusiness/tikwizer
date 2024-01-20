@@ -223,8 +223,18 @@ def value_fetch(node, input_items, row1, row2):
     for item in input_items:
         input_dic[item.get("optionName").lower().replace(" ", "_")] = item.get("value").get(
             "value")  # STest, should be lowercase
+
+    # handle this fucking candle id thing!
+    #for condition
     if "more" in node and "candleIDLeft" in node.get("more"):
         input_dic["shift"] = node.get("more").get("candleIDLeft").get("value")
+    #for modify variable
+    if "items" in node:
+        for item in node.get("items"):
+            value = item.get("value")
+            if "candleId" in value:
+                input_dic["shift"] = item.get("value").get("candleId").get("value")
+
 
     if row1 == "Indicator":
         indicator_name = row2

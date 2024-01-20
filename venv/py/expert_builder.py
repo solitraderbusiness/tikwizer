@@ -320,7 +320,14 @@ def add_task_elements_common(nodes):
                     if market_properties_done: continue
                     structs_data = market_properties_class_constructor.get_structs()
                     structs.append(structs_data)
-
+                    market_properties_done = True
+            case "modify_variables":
+                for item in node.get("items"):
+                    if (item.get("value").get("row1").get("label") == "Market Properties"):
+                        if market_properties_done: continue
+                        structs_data = market_properties_class_constructor.get_structs()
+                        structs.append(structs_data)
+                        market_properties_done = True
 
 # Elements that are assigned to a specific instance of a specific task type
 def add_task_elements_specific(nodes):

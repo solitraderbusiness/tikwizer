@@ -11,6 +11,10 @@ var = {
                     "name": "RSI",
                     "description": "this is RSI indicator"
                 },
+                "candleId": {
+                    "value": 3,
+                    "description": ""
+                },
                 "params": [
                     {
                         "optionName": "symbol",
