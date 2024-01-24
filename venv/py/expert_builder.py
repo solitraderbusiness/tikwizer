@@ -94,8 +94,8 @@ def process_tick_blocks(data):
 
 def add_vars_system():
     # blocks_tick var
-    blocks_tick_var = global_vars.get__blocks_tick()
-    vars_system.append(blocks_tick_var)
+    blocks_vars = global_vars.get__blocks()
+    vars_system.append(blocks_vars)
 
     # overriding_symbol
     overriding_symbol = global_vars.get__overriding_symbol()

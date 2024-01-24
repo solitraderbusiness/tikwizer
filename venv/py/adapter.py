@@ -72,6 +72,8 @@ def overwrite_task_names (nodes):
             node.get("data")["blockName"] = "once_every_n_bars"
         elif block_name == "No trade nearby" or block_name=="No pending order nearby":
             node.get("data")["blockName"] = "check_trades_orders_nearby"
+        elif block_name == "turn_on_blocks" or block_name=="turn_off_blocks" or block_name=="toggle_blocks":
+            node.get("data")["blockName"] = "blocks_on_off"
 
 def get_nexts_true(node, nodes, edges):
     result = []
@@ -133,6 +135,12 @@ def add_category (nodes):
                 node["category"] = "controlling_blocks"
             case "or":
                 node["category"] = "controlling_blocks"
+            case "turn_on_blocks":
+                node["category"] = "controlling_blocks"
+            case "turn_off_blocks":
+                node["category"] = "controlling_blocks"
+            case "toggle_blocks":
+                node["category"] = "controlling_blocks"
             case "pass_n_times":
                 node["category"] = "counters"
             case "for_each_trade":
@@ -150,6 +158,8 @@ def add_category (nodes):
             case "check_profit_unrealized":
                 node["category"] = "check_trading_conditions"
             case "delay":
+                node["category"] = "more"
+            case "pass":
                 node["category"] = "more"
             case "modify_variables":
                 node["category"] = "variables"

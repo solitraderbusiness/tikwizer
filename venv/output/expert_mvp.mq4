@@ -63,6 +63,9 @@
 #define VALUE_TYPE_TIME 7
 #define VALUE_PIPS_AS_IS 1
 #define VALUE_PIPS_AS_PRICE_FRACTION 2
+#define BLOCK_STATE_ENABLE 1
+#define BLOCK_STATE_DISABLE 2
+#define BLOCK_STATE_TOGGLE 3
 class BlockParent
   {
 public:
@@ -93,9 +96,12 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-
-class RSI1_left
-  {
+
+
+class RSI1_left
+
+  {
+
    string            symbol;
    int               timeframe;
    int               period;
@@ -103,26 +109,44 @@ class RSI1_left
    int               shift;
     
    int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
+   int              sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 14;
+
+      applied_price = PRICE_CLOSE;
+
       shift = 1;
       buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
   };
 class Value1_right
   {
@@ -185,9 +209,12 @@ public:
         }
      }
   };
-
-class RSI2_left
-  {
+
+
+class RSI2_left
+
+  {
+
    string            symbol;
    int               timeframe;
    int               period;
@@ -195,26 +222,44 @@ class RSI2_left
    int               shift;
     
    int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
+   int              sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 14;
+
+      applied_price = PRICE_CLOSE;
+
       shift = 1;
       buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
   };
 class Value2_right
   {
@@ -277,302 +322,570 @@ public:
         }
      }
   };
-
-class MACD3_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
+
+
+class MACD3_left1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
   };class Task0 : public Task
   {
-   //defined by user
-   string            symbol;
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   color             arrow_color;
-   //defined by system
-   string            msymbol;
+   string            block_ids;
+   int               what;
 public:
                      Task0(string name):Task(name)
      {
-         //specified by user
-      symbol = NULL;
-      group_mode = ORDER_GROUP_MODE_NONE;
-      group_number = 25;
-      int mtype[] = {5, 6}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      arrow_color = Red;
+         block_ids = "5,6";
+      what = BLOCK_STATE_TOGGLE;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
-      for(int i = OrdersTotal() ; i >= 0 ; i--)
+      string ids[];
+      ushort u_sep=StringGetCharacter(",",0);
+      int totalElements = StringSplit(block_ids, u_sep, ids);
+      if(totalElements<=0)
+         block.onResult(ROUTE_1_PASSED);
+      for(int i=0; i<ArraySize(ids); i++)
         {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(!filterGeneral())
-               continue;
-            DeleteOrder(OrderTicket(), arrow_color);
-           }
+         string id = ids[i];
+         id = StringTrimLeft(id);
+         id = StringTrimRight(id);
+         int mid = StrToInteger(id);
+
+         for(int j=0; j<ArraySize(blocks_init); j++)
+            if(blocks_init[j].id_by_user == mid)
+               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
+
+         for(int k=0; k<ArraySize(blocks_timer); k++)
+            if(blocks_timer[k].id_by_user == mid)
+               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
+
+         for(int l=0; l<ArraySize(blocks_tick); l++)
+            if(blocks_tick[l].id_by_user == mid)
+               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
+
+         for(int m=0; m<ArraySize(blocks_trade); m++)
+            if(blocks_trade[m].id_by_user == mid)
+               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
+
+         for(int n=0; n<ArraySize(blocks_chart); n++)
+            if(blocks_chart[n].id_by_user == mid)
+               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
+
+         for(int p=0; p<ArraySize(blocks_deinit); p++)
+            if(blocks_deinit[p].id_by_user == mid)
+               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
         }
-      block.onResult(ROUTE_1_PASSED);
+        block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level) {
       
    }
-   bool              filterGeneral()
+    bool              newValue(bool currentValue)
      {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
+      switch(what)
+        {
+         case BLOCK_STATE_ENABLE:
+            return true;
+         case BLOCK_STATE_DISABLE:
+            return false;
+         case BLOCK_STATE_TOGGLE:
+            return !currentValue;
+         default:
+            return true;
+        }
      }
   };
 class Task1 : public Task
@@ -1019,7 +1332,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "delete_pending_orders";
+      name = "blocks_on_off";
       enabled = True;
 
       int mnexts_true[] = {1, 2};
@@ -1166,7 +1479,12 @@ public:
       task = new Task6(name);
      }
   };
+Block *blocks_init[];
+Block *blocks_timer[];
 Block *blocks_tick[];
+Block *blocks_trade[];
+Block *blocks_chart[];
+Block *blocks_deinit[];
 string overriding_symbol = "";
 int overriding_timeframe = -1;
 template <typename T>
@@ -1270,7 +1588,7 @@ datetime TimeFromString(int time_mode, string stamp)
 //Considering each magic number is a 7 digit number like 2088100,
 //I choose to take first two digits as group number.
 int getGroupNumber (int magic){
-   return (int)(magic/1000000);
+   return (int)(magic/100000);
 }//This just checks if order is buy or sell
 bool sameOrderType (int type[], int orderType){
    for (int i=0; i<ArraySize(type); i++)
@@ -1280,7 +1598,7 @@ bool sameOrderType (int type[], int orderType){
 }//72 is the number in magic 3rd and 4th
 //digits that show it is opened by the expert
 bool isAutomated (int magic){
-   return MathMod((int)(magic/1000), 1000) == 72;
+   return MathMod((int)(magic/1000), 100) == 72;
 }
 void ReverseList(int &arr[])
   {

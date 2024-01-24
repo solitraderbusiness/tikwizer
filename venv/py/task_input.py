@@ -42,11 +42,21 @@ def set_task_input_dic(nodes):
                 for_each_trade(node)
             case "delay":
                 delay(node)
+            case "pass":
+                pass_task(node)
             case "modify_variables":
                 modify_variables(node)
+            case "blocks_on_off":
+                blocks_on_off(node)
             case _:
                 default(node)
 
+def blocks_on_off(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["block_ids"] = more.get("block_ids").get("value")
+    input_dic["what"] = more.get("what").get("value")
+    node["input_dic_task"] = input_dic
 def delay(node):
     more = node.get("more")
     input_dic = {}
@@ -54,6 +64,9 @@ def delay(node):
     input_dic["sleep_tester_normal"] = more.get("sleep_tester_normal").get("value")
     input_dic["sleep_tester_visual"] = more.get("sleep_tester_visual").get("value")
     node["input_dic_task"] = input_dic
+
+def pass_task(node):
+    node["input_dic_task"] = {}
 
 
 def for_each_trade(node):

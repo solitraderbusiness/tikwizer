@@ -1,0 +1,3 @@
+{
+	"field_data" : "string              symbol;\n   bool              spread_mode;\n   double            spread_limit;\n   int               average_spread_time_period;"
+}

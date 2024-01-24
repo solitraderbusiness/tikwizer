@@ -1,0 +1,3 @@
+{
+	"function_data" : " bool              newValue(bool currentValue)\n     {\n      switch(what)\n        {\n         case BLOCK_STATE_ENABLE:\n            return true;\n         case BLOCK_STATE_DISABLE:\n            return false;\n         case BLOCK_STATE_TOGGLE:\n            return !currentValue;\n         default:\n            return true;\n        }\n     }"
+}

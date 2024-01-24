@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "symbol = NULL;\n      spread_mode = SPREAD_MODE_AVERAGE;\n      average_spread_time_period = 20;\n      spread_limit = 18;"
+}

@@ -101,7 +101,15 @@ constants = [
     "#define VALUE_PIPS_AS_IS 1",
     "#define VALUE_PIPS_AS_PRICE_FRACTION 2",
 
-    ######################  ##########################
+    ###################### Blocks On/Off/Toggle ##########################
+    "#define BLOCK_STATE_ENABLE 1",
+    "#define BLOCK_STATE_DISABLE 2",
+    "#define BLOCK_STATE_TOGGLE 3"
+
+    ###################### Spread filter ##########################   
+    "#define SPREAD_MODE_AVERAGE 1",
+    "#define SPREAD_MODE_FIX 2"
+
 ]
 
 

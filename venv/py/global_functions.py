@@ -78,7 +78,7 @@ def get_fun__time_from_string():
 
 
 def get_fun__get_group_number():
-    result = "//Considering each magic number is a 7 digit number like 2088100,\n//I choose to take first two digits as group number.\nint getGroupNumber (int magic){\n   return (int)(magic/1000000);\n}"
+    result = "//Considering each magic number is a 7 digit number like 2088100,\n//I choose to take first two digits as group number.\nint getGroupNumber (int magic){\n   return (int)(magic/100000);\n}"
     return result
 
 
@@ -88,7 +88,7 @@ def get_fun__same_order_type():
 
 
 def get_fun__is_automated():
-    result = "//72 is the number in magic 3rd and 4th\n//digits that show it is opened by the expert\nbool isAutomated (int magic){\n   return MathMod((int)(magic/1000), 1000) == 72;\n}\n"
+    result = "//72 is the number in magic 3rd and 4th\n//digits that show it is opened by the expert\nbool isAutomated (int magic){\n   return MathMod((int)(magic/1000), 100) == 72;\n}\n"
     return result
 
 

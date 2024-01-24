@@ -1,12 +1,19 @@
+
+TEMPLATE_BLOCKS_INIT = "Block *blocks_init[];\n"
+TEMPLATE_BLOCKS_TIMER = "Block *blocks_timer[];\n"
 TEMPLATE_BLOCKS_TICK = "Block *blocks_tick[];\n"
+TEMPLATE_BLOCKS_TRADE = "Block *blocks_trade[];\n"
+TEMPLATE_BLOCKS_CHART = "Block *blocks_chart[];\n"
+TEMPLATE_BLOCKS_DEINIT = "Block *blocks_deinit[];\n"
+
 TEMPLATE_OVERRIDING_SYMBOL = "string overriding_symbol = \"\";\n"
 TEMPLATE_OVERRIDING_TIMEFRAME = "int overriding_timeframe = -1;\n"
 
 
 
 
-def get__blocks_tick():
-    return TEMPLATE_BLOCKS_TICK
+def get__blocks():
+    return TEMPLATE_BLOCKS_INIT + TEMPLATE_BLOCKS_TIMER + TEMPLATE_BLOCKS_TICK + TEMPLATE_BLOCKS_TRADE + TEMPLATE_BLOCKS_CHART + TEMPLATE_BLOCKS_DEINIT
 
 def get__overriding_symbol():
     return TEMPLATE_OVERRIDING_SYMBOL

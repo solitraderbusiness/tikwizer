@@ -101,7 +101,7 @@ public:
 //I choose to take first two digits as group number.
 int getGroupNumber(int magic)
   {
-   return (int)(magic/1000000);
+   return (int)(magic/100000);
   }
 
 //This just checks if order is buy or sell
@@ -117,7 +117,7 @@ bool sameOrderType(int type[], int orderType)
 //digits that show it is opened by the expert
 bool isAutomated(int magic)
   {
-   return MathMod((int)(magic/1000), 1000) == 72;
+   return MathMod((int)(magic/1000), 100) == 72;
   }
 
 
