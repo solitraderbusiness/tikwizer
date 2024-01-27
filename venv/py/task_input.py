@@ -26,9 +26,7 @@ def set_task_input_dic(nodes):
                 condition_1_cross(node)
             case "formula":
                 formula(node)
-            case "Buy now":
-                buy_sell(node)
-            case "Sell now":
+            case "Buy now" | "Sell now" | "Buy pending order" | "Sell pending order":
                 buy_sell(node)
             case "check_trades_orders_count":
                 check_trades_orders_count(node)
@@ -212,23 +210,35 @@ def buy_sell(node):
     task_name = node.get("data").get("blockName")
     input_dic = {}
     input_dic["symbol"] = more.get("symbol").get("value")
-    if task_name == "Buy now":
-        input_dic["cmd"] = "OP_BUY"
-        input_dic["price"] = "Ask"
-    elif task_name == "Sell now":
-        input_dic["cmd"] = "OP_SELL"
-        input_dic["price"] = "Bid"
-    input_dic["volume"] = more.get("howMuch").get("value")
+    input_dic["group"] = more.get("group").get("value")
+    input_dic["order_type"] = more.get("order_type").get("value")
+    input_dic["money_management"] = more.get("money_management").get("value")
+    input_dic["how_much_volume"] = more.get("how_much_volume").get("value")
+    input_dic["volume_upper_limit"] = more.get("volume_upper_limit").get("value")
+    input_dic["open_at_price"] = more.get("open_at_price").get("value")
+    input_dic["price_offset"] = more.get("price_offset").get("value")
+    input_dic["price_offset_as_pip"] = more.get("price_offset_as_pip").get("value")
     input_dic["slippage"] = more.get("slippage").get("value")
     input_dic["stoploss"] = more.get("inPipStop").get("value")
     input_dic["takeprofit"] = more.get("inPipTake").get("value")
+    input_dic["take_profit_mode"] = more.get("take_profit_mode").get("value")
+    input_dic["stop_loss_mode"] = more.get("stop_loss_mode").get("value")
     input_dic["comment"] = more.get("comment").get("value")
-    input_dic["magic"] = 10203015  # STest
     input_dic["expiration"] = 0  # STest
     input_dic["arrow_color"] = more.get("arrowColor").get("label")
 
+    input_dic["look_up_on"] = more.get("look_up_on").get("label")
+    input_dic["type"] = more.get("type").get("label")
+    input_dic["martingale_init_vol"] = more.get("martingale_init_vol").get("label")
+    input_dic["martingale_multiply_on_loss"] = more.get("martingale_multiply_on_loss").get("label")
+    input_dic["martingale_multiply_on_profit"] = more.get("martingale_multiply_on_profit").get("label")
+    input_dic["martingale_addlots_on_loss"] = more.get("martingale_addlots_on_loss").get("label")
+    input_dic["martingale_addlots_on_profit"] = more.get("martingale_addlots_on_profit").get("label")
+    input_dic["martingale_reset_on_n_losses"] = more.get("martingale_reset_on_n_losses").get("label")
+    input_dic["martingale_reset_on_n_profits"] = more.get("martingale_reset_on_n_profits").get("label")
+
     node["input_dic_task"] = input_dic
-    node.get("data")["blockName"] = "buy_sell"
+
 
 
 def modify_variables(node):

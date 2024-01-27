@@ -1,13 +1,31 @@
 {
-	"symbol" : "NULL",
-	"cmd" : "OP_SELL",
-	"volume" : 1,
-	"price" : "Bid",
-	"slippage" : 2,
-	"stoploss" : 50,
-	"takeprofit": 50,
-	"comment" : "\"This is my trade\"",
-	"magic" : 2154,
-	"expiration" : 0,
-	"arrow_color" : "clrNONE"
+	  "symbol" : "NULL",
+      "group" : 11,
+      "order_type" : "ORDER_BUY_PENDING",
+      "money_management" : "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+      "how_much_volume" : 35,
+      "volume_upper_limit" : 0,
+      "open_at_price" : "OPEN_AT_ASK",
+      "price_offset" : 25,
+      "price_offset_as_pip" : true,
+
+      "slippage" : 4,
+      "stoploss" : 20,
+      "takeprofit" : 20,
+      "take_profit_mode" : "TPSL_MODE_FIXED_PIPS",
+      "stop_loss_mode" : "TPSL_MODE_FIXED_PIPS",
+      "comment" : 0,
+      "expiration" : 0,
+      "arrow_color" : "clrYellow",
+
+      //martingale
+      "look_up_on" : "LOOK_UP_RUNNING_ONLY",
+      "type" : [0,1],//This doesn't seem to be an input. So this remains static forever.
+      "martingale_init_vol" : 0.1,
+      "martingale_multiply_on_loss" : 0,
+      "martingale_multiply_on_profit" : 0,
+      "martingale_addlots_on_loss" : 0.1,
+      "martingale_addlots_on_profit" : 0.1,
+      "martingale_reset_on_n_losses" : 5,
+      "martingale_reset_on_n_profits" : 5
 }

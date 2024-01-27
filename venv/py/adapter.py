@@ -74,7 +74,8 @@ def overwrite_task_names (nodes):
             node.get("data")["blockName"] = "check_trades_orders_nearby"
         elif block_name == "turn_on_blocks" or block_name=="turn_off_blocks" or block_name=="toggle_blocks":
             node.get("data")["blockName"] = "blocks_on_off"
-
+        elif block_name == "Buy now" or block_name=="Sell now" or block_name=="Buy pending order" or block_name=="Sell pending order":
+            node.get("data")["blockName"] = "buy_sell"
 def get_nexts_true(node, nodes, edges):
     result = []
     for edge in edges:
@@ -149,9 +150,7 @@ def add_category (nodes):
                 node["category"] = "loop_for_trades_orders"
             case "break":
                 node["category"] = "loop_for_trades_orders"
-            case "Buy now":
-                node["category"] = ""
-            case "Sell now":
+            case "Buy now" | "Sell now" | "Buy pending order" | "Sell pending order":
                 node["category"] = ""
             case "check_trades_orders_count" | "check_trades_orders_nearby":
                 node["category"] = "check_trades_orders_count"
