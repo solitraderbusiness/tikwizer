@@ -113,6 +113,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = formula(node, run_data_static)
     elif task_name == "modify_variables":
         run_data = modify_variable_run_data(node, run_data_static)
+    elif task_name == "spread_filter":
+        run_data = spread_filter_run_data(node, run_data_static)
     return run_data
 
 
@@ -152,6 +154,10 @@ def replace_input_values(data, input_dic):
             data = data.replace(key + "_val", str(input_dic.get(key)))
     return data
 
+
+def spread_filter_run_data(node, run_data):
+    run_data = run_data.replace("operator_val", node.get("input_dic_task").get("operator"))
+    return run_data
 
 def modify_variable_run_data(node, run_data):
     modify_variables = ""

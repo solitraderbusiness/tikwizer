@@ -18,6 +18,8 @@ def set_task_input_dic(nodes):
                 months_filter(node)
             case "weekday_filter":
                 weekday_filter(node)
+            case "spread_filter":
+                spread_filter(node)
             case "condition_1_normal":
                 condition_1_normal(node)
             case "condition_1_cross":
@@ -51,6 +53,15 @@ def set_task_input_dic(nodes):
             case _:
                 default(node)
 
+def spread_filter(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["spread_mode"] = more.get("spread_mode").get("value")
+    input_dic["spread_benchmark_fix_value"] = more.get("spread_benchmark_fix_value").get("value")
+    input_dic["average_spread_time_period"] = more.get("average_spread_time_period").get("value")
+    input_dic["operator"] = more.get("operator").get("value")
+    node["input_dic_task"] = input_dic
 def blocks_on_off(node):
     more = node.get("more")
     input_dic = {}

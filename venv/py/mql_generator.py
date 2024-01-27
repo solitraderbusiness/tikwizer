@@ -2,6 +2,7 @@ import adapter
 import expert_builder
 import test_input_2
 import test_input_3
+import test_input_4
 import test_input
 import path_root
 
@@ -16,7 +17,7 @@ def generate_mql(data_raw):
 
 
 def test():
-    data = test_input_3.input_data_27
+    data = test_input_4.input_data_1
     final_expert = generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"

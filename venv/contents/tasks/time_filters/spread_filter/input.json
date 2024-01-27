@@ -1,4 +1,7 @@
 {
 	"symbol": "NULL",
-	"n" : "7"
+	"spread_mode": "SPREAD_BENCHMARK_FIX",
+	"spread_benchmark_fix_value": 14,
+	"average_spread_time_period": 20,
+	"operator": "<="
 }

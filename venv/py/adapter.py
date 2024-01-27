@@ -131,6 +131,8 @@ def add_category (nodes):
                 node["category"] = "time_filters"
             case "weekday_filter":
                 node["category"] = "time_filters"
+            case "spread_filter":
+                node["category"] = "time_filters"
             case "and":
                 node["category"] = "controlling_blocks"
             case "or":

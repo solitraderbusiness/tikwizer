@@ -104,11 +104,11 @@ constants = [
     ###################### Blocks On/Off/Toggle ##########################
     "#define BLOCK_STATE_ENABLE 1",
     "#define BLOCK_STATE_DISABLE 2",
-    "#define BLOCK_STATE_TOGGLE 3"
+    "#define BLOCK_STATE_TOGGLE 3",
 
     ###################### Spread filter ##########################   
-    "#define SPREAD_MODE_AVERAGE 1",
-    "#define SPREAD_MODE_FIX 2"
+    "#define SPREAD_BENCHMARK_AVERAGE 1",
+    "#define SPREAD_BENCHMARK_FIX 2"
 
 ]
 

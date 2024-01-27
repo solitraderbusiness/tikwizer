@@ -8,6 +8,7 @@ import indicator_class_constructor
 import candle_class_constructor
 import value_class_constructor
 import market_properties_class_constructor
+import spread_filter_struct_constructor
 
 header = ""
 properties = []
@@ -320,6 +321,7 @@ def add_task_elements_common(nodes):
     pass_n_times_done = False
     and_done = False
     market_properties_done = False
+    spread_filter_done = False
     for node in nodes:
         task_name = node.get("data").get("blockName")
         match task_name:
@@ -343,6 +345,11 @@ def add_task_elements_common(nodes):
                         structs_data = market_properties_class_constructor.get_structs()
                         structs.append(structs_data)
                         market_properties_done = True
+            case "spread_filter":
+                if spread_filter_done: continue
+                structs_data = spread_filter_struct_constructor.get_structs()
+                structs.append(structs_data)
+                spread_filter_done = True
 
 # Elements that are assigned to a specific instance of a specific task type
 def add_task_elements_specific(nodes):

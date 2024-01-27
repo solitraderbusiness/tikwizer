@@ -4,45 +4,30 @@ struct SpreadHolder
    datetime          time;
   };
 
-SpreadHolder spreads[];
 
-#define SPREAD_MODE_AVERAGE 1
-#define SPREAD_MODE_FIX 2
-
+#define SPREAD_BENCHMARK_AVERAGE 1
+#define SPREAD_BENCHMARK_FIX 2
 
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-//void OnTick()
-//  {
-//   addSpread();
-//   removeSpreadExtra();
-//
-//
-//
-//  }
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task15 : public Task
+class Task0 : public Task
   {
 public:
    string              symbol;
    bool              spread_mode;
-   double            spread_limit;
+   double            spread_benchmark_fix_value;
    int               average_spread_time_period;
-
+   SpreadHolder      spreads[];
    string            msymbol;
 public:
-                     Task15(string name):Task(name)
+                     Task0(string name):Task(name)
      {
       symbol = NULL;
-      spread_mode = SPREAD_MODE_AVERAGE;
-      average_spread_time_period = 20;
-      spread_limit = 18;
+      spread_mode = SPREAD_BENCHMARK_FIX;
+      average_spread_time_period = 40;
+      spread_benchmark_fix_value = 14;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -51,11 +36,13 @@ public:
 
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
+      removeSpreadExtra();
+      addSpread();
 
-      double spread_bound = spread_mode==SPREAD_MODE_FIX ? spreadAverage() : spread_limit;
-      double spread = MarketInfo(msymbol, MODE_SPREAD);
+      double spread_benchmark = spread_mode==SPREAD_BENCHMARK_AVERAGE ? spreadAverage() : spread_benchmark_fix_value;
+      double spread_current = MarketInfo(msymbol, MODE_SPREAD);
 
-      bool result = spread >= spread_bound;
+      bool result = spread_current >= spread_benchmark;
       if(result)
         {
          block.onResult(ROUTE_1_PASSED);
@@ -70,48 +57,35 @@ public:
      {
 
      }
-
-  };
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addSpread()
-  {
-   SpreadHolder sph;
-   sph.spread = MarketInfo(NULL,MODE_SPREAD);
-   sph.time = TimeCurrent();
-   ArrayResize(spreads, ArraySize(spreads)+1, 0);
-   spreads[ArraySize(spreads)-1] = sph;
-  }
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void removeSpreadExtra()
-  {
-   int size = ArraySize(spreads);
-   if(size==0)
-      return;
-   for(int i=size-1; i>=0; i--)
+   void              addSpread()
      {
-      int timeDiff = TimeCurrent() - spreads[i].time;
-      if(timeDiff>20)
-         RemoveIndexFromArray(spreads, i);
+      SpreadHolder sph;
+      sph.spread = MarketInfo(msymbol,MODE_SPREAD);
+      sph.time = TimeCurrent();
+      ArrayResize(spreads, ArraySize(spreads)+1, 0);
+      spreads[ArraySize(spreads)-1] = sph;
      }
-  }
+   void              removeSpreadExtra()
+     {
+      int size = ArraySize(spreads);
+      if(size==0)
+         return;
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double spreadAverage()
-  {
-   double spreadTotal = 0;
-   int size = ArraySize(spreads);
-   if(size==0)
-      return 0;
-   for(int i=size-1; i>=0; i--)
-      spreadTotal += spreads[i].spread;
-   return spreadTotal/size;
-  }
+      for(int i=size-1; i>=0; i--)
+        {
+         int timeDiff = TimeCurrent() - spreads[i].time;
+         if(timeDiff>average_spread_time_period)
+            RemoveIndexFromArray(spreads, i);
+        }
+     }
+   double            spreadAverage()
+     {
+      double spreadTotal = 0;
+      int size = ArraySize(spreads);
+      if(size==0)
+         return 0;
+      for(int i=size-1; i>=0; i--)
+         spreadTotal += spreads[i].spread;
+      return spreadTotal/size;
+     }
+  };
