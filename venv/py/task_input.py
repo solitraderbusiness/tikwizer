@@ -26,7 +26,7 @@ def set_task_input_dic(nodes):
                 condition_1_cross(node)
             case "formula":
                 formula(node)
-            case "Buy now" | "Sell now" | "Buy pending order" | "Sell pending order":
+            case "buy_sell":
                 buy_sell(node)
             case "check_trades_orders_count":
                 check_trades_orders_count(node)
@@ -48,9 +48,23 @@ def set_task_input_dic(nodes):
                 modify_variables(node)
             case "blocks_on_off":
                 blocks_on_off(node)
+            case "break_even":
+                break_even(node)
             case _:
                 default(node)
 
+def break_even(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["group_mode"] = more.get("group_mode").get("value")
+    input_dic["group_number"] = more.get("group_number").get("value")
+    input_dic["type"] = more.get("type").get("value")
+    input_dic["on_profit_mode"] = more.get("on_profit_mode").get("value")
+    input_dic["pips_on_profit"] = more.get("pips_on_profit").get("value")
+    input_dic["bep_offset_mode"] = more.get("bep_offset_mode").get("value")
+    input_dic["bep_offset"] = more.get("bep_offset").get("value")
+    node["input_dic_task"] = input_dic
 def spread_filter(node):
     more = node.get("more")
     input_dic = {}
@@ -219,23 +233,23 @@ def buy_sell(node):
     input_dic["price_offset"] = more.get("price_offset").get("value")
     input_dic["price_offset_as_pip"] = more.get("price_offset_as_pip").get("value")
     input_dic["slippage"] = more.get("slippage").get("value")
-    input_dic["stoploss"] = more.get("inPipStop").get("value")
-    input_dic["takeprofit"] = more.get("inPipTake").get("value")
+    input_dic["stoploss"] = more.get("stoploss").get("value")
+    input_dic["takeprofit"] = more.get("takeprofit").get("value")
     input_dic["take_profit_mode"] = more.get("take_profit_mode").get("value")
     input_dic["stop_loss_mode"] = more.get("stop_loss_mode").get("value")
     input_dic["comment"] = more.get("comment").get("value")
-    input_dic["expiration"] = 0  # STest
-    input_dic["arrow_color"] = more.get("arrowColor").get("label")
+    input_dic["expiration"] = more.get("expiration").get("value")
+    input_dic["arrow_color"] = more.get("arrow_color").get("value")
 
-    input_dic["look_up_on"] = more.get("look_up_on").get("label")
-    input_dic["type"] = more.get("type").get("label")
-    input_dic["martingale_init_vol"] = more.get("martingale_init_vol").get("label")
-    input_dic["martingale_multiply_on_loss"] = more.get("martingale_multiply_on_loss").get("label")
-    input_dic["martingale_multiply_on_profit"] = more.get("martingale_multiply_on_profit").get("label")
-    input_dic["martingale_addlots_on_loss"] = more.get("martingale_addlots_on_loss").get("label")
-    input_dic["martingale_addlots_on_profit"] = more.get("martingale_addlots_on_profit").get("label")
-    input_dic["martingale_reset_on_n_losses"] = more.get("martingale_reset_on_n_losses").get("label")
-    input_dic["martingale_reset_on_n_profits"] = more.get("martingale_reset_on_n_profits").get("label")
+    input_dic["look_up_on"] = more.get("look_up_on").get("value")
+    input_dic["type"] = more.get("type").get("value")
+    input_dic["martingale_init_vol"] = more.get("martingale_init_vol").get("value")
+    input_dic["martingale_multiply_on_loss"] = more.get("martingale_multiply_on_loss").get("value")
+    input_dic["martingale_multiply_on_profit"] = more.get("martingale_multiply_on_profit").get("value")
+    input_dic["martingale_addlots_on_loss"] = more.get("martingale_addlots_on_loss").get("value")
+    input_dic["martingale_addlots_on_profit"] = more.get("martingale_addlots_on_profit").get("value")
+    input_dic["martingale_reset_on_n_losses"] = more.get("martingale_reset_on_n_losses").get("value")
+    input_dic["martingale_reset_on_n_profits"] = more.get("martingale_reset_on_n_profits").get("value")
 
     node["input_dic_task"] = input_dic
 

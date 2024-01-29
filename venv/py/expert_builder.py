@@ -216,13 +216,13 @@ def add_global_functions(data):
     history_trade_select_by_index = global_functions.get_fun__history_trade_select_by_index()
     functions.append(history_trade_select_by_index)
 
-    filter_general = global_functions.filter_general()
+    filter_general = global_functions.get_fun__filter_general()
     functions.append(filter_general)
 
     symbol_digits = global_functions.get_fun__symbol_digits()
     functions.append(symbol_digits)
 
-    is_order_type_sell = global_functions.is_order_type_sell()
+    is_order_type_sell = global_functions.get_fun__is_order_type_sell()
     functions.append(is_order_type_sell)
 
     dynamic_lots = global_functions.get_fun__dynamic_lots()
@@ -236,6 +236,9 @@ def add_global_functions(data):
 
     string_explode = global_functions.get_fun__string_explode()
     functions.append(string_explode)
+
+    to_digits = global_functions.get_fun__to_digits()
+    functions.append(to_digits)
 
 
 

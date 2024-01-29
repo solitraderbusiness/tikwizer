@@ -14,7 +14,7 @@
       "takeprofit" : 20,
       "take_profit_mode" : "TPSL_MODE_FIXED_PIPS",
       "stop_loss_mode" : "TPSL_MODE_FIXED_PIPS",
-      "comment" : 0,
+      "comment" : "",
       "expiration" : 0,
       "arrow_color" : "clrYellow",
 

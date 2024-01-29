@@ -66,7 +66,7 @@ public:
       look_up_on = look_up_on_val;
       int mtype[] = type_val;//This doesn't seem to be an input. So this remains static forever.
       ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
-      martingale_init_vol = martingale_init_val;
+      martingale_init_vol = martingale_init_vol_val;
       martingale_multiply_on_loss = martingale_multiply_on_loss_val;
       martingale_multiply_on_profit = martingale_multiply_on_profit_val;
       martingale_addlots_on_loss = martingale_addlots_on_loss_val;
@@ -91,12 +91,12 @@ public:
       if(ticket == ERR_NO_ERROR)
         {
          printf("task"+block_id + " passsed route 1");
-         //block.onResult(ROUTE_1_PASSED);
+         block.onResult(ROUTE_1_PASSED);
         }
       else
         {
          printf("task"+block_id + " passsed route 2");
-         //block.onResult(ROUTE_2_PASSED);
+         block.onResult(ROUTE_2_PASSED);
         }
      }
    virtual void      reset(int level)

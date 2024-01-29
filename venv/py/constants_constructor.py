@@ -108,62 +108,63 @@ constants = [
 
     ###################### Spread filter ##########################   
     "#define SPREAD_BENCHMARK_AVERAGE 1",
-    "#define SPREAD_BENCHMARK_FIX 2"
-    
+    "#define SPREAD_BENCHMARK_FIX 2",
+
     ###################### Buy Sell ##########################  
-"#define ORDER_BUY 1"
-"#define ORDER_SELL 2"
-"#define ORDER_BUY_PENDING 3"
-"#define ORDER_SELL_PENDING 4"
+    "#define ORDER_BUY 1",
+    "#define ORDER_SELL 2",
+    "#define ORDER_BUY_PENDING 3",
+    "#define ORDER_SELL_PENDING 4",
 
-"#define OPEN_AT_ASK 1"
-"#define OPEN_AT_BID 2"
-"#define OPEN_AT_MID 3"
-"#define OPEN_AT_CUSTOM_PRICE 4"
+    "#define OPEN_AT_ASK 1",
+    "#define OPEN_AT_BID 2",
+    "#define OPEN_AT_MID 3",
+    "#define OPEN_AT_CUSTOM_PRICE 4",
 
-"#define LOOK_UP_RUNNING_THEN_HISTORY 0"
-"#define LOOK_UP_RUNNING_ONLY 1"
-"#define LOOK_UP_HISTORY_ONLY 2"
+    "#define LOOK_UP_RUNNING_THEN_HISTORY 0",
+    "#define LOOK_UP_RUNNING_ONLY 1",
+    "#define LOOK_UP_HISTORY_ONLY 2",
 
-#TP SL modes are different only at items 1&2 and 5&6
-"#define TPSL_MODE_NO_TP 1"
-"#define TPSL_MODE_NO_SL 2"
-"#define TPSL_MODE_FIXED_PIPS 3"
-"#define TPSL_MODE_PERCENT_OF_PRICE 4"
-"#define TPSL_MODE_PERCENT_FROM_SL 5"
-"#define TPSL_MODE_PERCENT_FROM_TP 6"
-"#define TPSL_MODE_CUSTOM_PRICE_LEVEL 7"
-"#define TPSL_MODE_CUSTOM_PIPS 8"
-"#define TPSL_MODE_CUSTOM_PRICE_FRACTION 9"
+    # TP SL modes are different only at items 1&2 and 5&6
+    "#define TPSL_MODE_NO_TP 1",
+    "#define TPSL_MODE_NO_SL 2",
+    "#define TPSL_MODE_FIXED_PIPS 3",
+    "#define TPSL_MODE_PERCENT_OF_PRICE 4",
+    "#define TPSL_MODE_PERCENT_FROM_SL 5",
+    "#define TPSL_MODE_PERCENT_FROM_TP 6",
+    "#define TPSL_MODE_CUSTOM_PRICE_LEVEL 7",
+    "#define TPSL_MODE_CUSTOM_PIPS 8",
+    "#define TPSL_MODE_CUSTOM_PRICE_FRACTION 9",
 
-"#define MONEY_MANAGEMENT_FIXED_VOLUME 1"
-"#define MONEY_MANAGEMENT_PERCENT_OF_EQUITY 2"
-"#define MONEY_MANAGEMENT_PERCENT_OF_BALANCE 3"
-"#define MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN 4"
-"#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY 5"
-"#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE 6"
-"#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN 7"
-"#define MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY 8"
-"#define MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE 9"
-"#define MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN 10"
-"#define MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY 11"
-"#define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12"
-"#define MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI 13"
-"#define MONEY_MANAGEMENT_CUSTOM_VALUE 14"
+    "#define MONEY_MANAGEMENT_FIXED_VOLUME 1",
+    "#define MONEY_MANAGEMENT_PERCENT_OF_EQUITY 2",
+    "#define MONEY_MANAGEMENT_PERCENT_OF_BALANCE 3",
+    "#define MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN 4",
+    "#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY 5",
+    "#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE 6",
+    "#define MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN 7",
+    "#define MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY 8",
+    "#define MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE 9",
+    "#define MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN 10",
+    "#define MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY 11",
+    "#define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12",
+    "#define MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI 13",
+    "#define MONEY_MANAGEMENT_CUSTOM_VALUE 14",
 
-"#define POINT_FORMAT_RULES \"0.001=0.01,0.00001=0.0001,0.000001=0.0001\""
+    "#define POINT_FORMAT_RULES \"0.001=0.01,0.00001=0.0001,0.000001=0.0001\"",
+
+    ###################### break even ##########################
+
+    "#define ON_PROFIT_MODE_FIXED_VALUE 1",
+    "#define ON_PROFIT_MODE_PERCENT_OF_CURRENT_SL 2",
+    "#define ON_PROFIT_MODE_PERCENT_OF_CURRENT_TP 3",
+
+    "#define BEP_OFFSET_MODE_NONE 1",
+    "#define BEP_OFFSET_MODE_PIPS_OFFSET 2",
 
     ######################  ##########################
 
-
-
     ######################  ##########################
-
-
-
-    ######################  ##########################
-
-
 
     ######################  ##########################
 ]
