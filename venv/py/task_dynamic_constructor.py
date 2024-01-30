@@ -115,6 +115,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = modify_variable_run_data(node, run_data_static)
     elif task_name == "spread_filter":
         run_data = spread_filter_run_data(node, run_data_static)
+    elif task_name == "trailing_stop_each_trade":
+        run_data = trailing_stop_each_trade_run_data(node, run_data_static)
     return run_data
 
 
@@ -159,6 +161,23 @@ def spread_filter_run_data(node, run_data):
     run_data = run_data.replace("operator_val", node.get("input_dic_task").get("operator"))
     return run_data
 
+def trailing_stop_each_trade_run_data(node, run_data):
+    trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
+    trailing_stop_mode = trailing_stop_mode_data.get("value")
+    if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        value_fetch = trailing_stop_mode_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "tsm_cl"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_trailing_stop_mode", init)
+        run_data = run_data.replace("variable_name_trailing_stop_mode", val)
+    else:
+        run_data = run_data.replace("initializer_trailing_stop_mode", "")
+        run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
+    return run_data
 def modify_variable_run_data(node, run_data):
     modify_variables = ""
     for item in node.get("items"):

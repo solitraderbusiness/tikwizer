@@ -167,3 +167,7 @@ def get_fun__string_explode():
 def get_fun__to_digits():
     result = "double toDigits(double pips, string symbol)\n  {\n   if(symbol == \"\")\n      symbol = Symbol();\n\n   int digits   = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);\n   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);\n\n   return NormalizeDouble(pips * PipValue(symbol) * point, digits);\n  }\n"
     return result
+
+def get_fun__string_trim():
+    result = "string StringTrim(string str)\n  {\n   str = StringTrimRight(str);\n   str = StringTrimLeft(str);\n\n   return str;\n  }\n"
+    return result

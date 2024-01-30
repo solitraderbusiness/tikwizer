@@ -1,0 +1,27 @@
+{
+  "symbol": "NULL",
+  "group_mode": "ORDER_GROUP_MODE_NONE",
+  "group_number": 15,
+  "type": [0,1],
+
+  "TrailWhat" : 1,
+  "TrailingReferencePrice" : 0,
+  "TrailingStopMode" : "TRAILING_STOP_MODE_PERCENT_OF_OPPOSITE_STOP",
+  "tStopPips" : 40.0,
+  "tStopMoney" : 10.0,
+  "tStopMultiple" : "\"20/5, 30/10\"",
+  "tStopPercentTP" : 100.0,
+  "tStopPercentProfit" : 50.0,
+  "TrailingStepMode" : "TRAILING_STEP_MODE_PIPS",
+  "tStepPips" : 1.0,
+  "tStepPercentTS" : 10.0,
+  "TrailingStartMode" : "TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP",
+  "tStartPips" : 10.0,
+  "tStartPercentTS" : 100.0,
+  "tStartPercentSL" : 10.0,
+  "tStartPercentTP" : 10.0,
+  "TrailingTPmode" : "TRAILING_OPPOSITE_STOP_MODE_PIPS_FROM_OPEN_PRICE",
+  "tTPpips" : 20.0,
+  "tTPpercentTS" : 200.0,
+  "LevelColor" : "clrDeepPink"
+}

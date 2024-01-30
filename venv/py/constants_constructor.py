@@ -162,7 +162,34 @@ constants = [
     "#define BEP_OFFSET_MODE_NONE 1",
     "#define BEP_OFFSET_MODE_PIPS_OFFSET 2",
 
-    ######################  ##########################
+    ###################### Trailing stop (each trade) ##########################
+
+"#define TRAILING_STOP_MODE_PIP \"fixed\"",
+"#define TRAILING_STOP_MODE_MULTIPLE_LEVELS \"multiple\"",
+"#define TRAILING_STOP_MODE_MONEY \"money\"",
+"#define TRAILING_STOP_MODE_PERCENT_OF_OPPOSITE_STOP \"percentTP\"",
+"#define TRAILING_STOP_MODE_PERCENT_OF_PROFIT \"percentProfit\"",
+"#define TRAILING_STOP_MODE_CUSTOM_LEVEL \"dynamic\"",
+"#define TRAILING_STOP_MODE_CUSTOM_PIPS \"dynamicSize\"",
+"#define TRAILING_STOP_MODE_CUSTOM_PRICE_FRACTION \"dynamicDigits\"",
+
+"#define TRAILING_START_MODE_OFF \"none\"",
+"#define TRAILING_START_MODE_OPEN_PRICE \"zero\"",
+"#define TRAILING_START_MODE_PIPS_OFFSET \"fixed\"",
+"#define TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP \"percentTS\"",
+"#define TRAILING_START_MODE_PERCENT_OF_OPPOSITE_STOP \"percentTP\"",
+"#define TRAILING_START_MODE_PERCENT_OF_STOP \"percentSL\"",
+"#define TRAILING_START_MODE_CUSTOM_PIPS \"function\"",
+"#define TRAILING_START_MODE_CUSTOM_PRICE_FRACTION \"functionFraction\"",
+
+"#define TRAILING_STEP_MODE_PIPS \"fixed\"",
+"#define TRAILING_STEP_MODE_PERCENT_OF_TRAILING_STOP \"percentTS\"",
+
+"#define TRAILING_OPPOSITE_STOP_MODE_NO_CHANGE \"none\"",
+"#define TRAILING_OPPOSITE_STOP_MODE_CLEAR_STOP \"clear\"",
+"#define TRAILING_OPPOSITE_STOP_MODE_PIPS_FROM_OPEN_PRICE \"fixed\"",
+"#define TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP \"percentTS\"",
+"#define TRAILING_OPPOSITE_STOP_MODE_CUSTOM \"function\"",
 
     ######################  ##########################
 

@@ -50,8 +50,52 @@ def set_task_input_dic(nodes):
                 blocks_on_off(node)
             case "break_even":
                 break_even(node)
+            case "trailing_stop_each_trade":
+                trailing_stop_each_trade(node)
             case _:
                 default(node)
+
+def trailing_stop_each_trade(node):
+    more = node.get("more")
+    input_dic = {}
+    # Filter params
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["group_mode"] = more.get("group_mode").get("value")
+    input_dic["group_number"] = more.get("group_number").get("value")
+    input_dic["type"] = more.get("type").get("value")
+    # Trailing params
+    input_dic["TrailWhat"] = more.get("TrailWhat").get("value")
+    input_dic["TrailingReferencePrice"] = more.get("TrailingReferencePrice").get("value")
+    input_dic["TrailingStopMode"] = more.get("TrailingStopMode").get("value")
+    input_dic["tStopPips"] = more.get("tStopPips").get("value")
+    input_dic["tStopMoney"] = more.get("tStopMoney").get("value")
+    input_dic["tStopMultiple"] = more.get("tStopMultiple").get("value")
+    input_dic["tStopPercentTP"] = more.get("tStopPercentTP").get("value")
+    input_dic["tStopPercentProfit"] = more.get("tStopPercentProfit").get("value")
+    input_dic["TrailingStepMode"] = more.get("TrailingStepMode").get("value")
+    input_dic["tStepPips"] = more.get("tStepPips").get("value")
+    input_dic["tStepPercentTS"] = more.get("tStepPercentTS").get("value")
+    input_dic["TrailingStartMode"] = more.get("TrailingStartMode").get("value")
+    input_dic["tStartPips"] = more.get("tStartPips").get("value")
+    input_dic["tStartPercentTS"] = more.get("tStartPercentTS").get("value")
+    input_dic["tStartPercentSL"] = more.get("tStartPercentSL").get("value")
+    input_dic["tStartPercentTP"] = more.get("tStartPercentTP").get("value")
+    input_dic["TrailingTPmode"] = more.get("TrailingTPmode").get("value")
+    input_dic["tTPpips"] = more.get("tTPpips").get("value")
+    input_dic["tTPpercentTS"] = more.get("tTPpercentTS").get("value")
+    input_dic["LevelColor"] = more.get("LevelColor").get("value")
+
+    node["input_dic_task"] = input_dic
+
+    # Now fill input task for value fetch if any
+    trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
+    trailing_stop_mode = trailing_stop_mode_data.get("value")
+    if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        value = trailing_stop_mode_data.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        trailing_stop_mode_data["input_dic"] = input_dic
+
 
 def break_even(node):
     more = node.get("more")

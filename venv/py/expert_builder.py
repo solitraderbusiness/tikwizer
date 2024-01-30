@@ -240,6 +240,8 @@ def add_global_functions(data):
     to_digits = global_functions.get_fun__to_digits()
     functions.append(to_digits)
 
+    string_trim = global_functions.get_fun__string_trim()
+    functions.append(string_trim)
 
 
 
@@ -404,7 +406,19 @@ def add_task_elements_specific(nodes):
             condition_1_cross_elements(node)
         elif task_name == "modify_variables":
             modify_variables(node)
+        elif task_name == "trailing_stop_each_trade":
+            trailing_stop_each_trade(node)
 
+def trailing_stop_each_trade (node):
+    trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
+    trailing_stop_mode = trailing_stop_mode_data.get("value")
+    if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        input_dic = trailing_stop_mode_data.get("input_dic")
+        value_fetch = trailing_stop_mode_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "tsm_cl"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
 def modify_variables (node):
     for item in node.get("items"):
