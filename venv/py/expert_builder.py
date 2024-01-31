@@ -243,6 +243,12 @@ def add_global_functions(data):
     string_trim = global_functions.get_fun__string_trim()
     functions.append(string_trim)
 
+    format_value_for_printing_all = global_functions.get_fun__format_value_for_printing_all()
+    functions.append(format_value_for_printing_all)
+
+    window_find_visible = global_functions.get_fun__window_find_visible()
+    functions.append(window_find_visible)
+
 
 
 
@@ -408,6 +414,81 @@ def add_task_elements_specific(nodes):
             modify_variables(node)
         elif task_name == "trailing_stop_each_trade":
             trailing_stop_each_trade(node)
+        elif task_name == "comment":
+            comment(node)
+
+def comment (node):
+    mrow1 = node.get("more").get("row1")
+    if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
+        input_dic = mrow1.get("input_dic")
+        value_fetch = mrow1.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r1"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow2 = node.get("more").get("row2")
+    if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
+        input_dic = mrow2.get("input_dic")
+        value_fetch = mrow2.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r2"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow3 = node.get("more").get("row3")
+    if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
+        input_dic = mrow3.get("input_dic")
+        value_fetch = mrow3.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r3"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow4 = node.get("more").get("row4")
+    if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
+        input_dic = mrow4.get("input_dic")
+        value_fetch = mrow4.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r4"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow5 = node.get("more").get("row5")
+    if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
+        input_dic = mrow5.get("input_dic")
+        value_fetch = mrow5.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r5"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow6 = node.get("more").get("row6")
+    if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
+        input_dic = mrow6.get("input_dic")
+        value_fetch = mrow6.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r6"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow7 = node.get("more").get("row7")
+    if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
+        input_dic = mrow7.get("input_dic")
+        value_fetch = mrow7.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r7"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    mrow8 = node.get("more").get("row8")
+    if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
+        input_dic = mrow8.get("input_dic")
+        value_fetch = mrow8.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r8"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
 def trailing_stop_each_trade (node):
     trailing_stop_mode_data = node.get("more").get("TrailingStopMode")

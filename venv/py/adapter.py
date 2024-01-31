@@ -168,6 +168,8 @@ def add_category (nodes):
                 node["category"] = "trailing_stop_break_even"
             case "trailing_stop_each_trade":
                 node["category"] = "trailing_stop_break_even"
+            case "comment":
+                node["category"] = "output_and_communication"
             case _:
                 node["category"] = "not_specified"
 

@@ -162,7 +162,67 @@ public:
 
   };
 
-class RSI0tsm_cl
+class RSI0cm_r1
+  {
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
+      shift = 0;
+      buy_threshold = 70;
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
+class RSI0cm_r2
+  {
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = 14;
+      timeframe = PRICE_CLOSE;
+      period = PRICE_CLOSE;
+      applied_price = PRICE_CLOSE;
+      shift = PRICE_CLOSE;
+      buy_threshold = PRICE_CLOSE;
+      sell_threshold = PRICE_CLOSE;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
+class RSI0cm_r6
   {
    string            symbol;
    int               timeframe;
@@ -625,390 +685,359 @@ public:
 
   };class Task0 : public Task
   {
-   //defined by user
-   string            symbol;
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-
-   int               TrailWhat;
-   int               TrailingReferencePrice;
-   string            TrailingStopMode;
-   double            tStopPips;
-   double            tStopMoney;
-   string            tStopMultiple;
-   double            tStopPercentTP;
-   double            tStopPercentProfit;
-   string            TrailingStepMode;
-   double            tStepPips;
-   double            tStepPercentTS;
-   string            TrailingStartMode;
-   double            tStartPips;
-   double            tStartPercentTS;
-   double            tStartPercentSL;
-   double            tStartPercentTP;
-   string            TrailingTPmode;
-   double            tTPpips;
-   double            tTPpercentTS;
-   color             LevelColor;
-
-   //defined by system
-   string            msymbol;
+   //specified by user
+   string            Title;
+   string            ObjChartSubWindow;
+   int               ObjCorner;
+   int               ObjX;
+   int               ObjY;
+   string            ObjTitleFont;
+   color             ObjTitleFontColor;
+   int               ObjTitleFontSize;
+   string            ObjLabelsFont;
+   color             ObjLabelsFontColor;
+   int               ObjLabelsFontSize;
+   string            ObjFont;
+   int               ObjFontColor;
+   int               ObjFontSize;
+   string            Label1;
+   int               FormatNumber1;
+   int               FormatTime1;
+   string            Label2;
+   int               FormatNumber2;
+   int               FormatTime2;
+   string            Label3;
+   int               FormatNumber3;
+   int               FormatTime3;
+   string            Label4;
+   int               FormatNumber4;
+   int               FormatTime4;
+   string            Label5;
+   int               FormatNumber5;
+   int               FormatTime5;
+   string            Label6;
+   int               FormatNumber6;
+   int               FormatTime6;
+   string            Label7;
+   int               FormatNumber7;
+   int               FormatTime7;
+   string            Label8;
+   int               FormatNumber8;
+   int               FormatTime8;
+   //specified by system
+   bool              initialized;
 public:
                      Task0(string name):Task(name)
      {
-         symbol = NULL;//STest, no lists yet, also all is not suported yet.
-      group_mode = ORDER_GROUP_MODE_NONE;
-      group_number = 15;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-
-      TrailWhat = 1;
-      TrailingReferencePrice = 0;
-      TrailingStopMode = TRAILING_STOP_MODE_CUSTOM_LEVEL;
-      tStopPips = 40.0;
-      tStopMoney = 10.0;
-      tStopMultiple = "20/5, 30/10";
-      tStopPercentTP = 100.0;
-      tStopPercentProfit = 50.0;
-      TrailingStepMode = TRAILING_STEP_MODE_PIPS;
-      tStepPips = 1;
-      tStepPercentTS = 10.0;
-      TrailingStartMode = TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP;
-      tStartPips = 10.0;
-      tStartPercentTS = 100.0;
-      tStartPercentSL = 10.0;
-      tStartPercentTP = 10.0;
-      TrailingTPmode = TRAILING_OPPOSITE_STOP_MODE_PIPS_FROM_OPEN_PRICE;
-      tTPpips = 20.0;
-      tTPpercentTS = 200.0;
-      LevelColor = clrDeepPink;
+         Title = "Comment Message";
+      ObjChartSubWindow = "";
+      ObjCorner = CORNER_LEFT_UPPER;
+      ObjX = 800;
+      ObjY = 200;
+      ObjTitleFont = "Georgia";
+      ObjTitleFontColor = clrBlue;
+      ObjTitleFontSize = 13;
+      ObjLabelsFont = "Verdana";
+      ObjLabelsFontColor = clrDarkGray;
+      ObjLabelsFontSize = 10;
+      ObjFont = "Verdana";
+      ObjFontColor = clrWhite;
+      ObjFontSize = 10;
+      Label1 = "Hello1";
+      FormatNumber1 = 50;
+      FormatTime1 = EMPTY_VALUE;
+      Label2 = "Hello2";
+      FormatNumber2 = EMPTY_VALUE;
+      FormatTime2 = EMPTY_VALUE;
+      Label3 = "Hello3";
+      FormatNumber3 = EMPTY_VALUE;
+      FormatTime3 = EMPTY_VALUE;
+      Label4 = "Hello4";
+      FormatNumber4 = EMPTY_VALUE;
+      FormatTime4 = EMPTY_VALUE;
+      Label5 = "Hello5";
+      FormatNumber5 = EMPTY_VALUE;
+      FormatTime5 = EMPTY_VALUE;
+      Label6 = "Hello6";
+      FormatNumber6 = EMPTY_VALUE;
+      FormatTime6 = EMPTY_VALUE;
+      Label7 = "Hello7";
+      FormatNumber7 = EMPTY_VALUE;
+      FormatTime7 = EMPTY_VALUE;
+      Label8 = "Hello8";
+      FormatNumber8 = EMPTY_VALUE;
+      FormatTime8 = EMPTY_VALUE;
+      /* Static Parameters (initial value) */
+      initialized =  false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+            Task::run(block_id, block);
 
-      for(int m = OrdersTotal() ; m >= 0 ; m--)
+      if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
         {
-         if(OrderSelect(m, SELECT_BY_POS, MODE_TRADES))
+
+
+         long ObjChartID = 0;
+         int ObjAnchor   = ANCHOR_LEFT;
+
+         if(ObjCorner == CORNER_RIGHT_UPPER || ObjCorner == CORNER_RIGHT_LOWER)
            {
-            if(!filterGeneral())
-               continue;
+            ObjAnchor = ANCHOR_RIGHT;
+           }
 
-            string symbol     = OrderSymbol();//STest, conflict with symbol in filed (?)
-            double ask        = SymbolInfoDouble(symbol, SYMBOL_ASK);
-            double bid        = SymbolInfoDouble(symbol, SYMBOL_BID);
-            double stopslevel = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL);
-            int digits        = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-            int polarity      = 1;   // 1 = buy, -1 = sell
-            double askbid     = ask; // could be Ask or Bid
-            double bidask     = bid; // the opposite of askbid
-            double sltp       = 0;   // could be SL or TP
-            double tpsl       = 0;   // the opposite of sltp
-            double fsl        = 0;   // Freeze Level
-            double limit      = 0;
-            double t_stop     = 0;   // trailing STOP
-            double t_start    = 0;   // trailing START
-            double t_step     = 0;   // trailing STEP
-            double t_opp      = 0;   // trailing Opposite (TP when trailing SL or SL when trailing TP)
+         string namebase = "fxd_cmnt_" + block_id;
 
-            if(TrailWhat > 0)
+         int subwindow = WindowFindVisible(ObjChartID, ObjChartSubWindow);
+
+         if(subwindow >= 0)
+           {
+            //-- draw comment title
+            if((string)Title != "")
               {
-               sltp = OrderStopLoss();
-               tpsl = OrderTakeProfit();
-              }
-            else
-              {
-               sltp = OrderTakeProfit();
-               tpsl = OrderStopLoss();
-              }
+               string nametitle = namebase;
 
-            if(OrderType() == 0)
-              {
-               polarity = 1;
-
-               if(TrailingReferencePrice == 1)
+               if(ObjectFind(ObjChartID, nametitle) < 0)
                  {
-                  askbid = bid;
-                  bidask = ask;
-                 }
-              }
-            else
-               if(OrderType() == 1)
-                 {
-                  polarity = -1;
-                  askbid   = bid;
-                  bidask   = ask;
-
-                  if(TrailingReferencePrice == 1)
+                  if(!ObjectCreate(ObjChartID, nametitle, OBJ_LABEL, subwindow, 0, 0, 0, 0))
                     {
-                     askbid = ask;
-                     bidask = bid;
-                    }
-                 }
-
-            if(TrailingReferencePrice == 2)
-              {
-               askbid = (ask + bid) / 2;
-               bidask = (ask + bid) / 2;
-              }
-
-            // Trailing Stop Size
-            if(TrailingStopMode == TRAILING_STOP_MODE_PIP)
-              {
-               t_stop = toDigits(tStopPips, symbol);
-              }
-            else
-               if(TrailingStopMode == TRAILING_STOP_MODE_PERCENT_OF_OPPOSITE_STOP)
-                 {
-                  t_stop = (MathAbs(OrderOpenPrice() - tpsl)) * (tStopPercentTP / 100);
-                 }
-               else
-                  if(TrailingStopMode == TRAILING_STOP_MODE_PERCENT_OF_PROFIT)
-                    {
-                     t_stop = (MathAbs(askbid - OrderOpenPrice())) * (tStopPercentProfit / 100);
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
                     }
                   else
-                     if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_PIPS)
-                       {
-                        //t_stop = toDigits(_ftStop_(), symbol);
-                       }
-                     else
-                        if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_PRICE_FRACTION)
-                          {
-                           //t_stop = _ftDigits_();
-                          }
-                        else
-                           if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_LEVEL)
-                             {
-                                RSI0tsm_cl rsi0tsm_cl;
-   rsi0tsm_cl.init();
-   double valueRSI0tsm_cl = rsi0tsm_cl.calc();
-                                t_stop = valueRSI0tsm_cl;
-    
-                                t_stop = (polarity == 1) ? ask - t_stop : t_stop - bid;
-                             }
-                           else
-                              if(TrailingStopMode == TRAILING_STOP_MODE_MONEY)
-                                {
-                                 t_stop = tStopMoney;
+                    {
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(ObjTitleFontSize));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, ObjTitleFontColor);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
 
-                                 double lotsize   = SymbolInfoDouble(symbol, SYMBOL_TRADE_CONTRACT_SIZE);
-                                 double tickvalue = (SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_VALUE) / SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_SIZE)) * SymbolInfoDouble(symbol, SYMBOL_POINT);
-                                 t_stop = t_stop / (OrderLots() * PipValue(symbol));
-                                 // TODO: remove this toDigits(), the calculation should be made directly into digits
-                                 t_stop = toDigits(t_stop / tickvalue, symbol);
-                                }
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, ObjTitleFont);
 
-            // Trailing Start Level
-            if(TrailingStartMode == TRAILING_START_MODE_OFF)
-              {
-               t_start = -EMPTY_VALUE;
-              }
-            else
-               if(TrailingStartMode == TRAILING_START_MODE_OPEN_PRICE)
-                 {
-                  t_start = 0;
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, ObjX);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, ObjY);
+                    }
                  }
                else
-                  if(TrailingStartMode == TRAILING_START_MODE_PIPS_OFFSET)
-                    {
-                     t_start = toDigits(tStartPips, symbol);
-                    }
-                  else
-                     if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP)
-                       {
-                        t_start = t_stop * (tStartPercentTS / 100);
-                       }
-                     else
-                        if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_OPPOSITE_STOP)
-                          {
-                           t_start = (MathAbs(OrderOpenPrice() - tpsl)) * (tStartPercentTP / 100);
-                          }
-                        else
-                           if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_STOP)
-                             {
-                              t_start = (MathAbs(OrderOpenPrice() - sltp)) * (tStartPercentSL / 100);
-                             }
-                           else
-                              if(TrailingStartMode == TRAILING_START_MODE_CUSTOM_PIPS)
-                                {
-                                 //t_start = toDigits(_ftStart_(), symbol);
-                                }
-                              else
-                                 if(TrailingStartMode == TRAILING_START_MODE_CUSTOM_PRICE_FRACTION)
-                                   {
-                                    //t_start = _ftStartFraction_();
-                                   }
-
-            // Trailing Step Size
-            if(TrailingStepMode == TRAILING_STEP_MODE_PIPS)
-              {
-               t_step = toDigits(tStepPips, symbol);
-              }
-            else
-               if(TrailingStepMode == TRAILING_STEP_MODE_PERCENT_OF_TRAILING_STOP)
                  {
-                  t_step = t_stop * (tStepPercentTS / 100);
+                  ObjX = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  ObjY = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
                  }
 
-            // Trailing Opposite Size
-            if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_NO_CHANGE)
-              {
-               t_opp = tpsl;
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)Title);
+
+               ObjY = (int)(ObjY + ObjTitleFontSize / 3);
               }
-            else
-               if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_CLEAR_STOP)
-                 {
-                  t_opp = 0;
-                 }
-               else
-                  if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_PIPS_FROM_OPEN_PRICE)
-                    {
-                     t_opp = TrailWhat * (OrderOpenPrice() + (polarity * toDigits(tTPpips, symbol)));
-                    }
-                  else
-                     if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP)
-                       {
-                        t_opp = TrailWhat * (OrderOpenPrice() + (polarity * toDigits(t_stop * (tTPpercentTS / 100), symbol)));
-                       }
-                     else
-                        if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_CUSTOM)
-                          {
-                           //t_opp = _ftTP_();
-                          }
 
-            // this mode is located here because it overrides Start, Stop and Step
-            // the idea here is to use Start as target profits
-            if(TrailingStopMode == TRAILING_STOP_MODE_MULTIPLE_LEVELS)
+            //-- draw comment rows
+            for(int i = 1; i <= 8; i++)
               {
-               bool next = false;
-               string tmp1[];
-               string tmp2[];
+               string text    = "";
+               string textlbl = "";
 
-               StringExplode(",", tStopMultiple, tmp1);
-
-               for(int i = ArraySize(tmp1)-1; i >= 0; i--)
+               switch(i)
                  {
-                  StringExplode("/", tmp1[i], tmp2);
-
-                  if(ArraySize(tmp2) != 2)
+                  case 1:
                     {
-                     continue;
+                     if(Label1 != "")
+                       {
+                        textlbl = Label1;
+                        RSI0cm_r1 rsi0cm_r1;
+   rsi0cm_r1.init();
+   double valueRSI0cm_r1 = rsi0cm_r1.calc();
+                        text    = FormatValueForPrinting(valueRSI0cm_r1, FormatNumber1, FormatTime1);
+                       }
+
+                     break;
                     }
-
-                  // trailing start will be used as the treshold level
-                  double new_start = toDigits(StringToDouble(StringTrim(tmp2[0])), symbol);
-
-                  // the regular trailing start is bigger than this level -> skip
-                  if(new_start < t_start)
+                  case 2:
                     {
-                     continue;
+                     if(Label2 != "")
+                       {
+                        textlbl = Label2;
+                        RSI0cm_r2 rsi0cm_r2;
+   rsi0cm_r2.init();
+   double valueRSI0cm_r2 = rsi0cm_r2.calc();
+                        text    = FormatValueForPrinting(valueRSI0cm_r2, FormatNumber2, FormatTime2);
+                       }
+
+                     break;
                     }
-
-                  // check whether the current price<->op distance is bigger than some of the desired levels
-                  double diff = NormalizeDouble(askbid - OrderOpenPrice(), digits);
-
-                  if(polarity * TrailWhat * diff >= new_start)
+                  case 3:
                     {
-                     // and setup parameters so SL will be moved
-                     t_start = new_start;
-                     t_stop  = polarity * TrailWhat * diff - toDigits(StringToDouble(StringTrim(tmp2[1])), symbol);
+                     if(Label3 != "")
+                       {
+                        textlbl = Label3;
+                        
+                        text    = FormatValueForPrinting("", FormatNumber3, FormatTime3);
+                       }
 
-                     next = true;
+                     break;
+                    }
+                  case 4:
+                    {
+                     if(Label4 != "")
+                       {
+                        textlbl = Label4;
+                        
+                        text    = FormatValueForPrinting("", FormatNumber4, FormatTime4);
+                       }
+
+                     break;
+                    }
+                  case 5:
+                    {
+                     if(Label5 != "")
+                       {
+                        textlbl = Label5;
+                        
+                        text    = FormatValueForPrinting("", FormatNumber5, FormatTime5);
+                       }
+
+                     break;
+                    }
+                  case 6:
+                    {
+                     if(Label6 != "")
+                       {
+                        textlbl = Label6;
+                        RSI0cm_r6 rsi0cm_r6;
+   rsi0cm_r6.init();
+   double valueRSI0cm_r6 = rsi0cm_r6.calc();
+                        text    = FormatValueForPrinting(valueRSI0cm_r6, FormatNumber6, FormatTime6);
+                       }
+
+                     break;
+                    }
+                  case 7:
+                    {
+                     if(Label7 != "")
+                       {
+                        textlbl = Label7;
+                        
+                        text    = FormatValueForPrinting("", FormatNumber7, FormatTime7);
+                       }
+
+                     break;
+                    }
+                  case 8:
+                    {
+                     if(Label8 != "")
+                       {
+                        textlbl = Label8;
+                        
+                        text    = FormatValueForPrinting("", FormatNumber8, FormatTime8);
+                       }
+
                      break;
                     }
                  }
 
-               if(next == false)
+               string name    = namebase + "_" + (string)i;
+               string namelbl = name + "_l";
+
+               if(textlbl == "")
                  {
+                  if(!initialized)
+                    {
+                     //-- pre-delete
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                    }
+
                   continue;
                  }
-              }
 
-            stopslevel   = stopslevel * SymbolInfoDouble(symbol, SYMBOL_POINT);
-
-            if(t_stop <= 0)
-              {
-               continue;
-              }
-
-            if(OrderType() == 0 && TrailWhat * (askbid - OrderOpenPrice()) > t_start)
-              {
-               if((TrailWhat * (askbid - sltp) >= t_stop + t_step) || sltp == 0)
+               //-- draw initial objects
+               if(ObjectFind(ObjChartID, name) < 0)
                  {
-                  // consider minimum stop
-                  fsl   = MathAbs(askbid - t_stop);
-                  limit = bidask - stopslevel * TrailWhat;
-
-                  if(fsl > limit)
+                  if(textlbl == "")
                     {
-                     fsl = limit;
+                     continue;
                     }
 
-                  if(TrailWhat == 1)  // trail SL
+                  if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
                     {
-                     if(sltp == 0 || sltp < fsl)
-                       {
-                        OrderModify(OrderTicket(), OrderOpenPrice(), askbid - t_stop, t_opp, 0, LevelColor);
-                       }
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, ObjLabelsFontSize);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, ObjLabelsFontColor);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, ObjLabelsFont);
                     }
-                  else   // trail TP
+                  else
                     {
-                     if(sltp == 0 || sltp > fsl)
-                       {
-                        OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid + t_stop, 0, LevelColor);
-                       }
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+
+                  if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, ObjFontSize);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, ObjFontColor);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, ObjFont);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
                     }
                  }
-              }
-            else
-               if(OrderType() == 1 && TrailWhat * (OrderOpenPrice() - askbid) > t_start)
+               else
                  {
-                  if((TrailWhat * (sltp - askbid) >= t_stop + t_step) || sltp == 0)
+                  if(textlbl == "")
                     {
-                     // consider minimum stop
-                     fsl   = MathAbs(askbid + t_stop);
-                     limit = bidask + stopslevel * TrailWhat;
-
-                     if(fsl < limit)
-                       {
-                        fsl = limit;
-                       }
-
-                     if(TrailWhat == 1)
-                       {
-                        // trail SL
-                        if(sltp == 0 || sltp > fsl)
-                          {
-                           OrderModify(OrderTicket(), OrderOpenPrice(), askbid + t_stop, t_opp, 0, LevelColor);
-                          }
-                       }
-                     else
-                       {
-                        // trail TP
-                        if(sltp == 0 || sltp < fsl)
-                          {
-                           OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid - t_stop, 0, LevelColor);
-                          }
-                       }
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                     continue;
                     }
                  }
+
+               ObjY  = (int)(ObjY + ObjFontSize + ObjFontSize/2);
+
+               //-- update label objects
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, ObjX);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, ObjY);
+               ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
+
+               //-- update value objects
+               int x        = 0;
+               int xsizelbl = (int)ObjectGetInteger(ObjChartID, namelbl, OBJPROP_XSIZE);
+
+               if(xsizelbl == 0)
+                 {
+                  //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
+                  xsizelbl = (int)(StringLen((string)textlbl) * ObjFontSize / 1.5 + ObjFontSize / 2);
+                 }
+
+               x = ObjX + (xsizelbl + ObjFontSize/2);
+
+               ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, ObjY);
+               ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
+              }
+
+            ChartRedraw();
            }
+
+         initialized = true;
         }
+
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level) {
       
    }
-   bool              filterGeneral()
-     {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
+   
   };
 class Task1 : public Task
   {
@@ -1640,7 +1669,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "trailing_stop_each_trade";
+      name = "comment";
       enabled = True;
 
       int mnexts_true[] = {1, 2};
@@ -3184,6 +3213,109 @@ string StringTrim(string str)
    str = StringTrimLeft(str);
 
    return str;
+  }
+
+template<typename T>
+string FormatValueForPrinting(T value, int digits, int timeFormat)
+  {
+   string outputValue = "";
+   string typeName    = typename(value);
+
+   if(typeName == "double" || typeName == "float")
+     {
+      if(digits >= -16 && digits <= 8)
+        {
+         if(value > -1.0 && value < 1.0)
+           {
+            /**
+            * Find how many zeroes are after the point, but before the first non-zero digit.
+            * For example 0.000195 has 3 zeroes
+            * The function would return negative value for values bigger than 0
+            *
+            * @see https://stackoverflow.com/questions/31001901/how-can-i-count-the-number-of-zero-decimals-in-javascript/31002148#31002148
+            */
+            int zeroesAfterPoint = (int)-MathFloor(MathLog10(MathAbs(value)) + 1);
+
+            digits = zeroesAfterPoint + digits;
+           }
+
+         T normalizedValue  = NormalizeDouble(value, digits);
+         outputValue = DoubleToString(normalizedValue, digits);
+        }
+      else
+        {
+         outputValue = (string)NormalizeDouble(value, 8);
+        }
+     }
+   else
+     {
+      outputValue = IntegerToString((long)value);
+     }
+
+   return outputValue;
+  }
+
+
+
+
+/**
+* Bool overload
+*/
+string FormatValueForPrinting(
+   bool value,
+   int digits,
+   int timeFormat
+)
+  {
+   return (value) ? "true" : "false";
+  }
+
+/**
+* Datetime overload
+*/
+string FormatValueForPrinting(
+   datetime value,
+   int digits,
+   int timeFormat
+)
+  {
+   if(timeFormat == (int)EMPTY_VALUE || timeFormat == EMPTY_VALUE)
+      timeFormat = TIME_DATE|TIME_MINUTES;
+   return TimeToString(value, timeFormat);
+  }
+
+/**
+* String overload
+*/
+string FormatValueForPrinting(
+   string value,
+   int digits,
+   int timeFormat
+)
+  {
+   return value;
+  }
+int WindowFindVisible(long chart_id, string term)
+  {
+//-- the search term can be chart name, such as Force(13), or subwindow index
+   if(term == "" || term == "0")
+     {
+      return 0;
+     }
+
+   int subwindow = (int)StringToInteger(term);
+
+   if(subwindow == 0 && StringLen(term) > 1)
+     {
+      subwindow = ChartWindowFind(chart_id, term);
+     }
+
+   if(subwindow > 0 && !ChartGetInteger(chart_id, CHART_WINDOW_IS_VISIBLE, subwindow))
+     {
+      return -1;
+     }
+
+   return subwindow;
   }
 int init(){
 addBlocksTick();

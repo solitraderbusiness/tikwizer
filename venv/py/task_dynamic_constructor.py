@@ -117,6 +117,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = spread_filter_run_data(node, run_data_static)
     elif task_name == "trailing_stop_each_trade":
         run_data = trailing_stop_each_trade_run_data(node, run_data_static)
+    elif task_name == "comment":
+        run_data = comment_run_data(node, run_data_static)
     return run_data
 
 
@@ -161,6 +163,129 @@ def spread_filter_run_data(node, run_data):
     run_data = run_data.replace("operator_val", node.get("input_dic_task").get("operator"))
     return run_data
 
+
+def comment_run_data(node, run_data):
+    mrow1 = node.get("more").get("row1")
+    if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
+        value_fetch = mrow1.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r1"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_1", init)
+        run_data = run_data.replace("variable_name_1", val)
+    else:
+        run_data = run_data.replace("initializer_1", "")
+        run_data = run_data.replace("variable_name_1", "\"\"")
+
+    mrow2 = node.get("more").get("row2")
+    if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
+        value_fetch = mrow2.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r2"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_2", init)
+        run_data = run_data.replace("variable_name_2", val)
+    else:
+        run_data = run_data.replace("initializer_2", "")
+        run_data = run_data.replace("variable_name_2", "\"\"")
+
+    mrow3 = node.get("more").get("row3")
+    if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
+        value_fetch = mrow3.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r3"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_3", init)
+        run_data = run_data.replace("variable_name_3", val)
+    else:
+        run_data = run_data.replace("initializer_3", "")
+        run_data = run_data.replace("variable_name_3", "\"\"")
+
+    mrow4 = node.get("more").get("row4")
+    if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
+        value_fetch = mrow4.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r4"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_4", init)
+        run_data = run_data.replace("variable_name_4", val)
+    else:
+        run_data = run_data.replace("initializer_4", "")
+        run_data = run_data.replace("variable_name_4", "\"\"")
+
+    mrow5 = node.get("more").get("row5")
+    if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
+        value_fetch = mrow5.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r5"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_5", init)
+        run_data = run_data.replace("variable_name_5", val)
+    else:
+        run_data = run_data.replace("initializer_5", "")
+        run_data = run_data.replace("variable_name_5", "\"\"")
+
+    mrow6 = node.get("more").get("row6")
+    if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
+        value_fetch = mrow6.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r6"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_6", init)
+        run_data = run_data.replace("variable_name_6", val)
+    else:
+        run_data = run_data.replace("initializer_6", "")
+        run_data = run_data.replace("variable_name_6", "\"\"")
+
+    mrow7 = node.get("more").get("row7")
+    if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
+        value_fetch = mrow7.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r7"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_7", init)
+        run_data = run_data.replace("variable_name_7", val)
+    else:
+        run_data = run_data.replace("initializer_7", "")
+        run_data = run_data.replace("variable_name_7", "\"\"")
+
+    mrow8 = node.get("more").get("row8")
+    if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
+        value_fetch = mrow8.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "cm_r8"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_8", init)
+        run_data = run_data.replace("variable_name_8", val)
+    else:
+        run_data = run_data.replace("initializer_8", "")
+        run_data = run_data.replace("variable_name_8", "\"\"")
+
+    return run_data
 def trailing_stop_each_trade_run_data(node, run_data):
     trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
     trailing_stop_mode = trailing_stop_mode_data.get("value")

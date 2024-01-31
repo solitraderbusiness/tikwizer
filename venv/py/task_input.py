@@ -52,8 +52,120 @@ def set_task_input_dic(nodes):
                 break_even(node)
             case "trailing_stop_each_trade":
                 trailing_stop_each_trade(node)
+            case "comment":
+                comment(node)
             case _:
                 default(node)
+
+def comment(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["Title"] = more.get("Title").get("value")
+    input_dic["ObjChartSubWindow"] = more.get("ObjChartSubWindow").get("value")
+    input_dic["ObjCorner"] = more.get("ObjCorner").get("value")
+    input_dic["ObjX"] = more.get("ObjX").get("value")
+    input_dic["ObjY"] = more.get("ObjY").get("value")
+    input_dic["ObjTitleFont"] = more.get("ObjTitleFont").get("value")
+    input_dic["ObjTitleFontColor"] = more.get("ObjTitleFontColor").get("value")
+    input_dic["ObjTitleFontSize"] = more.get("ObjTitleFontSize").get("value")
+    input_dic["ObjLabelsFont"] = more.get("ObjLabelsFont").get("value")
+    input_dic["ObjLabelsFontColor"] = more.get("ObjLabelsFontColor").get("value")
+    input_dic["ObjLabelsFontSize"] = more.get("ObjLabelsFontSize").get("value")
+    input_dic["ObjFont"] = more.get("ObjFont").get("value")
+    input_dic["ObjFontColor"] = more.get("ObjFontColor").get("value")
+    input_dic["ObjFontSize"] = more.get("ObjFontSize").get("value")
+
+    row1 = more.get("row1")
+    input_dic["Label1"] = row1.get("Label").get("value")
+    input_dic["FormatNumber1"] = row1.get("FormatNumber").get("value")
+    input_dic["FormatTime1"] = row1.get("FormatTime").get("value")
+
+    row2 = more.get("row2")
+    input_dic["Label2"] = row2.get("Label").get("value")
+    input_dic["FormatNumber2"] = row2.get("FormatNumber").get("value")
+    input_dic["FormatTime2"] = row2.get("FormatTime").get("value")
+
+    row3 = more.get("row3")
+    input_dic["Label3"] = row3.get("Label").get("value")
+    input_dic["FormatNumber3"] = row3.get("FormatNumber").get("value")
+    input_dic["FormatTime3"] = row3.get("FormatTime").get("value")
+
+    row4 = more.get("row4")
+    input_dic["Label4"] = row4.get("Label").get("value")
+    input_dic["FormatNumber4"] = row4.get("FormatNumber").get("value")
+    input_dic["FormatTime4"] = row4.get("FormatTime").get("value")
+
+    row5 = more.get("row5")
+    input_dic["Label5"] = row5.get("Label").get("value")
+    input_dic["FormatNumber5"] = row5.get("FormatNumber").get("value")
+    input_dic["FormatTime5"] = row5.get("FormatTime").get("value")
+
+    row6 = more.get("row6")
+    input_dic["Label6"] = row6.get("Label").get("value")
+    input_dic["FormatNumber6"] = row6.get("FormatNumber").get("value")
+    input_dic["FormatTime6"] = row6.get("FormatTime").get("value")
+
+    row7 = more.get("row7")
+    input_dic["Label7"] = row7.get("Label").get("value")
+    input_dic["FormatNumber7"] = row7.get("FormatNumber").get("value")
+    input_dic["FormatTime7"] = row7.get("FormatTime").get("value")
+
+    row8 = more.get("row8")
+    input_dic["Label8"] = row8.get("Label").get("value")
+    input_dic["FormatNumber8"] = row8.get("FormatNumber").get("value")
+    input_dic["FormatTime8"] = row8.get("FormatTime").get("value")
+
+    node["input_dic_task"] = input_dic
+
+    # Now fill input task for value fetch if any
+    if row1.get("Label").get("value") != "" and "value_fetch" in row1:
+        value = row1.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row1["input_dic"] = input_dic
+
+    if row2.get("Label").get("value") != "" and "value_fetch" in row2:
+        value = row2.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row2["input_dic"] = input_dic
+
+    if row3.get("Label").get("value") != "" and "value_fetch" in row3:
+        value = row3.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row3["input_dic"] = input_dic
+
+    if row4.get("Label").get("value") != "" and "value_fetch" in row4:
+        value = row4.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row4["input_dic"] = input_dic
+
+    if row5.get("Label").get("value") != "" and "value_fetch" in row5:
+        value = row5.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row5["input_dic"] = input_dic
+
+    if row6.get("Label").get("value") != "" and "value_fetch" in row6:
+        value = row6.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row6["input_dic"] = input_dic
+
+    if row7.get("Label").get("value") != "" and "value_fetch" in row7:
+        value = row7.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row7["input_dic"] = input_dic
+
+    if row8.get("Label").get("value") != "" and "value_fetch" in row8:
+        value = row8.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        row8["input_dic"] = input_dic
+
 
 def trailing_stop_each_trade(node):
     more = node.get("more")
