@@ -9,6 +9,7 @@ import candle_class_constructor
 import value_class_constructor
 import market_properties_class_constructor
 import spread_filter_struct_constructor
+import close_partially_items
 
 header = ""
 properties = []
@@ -373,6 +374,7 @@ def add_task_elements_common(nodes):
     and_done = False
     market_properties_done = False
     spread_filter_done = False
+    close_partially_done = False
     for node in nodes:
         task_name = node.get("data").get("blockName")
         match task_name:
@@ -400,6 +402,13 @@ def add_task_elements_common(nodes):
                 if spread_filter_done: continue
                 structs_data = spread_filter_struct_constructor.get_structs()
                 structs.append(structs_data)
+                spread_filter_done = True
+            case "close_partially":
+                if close_partially_done: continue
+                structs_data = close_partially_items.get_structs()
+                structs.append(structs_data)
+                vars_data = close_partially_items.get_vars()
+                vars_system.append(vars_data)
                 spread_filter_done = True
 
 # Elements that are assigned to a specific instance of a specific task type

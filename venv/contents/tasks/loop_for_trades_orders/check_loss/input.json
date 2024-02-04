@@ -1,0 +1,5 @@
+{
+  "check_mode": "CHECK_PROFIT_LOSS_MODE_ACCOUNT_PROFIT",
+  "check_value": 50.0,
+  "operator": "<="
+}

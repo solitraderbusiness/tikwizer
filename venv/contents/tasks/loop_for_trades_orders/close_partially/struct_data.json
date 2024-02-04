@@ -1,0 +1,3 @@
+{
+	"struct_data" : "struct Order\n  {\n   int               orderTicket;\n   double            orderVolume;\n\n  };\n"
+}

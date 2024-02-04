@@ -54,9 +54,47 @@ def set_task_input_dic(nodes):
                 trailing_stop_each_trade(node)
             case "comment":
                 comment(node)
+            case "close_partially":
+                close_partially(node)
+            case "close":
+                close(node)
+            case "check_profit":
+                check_profit(node)
+            case "check_loss":
+                check_loss(node)
             case _:
                 default(node)
 
+
+def check_loss(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["check_mode"] = more.get("check_mode").get("value")
+    input_dic["check_value"] = more.get("check_value").get("value")
+    input_dic["operator"] = more.get("operator").get("value")
+    node["input_dic_task"] = input_dic
+def check_profit(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["check_mode"] = more.get("check_mode").get("value")
+    input_dic["check_value"] = more.get("check_value").get("value")
+    input_dic["operator"] = more.get("operator").get("value")
+    node["input_dic_task"] = input_dic
+def close(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["slippage"] = more.get("slippage").get("value")
+    input_dic["arrow_color"] = more.get("arrow_color").get("value")
+    node["input_dic_task"] = input_dic
+
+def close_partially(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["part_vol_mode"] = more.get("part_vol_mode").get("value")
+    input_dic["part_vol_value"] = more.get("part_vol_value").get("value")
+    input_dic["slippage"] = more.get("slippage").get("value")
+    input_dic["arrow_color"] = more.get("arrow_color").get("value")
+    node["input_dic_task"] = input_dic
 def comment(node):
     more = node.get("more")
     input_dic = {}

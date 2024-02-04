@@ -148,7 +148,15 @@ def add_category (nodes):
                 node["category"] = "counters"
             case "for_each_trade":
                 node["category"] = "loop_for_trades_orders"
+            case "close_partially":
+                node["category"] = "loop_for_trades_orders"
+            case "close":
+                node["category"] = "loop_for_trades_orders"
             case "break":
+                node["category"] = "loop_for_trades_orders"
+            case "check_profit":
+                node["category"] = "loop_for_trades_orders"
+            case "check_loss":
                 node["category"] = "loop_for_trades_orders"
             case "Buy now" | "Sell now" | "Buy pending order" | "Sell pending order":
                 node["category"] = ""

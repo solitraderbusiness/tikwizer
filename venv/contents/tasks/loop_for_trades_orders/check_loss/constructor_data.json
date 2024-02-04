@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "check_mode = check_mode_val;\n      check_value = check_value_val;"
+}

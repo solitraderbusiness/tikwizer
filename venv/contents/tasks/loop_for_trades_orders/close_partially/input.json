@@ -1,0 +1,6 @@
+{
+"part_vol_mode" : "CLOSE_PARTIALLY_PERCENT_OF_INITIAL_VOLUME",
+"part_vol_value" : 20,
+"slippage" : 4,
+"arrow_color" : "clrDeepPink"
+}
