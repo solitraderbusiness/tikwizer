@@ -11,6 +11,9 @@ constants = [
     "#define RESET_LEVEL_CUSTOM 3",
 
     ########################## Time filter ############################
+    "#define TIME_MODE_TEXT 1",
+    "#define TIME_MODE_COMPONENT 2",
+    "#define TIME_MODE_RELATIVE 3",
 
     "#define TIME_SERVER 1",
     "#define TIME_LOCAL 2",

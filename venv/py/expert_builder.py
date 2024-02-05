@@ -167,6 +167,10 @@ def add_global_functions(data):
     fun_time_from_string = global_functions.get_fun__time_from_string()
     functions.append(fun_time_from_string)
 
+    # TimeFromComponent function
+    fun_time_from_components = global_functions.get_fun__time_from_components()
+    functions.append(fun_time_from_components)
+
     # getGroupNumber function
     fun_get_group_number = global_functions.get_fun__get_group_number()
     functions.append(fun_get_group_number)

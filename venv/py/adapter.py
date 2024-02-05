@@ -118,6 +118,8 @@ def add_category (nodes):
                 node["category"] = "condition_formula"
             case "formula":
                 node["category"] = "condition_formula"
+            case "time_filter":
+                node["category"] = "time_filters"
             case "Once per bar":
                 node["category"] = "time_filters"
             case "once_every_n_bars":

@@ -62,10 +62,38 @@ def set_task_input_dic(nodes):
                 check_profit(node)
             case "check_loss":
                 check_loss(node)
+            case "time_filter":
+                time_filter(node)
             case _:
                 default(node)
 
-
+def time_filter(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["server_or_local_time"] = more.get("server_or_local_time").get("value")
+    input_dic["time_start_mode"] = more.get("time_start_mode").get("value")
+    input_dic["time_start"] = more.get("time_start").get("value")
+    input_dic["time_start_year"] = more.get("time_start_year").get("value")
+    input_dic["time_start_month"] = more.get("time_start_month").get("value")
+    input_dic["time_start_day"] = more.get("time_start_day").get("value")
+    input_dic["time_start_hour"] = more.get("time_start_hour").get("value")
+    input_dic["time_start_minute"] = more.get("time_start_minute").get("value")
+    input_dic["time_start_second"] = more.get("time_start_second").get("value")
+    input_dic["time_end_mode"] = more.get("time_end_mode").get("value")
+    input_dic["time_end"] = more.get("time_end").get("value")
+    input_dic["time_end_year"] = more.get("time_end_year").get("value")
+    input_dic["time_end_month"] = more.get("time_end_month").get("value")
+    input_dic["time_end_day"] = more.get("time_end_day").get("value")
+    input_dic["time_end_hour"] = more.get("time_end_hour").get("value")
+    input_dic["time_end_minute"] = more.get("time_end_minute").get("value")
+    input_dic["time_end_second"] = more.get("time_end_second").get("value")
+    input_dic["time_end_rel_years"] = more.get("time_end_rel_years").get("value")
+    input_dic["time_end_rel_months"] = more.get("time_end_rel_months").get("value")
+    input_dic["time_end_rel_days"] = more.get("time_end_rel_days").get("value")
+    input_dic["time_end_rel_hours"] = more.get("time_end_rel_hours").get("value")
+    input_dic["time_end_rel_minutes"] = more.get("time_end_rel_minutes").get("value")
+    input_dic["time_end_rel_seconds"] = more.get("time_end_rel_seconds").get("value")
+    node["input_dic_task"] = input_dic
 def check_loss(node):
     more = node.get("more")
     input_dic = {}
