@@ -294,6 +294,7 @@ def spread_filter(node):
     input_dic["spread_mode"] = more.get("spread_mode").get("value")
     input_dic["spread_benchmark_fix_value"] = more.get("spread_benchmark_fix_value").get("value")
     input_dic["average_spread_time_period"] = more.get("average_spread_time_period").get("value")
+    input_dic["average_spread_adjust"] = more.get("average_spread_adjust").get("value")
     input_dic["operator"] = more.get("operator").get("value")
     node["input_dic_task"] = input_dic
 def blocks_on_off(node):

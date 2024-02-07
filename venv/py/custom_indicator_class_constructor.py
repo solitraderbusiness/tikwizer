@@ -52,6 +52,10 @@ def get_class(input_dic, class_id):
         .replace("custom_init", custom_init) \
         .replace("custom_params", custom_params)
 
+    if "adjust" in input_dic:
+        adjustment = adjust.get("result", input_dic.get("adjust"), "symbol")
+        mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
+
     return mql4_body
 
 

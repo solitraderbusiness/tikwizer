@@ -16,33 +16,36 @@ public:
      {
 
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
+      string result = "";
       switch(type)
         {
          case VALUE_TYPE_NUMERIC:
          case VALUE_TYPE_BOOLEAN:
          case VALUE_TYPE_COLOR:
          case VALUE_TYPE_TEXT:
-            return (string)value;
+            result = (string)value;
+            break;
 
          case VALUE_TYPE_TEXT_CODE_INPUT:
-            return "\"" + value + "\"";
+            result = "\"" + value + "\"";
+            break;
 
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               return (string) value;
+               result = (string) value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                  {
                   double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                  return (string)(point*10*value);  //STest, *10 works for all symbols?
+                  result = (string)(point*10*value);  //STest, *10 works for all symbols?
                  }
-            return "";
+            break;
 
          case VALUE_TYPE_TIME:
-            return "";
+            break;
         }
+        return result;
      }
   };

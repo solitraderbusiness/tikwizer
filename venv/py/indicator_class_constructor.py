@@ -1,5 +1,6 @@
 import json
 import path_root
+import adjust
 
 path = path_root.get()
 path_sub = "/contents/indicators/"
@@ -39,7 +40,12 @@ def get_class(indicator_name, input_dic, class_id):
         .replace("init_body", init_body_dic.get("init_body")) \
         .replace("fun_body", fun_body_dic.get("fun_body"))
 
+    if "adjust" in input_dic:
+        adjustment = adjust.get("result", input_dic.get("adjust"), "symbol")
+        mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
+
     return mql4_body
+
 
 
 def get_initializer(indicator_name, var_id):

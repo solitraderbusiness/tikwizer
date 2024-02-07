@@ -1,5 +1,6 @@
 import json
 import path_root
+import adjust
 
 path = path_root.get()
 path_sub = "/contents/market_properties/"
@@ -32,6 +33,18 @@ def get_class(input_dic, class_id):
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
         .replace("init_body", init_body_dic.get("init_body"))
+
+    if "adjust" in input_dic:
+        adjustment1 = adjust.get("result.price", input_dic.get("adjust"), "msymbol")
+        adjustment2 = adjust.get("result.index", input_dic.get("adjust"), "msymbol")
+        adjustment3 = adjust.get("result.time", input_dic.get("adjust"), "msymbol")
+
+        adj_line_1 = "result.price = " + adjustment1 + ";"
+        adj_line_2 = "result.index = " + adjustment2 + ";"
+        adj_line_3 = "result.time = " + adjustment3 + ";"
+
+        adjustment = adj_line_1 + "\n" + adj_line_2 + "\n" + adj_line_3 + "\n"
+        mql4_body = mql4_body.replace("getHiLo(result);", "getHiLo(result);\n" + adjustment)
 
     return mql4_body
 

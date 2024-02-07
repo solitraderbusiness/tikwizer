@@ -6,6 +6,7 @@ public:
    bool              spread_mode;
    double            spread_benchmark_fix_value;
    int               average_spread_time_period;
+   double            average_spread_adjust;
    SpreadHolder      spreads[];
    string            msymbol;
 public:
@@ -15,6 +16,7 @@ public:
       spread_mode = spread_mode_val;
       average_spread_time_period = average_spread_time_period_val;
       spread_benchmark_fix_value = spread_benchmark_fix_value_val;
+      average_spread_adjust = average_spread_adjust_val;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -73,6 +75,6 @@ public:
          return 0;
       for(int i=size-1; i>=0; i--)
          spreadTotal += spreads[i].spread;
-      return spreadTotal/size;
+      return spreadTotal/size + average_spread_adjust;
      }
   };

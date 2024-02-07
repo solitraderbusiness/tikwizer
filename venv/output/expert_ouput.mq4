@@ -1,8 +1,3 @@
-//+------------------------------------------------------------------+
-//|                                                      ProjectName |
-//|                                      Copyright 2018, CompanyName |
-//|                                       http://www.companyname.net |
-//+------------------------------------------------------------------+
 #define ROUTE_1_PASSED 1
 #define ROUTE_2_PASSED 0
 #define RESET_LEVEL_DEFAULT 0
@@ -149,6 +144,18 @@
 #define CHECK_PROFIT_LOSS_MODE_FREE_MARGIN 5
 #define CHECK_PROFIT 1
 #define CHECK_LOSS 2
+struct SpreadHolder
+  {
+   double            spread;
+   datetime          time;
+  };
+struct MarketPropertiesResult
+  {
+   double            price;
+   int               index;
+   datetime          time;
+  };
+
 class BlockParent
   {
 public:
@@ -161,9 +168,6 @@ public:
 public:
    virtual void      onResult(int result) = NULL;
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task
   {
 public:
@@ -171,7 +175,7 @@ public:
 public:
                      Task(string name)
      {
-      this.name = name;
+        this.name = name;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -182,72 +186,47 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-
-
-class RSI1_left
-
-  {
-
+
+class RSI1_left
+  {
    string            symbol;
    int               timeframe;
    int               period;
    int               applied_price;
    int               shift;
-
-   int               buy_threshold;
-   int               sell_threshold;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      period = 14;
-
-      applied_price = PRICE_CLOSE;
-
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
       shift = 1;
       buy_threshold = 70;
-      sell_threshold = 30;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result + result*  20   /NormalizeDouble(100,0);
+     }
+
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Value1_right
   {
 public:
-   int               type;
+       int               type;
    int               value;
-   string               adjust;
    //for pips
    int               pips_mode;
    string            symbol;
    //for time (phase 2)
-
+   
    string            msymbol;
 
 public:
@@ -257,7 +236,6 @@ public:
      {
       type = VALUE_TYPE_PIPS;
       value = 10;
-      adjust = 20;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -268,102 +246,326 @@ public:
      {
 
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
+      string result = "";
       switch(type)
         {
          case VALUE_TYPE_NUMERIC:
          case VALUE_TYPE_BOOLEAN:
          case VALUE_TYPE_COLOR:
          case VALUE_TYPE_TEXT:
-            return (string)value;
+            result = (string)value;
+            break;
 
          case VALUE_TYPE_TEXT_CODE_INPUT:
-            return "\"" + value + "\"";
+            result = "\"" + value + "\"";
+            break;
 
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               return (string) value;
+               result = (string) value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                  {
                   double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                  return (string)(point*10*value);  //STest, *10 works for all symbols?
+                  result = (string)(point*10*value);  //STest, *10 works for all symbols?
                  }
-            return "";
+            break;
 
          case VALUE_TYPE_TIME:
-            return "";
+            break;
         }
+        return result + 20;
      }
   };
-
-
-class RSI2_left
-
-  {
-
+
+class RSI2_left1
+  {
    string            symbol;
    int               timeframe;
    int               period;
    int               applied_price;
    int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
+      shift = 1;
+      buy_threshold = 70;
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
+class RSI2_left2
+  {
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
+      shift = 2;
+      buy_threshold = 70;
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
 
-   int               buy_threshold;
-   int               sell_threshold;
+class MarketProperties2_right1
 
+  {
 
+public:
+       string            symbol;
+   int               timeframe;
+   int               find_method;
+   int               price_mode;
+   int               time_mode;
+   //what to return
+   int               what_to_get;
+   //used for time period
+   string            timestr_start;
+   string            timestr_end;
+   int               day_offset;
+   //used for candle period
+   int               range_start;
+   int               range_end;
+
+   string msymbol;
+   int mtimeframe;
 
 public:
 
    void              init()
 
      {
-
       symbol = NULL;
-
       timeframe = 0;
-
-      period = 14;
-
-      applied_price = PRICE_CLOSE;
-
-      shift = 1;
-      buy_threshold = 70;
-      sell_threshold = 30;
-
+      find_method = CANDLE_PERIOD;
+      price_mode = LOWEST_PRICE;
+      what_to_get = GET_PRICE;
+      timestr_start = "2023.11.23 7:30:30";
+      timestr_end   = timestr_end;
+      day_offset = 0;
+      range_start = 50;
+      range_end   = 100;
      }
 
 
 
-   double            calc()
-
+   int               calc(MarketPropertiesResult &result)
      {
+      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
 
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-
-      return result;
+      //In time mode, first calc range start and range end, then calc the result just like range mode
+      //STest, what is the effect of time mode? For now, it is ignored.
+      //STest, in iBarsShift, exact = false?
+      if(find_method == TIME_PERIOD)
+        {
+         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
+         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
+         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
+         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
+        }
+      getHiLo(result);
 
      }
 
 
+   void              getHiLo(MarketPropertiesResult &result)
+     {
+      if(price_mode == HIGHEST_PRICE)
+         getHighest(result);
+      else
+         if(price_mode == LOWEST_PRICE)
+            getLowest(result);
+     }
+
+
+
+   void              getHighest(MarketPropertiesResult &result)
+     {
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
+      result.price = iHigh(msymbol, mtimeframe, hi);
+      result.index = hi;
+      result.time = iTime(msymbol, mtimeframe, hi);
+     }
+
+
+   void              getLowest(MarketPropertiesResult &result)
+     {
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
+      result.price = iLow(msymbol, mtimeframe, li);
+      result.index = li;
+      result.time = iTime(msymbol, mtimeframe, li);
+     }
 
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value2_right
+
+
+class MarketProperties2_right2
+
+  {
+
+public:
+       string            symbol;
+   int               timeframe;
+   int               find_method;
+   int               price_mode;
+   int               time_mode;
+   //what to return
+   int               what_to_get;
+   //used for time period
+   string            timestr_start;
+   string            timestr_end;
+   int               day_offset;
+   //used for candle period
+   int               range_start;
+   int               range_end;
+
+   string msymbol;
+   int mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = NULL;
+      timeframe = 0;
+      find_method = CANDLE_PERIOD;
+      price_mode = LOWEST_PRICE;
+      what_to_get = GET_PRICE;
+      timestr_start = "2023.11.23 7:30:30";
+      timestr_end   = timestr_end;
+      day_offset = 0;
+      range_start = 50;
+      range_end   = 100;
+     }
+
+
+
+   int               calc(MarketPropertiesResult &result)
+     {
+      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
+
+      //In time mode, first calc range start and range end, then calc the result just like range mode
+      //STest, what is the effect of time mode? For now, it is ignored.
+      //STest, in iBarsShift, exact = false?
+      if(find_method == TIME_PERIOD)
+        {
+         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
+         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
+         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
+         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
+        }
+      getHiLo(result);
+
+     }
+
+
+   void              getHiLo(MarketPropertiesResult &result)
+     {
+      if(price_mode == HIGHEST_PRICE)
+         getHighest(result);
+      else
+         if(price_mode == LOWEST_PRICE)
+            getLowest(result);
+     }
+
+
+
+   void              getHighest(MarketPropertiesResult &result)
+     {
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
+      result.price = iHigh(msymbol, mtimeframe, hi);
+      result.index = hi;
+      result.time = iTime(msymbol, mtimeframe, hi);
+     }
+
+
+   void              getLowest(MarketPropertiesResult &result)
+     {
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
+      result.price = iLow(msymbol, mtimeframe, li);
+      result.index = li;
+      result.time = iTime(msymbol, mtimeframe, li);
+     }
+
+  };
+
+class RSI3_left
+  {
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+    
+   int              buy_threshold;
+   int              sell_threshold;
+
+public:
+   void              init()
+     {
+      symbol = NULL;
+      timeframe = 0;
+      period = 14;
+      applied_price = PRICE_CLOSE;
+      shift = 1;
+      buy_threshold = 70;
+      sell_threshold = 30;
+     }
+
+   double            calc()
+     {
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+      return result;
+     }
+
+  };
+class Value3_right
   {
 public:
-   int               type;
+       int               type;
    int               value;
-   string               adjust;
    //for pips
    int               pips_mode;
    string            symbol;
    //for time (phase 2)
-
+   
    string            msymbol;
 
 public:
@@ -373,7 +575,6 @@ public:
      {
       type = VALUE_TYPE_PIPS;
       value = 10;
-      adjust = 20;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -384,692 +585,380 @@ public:
      {
 
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
+      string result = "";
       switch(type)
         {
          case VALUE_TYPE_NUMERIC:
          case VALUE_TYPE_BOOLEAN:
          case VALUE_TYPE_COLOR:
          case VALUE_TYPE_TEXT:
-            return (string)value;
+            result = (string)value;
+            break;
 
          case VALUE_TYPE_TEXT_CODE_INPUT:
-            return "\"" + value + "\"";
+            result = "\"" + value + "\"";
+            break;
 
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               return (string) value;
+               result = (string) value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                  {
                   double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                  return (string)(point*10*value);  //STest, *10 works for all symbols?
+                  result = (string)(point*10*value);  //STest, *10 works for all symbols?
                  }
-            return "";
+            break;
 
          case VALUE_TYPE_TIME:
-            return "";
+            break;
         }
+        return result + 20;
      }
   };
-
-
-class MACD3_left1
-
+
+class MACD4_left1
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 1;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD4_left2
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 2;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD4_right1
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_SIGNAL;
+      shift = 1;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD4_right2
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_SIGNAL;
+      shift = 2;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD5_left1
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 1;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD5_left2
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 2;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD5_right1
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_SIGNAL;
+      shift = 1;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };
+class MACD5_right2
+  {
+   string            symbol;
+   int               timeframe;
+   int               fast_ema_period;
+   int               slow_ema_period;
+   int               signal_period;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+public:
+   void              init()
+     {
+       symbol = NULL;
+      timeframe = 0;
+      fast_ema_period = 9;
+      slow_ema_period = 29;
+      signal_period = 12;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_SIGNAL;
+      shift = 2;
+     }
+
+   double            calc()
+     {
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+      return result;
+     }
+
+  };class Task0 : public Task
   {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_MAIN;
-
-      shift = 1;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD3_left2
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_MAIN;
-
-      shift = 2;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD3_right1
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_SIGNAL;
-
-      shift = 1;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD3_right2
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_SIGNAL;
-
-      shift = 2;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD4_left1
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_MAIN;
-
-      shift = 1;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD4_left2
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_MAIN;
-
-      shift = 2;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD4_right1
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_SIGNAL;
-
-      shift = 1;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MACD4_right2
-
-  {
-
-   string            symbol;
-
-   int               timeframe;
-
-   int               fast_ema_period;
-
-   int               slow_ema_period;
-
-   int               signal_period;
-
-   int               applied_price;
-
-   int               mode;
-
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = 0;
-
-      fast_ema_period = 9;
-
-      slow_ema_period = 29;
-
-      signal_period = 12;
-
-      applied_price = PRICE_CLOSE;
-
-      mode = MODE_SIGNAL;
-
-      shift = 2;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task0 : public Task
-  {
-   int               server_or_local_time;
-   int               time_start_mode;
-   string            time_start;
-   int               time_start_year;
-   int               time_start_month;
-   double            time_start_day;
-   double            time_start_hour;
-   double            time_start_minute;
-   int               time_start_second;
-   int               time_end_mode;
-   string            time_end;
-   int               time_end_year;
-   int               time_end_month;
-   double            time_end_day;
-   double            time_end_hour;
-   double            time_end_minute;
-   int               time_end_second;
-   int               time_end_rel_years;
-   int               time_end_rel_months;
-   double            time_end_rel_days;
-   double            time_end_rel_hours;
-   double            time_end_rel_minutes;
-   int               time_end_rel_seconds;
+   string              symbol;
+   bool              spread_mode;
+   double            spread_benchmark_fix_value;
+   int               average_spread_time_period;
+   double            average_spread_adjust;
+   SpreadHolder      spreads[];
+   string            msymbol;
 public:
                      Task0(string name):Task(name)
      {
-      server_or_local_time = TIME_SERVER;
-      time_start_mode = TIME_MODE_TEXT;
-      time_start = "00:00";
-      time_start_year = 0;
-      time_start_month = 0;
-      time_start_day = 0.0;
-      time_start_hour = 1.0;
-      time_start_minute = 0.0;
-      time_start_second = 0;
-      time_end_mode = TIME_MODE_TEXT;
-      time_end = "00:01";
-      time_end_year = 0;
-      time_end_month = 0;
-      time_end_day = 0.0;
-      time_end_hour = 1.0;
-      time_end_minute = 1.0;
-      time_end_second = 0;
-      time_end_year = 0;
-      time_end_rel_months = 0;
-      time_end_rel_days = 0.0;
-      time_end_rel_hours = 0.0;
-      time_end_rel_minutes = 1.0;
-      time_end_rel_seconds = 0;
+         symbol = NULL;
+      spread_mode = SPREAD_BENCHMARK_FIX;
+      average_spread_time_period = 20;
+      spread_benchmark_fix_value = 14;
+      average_spread_adjust = 817;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      datetime t0 = 0, t1 = 0, tx = 0, now = 0;
-      int mode_time = 0;
 
-      if(server_or_local_time == TIME_SERVER)
+      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+
+      removeSpreadExtra();
+      addSpread();
+
+      double spread_benchmark = spread_mode==SPREAD_BENCHMARK_AVERAGE ? spreadAverage() : spread_benchmark_fix_value;
+      double spread_current = MarketInfo(msymbol, MODE_SPREAD);
+
+      bool result = spread_current <= spread_benchmark;
+      if(result)
         {
-         mode_time = 0;
-         now = TimeCurrent();
-        }
-      else
-         if(server_or_local_time == TIME_LOCAL)
-           {
-            mode_time = 1;
-            now = TimeLocal();
-           }
-         else
-            if(server_or_local_time == TIME_GMT)
-              {
-               mode_time = 2;
-               now = TimeGMT();
-              }
-
-      //-- start time
-      if(time_start_mode == TIME_MODE_TEXT)
-        {
-         t0 = TimeFromString(mode_time, time_start);
-        }
-      else
-         if(time_start_mode == TIME_MODE_COMPONENT)
-           {
-            t0 = TimeFromComponents(mode_time, time_start_year, time_start_month, time_start_day, time_start_hour, time_start_minute, time_start_second);
-           }
-
-      //-- end time
-      if(time_end_mode == TIME_MODE_TEXT)
-        {
-         t1 = TimeFromString(mode_time, time_end);
-        }
-      else
-         if(time_end_mode == TIME_MODE_COMPONENT)
-           {
-            t1 = TimeFromComponents(mode_time, time_end_year, time_end_month, time_end_day, time_end_hour, time_end_minute, time_end_second);
-           }
-         else
-            if(time_end_mode == TIME_MODE_RELATIVE)
-              {
-               MqlDateTime tm;
-               TimeToStruct(t0, tm);
-
-               tm.year += time_end_rel_years;
-               tm.mon  += time_end_rel_months;
-               tm.day  += (int)MathFloor(time_end_rel_days);
-               tm.hour += (int)(MathFloor(time_end_rel_hours) + (24 * (time_end_rel_hours - MathFloor(time_end_rel_hours))));
-               tm.min  += (int)(MathFloor(time_end_rel_minutes) + (60 * (time_end_rel_minutes - MathFloor(time_end_rel_minutes))));
-               tm.sec  += (int)((double)time_end_rel_seconds + (60 * (time_end_rel_seconds - MathFloor(time_end_rel_seconds))));
-
-               t1 = StructToTime(tm);
-
-               if(t1 < t0)
-                 {
-                  t1 = t1 + 86400;
-                 }
-              }
-
-      if((now >= t0 && now < t1) || (t0 > t1 && (now >= t0 || now < t1)))
-        {
-         printf("task" + block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task" + block_id + " passsed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
+   virtual void      reset(int level) {
+      
+   }
+      void              addSpread()
      {
-
+      SpreadHolder sph;
+      sph.spread = MarketInfo(msymbol,MODE_SPREAD);
+      sph.time = TimeCurrent();
+      ArrayResize(spreads, ArraySize(spreads)+1, 0);
+      spreads[ArraySize(spreads)-1] = sph;
      }
+   void              removeSpreadExtra()
+     {
+      int size = ArraySize(spreads);
+      if(size==0)
+         return;
 
+      for(int i=size-1; i>=0; i--)
+        {
+         int timeDiff = TimeCurrent() - spreads[i].time;
+         if(timeDiff>average_spread_time_period)
+            RemoveIndexFromArray(spreads, i);
+        }
+     }
+   double            spreadAverage()
+     {
+      double spreadTotal = 0;
+      int size = ArraySize(spreads);
+      if(size==0)
+         return 0;
+      for(int i=size-1; i>=0; i--)
+         spreadTotal += spreads[i].spread;
+      return spreadTotal/size + average_spread_adjust;
+     }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task1 : public Task
   {
-
+   
 public:
                      Task1(string name):Task(name)
      {
-
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
       RSI1_left rsi1_left;
-      rsi1_left.init();
-      double valueRSI1_left = rsi1_left.calc();
+   rsi1_left.init();
+   double valueRSI1_left = rsi1_left.calc();
       Value1_right value1_right;
-      value1_right.init();
-      double valueValue1_right = value1_right.calc();
+   value1_right.init();
+   double valueValue1_right = value1_right.calc();
 
       if(valueRSI1_left > valueValue1_right)
         {
@@ -1082,35 +971,39 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
-     {
-
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task2 : public Task
   {
-
+   
 public:
                      Task2(string name):Task(name)
      {
-
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      RSI2_left rsi2_left;
-      rsi2_left.init();
-      double valueRSI2_left = rsi2_left.calc();
-      Value2_right value2_right;
-      value2_right.init();
-      double valueValue2_right = value2_right.calc();
-
-      if(valueRSI2_left < valueValue2_right)
+      RSI2_left1 rsi2_left1;
+   rsi2_left1.init();
+   double valueRSI2_left1 = rsi2_left1.calc();
+      RSI2_left2 rsi2_left2;
+   rsi2_left2.init();
+   double valueRSI2_left2 = rsi2_left2.calc();
+      MarketProperties2_right1 marketproperties2_right1;
+   marketproperties2_right1.init();
+   MarketPropertiesResult mp_result2_right1;
+   marketproperties2_right1.calc(mp_result2_right1);
+      MarketProperties2_right2 marketproperties2_right2;
+   marketproperties2_right2.init();
+   MarketPropertiesResult mp_result2_right2;
+   marketproperties2_right2.calc(mp_result2_right2);
+      
+      if(valueRSI2_left1 < marketproperties2_right1.what_to_get == GET_PRICE ? mp_result2_right1.price : marketproperties2_right1.what_to_get == GET_CANDLE_ID ? mp_result2_right1.index : mp_result2_right1.time && valueRSI2_left2 > marketproperties2_right2.what_to_get == GET_PRICE ? mp_result2_right2.price : marketproperties2_right2.what_to_get == GET_CANDLE_ID ? mp_result2_right2.index : mp_result2_right2.time)
         {
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1121,41 +1014,31 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
-     {
-
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task3 : public Task
   {
-
+   
 public:
                      Task3(string name):Task(name)
      {
-
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      MACD3_left1 macd3_left1;
-      macd3_left1.init();
-      double valueMACD3_left1 = macd3_left1.calc();
-      MACD3_left2 macd3_left2;
-      macd3_left2.init();
-      double valueMACD3_left2 = macd3_left2.calc();
-      MACD3_right1 macd3_right1;
-      macd3_right1.init();
-      double valueMACD3_right1 = macd3_right1.calc();
-      MACD3_right2 macd3_right2;
-      macd3_right2.init();
-      double valueMACD3_right2 = macd3_right2.calc();
+      RSI3_left rsi3_left;
+   rsi3_left.init();
+   double valueRSI3_left = rsi3_left.calc();
+      Value3_right value3_right;
+   value3_right.init();
+   double valueValue3_right = value3_right.calc();
 
-      if(valueMACD3_left1 < valueMACD3_right1 && valueMACD3_left2 > valueMACD3_right2)
+      if(valueRSI3_left < valueValue3_right)
         {
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1166,41 +1049,37 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
-     {
-
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task4 : public Task
   {
-
+   
 public:
                      Task4(string name):Task(name)
      {
-
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      MACD4_left1 macd4_left1;
-      macd4_left1.init();
-      double valueMACD4_left1 = macd4_left1.calc();
-      MACD4_left2 macd4_left2;
-      macd4_left2.init();
-      double valueMACD4_left2 = macd4_left2.calc();
-      MACD4_right1 macd4_right1;
-      macd4_right1.init();
-      double valueMACD4_right1 = macd4_right1.calc();
-      MACD4_right2 macd4_right2;
-      macd4_right2.init();
-      double valueMACD4_right2 = macd4_right2.calc();
-
-      if(valueMACD4_left1 > valueMACD4_right1 && valueMACD4_left2 < valueMACD4_right2)
+         MACD4_left1 macd4_left1;
+   macd4_left1.init();
+   double valueMACD4_left1 = macd4_left1.calc();
+         MACD4_left2 macd4_left2;
+   macd4_left2.init();
+   double valueMACD4_left2 = macd4_left2.calc();
+         MACD4_right1 macd4_right1;
+   macd4_right1.init();
+   double valueMACD4_right1 = macd4_right1.calc();
+         MACD4_right2 macd4_right2;
+   macd4_right2.init();
+   double valueMACD4_right2 = macd4_right2.calc();
+      
+      if(valueMACD4_left1 < valueMACD4_right1 && valueMACD4_left2 > valueMACD4_right2)
         {
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1211,16 +1090,53 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
-     {
-
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task5 : public Task
+  {
+   
+public:
+                     Task5(string name):Task(name)
+     {
+         
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+         MACD5_left1 macd5_left1;
+   macd5_left1.init();
+   double valueMACD5_left1 = macd5_left1.calc();
+         MACD5_left2 macd5_left2;
+   macd5_left2.init();
+   double valueMACD5_left2 = macd5_left2.calc();
+         MACD5_right1 macd5_right1;
+   macd5_right1.init();
+   double valueMACD5_right1 = macd5_right1.calc();
+         MACD5_right2 macd5_right2;
+   macd5_right2.init();
+   double valueMACD5_right2 = macd5_right2.calc();
+      
+      if(valueMACD5_left1 > valueMACD5_right1 && valueMACD5_left2 < valueMACD5_right2)
+        {
+         printf("task"+block_id + " passsed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passsed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level) {
+      
+   }
+   
+  };
+class Task6 : public Task
   {
    //values set by user
    string            symbol;
@@ -1263,9 +1179,9 @@ class Task5 : public Task
    double            martingale_reset_on_n_profits;
    int               type[];
 public:
-                     Task5(string name):Task(name)
+                     Task6(string name):Task(name)
      {
-      symbol = NULL;
+         symbol = NULL;
       group = 11;
       order_type = ORDER_BUY_PENDING;
       money_management = MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI;
@@ -1298,7 +1214,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-      Task::run(block_id, block);
+            Task::run(block_id, block);
 
       msymbol = overriding_symbol=="" ? Symbol() : overriding_symbol;
 
@@ -1321,11 +1237,10 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level)
-     {
-
-     }
-private:
+   virtual void      reset(int level) {
+      
+   }
+   private:
    //does needed calculations
    void              calc()
      {
@@ -1568,34 +1483,27 @@ private:
 
    void              buildMagic()
      {
-      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task6 : public Task
+class Task7 : public Task
   {
-
+   
 public:
-                     Task6(string name):Task(name)
+                     Task7(string name):Task(name)
      {
-
+         
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
       block.onResult(ROUTE_1_PASSED);
      }
-   virtual void      reset(int level)
-     {
-
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block : BlockParent
   {
 
@@ -1699,9 +1607,6 @@ public:
 
   };
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block0 : public Block
   {
 public:
@@ -1709,10 +1614,10 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "time_filter";
+      name = "spread_filter";
       enabled = True;
 
-      int mnexts_true[] = {1, 2};
+      int mnexts_true[] = {1, 3};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1724,15 +1629,56 @@ public:
       task = new Task0(name);
      }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block1 : public Block
   {
 public:
                      Block1()
      {
       id = 1;
+      id_by_user = 1;
+      name = "condition_1_normal";
+      enabled = True;
+
+      int mnexts_true[] = {5};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task1(name);
+     }
+  };
+class Block2 : public Block
+  {
+public:
+                     Block2()
+     {
+      id = 2;
+      id_by_user = 1;
+      name = "condition_1_cross";
+      enabled = True;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task2(name);
+     }
+  };
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 3;
       id_by_user = 1;
       name = "condition_1_normal";
       enabled = True;
@@ -1746,62 +1692,9 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block2 : public Block
-  {
-public:
-                     Block2()
-     {
-      id = 2;
-      id_by_user = 1;
-      name = "condition_1_normal";
-      enabled = True;
-
-      int mnexts_true[] = {3};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 3;
-      id_by_user = 1;
-      name = "condition_1_cross";
-      enabled = True;
-
-      int mnexts_true[] = {5};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {2};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
       task = new Task3(name);
      }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
@@ -1814,7 +1707,7 @@ public:
 
       int mnexts_true[] = {6};
       int mnexts_false[] = {};
-      int mprevs_true[] = {1};
+      int mprevs_true[] = {3};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1824,22 +1717,19 @@ public:
       task = new Task4(name);
      }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block5 : public Block
   {
 public:
                      Block5()
      {
       id = 5;
-      id_by_user = 53;
-      name = "buy_sell";
+      id_by_user = 1;
+      name = "condition_1_cross";
       enabled = True;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {7};
       int mnexts_false[] = {};
-      int mprevs_true[] = {3};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1849,17 +1739,14 @@ public:
       task = new Task5(name);
      }
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block6 : public Block
   {
 public:
                      Block6()
      {
       id = 6;
-      id_by_user = 50;
-      name = "pass";
+      id_by_user = 53;
+      name = "buy_sell";
       enabled = True;
 
       int mnexts_true[] = {};
@@ -1874,6 +1761,28 @@ public:
       task = new Task6(name);
      }
   };
+class Block7 : public Block
+  {
+public:
+                     Block7()
+     {
+      id = 7;
+      id_by_user = 50;
+      name = "pass";
+      enabled = True;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {5};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task7(name);
+     }
+  };
 Block *blocks_init[];
 Block *blocks_timer[];
 Block *blocks_tick[];
@@ -1883,105 +1792,73 @@ Block *blocks_deinit[];
 string overriding_symbol = "";
 int overriding_timeframe = -1;
 template <typename T>
-void AddToArray(T& A[], T &value)
-  {
-   ArrayResize(A, ArraySize(A)+1);
-   A[ArraySize(A)-1] = value;
-  }
-template <typename T>
-void RemoveIndexFromArray(T& A[], int iPos)
-  {
-   int iLast;
-   for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
-      A[iPos] = A[iPos + 1];
-   ArrayResize(A, iLast);
-  }// Function to join two arrays into one
-void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[])
-  {
-   int size1 = ArraySize(array1);
-   int size2 = ArraySize(array2);
-   int newSize = size1 + size2;
-   ArrayCopy(arrayJoined, array1, 0, 0, size1);
-   ArrayCopy(arrayJoined, array2, 0, size1, size2);
-  }
+ void AddToArray(T& A[], T &value) {
+ ArrayResize(A, ArraySize(A)+1);
+ A[ArraySize(A)-1] = value;
+ }template <typename T>
+ void RemoveIndexFromArray(T& A[], int iPos) {
+ int iLast;
+ for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
+ A[iPos] = A[iPos + 1];
+ ArrayResize(A, iLast);
+ }// Function to join two arrays into one
+ void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[]) {
+ int size1 = ArraySize(array1);
+ int size2 = ArraySize(array2);
+ int newSize = size1 + size2;
+ ArrayCopy(arrayJoined, array1, 0, 0, size1);
+ ArrayCopy(arrayJoined, array2, 0, size1, size2);
+ }
 // Check if all items in arrayB are in ArrayA
-bool areAllItemsPresent(int &arrayA[], int &arrayB[])
-  {
-   for(int i = 0; i < ArraySize(arrayA); i++)
-     {
-      bool isPresent = false;
-      for(int j = 0; j < ArraySize(arrayB); j++)
-        {
-         if(arrayA[i] == arrayB[j])
-           {
-            isPresent = true;
-            break;
-           }
-        }
-      if(!isPresent)
-        {
-         return false;
-        }
-     }
-   return true;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+ bool areAllItemsPresent(int &arrayA[], int &arrayB[]) {
+ for(int i = 0; i < ArraySize(arrayA); i++) {
+ bool isPresent = false;
+ for(int j = 0; j < ArraySize(arrayB); j++) {
+ if(arrayA[i] == arrayB[j]) {
+ isPresent = true;
+ break;
+ }
+ }
+ if(!isPresent) {
+ return false;
+ }
+ } 
+return true;
+ }
 void runBlockTick(int source_id, int source_result, int dest_id)
-  {
-   blocks_tick[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksTick()
-  {
-   ArrayResize(blocks_tick, 7);
-   Block0 *block0 = new Block0();
-   Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
-   Block4 *block4 = new Block4();
-   Block5 *block5 = new Block5();
-   Block6 *block6 = new Block6();
+{
+blocks_tick[dest_id].run(source_id, source_result);
+}void addBlocksTick()
+{
+ArrayResize(blocks_tick, 8);
+Block0 *block0 = new Block0();
+Block1 *block1 = new Block1();
+Block2 *block2 = new Block2();
+Block3 *block3 = new Block3();
+Block4 *block4 = new Block4();
+Block5 *block5 = new Block5();
+Block6 *block6 = new Block6();
+Block7 *block7 = new Block7();
 
-   blocks_tick[0] = block0;
-   blocks_tick[1] = block1;
-   blocks_tick[2] = block2;
-   blocks_tick[3] = block3;
-   blocks_tick[4] = block4;
-   blocks_tick[5] = block5;
-   blocks_tick[6] = block6;
+blocks_tick[0] = block0;
+blocks_tick[1] = block1;
+blocks_tick[2] = block2;
+blocks_tick[3] = block3;
+blocks_tick[4] = block4;
+blocks_tick[5] = block5;
+blocks_tick[6] = block6;
+blocks_tick[7] = block7;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksTick(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_tick); i++)
-     {
-      blocks_tick[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-string syncSymbolOverriding(string symbol)
-  {
-   return overriding_symbol == "" ? symbol : overriding_symbol;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int syncTimeframeOverriding(int timeframe)
-  {
-   return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-datetime TimeFromString(int mode_time, string stamp)
+{
+    for(int i=0; i<ArraySize(blocks_tick); i++){
+        blocks_tick[i].reset(level);
+    }
+}string syncSymbolOverriding(string symbol) {
+ return overriding_symbol == "" ? symbol : overriding_symbol;
+}int syncTimeframeOverriding(int timeframe) {
+ return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
+ }datetime TimeFromString(int mode_time, string stamp)
   {
    datetime t = 0;
 
@@ -2019,9 +1896,6 @@ datetime TimeFromString(int mode_time, string stamp)
    return StringToTime(stamp);
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 datetime TimeFromComponents(
    int time_src = 0,
    int    y = 0,
@@ -2079,25 +1953,19 @@ datetime TimeFromComponents(
   }
 //Considering each magic number is a 7 digit number like 2088100,
 //I choose to take first two digits as group number.
-int getGroupNumber(int magic)
-  {
+int getGroupNumber (int magic){
    return (int)(magic/100000);
-  }//This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
-  {
-   for(int i=0; i<ArraySize(type); i++)
-      if(orderType==type[i])
+}//This just checks if order is buy or sell
+bool sameOrderType (int type[], int orderType){
+   for (int i=0; i<ArraySize(type); i++)
+      if (orderType==type[i])
          return true;
    return false;
-  }//72 is the number in magic 3rd and 4th
+}//72 is the number in magic 3rd and 4th
 //digits that show it is opened by the expert
-bool isAutomated(int magic)
-  {
+bool isAutomated (int magic){
    return MathMod((int)(magic/1000), 100) == 72;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+}
 void ReverseList(int &arr[])
   {
    int size = ArraySize(arr);
@@ -2114,9 +1982,6 @@ void ReverseList(int &arr[])
 bool SleepEx(int ms, bool bAlertable);
 #import
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
   {
    bool success=false;
@@ -2147,9 +2012,6 @@ bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
    return(false);
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void WaitTradeContextIfBusy()
   {
    if(IsTradeContextBusy())
@@ -2166,9 +2028,6 @@ void WaitTradeContextIfBusy()
      }
    return;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int CheckForTradingError(int error_code=-1, string msg_prefix="")
   {
 // return 0 -> no error
@@ -2370,9 +2229,6 @@ int CheckForTradingError(int error_code=-1, string msg_prefix="")
 
    return(retval);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string ErrorMessage(int error_code=-1)
   {
    string e = "";
@@ -2830,11 +2686,7 @@ string ErrorMessage(int error_code=-1)
    e = StringConcatenate(e, " (", error_code, ")");
 
    return e;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double BetMartingale(
+  }double BetMartingale(
    string symbol,
    int look_up_on,
    int group,
@@ -2897,11 +2749,7 @@ double BetMartingale(
      }
 
    return lots;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void GetBetTradesInfo(
+  }void GetBetTradesInfo(
    double &output[],
    string symbol,
    int look_up_on, // 0: try running trades first and then history trades, 1: try running only, 2: try history only
@@ -2990,9 +2838,6 @@ void GetBetTradesInfo(
       GetBetTradesInfo(output, symbol, look_up_on, group, type, findConsecutive);
      }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool TradeSelectByIndex(
    int index,
    string group_mode,
@@ -3011,11 +2856,7 @@ bool TradeSelectByIndex(
 
 
 
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool HistoryTradeSelectByIndex(
+  }bool HistoryTradeSelectByIndex(
    int index,
    string group_mode,
    string group,
@@ -3031,9 +2872,6 @@ bool HistoryTradeSelectByIndex(
 
    return false;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool              filterGeneral(string symbol, int type[], int group_mode, int group_number)
   {
    bool con1 = (symbol==NULL && OrderSymbol()==Symbol()) || symbol==OrderSymbol();
@@ -3042,29 +2880,18 @@ bool              filterGeneral(string symbol, int type[], int group_mode, int g
    bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
    return con1 && con2 && con3 && con4;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int SymbolDigits(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool IsOrderTypeSell()
+  }bool IsOrderTypeSell()
   {
    int type = OrderType();
 
    return (type == OP_SELL || type == OP_SELLSTOP || type == OP_SELLLIMIT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
+  }double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
   {
    double size=0;
    double LotStep=MarketInfo(symbol,MODE_LOTSTEP);
@@ -3209,20 +3036,13 @@ double DynamicLots(string symbol, int mode, double value=0, double sl=0, string 
    size=MathRound(size/LotStep)*LotStep;
    return (size);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double PipValue(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return CustomPoint(symbol) / SymbolInfoDouble(symbol, SYMBOL_POINT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double CustomPoint(string symbol)
+  }double CustomPoint(string symbol)
   {
    static string symbols[];
    static double points[];
@@ -3406,9 +3226,6 @@ void StringExplode(string delimiter, string inputString, T &output[])
       output[element] = empty_val;
      }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double toDigits(double pips, string symbol)
   {
    if(symbol == "")
@@ -3419,9 +3236,6 @@ double toDigits(double pips, string symbol)
 
    return NormalizeDouble(pips * PipValue(symbol) * point, digits);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string StringTrim(string str)
   {
    str = StringTrimRight(str);
@@ -3510,9 +3324,6 @@ string FormatValueForPrinting(
   {
    return value;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int WindowFindVisible(long chart_id, string term)
   {
 //-- the search term can be chart name, such as Force(13), or subwindow index
@@ -3535,51 +3346,25 @@ int WindowFindVisible(long chart_id, string term)
 
    return subwindow;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int init()
-  {
-   addBlocksTick();
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTimer()
-  {
+int init(){
+addBlocksTick();
+}
+void OnTimer(){
 
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTick()
-  {
-   resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTrade()
-  {
+}
+void OnTick(){
+resetBlocksTick(RESET_LEVEL_TICK);runBlockTick(-1, -1, 0);
+}
+void OnTrade(){
 
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+}
 void OnChartEvent(const int id,         // Event identifier
-                  const long& lparam,   // Event parameter of long type
-                  const double& dparam, // Event parameter of double type
-                  const string& sparam  // Event parameter of string type
-                 )
-  {
+const long& lparam,   // Event parameter of long type
+const double& dparam, // Event parameter of double type
+const string& sparam  // Event parameter of string type
+){
 
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void deinit(const int reason)
-  {
+}
+void deinit(const int reason){
 
-  }
-//+------------------------------------------------------------------+
+}

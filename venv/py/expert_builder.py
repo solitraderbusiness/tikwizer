@@ -402,6 +402,31 @@ def add_task_elements_common(nodes):
                         structs_data = market_properties_class_constructor.get_structs()
                         structs.append(structs_data)
                         market_properties_done = True
+            case "comment":
+                if market_properties_done: continue
+                row1 = node.get("more").get("row1")
+                row2 = node.get("more").get("row2")
+                row3 = node.get("more").get("row3")
+                row4 = node.get("more").get("row4")
+                row5 = node.get("more").get("row5")
+                row6 = node.get("more").get("row6")
+                row7 = node.get("more").get("row7")
+                row8 = node.get("more").get("row8")
+
+                con1 = "value_fetch" in row1 and row1.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con2 = "value_fetch" in row2 and row2.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con3 = "value_fetch" in row3 and row3.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con4 = "value_fetch" in row4 and row4.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con5 = "value_fetch" in row5 and row5.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con6 = "value_fetch" in row6 and row6.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con7 = "value_fetch" in row7 and row7.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con8 = "value_fetch" in row8 and row8.get("value_fetch").get("row1").get("label") == "Market Properties"
+
+                con = con1 or con2 or con3 or con4 or con5 or con6 or con7 or con8
+                if (con):
+                    structs_data = market_properties_class_constructor.get_structs()
+                    structs.append(structs_data)
+                    market_properties_done = True
             case "spread_filter":
                 if spread_filter_done: continue
                 structs_data = spread_filter_struct_constructor.get_structs()

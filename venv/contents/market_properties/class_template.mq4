@@ -33,7 +33,6 @@ public:
          range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
         }
       getHiLo(result);
-
      }
 
 

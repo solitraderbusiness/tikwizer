@@ -1,5 +1,6 @@
 import json
 import path_root
+import adjust
 
 path = path_root.get()
 path_sub = "/contents/candle/"
@@ -31,6 +32,10 @@ def get_class(input_dic, class_id):
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
         .replace("init_body", init_body_dic.get("init_body"))
+
+    if "adjust" in input_dic:
+        adjustment = adjust.get("value", input_dic.get("adjust"), "msymbol")
+        mql4_body = mql4_body.replace("return value;", "return " + adjustment + ";")
 
     return mql4_body
 
