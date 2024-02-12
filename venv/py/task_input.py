@@ -476,6 +476,14 @@ def buy_sell(node):
 
     node["input_dic_task"] = input_dic
 
+    # Now fill input task for value fetch if any
+    open_at_price_data = node.get("more").get("open_at_price")
+    open_at_price = open_at_price_data.get("value")
+    if open_at_price == "OPEN_AT_CUSTOM_PRICE":
+        value = open_at_price_data.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        open_at_price_data["input_dic"] = input_dic
 
 
 def modify_variables(node):

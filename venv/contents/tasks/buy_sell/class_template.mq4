@@ -183,10 +183,8 @@ private:
                   price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
                   break;
                case OPEN_AT_CUSTOM_PRICE:
-                  RSI1_left rsi1_left;
-                  rsi1_left.init();
-                  double valueRsi1_left = rsi1_left.calc();
-                  price = valueRsi1_left;
+                  initializer_oacp
+                  price = variable_name_oacp;
                   break;
               }
            }

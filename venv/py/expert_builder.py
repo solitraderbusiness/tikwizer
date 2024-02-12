@@ -454,7 +454,19 @@ def add_task_elements_specific(nodes):
             trailing_stop_each_trade(node)
         elif task_name == "comment":
             comment(node)
+        elif task_name == "buy_sell":
+            buy_sell(node)
 
+def buy_sell (node):
+    open_at_price_data = node.get("more").get("open_at_price")
+    open_at_price = open_at_price_data.get("value")
+    if open_at_price == "OPEN_AT_CUSTOM_PRICE":
+        input_dic = open_at_price_data.get("input_dic")
+        value_fetch = open_at_price_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "oacp"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 def comment (node):
     mrow1 = node.get("more").get("row1")
     if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:

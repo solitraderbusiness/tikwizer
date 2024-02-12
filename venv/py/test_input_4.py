@@ -921,6 +921,10 @@ input_data_2 = {
                     "value": 20,
                     "checked": False
                 },
+                "average_spread_adjust": {
+                    "value": 20,
+                    "checked": False
+                },
                 "operator": {
                     "value": "<=",
                     "checked": False
@@ -1492,7 +1496,64 @@ input_data_2 = {
                 },
                 "open_at_price": {
                     "id": 2,
-                    "value": "OPEN_AT_ASK"
+                    "value": "OPEN_AT_CUSTOM_PRICE",
+                    "value_fetch": {
+                        "row1": {
+                            "label": "Indicator"
+                        },
+                        "row2": {
+                            "name": "RSI",
+                            "description": "this is RSI indicator"
+                        },
+                        "candleId": {
+                            "value": 3,
+                            "description": ""
+                        },
+                        "params": [
+                            {
+                                "optionName": "symbol",
+                                "value": {
+                                    "value": 14
+                                }
+                            },
+                            {
+                                "optionName": "timeframe",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "period",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "applied_price",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "buy_threshold",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "sell_threshold",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "shift",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            }
+                        ]
+                    }
                 },
                 "price_offset": {
                     "id": 25,

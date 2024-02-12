@@ -45,7 +45,7 @@ def get_task_child(node):
     reset_data = reset_data_dynamic_fun(reset_data_static)
 
     function_data_static = function_data_static_fun(path_task_id)
-    function_data = function_data_dynamic_fun(function_data_static)
+    function_data = function_data_dynamic_fun(node, function_data_static)
 
     # class template to class final
     task = class_template \
@@ -142,12 +142,32 @@ def function_data_static_fun(path_task_id):
             return function_data
     return ""
 
-def function_data_dynamic_fun(function_data_static):
+def function_data_dynamic_fun(node, function_data_static):
+    task_name = node.get("data").get("blockName")
+    function_data = function_data_static
+    if task_name == "buy_sell":
+        function_data = buy_sell_function_data(node, function_data_static)
+
+    return function_data
+
+
+def buy_sell_function_data(node, function_data_static):
+    open_at_price_data = node.get("more").get("open_at_price")
+    if open_at_price_data.get("value") == "OPEN_AT_CUSTOM_PRICE":
+        value_fetch = open_at_price_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "oacp"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer_oacp", init)
+        function_data_static = function_data_static.replace("variable_name_oacp", val)
+    else:
+        function_data_static = function_data_static.replace("initializer_oacp", "")
+        function_data_static = function_data_static.replace("variable_name_oacp", "\"\"")
+
     return function_data_static
-
-
-
-
 
 def replace_input_values(data, input_dic):
     for key in input_dic:
