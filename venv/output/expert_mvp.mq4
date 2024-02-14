@@ -103,7 +103,7 @@
 #define MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN 10
 #define MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY 11
 #define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12
-#define MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI 13
+#define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13
 #define MONEY_MANAGEMENT_CUSTOM_VALUE 14
 #define POINT_FORMAT_RULES "0.001=0.01,0.00001=0.0001,0.000001=0.0001"
 #define ON_PROFIT_MODE_FIXED_VALUE 1
@@ -174,9 +174,12 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-
-class RSI1_left
-  {
+
+
+class RSI1_left
+
+  {
+
    string            symbol;
    int               timeframe;
    int               period;
@@ -184,26 +187,44 @@ class RSI1_left
    int               shift;
     
    int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
+   int              sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 14;
+
+      applied_price = PRICE_CLOSE;
+
       shift = 1;
       buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
   };
 class Value1_right
   {
@@ -266,9 +287,12 @@ public:
         }
      }
   };
-
-class RSI2_left
-  {
+
+
+class RSI2_left
+
+  {
+
    string            symbol;
    int               timeframe;
    int               period;
@@ -276,26 +300,44 @@ class RSI2_left
    int               shift;
     
    int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
+   int              sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 14;
+
+      applied_price = PRICE_CLOSE;
+
       shift = 1;
       buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
   };
 class Value2_right
   {
@@ -358,254 +400,502 @@ public:
         }
      }
   };
-
-class MACD3_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
+
+
+class MACD3_left1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+       symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 2;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
   };class Task0 : public Task
   {
    int               server_or_local_time;
@@ -940,7 +1230,7 @@ public:
          symbol = NULL;
       group = 11;
       order_type = ORDER_BUY_PENDING;
-      money_management = MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI;
+      money_management = MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI;
       how_much_volume = 35;
       volume_upper_limit = 10;
       open_at_price = OPEN_AT_ASK;
@@ -1213,7 +1503,7 @@ public:
                                           //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
                                          }
                                        else
-                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI)
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
                                              volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }

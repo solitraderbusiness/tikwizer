@@ -87,7 +87,7 @@ public:
          //block.onResult(ROUTE_2_PASSED);
          return;
         }
-      ticket=OrderSend(msymbol,cmd,volume,price,slippage,slPrice,tpPrice,comment,magic,expiration,arrow_color);
+      ticket=OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
       if(ticket == ERR_NO_ERROR)
         {
          printf("task"+block_id + " passsed route 1");
@@ -321,7 +321,7 @@ private:
                                           //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
                                          }
                                        else
-                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI)
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
                                              volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }

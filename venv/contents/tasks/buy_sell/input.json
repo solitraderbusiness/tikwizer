@@ -2,7 +2,7 @@
 	  "symbol" : "NULL",
       "group" : 11,
       "order_type" : "ORDER_BUY_PENDING",
-      "money_management" : "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+      "money_management" : "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
       "how_much_volume" : 35,
       "volume_upper_limit" : 0,
       "open_at_price" : "OPEN_AT_ASK",

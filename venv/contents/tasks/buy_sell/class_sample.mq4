@@ -35,7 +35,7 @@
 #define MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN 10
 #define MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY 11
 #define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12
-#define MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI 13
+#define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13
 #define MONEY_MANAGEMENT_CUSTOM_VALUE 14
 
 
@@ -90,7 +90,7 @@ public:
       symbol = NULL;
       group = 11;
       order_type = ORDER_BUY_PENDING;
-      money_management = MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI;
+      money_management = MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI;
       how_much_volume = 35;
       volume_upper_limit = 0;
       open_at_price = OPEN_AT_ASK;
@@ -132,7 +132,7 @@ public:
          return;
         }
       //printf("JJJJJJJJ " + cmd + " " + price + " " + slPrice + " " + tpPrice);
-      ticket=OrderSend(msymbol,cmd,volume,price,slippage,slPrice,tpPrice,comment,magic,expiration,arrow_color);
+      ticket=OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
       if(ticket == ERR_NO_ERROR)
         {
          printf("task"+block_id + " passsed route 1");
@@ -152,7 +152,6 @@ private:
    //does needed calculations
    void              calc()
      {
-      slippage = (int)(slippage * PipValue(msymbol));
       fitGroup();
       buildMagic();
       if(order_type==ORDER_BUY)
@@ -368,7 +367,7 @@ private:
                                           //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
                                          }
                                        else
-                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI)
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
                                              volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }

@@ -103,7 +103,7 @@
 #define MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN 10
 #define MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY 11
 #define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12
-#define MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI 13
+#define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13
 #define MONEY_MANAGEMENT_CUSTOM_VALUE 14
 #define POINT_FORMAT_RULES "0.001=0.01,0.00001=0.0001,0.000001=0.0001"
 #define ON_PROFIT_MODE_FIXED_VALUE 1
@@ -1152,7 +1152,7 @@ public:
          symbol = NULL;
       group = 11;
       order_type = ORDER_BUY_PENDING;
-      money_management = MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI;
+      money_management = MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI;
       how_much_volume = 35;
       volume_upper_limit = 10;
       open_at_price = OPEN_AT_ASK;
@@ -1190,12 +1190,46 @@ public:
       if(!initialized)
         {
          printf("Not initialized");
-         //block.onResult(ROUTE_2_PASSED);
+         block.onResult(ROUTE_2_PASSED);
          return;
         }
-      ticket=OrderSend(msymbol,cmd,volume,price,slippage,slPrice,tpPrice,comment,magic,expiration,arrow_color);
-      if(ticket == ERR_NO_ERROR)
+
+      int retryCount = 0;
+
+      while(!IsStopped())
         {
+
+         if(retryCount>30)
+            break;
+
+         WaitTradeContextIfBusy();
+
+         //-- send ---------------------------------------------------------
+         ResetLastError();
+
+         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
+         if (ticket>0) //Must be here
+            break;
+         //-- error check --------------------------------------------------
+         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
+
+         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
+
+         switch(erraction)
+           {
+            case 0:
+               break;    // no error
+            case 1:
+               retryCount ++;
+               continue; // overcomable error
+            case 2:
+               break;    // fatal error
+           }
+        }
+
+      if(ticket > 0)
+        {
+         //onTrade()
          printf("task"+block_id + " passsed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
@@ -1212,8 +1246,7 @@ public:
    //does needed calculations
    void              calc()
      {
-     slippage = (int)(slippage * PipValue(msymbol));
-      fitGroup();
+     fitGroup();
       buildMagic();
       if(order_type==ORDER_BUY)
         {
@@ -1425,7 +1458,7 @@ public:
                                           //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
                                          }
                                        else
-                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI)
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
                                              volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }

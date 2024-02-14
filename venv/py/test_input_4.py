@@ -1483,7 +1483,7 @@ input_data_2 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -2489,7 +2489,7 @@ input_data_3 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -3539,7 +3539,7 @@ input_data_4 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -4589,7 +4589,7 @@ input_data_5 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -5997,7 +5997,7 @@ input_data_6 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -6935,7 +6935,7 @@ input_data_7 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -7859,7 +7859,7 @@ input_data_8 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -8787,7 +8787,7 @@ input_data_9 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -9716,7 +9716,7 @@ input_data_10 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -10911,7 +10911,7 @@ input_data_11 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -12038,7 +12038,7 @@ input_data_12 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
@@ -13138,7 +13138,7 @@ input_data_13 = {
                     "value": "ORDER_BUY_PENDING"
                 },
                 "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGLE_PAROLI",
+                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
                     "checked": False
                 },
                 "how_much_volume": {
