@@ -35,7 +35,13 @@ def get_class(input_dic, class_id):
         .replace("init_body", init_body_dic.get("init_body"))
 
     if "adjust" in input_dic:
-        adjustment = adjust.get("result", input_dic.get("adjust"), "symbol")
+        type = input_dic.get("type")
+        var_name = "result"
+        match type:
+            case "VALUE_TYPE_NUMERIC" | "VALUE_TYPE_BOOLEAN" | "VALUE_TYPE_COLOR" | "VALUE_TYPE_PIPS":
+                var_name = "(double)" + var_name
+
+        adjustment = adjust.get(var_name, input_dic.get("adjust"), "msymbol")
         mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
 
     return mql4_body

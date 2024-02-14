@@ -107,6 +107,7 @@ private:
    //does needed calculations
    void              calc()
      {
+      slippage = (int)(slippage * PipValue(msymbol));
       fitGroup();
       buildMagic();
       if(order_type==ORDER_BUY)
@@ -194,7 +195,9 @@ private:
       if(price_offset_as_pip)
          offset = price_offset * Point() * 10;
 
-      if(order_type==ORDER_BUY_PENDING || order_type==ORDER_SELL_PENDING)
+      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+         price -= offset;
+      else if (cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
          price += offset;
      }
 
