@@ -128,20 +128,53 @@ public:
       if(!initialized)
         {
          printf("Not initialized");
-         //block.onResult(ROUTE_2_PASSED);
+         block.onResult(ROUTE_2_PASSED);
          return;
         }
-      //printf("JJJJJJJJ " + cmd + " " + price + " " + slPrice + " " + tpPrice);
-      ticket=OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
-      if(ticket == ERR_NO_ERROR)
+
+      int retryCount = 0;
+
+      while(!IsStopped())
         {
+
+         if(retryCount>30)
+            break;
+
+         WaitTradeContextIfBusy();
+
+         //-- send ---------------------------------------------------------
+         ResetLastError();
+
+         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
+         if(ticket>0)  //Must be here
+            break;
+         //-- error check --------------------------------------------------
+         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
+
+         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
+
+         switch(erraction)
+           {
+            case 0:
+               break;    // no error
+            case 1:
+               retryCount ++;
+               continue; // overcomable error
+            case 2:
+               break;    // fatal error
+           }
+        }
+
+      if(ticket > 0)
+        {
+         //onTrade()
          printf("task"+block_id + " passsed route 1");
-         //block.onResult(ROUTE_1_PASSED);
+         block.onResult(ROUTE_1_PASSED);
         }
       else
         {
          printf("task"+block_id + " passsed route 2");
-         //block.onResult(ROUTE_2_PASSED);
+         block.onResult(ROUTE_2_PASSED);
         }
      }
    virtual void      reset(int level)
