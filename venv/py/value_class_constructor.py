@@ -47,14 +47,33 @@ def get_class(input_dic, class_id):
     return mql4_body
 
 
-def get_initializer(var_id):
+def get_initializer(var_id, var_type):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
             initializer_dic = json.loads(initializer_str)
-            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
+
+            mtype = ""
+            match var_type:
+                case "Numeric":
+                    mtype = "double"
+                case "Boolean":
+                    mtype = "bool"
+                case "Color":
+                    mtype = "color"
+                case "Pips":
+                    mtype = "double"
+                case "Text":
+                    mtype = "string"
+                case "Text(code input)":
+                    mtype = "string"
+                case "Time":
+                    mtype = "int"  # STest, int as time?
+
+            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id)).replace("type", mtype)
             return initializer_body
+
 
 def get_initializer_split(var_id):
     mpath = path + path_sub
@@ -66,6 +85,8 @@ def get_initializer_split(var_id):
             for i in range(len(initializer_list)):
                 initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
             return initializer_list
+
+
 def get_var_name(var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
@@ -74,7 +95,6 @@ def get_var_name(var_id):
             initializer_dic = json.loads(initializer_str)
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
-
 
 # Test
 # input = {

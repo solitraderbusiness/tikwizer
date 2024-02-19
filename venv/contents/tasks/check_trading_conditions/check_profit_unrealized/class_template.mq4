@@ -15,7 +15,7 @@ public:
 public:
    void              Task_id(string name): Task(name)
      {
-      symbol = symbol_val;//STest, no lists yet, also all is not suported yet.
+      symbol = symbol_val;//STest, no lists yet, also all is not supported yet.
       group_mode = group_mode_val;
       group_number = group_number_val;
       int mtype[] = type_val; //0 for buy and 1 for sell

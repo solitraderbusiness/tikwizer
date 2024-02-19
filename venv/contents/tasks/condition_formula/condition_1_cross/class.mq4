@@ -21,12 +21,12 @@ public:
 
       if(var_name_11 operator_1 var_name_21 && var_name_12 operator_2 var_name_22)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }

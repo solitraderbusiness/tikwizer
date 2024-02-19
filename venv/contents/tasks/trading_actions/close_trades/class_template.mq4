@@ -31,6 +31,7 @@ public:
 
    virtual void      run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
       //STest, trades not sorted by newest

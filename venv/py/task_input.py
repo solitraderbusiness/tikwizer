@@ -52,6 +52,8 @@ def set_task_input_dic(nodes):
                 break_even(node)
             case "trailing_stop_each_trade":
                 trailing_stop_each_trade(node)
+            case "trailing_pending_orders":
+                trailing_pending_orders(node)
             case "comment":
                 comment(node)
             case "close_partially":
@@ -64,8 +66,77 @@ def set_task_input_dic(nodes):
                 check_loss(node)
             case "time_filter":
                 time_filter(node)
+            case "modify_stops_of_trades":
+                modify_stops_of_trades(node)
             case _:
                 default(node)
+
+
+def modify_stops_of_trades(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["group_mode"] = more.get("group_mode").get("value")
+    input_dic["group_number"] = more.get("group_number").get("value")
+    input_dic["type"] = more.get("type").get("value")
+
+    input_dic["order_age_mins"] = more.get("order_age_mins").get("value")
+    input_dic["relative_to"] = more.get("relative_to").get("value")
+    input_dic["new_tpsl_mode"] = more.get("new_tpsl_mode").get("value")
+    input_dic["new_stoploss"] = more.get("new_stoploss").get("value")
+    input_dic["new_stoploss_percent"] = more.get("v").get("value")
+    input_dic["new_takeprofit"] = more.get("new_takeprofit").get("value")
+    input_dic["new_takeprofit_percent"] = more.get("new_takeprofit_percent").get("value")
+    input_dic["level_color"] = more.get("level_color").get("value")
+
+    node["input_dic_task"] = input_dic
+
+    # Now fill input dic for value fetch if any
+    relative_to_data = node.get("more").get("relative_to")
+    relative_to = relative_to_data.get("value")
+    if relative_to == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+        value = relative_to_data.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        relative_to_data["input_dic"] = input_dic
+
+    new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
+    new_tpsl_mode = new_tpsl_mode_data.get("value")
+    if new_tpsl_mode == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+
+        value_tp = new_tpsl_mode_data.get("value_fetch_tp")
+        params_tp = value_tp.get("params")
+        input_dic_tp = value_fetch(node, params_tp, value_tp.get("row1").get("label"), value_tp.get("row2").get("name"))
+
+        value_sl = new_tpsl_mode_data.get("value_fetch_sl")
+        params_sl = value_sl.get("params")
+        input_dic_sl = value_fetch(node, params_sl, value_sl.get("row1").get("label"), value_sl.get("row2").get("name"))
+
+        relative_to_data["input_dic_tp"] = input_dic_tp
+        relative_to_data["input_dic_sl"] = input_dic_sl
+
+def trailing_pending_orders(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["group_mode"] = more.get("group_mode").get("value")
+    input_dic["group_number"] = more.get("group_number").get("value")
+    input_dic["type"] = more.get("type").get("value")
+
+    input_dic["trailing_distance_mode"] = more.get("trailing_distance_mode").get("value")
+    input_dic["t_distance_pips"] = more.get("t_distance_pips").get("value")
+    input_dic["t_step_pips"] = more.get("t_step_pips").get("value")
+
+    node["input_dic_task"] = input_dic
+
+    # Now fill input dic for value fetch if any
+    trailing_distance_mode_data = node.get("more").get("trailing_distance_mode")
+    trailing_distance_mode = trailing_distance_mode_data.get("value")
+    if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
+        value = trailing_distance_mode_data.get("value_fetch")
+        params = value.get("params")
+        input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+        trailing_distance_mode_data["input_dic"] = input_dic
 
 def time_filter(node):
     more = node.get("more")

@@ -27,7 +27,7 @@ public:
 
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
-      for(int i = OrdersTotal() ; i >= 0 ; i--)
+      for(int i = OrdersTotal()-1 ; i >= 0 ; i--)
         {
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {

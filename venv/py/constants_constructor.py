@@ -208,9 +208,22 @@ constants = [
     "#define CHECK_PROFIT 1",
     "#define CHECK_LOSS 2",
 
-    ######################  ##########################
+    ###################### trailing pending orders ##########################
 
-    ######################  ##########################
+    "#define TRAILING_DISTANCE_MODE_FIXED 1",
+    "#define TRAILING_DISTANCE_MODE_DYNAMIC 2",
+    "#define TRAILING_DISTANCE_MODE_DYNAMIC_PIPS 3",
+    "#define TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS 4",
+
+    ###################### modify stops of trades ##########################
+
+    "#define PRICE_RELATIVE_TO_OPEN_PRICE 1",
+    "#define PRICE_RELATIVE_TO_CURRENT_PRICE 2",
+    "#define PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL 3",
+
+    "#define NEW_STOPS_FIXED 1",
+    "#define NEW_STOPS_PERCENT_OF_CURRENT_TPSL 2",
+    "#define NEW_STOPS_CUSTOM_PRICE_LEVEL 3",
 
     ######################  ##########################
 ]

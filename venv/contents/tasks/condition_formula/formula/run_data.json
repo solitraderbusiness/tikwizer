@@ -1,3 +1,3 @@
 {
-	"run_data" : "Task::run(block_id, block);\n\n      initializer_1\n      initializer_2\n      variable_name = var_name_1 operator var_name_2;\n      \n      printf(\"task\"+block_id + \" passsed route 1\");\n      block.onResult(ROUTE_1_PASSED);"
+	"run_data" : "Task::run(block_id, block);\n\n      initializer_1\n      initializer_2\n      variable_name = var_name_1 operator var_name_2;\n      \n      printf(\"task\"+block_id + \" passed route 1\");\n      block.onResult(ROUTE_1_PASSED);"
 }

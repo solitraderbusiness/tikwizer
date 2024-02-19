@@ -18,21 +18,22 @@ def refactor(data):
         task_input.set_task_input_dic(event["nodes"])
     return data
 
+
 def correct_enabled(data):
     events = data["events"]
     for key in events:
         for node in events[key]["nodes"]:
             node["enabled"] = True
 
-#STest, remove later
-def correct_events (data):
+
+# STest, remove later
+def correct_events(data):
     on_tick = {}
     on_tick["nodes"] = data.get("nodes")
     on_tick["edges"] = data.get("edges")
     data["events"] = {"on_tick": on_tick}
     data.pop("nodes")
     data.pop("edges")
-
 
 
 def overwrite_ids(nodes, edges):
@@ -59,7 +60,8 @@ def set_blocks_input_dic(nodes, edges):
         input_dic["prevs_false"] = get_prevs_false(node, nodes, edges)
         node["input_dic_block"] = input_dic
 
-def overwrite_task_names (nodes):
+
+def overwrite_task_names(nodes):
     for node in nodes:
         block_name = node.get("data").get("blockName")
         if block_name == "condition1":
@@ -70,12 +72,14 @@ def overwrite_task_names (nodes):
                 node.get("data")["blockName"] = "condition_1_normal"
         elif block_name == "Once per bar":
             node.get("data")["blockName"] = "once_every_n_bars"
-        elif block_name == "No trade nearby" or block_name=="No pending order nearby":
+        elif block_name == "No trade nearby" or block_name == "No pending order nearby":
             node.get("data")["blockName"] = "check_trades_orders_nearby"
-        elif block_name == "turn_on_blocks" or block_name=="turn_off_blocks" or block_name=="toggle_blocks":
+        elif block_name == "turn_on_blocks" or block_name == "turn_off_blocks" or block_name == "toggle_blocks":
             node.get("data")["blockName"] = "blocks_on_off"
-        elif block_name == "Buy now" or block_name=="Sell now" or block_name=="Buy pending order" or block_name=="Sell pending order":
+        elif block_name == "Buy now" or block_name == "Sell now" or block_name == "Buy pending order" or block_name == "Sell pending order":
             node.get("data")["blockName"] = "buy_sell"
+
+
 def get_nexts_true(node, nodes, edges):
     result = []
     for edge in edges:
@@ -111,7 +115,8 @@ def get_prevs_false(node, nodes, edges):
                 result.append(edge.get("source"))
     return result
 
-def add_category (nodes):
+
+def add_category(nodes):
     for node in nodes:
         match node.get("data").get("blockName"):
             case "condition1":
@@ -164,7 +169,11 @@ def add_category (nodes):
                 node["category"] = ""
             case "check_trades_orders_count" | "check_trades_orders_nearby":
                 node["category"] = "check_trades_orders_count"
-            case "close_trades" | "delete_pending_orders":
+            case "close_trades":
+                node["category"] = "trading_actions"
+            case "delete_pending_orders":
+                node["category"] = "trading_actions"
+            case "modify_stops_of_trades":
                 node["category"] = "trading_actions"
             case "check_profit_unrealized":
                 node["category"] = "check_trading_conditions"
@@ -178,8 +187,9 @@ def add_category (nodes):
                 node["category"] = "trailing_stop_break_even"
             case "trailing_stop_each_trade":
                 node["category"] = "trailing_stop_break_even"
+            case "trailing_pending_orders":
+                node["category"] = "trailing_stop_break_even"
             case "comment":
                 node["category"] = "output_and_communication"
             case _:
                 node["category"] = "not_specified"
-

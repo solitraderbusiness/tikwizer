@@ -13,16 +13,15 @@ def generate_mql(data_raw):
     return expert
 
 
-
 def test():
-    data = test_input_4.input_data_13
+    data = test_input_4.input_data_14
     final_expert = generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"
-    file_name = "expert_ouput" + ".mq4"
+    file_name = "expert_output" + ".mq4"
     with open(path + path_sub + file_name, "w") as result_file:
         result_file.write(final_expert)
     print(final_expert)
 
-test()
 
+test()

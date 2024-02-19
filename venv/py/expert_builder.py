@@ -254,8 +254,17 @@ def add_global_functions(data):
     window_find_visible = global_functions.get_fun__window_find_visible()
     functions.append(window_find_visible)
 
+    symbol_ask = global_functions.get_fun__symbol_ask()
+    functions.append(symbol_ask)
 
+    symbol_bid = global_functions.get_fun__symbol_bid()
+    functions.append(symbol_bid)
 
+    is_order_type_buy = global_functions.get_fun__is_order_type_buy()
+    functions.append(is_order_type_buy)
+
+    is_order_type_stop = global_functions.get_fun__is_order_type_stop()
+    functions.append(is_order_type_stop)
 
 
 def build():
@@ -440,11 +449,12 @@ def add_task_elements_common(nodes):
                 vars_system.append(vars_data)
                 spread_filter_done = True
 
+
 # Elements that are assigned to a specific instance of a specific task type
 def add_task_elements_specific(nodes):
     for node in nodes:
         task_name = node.get("data").get("blockName")
-        if task_name == "condition_1_normal" or task_name == "formula": #formula also use the same function as condition 1 normal
+        if task_name == "condition_1_normal" or task_name == "formula":  # formula also use the same function as condition 1 normal
             condition_1_normal_elements(node)
         elif task_name == "condition_1_cross":
             condition_1_cross_elements(node)
@@ -456,8 +466,22 @@ def add_task_elements_specific(nodes):
             comment(node)
         elif task_name == "buy_sell":
             buy_sell(node)
+        elif task_name == "trailing_pending_orders":
+            trailing_pending_orders(node)
 
-def buy_sell (node):
+
+def trailing_pending_orders(node):
+    trailing_distance_mode_data = node.get("more").get("trailing_distance_mode")
+    trailing_distance_mode = trailing_distance_mode_data.get("value")
+    if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
+        input_dic = trailing_distance_mode_data.get("input_dic")
+        value_fetch = trailing_distance_mode_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "_tdmd"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+def buy_sell(node):
     open_at_price_data = node.get("more").get("open_at_price")
     open_at_price = open_at_price_data.get("value")
     if open_at_price == "OPEN_AT_CUSTOM_PRICE":
@@ -467,7 +491,9 @@ def buy_sell (node):
         row2 = value_fetch.get("row2").get("name")
         id_val = str(node.get("id")) + "oacp"
         classes.append(value_fetch_class(row1, row2, input_dic, id_val))
-def comment (node):
+
+
+def comment(node):
     mrow1 = node.get("more").get("row1")
     if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
         input_dic = mrow1.get("input_dic")
@@ -540,7 +566,8 @@ def comment (node):
         id_val = str(node.get("id")) + "cm_r8"
         classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
-def trailing_stop_each_trade (node):
+
+def trailing_stop_each_trade(node):
     trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
     trailing_stop_mode = trailing_stop_mode_data.get("value")
     if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
@@ -551,7 +578,8 @@ def trailing_stop_each_trade (node):
         id_val = str(node.get("id")) + "tsm_cl"
         classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
-def modify_variables (node):
+
+def modify_variables(node):
     for item in node.get("items"):
         input_dic = item.get("input_dic")
         value = item.get("value")

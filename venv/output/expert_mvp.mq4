@@ -1016,12 +1016,12 @@ public:
 
       if((now >= t0 && now < t1) || (t0 > t1 && (now >= t0 || now < t1)))
         {
-         printf("task" + block_id + " passsed route 1");
+         printf("task" + block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task" + block_id + " passsed route 2");
+         printf("task" + block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -1051,12 +1051,12 @@ public:
 
       if(valueRSI1_left > valueValue1_right)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -1086,12 +1086,12 @@ public:
 
       if(valueRSI2_left < valueValue2_right)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -1127,12 +1127,12 @@ public:
       
       if(valueMACD3_left1 < valueMACD3_right1 && valueMACD3_left2 > valueMACD3_right2)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -1168,12 +1168,12 @@ public:
       
       if(valueMACD4_left1 > valueMACD4_right1 && valueMACD4_left2 < valueMACD4_right2)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -1274,12 +1274,12 @@ public:
       ticket=OrderSend(msymbol,cmd,volume,price,slippage,slPrice,tpPrice,comment,magic,expiration,arrow_color);
       if(ticket == ERR_NO_ERROR)
         {
-         printf("task"+block_id + " passsed route 1");
+         printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task"+block_id + " passsed route 2");
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }

@@ -10,13 +10,13 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       if(firstBlockMet)
         {
          printf("task "+block_id+" didn't pass cuz first block already met!");
          block.onResult(ROUTE_2_PASSED);
          return;
         }
-      Task::run(block_id, block);
 
 
       printf("task "+block_id+" passed!");

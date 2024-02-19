@@ -38,7 +38,7 @@ public:
 public:
    void              Task33(string name): Task(name)
      {
-      symbol = NULL;//STest, no lists yet, also all is not suported yet.
+      symbol = NULL;//STest, no lists yet, also all is not supported yet.
       group_mode = ORDER_GROUP_MODE_NONE;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell

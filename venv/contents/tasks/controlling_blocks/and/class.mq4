@@ -13,12 +13,12 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       if(allBlocksMet)
         {
          printf("task "+block_id+" didn't pass cuz all blocks already met!");
          block.onResult(ROUTE_2_PASSED);
         }
-      Task::run(block_id, block);
 
       AddToArray(source_history, block.current_source_id);
       int prevs[];

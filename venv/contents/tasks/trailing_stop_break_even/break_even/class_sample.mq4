@@ -24,7 +24,7 @@ class Task0 : public Task
 public:
                      Task0(string name):Task(name)
      {
-      symbol = NULL;//STest, no lists yet, also all is not suported yet.
+      symbol = NULL;//STest, no lists yet, also all is not supported yet.
       group_mode = ORDER_GROUP_MODE_NONE;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell
@@ -37,6 +37,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
       for(int i = 0 ; i < OrdersTotal() ; i++)
@@ -84,7 +85,7 @@ public:
               }
            }
         }
-      printf("task"+block_id + " passsed route 1");
+      printf("task"+block_id + " passed route 1");
       //block.onResult(ROUTE_1_PASSED);
      }
 

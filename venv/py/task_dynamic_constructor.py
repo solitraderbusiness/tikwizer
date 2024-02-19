@@ -67,6 +67,8 @@ def class_template_fun(path_task_id_template):
             class_template = json.loads(class_txt).get("class_template")
             return class_template
     return ""
+
+
 def field_data_static_fun(path_task_id):
     with open(path_task_id + "field_data.json") as field_file:
         if field_file:
@@ -78,6 +80,7 @@ def field_data_static_fun(path_task_id):
 
 def field_data_dynamic_fun(field_data_static):
     return field_data_static
+
 
 def constructor_data_static_fun(path_task_id, input_dic):
     with open(path_task_id + "constructor_data.json") as constructor_file:
@@ -91,6 +94,7 @@ def constructor_data_static_fun(path_task_id, input_dic):
 
 def constructor_data_dynamic_fun(constructor_data_static):
     return constructor_data_static
+
 
 def run_data_static_fun(path_task_id, input_dic):
     with open(path_task_id + "run_data.json") as run_file:
@@ -119,6 +123,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = trailing_stop_each_trade_run_data(node, run_data_static)
     elif task_name == "comment":
         run_data = comment_run_data(node, run_data_static)
+    elif task_name == "trailing_pending_orders":
+        run_data = trailing_pending_orders_run_data(node, run_data_static)
     return run_data
 
 
@@ -134,6 +140,7 @@ def reset_data_static_fun(path_task_id):
 def reset_data_dynamic_fun(reset_data_static):
     return reset_data_static
 
+
 def function_data_static_fun(path_task_id):
     with open(path_task_id + "function_data.json") as function_file:
         if function_file:
@@ -141,6 +148,7 @@ def function_data_static_fun(path_task_id):
             function_data = json.loads(function_txt).get("function_data")
             return function_data
     return ""
+
 
 def function_data_dynamic_fun(node, function_data_static):
     task_name = node.get("data").get("blockName")
@@ -168,6 +176,7 @@ def buy_sell_function_data(node, function_data_static):
         function_data_static = function_data_static.replace("variable_name_oacp", "\"\"")
 
     return function_data_static
+
 
 def replace_input_values(data, input_dic):
     for key in input_dic:
@@ -306,6 +315,56 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("variable_name_8", "\"\"")
 
     return run_data
+
+
+def trailing_pending_orders_run_data(node, run_data):
+    trailing_distance_mode_data = node.get("more").get("trailing_distance_mode")
+    trailing_distance_mode = trailing_distance_mode_data.get("value")
+    if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
+        value_fetch = trailing_distance_mode_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "_tdmd"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+
+        if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+            run_data = run_data.replace("initializer_dynamic", init, 1)
+            run_data = run_data.replace("variable_name_dynamic", val, 1)
+            run_data = run_data.replace("initializer_dynamic_pips", "")
+            run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+            run_data = run_data.replace("initializer_dynamic_digits", "")
+            run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+
+
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+            run_data = run_data.replace("initializer_dynamic", "", 1)
+            run_data = run_data.replace("variable_name_dynamic", "0", 1)
+            run_data = run_data.replace("initializer_dynamic_pips", init)
+            run_data = run_data.replace("variable_name_dynamic_pips", val)
+            run_data = run_data.replace("initializer_dynamic_digits", "")
+            run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+
+
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+            run_data = run_data.replace("initializer_dynamic", "", 1)
+            run_data = run_data.replace("variable_name_dynamic", "0", 1)
+            run_data = run_data.replace("initializer_dynamic_pips", "")
+            run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+            run_data = run_data.replace("initializer_dynamic_digits", init)
+            run_data = run_data.replace("variable_name_dynamic_digits", val)
+
+    else:
+        run_data = run_data.replace("initializer_dynamic", "", 1)
+        run_data = run_data.replace("variable_name_dynamic", "0", 1)
+        run_data = run_data.replace("initializer_dynamic_pips", "")
+        run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+        run_data = run_data.replace("initializer_dynamic_digits", "")
+        run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+    return run_data
+
+
 def trailing_stop_each_trade_run_data(node, run_data):
     trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
     trailing_stop_mode = trailing_stop_mode_data.get("value")
@@ -323,6 +382,8 @@ def trailing_stop_each_trade_run_data(node, run_data):
         run_data = run_data.replace("initializer_trailing_stop_mode", "")
         run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
     return run_data
+
+
 def modify_variable_run_data(node, run_data):
     modify_variables = ""
     for item in node.get("items"):
@@ -336,6 +397,7 @@ def modify_variable_run_data(node, run_data):
         modify_variables += item.get("variable_name") + " = " + val + ";\n\n"
     run_data = run_data.replace("modify_variables", modify_variables)
     return run_data
+
 
 def formula(node, run_data):
     more = node.get("more")
@@ -367,6 +429,7 @@ def formula(node, run_data):
         .replace("variable_name", variable_name) \
         .replace("operator", operator)
     return run_data
+
 
 def condition_1_run_data_normal(node, run_data):
     more = node.get("more")
@@ -422,7 +485,7 @@ def condition_1_run_data_cross(node, run_data):
     val_21 = get_value_fetch_val(row1_right, row2_right, id_val_21)
     val_22 = get_value_fetch_val(row1_right, row2_right, id_val_22)
 
-    #Operator
+    # Operator
     operator_1 = ""
     operator_2 = ""
     operator = node.get("more").get("operator").get("label")
@@ -448,7 +511,7 @@ def condition_1_run_data_cross(node, run_data):
     return run_data
 
 
-def get_value_fetch_init (row1, row2, suffix):
+def get_value_fetch_init(row1, row2, suffix):
     if row1 == "Indicator":
         init = indicator_class_constructor.get_initializer(row2, suffix)
     elif row1 == "Candle":
@@ -456,10 +519,11 @@ def get_value_fetch_init (row1, row2, suffix):
     elif row1 == "Market Properties":
         init = market_properties_class_constructor.get_initializer(suffix)
     elif row1 == "Value":
-        init = value_class_constructor.get_initializer(suffix)
+        init = value_class_constructor.get_initializer(suffix, row2)
     return init
 
-def get_value_fetch_val (row1, row2, suffix):
+
+def get_value_fetch_val(row1, row2, suffix):
     if row1 == "Indicator":
         val = indicator_class_constructor.get_var_name(row2, suffix)
     elif row1 == "Candle":
@@ -469,6 +533,7 @@ def get_value_fetch_val (row1, row2, suffix):
     elif row1 == "Value":
         val = value_class_constructor.get_var_name(suffix)
     return val
+
 
 def get_initializer(var_id):
     path_task_id = path + path_sub + "task_id" + "/"

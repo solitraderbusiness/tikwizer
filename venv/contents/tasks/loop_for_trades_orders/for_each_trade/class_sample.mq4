@@ -23,7 +23,7 @@ class Task12 : public Task
 public:
                      Task12(string name):Task(name)
      {
-      symbol = NULL;//STest, no lists yet, also all is not suported yet.
+      symbol = NULL;//STest, no lists yet, also all is not supported yet.
       group_mode = ORDER_GROUP_MODE_NONE;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell
@@ -36,6 +36,7 @@ public:
 
    virtual void               run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
       int trades[];
@@ -82,7 +83,7 @@ public:
    //+------------------------------------------------------------------+
    void              getTrades(int &trades[])
      {
-      for(int i=0; i<OrdersTotal()-1; i++)
+      for(int i=0; i<OrdersTotal(); i++)
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {
             if(OrderType()==OP_BUY || OrderType()==OP_SELL)

@@ -16,7 +16,7 @@ class Task_id : public Task
 public:
                      Task_id(string name):Task(name)
      {
-      symbol = symbol_val;//STest, no lists yet, also all is not suported yet.
+      symbol = symbol_val;//STest, no lists yet, also all is not supported yet.
       group_mode = group_mode_val;
       group_number = group_number_val;
       int mtype[] = type_val; //0 for buy and 1 for sell
@@ -29,6 +29,7 @@ public:
 
    virtual void               run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
       int trades[];
@@ -75,7 +76,7 @@ public:
    //+------------------------------------------------------------------+
    void              getTrades(int &trades[])
      {
-      for(int i=0; i<OrdersTotal()-1; i++)
+      for(int i=0; i<OrdersTotal(); i++)
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {
             if(OrderType()==OP_BUY || OrderType()==OP_SELL)
