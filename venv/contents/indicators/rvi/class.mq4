@@ -23,6 +23,10 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
+
       double result = iRVI(symbol,timeframe,period, mode, shift);
       return result;
      }

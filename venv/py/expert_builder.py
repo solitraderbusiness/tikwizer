@@ -266,6 +266,11 @@ def add_global_functions(data):
     is_order_type_stop = global_functions.get_fun__is_order_type_stop()
     functions.append(is_order_type_stop)
 
+    get_symbol = global_functions.get_fun__get_symbol()
+    functions.append(get_symbol)
+
+    get_timeframe = global_functions.get_fun__get_timeframe()
+    functions.append(get_timeframe)
 
 def build():
     expert = ""
@@ -468,6 +473,36 @@ def add_task_elements_specific(nodes):
             buy_sell(node)
         elif task_name == "trailing_pending_orders":
             trailing_pending_orders(node)
+        elif task_name == "modify_stops_of_trades":
+            modify_stops_of_trades(node)
+
+
+def modify_stops_of_trades(node):
+    relative_to_data = node.get("more").get("relative_to")
+    if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+        input_dic = relative_to_data.get("input_dic")
+        value_fetch = relative_to_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "_rt"
+        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
+    new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
+    if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+        input_dic_tp = new_tpsl_mode_data.get("input_dic_tp")
+        value_fetch_tp = new_tpsl_mode_data.get("value_fetch_tp")
+        row1_tp = value_fetch_tp.get("row1").get("label")
+        row2_tp = value_fetch_tp.get("row2").get("name")
+        id_val_tp = str(node.get("id")) + "_ntm_tp"
+
+        input_dic_sl = new_tpsl_mode_data.get("input_dic_sl")
+        value_fetch_sl = new_tpsl_mode_data.get("value_fetch_sl")
+        row1_sl = value_fetch_sl.get("row1").get("label")
+        row2_sl = value_fetch_sl.get("row2").get("name")
+        id_val_sl = str(node.get("id")) + "_ntm_sl"
+
+        classes.append(value_fetch_class(row1_tp, row2_tp, input_dic_tp, id_val_tp))
+        classes.append(value_fetch_class(row1_sl, row2_sl, input_dic_sl, id_val_sl))
 
 
 def trailing_pending_orders(node):
@@ -480,6 +515,7 @@ def trailing_pending_orders(node):
         row2 = value_fetch.get("row2").get("name")
         id_val = str(node.get("id")) + "_tdmd"
         classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+
 
 def buy_sell(node):
     open_at_price_data = node.get("more").get("open_at_price")

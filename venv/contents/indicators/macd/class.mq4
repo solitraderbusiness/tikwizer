@@ -29,6 +29,10 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
+
       double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
       return result;
      }

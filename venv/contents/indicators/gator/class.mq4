@@ -37,6 +37,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iGator(symbol,timeframe,jaw_period,jaw_shift,teeth_period, teeth_shift, lips_period, lips_shift, ma_method, applied_price, mode, shift);
       return result;
      }

@@ -68,8 +68,34 @@ def set_task_input_dic(nodes):
                 time_filter(node)
             case "modify_stops_of_trades":
                 modify_stops_of_trades(node)
+            case "terminate":
+                terminate(node)
+            case "set_current_market_for_next_blocks":
+                set_current_market_for_next_blocks(node)
+            case "set_current_timeframe_for_next_blocks":
+                set_current_timeframe_for_next_blocks(node)
             case _:
                 default(node)
+
+
+def set_current_timeframe_for_next_blocks(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["timeframes"] = more.get("timeframes").get("value")
+    node["input_dic_task"] = input_dic
+
+def set_current_market_for_next_blocks(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
+    node["input_dic_task"] = input_dic
+
+
+def terminate(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["message"] = more.get("message").get("value")
+    node["input_dic_task"] = input_dic
 
 
 def modify_stops_of_trades(node):
@@ -84,7 +110,7 @@ def modify_stops_of_trades(node):
     input_dic["relative_to"] = more.get("relative_to").get("value")
     input_dic["new_tpsl_mode"] = more.get("new_tpsl_mode").get("value")
     input_dic["new_stoploss"] = more.get("new_stoploss").get("value")
-    input_dic["new_stoploss_percent"] = more.get("v").get("value")
+    input_dic["new_stoploss_percent"] = more.get("new_stoploss_percent").get("value")
     input_dic["new_takeprofit"] = more.get("new_takeprofit").get("value")
     input_dic["new_takeprofit_percent"] = more.get("new_takeprofit_percent").get("value")
     input_dic["level_color"] = more.get("level_color").get("value")
@@ -103,7 +129,6 @@ def modify_stops_of_trades(node):
     new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
     new_tpsl_mode = new_tpsl_mode_data.get("value")
     if new_tpsl_mode == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-
         value_tp = new_tpsl_mode_data.get("value_fetch_tp")
         params_tp = value_tp.get("params")
         input_dic_tp = value_fetch(node, params_tp, value_tp.get("row1").get("label"), value_tp.get("row2").get("name"))
@@ -112,8 +137,9 @@ def modify_stops_of_trades(node):
         params_sl = value_sl.get("params")
         input_dic_sl = value_fetch(node, params_sl, value_sl.get("row1").get("label"), value_sl.get("row2").get("name"))
 
-        relative_to_data["input_dic_tp"] = input_dic_tp
-        relative_to_data["input_dic_sl"] = input_dic_sl
+        new_tpsl_mode_data["input_dic_tp"] = input_dic_tp
+        new_tpsl_mode_data["input_dic_sl"] = input_dic_sl
+
 
 def trailing_pending_orders(node):
     more = node.get("more")
@@ -137,6 +163,7 @@ def trailing_pending_orders(node):
         params = value.get("params")
         input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
         trailing_distance_mode_data["input_dic"] = input_dic
+
 
 def time_filter(node):
     more = node.get("more")
@@ -165,6 +192,8 @@ def time_filter(node):
     input_dic["time_end_rel_minutes"] = more.get("time_end_rel_minutes").get("value")
     input_dic["time_end_rel_seconds"] = more.get("time_end_rel_seconds").get("value")
     node["input_dic_task"] = input_dic
+
+
 def check_loss(node):
     more = node.get("more")
     input_dic = {}
@@ -172,6 +201,8 @@ def check_loss(node):
     input_dic["check_value"] = more.get("check_value").get("value")
     input_dic["operator"] = more.get("operator").get("value")
     node["input_dic_task"] = input_dic
+
+
 def check_profit(node):
     more = node.get("more")
     input_dic = {}
@@ -179,12 +210,15 @@ def check_profit(node):
     input_dic["check_value"] = more.get("check_value").get("value")
     input_dic["operator"] = more.get("operator").get("value")
     node["input_dic_task"] = input_dic
+
+
 def close(node):
     more = node.get("more")
     input_dic = {}
     input_dic["slippage"] = more.get("slippage").get("value")
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
     node["input_dic_task"] = input_dic
+
 
 def close_partially(node):
     more = node.get("more")
@@ -194,6 +228,8 @@ def close_partially(node):
     input_dic["slippage"] = more.get("slippage").get("value")
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
     node["input_dic_task"] = input_dic
+
+
 def comment(node):
     more = node.get("more")
     input_dic = {}
@@ -358,6 +394,8 @@ def break_even(node):
     input_dic["bep_offset_mode"] = more.get("bep_offset_mode").get("value")
     input_dic["bep_offset"] = more.get("bep_offset").get("value")
     node["input_dic_task"] = input_dic
+
+
 def spread_filter(node):
     more = node.get("more")
     input_dic = {}
@@ -368,12 +406,16 @@ def spread_filter(node):
     input_dic["average_spread_adjust"] = more.get("average_spread_adjust").get("value")
     input_dic["operator"] = more.get("operator").get("value")
     node["input_dic_task"] = input_dic
+
+
 def blocks_on_off(node):
     more = node.get("more")
     input_dic = {}
     input_dic["block_ids"] = more.get("block_ids").get("value")
     input_dic["what"] = more.get("what").get("value")
     node["input_dic_task"] = input_dic
+
+
 def delay(node):
     more = node.get("more")
     input_dic = {}
@@ -381,6 +423,7 @@ def delay(node):
     input_dic["sleep_tester_normal"] = more.get("sleep_tester_normal").get("value")
     input_dic["sleep_tester_visual"] = more.get("sleep_tester_visual").get("value")
     node["input_dic_task"] = input_dic
+
 
 def pass_task(node):
     node["input_dic_task"] = {}
@@ -427,6 +470,7 @@ def close_trades(node):
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
     node["input_dic_task"] = input_dic
 
+
 def delete_pending_orders(node):
     more = node.get("more")
     input_dic = {}
@@ -437,6 +481,7 @@ def delete_pending_orders(node):
     input_dic["arrow_color"] = more.get("arrow_color").get("value")
 
     node["input_dic_task"] = input_dic
+
 
 def check_trades_orders_count(node):
     more = node.get("more")
@@ -569,23 +614,31 @@ def modify_variables(node):
 def formula(node):
     node["input_dic_task"] = {}
     more = node.get("more")
-    node["input_dic_left"] = value_fetch(node, more.get("left"), more.get("left1").get("label"), more.get("left2").get("name"))
-    node["input_dic_right"] = value_fetch(node, more.get("right"), more.get("right1").get("label"), more.get("right2").get("name"))
+    node["input_dic_left"] = value_fetch(node, more.get("left"), more.get("left1").get("label"),
+                                         more.get("left2").get("name"))
+    node["input_dic_right"] = value_fetch(node, more.get("right"), more.get("right1").get("label"),
+                                          more.get("right2").get("name"))
 
 
 def condition_1_normal(node):
     node["input_dic_task"] = {}
     more = node.get("more")
-    node["input_dic_left"] = value_fetch(node, more.get("left"), more.get("left1").get("label"), more.get("left2").get("name"))
-    node["input_dic_right"] = value_fetch(node, more.get("right"), more.get("right1").get("label"), more.get("right2").get("name"))
+    node["input_dic_left"] = value_fetch(node, more.get("left"), more.get("left1").get("label"),
+                                         more.get("left2").get("name"))
+    node["input_dic_right"] = value_fetch(node, more.get("right"), more.get("right1").get("label"),
+                                          more.get("right2").get("name"))
+
 
 def condition_1_cross(node):
     node["input_dic_task"] = {}
     more = node.get("more")
-    node["input_dic_left_1"] = value_fetch(node, more.get("left"), more.get("left1").get("label"), more.get("left2").get("name"))
+    node["input_dic_left_1"] = value_fetch(node, more.get("left"), more.get("left1").get("label"),
+                                           more.get("left2").get("name"))
     node["input_dic_left_2"] = input_cross(node, node.get("input_dic_left_1"))
-    node["input_dic_right_1"] = value_fetch(node, more.get("right"), more.get("right1").get("label"), more.get("right2").get("name"))
+    node["input_dic_right_1"] = value_fetch(node, more.get("right"), more.get("right1").get("label"),
+                                            more.get("right2").get("name"))
     node["input_dic_right_2"] = input_cross(node, node.get("input_dic_right_1"))
+
 
 def value_fetch(node, input_items, row1, row2):
     input_dic = {}
@@ -594,16 +647,15 @@ def value_fetch(node, input_items, row1, row2):
             "value")  # STest, should be lowercase
 
     # handle this fucking candle id thing!
-    #for condition
+    # for condition
     if "more" in node and "candleIDLeft" in node.get("more"):
         input_dic["shift"] = node.get("more").get("candleIDLeft").get("value")
-    #for modify variable
+    # for modify variable
     if "items" in node:
         for item in node.get("items"):
             value = item.get("value")
             if "candleId" in value:
                 input_dic["shift"] = item.get("value").get("candleId").get("value")
-
 
     if row1 == "Indicator":
         indicator_name = row2

@@ -30,6 +30,10 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
+
       double result = iStochastic(symbol,timeframe,k_period,d_period,slowing, method, price_field, mode, shift);
       return result;
      }

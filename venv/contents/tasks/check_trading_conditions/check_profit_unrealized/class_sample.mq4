@@ -51,7 +51,7 @@ public:
 
    virtual void      run(int block_id, BlockParent &block)
      {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
 
       double profitTotal=0;
       for(int i = 0 ; i < OrdersTotal() ; i++)

@@ -63,8 +63,8 @@ public:
    double            calc()
 
      {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
+      msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
 
       int index = get_index();
       double value = get_value(index);
@@ -78,7 +78,7 @@ private:
       if(find_method==FIND_BY_DATE)
         {
          datetime date = StrToTime(timestr);
-         index = iBarShift(symbol, timeframe, date, false);
+         index = iBarShift(msymbol, mtimeframe, date, false);
         }
       else
          if(find_method==FIND_BY_ID)

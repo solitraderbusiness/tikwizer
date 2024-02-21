@@ -220,3 +220,13 @@ def get_fun__is_order_type_buy():
 def get_fun__is_order_type_stop():
     result = "bool IsOrderTypeStop()\n  {\n   int type = OrderType();\n\n   return (type == OP_BUYSTOP || type == OP_SELLSTOP);\n  }"
     return result
+
+
+def get_fun__get_symbol():
+    result = "string getSymbol(string symbol)\n  {\n   return (symbol==NULL || symbol==\"\") && overriding_symbol != \"\" ? overriding_symbol : symbol;\n  }"
+    return result
+
+
+def get_fun__get_timeframe():
+    result = "int getTimeframe(int timeframe)\n  {\n   return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;\n  }\n"
+    return result

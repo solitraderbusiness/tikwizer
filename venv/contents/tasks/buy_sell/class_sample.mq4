@@ -122,7 +122,7 @@ public:
      {
       Task::run(block_id, block);
 
-      msymbol = overriding_symbol=="" ? Symbol() : overriding_symbol;
+      msymbol = getSymbol(symbol);
 
       calc();
       if(!initialized)

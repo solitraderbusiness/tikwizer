@@ -30,7 +30,7 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      string msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)

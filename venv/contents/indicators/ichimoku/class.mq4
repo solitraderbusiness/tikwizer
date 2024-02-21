@@ -51,6 +51,8 @@ public:
    double            calc()
 
      {
+        string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
 
       double result = iIchimoku(symbol,timeframe,tenkan_sen,kijun_sen,senkou_span_b,mode,shift);
 

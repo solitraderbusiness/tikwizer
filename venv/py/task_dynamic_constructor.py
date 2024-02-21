@@ -125,6 +125,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = comment_run_data(node, run_data_static)
     elif task_name == "trailing_pending_orders":
         run_data = trailing_pending_orders_run_data(node, run_data_static)
+    elif task_name == "modify_stops_of_trades":
+        run_data = modify_stops_of_trades_data(node, run_data_static)
     return run_data
 
 
@@ -158,6 +160,54 @@ def function_data_dynamic_fun(node, function_data_static):
 
     return function_data
 
+
+def modify_stops_of_trades_data(node, function_data_static):
+    relative_to_data = node.get("more").get("relative_to")
+    if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+        value_fetch = relative_to_data.get("value_fetch")
+        row1 = value_fetch.get("row1").get("label")
+        row2 = value_fetch.get("row2").get("name")
+        id_val = str(node.get("id")) + "_rt"
+
+        init = get_value_fetch_init(row1, row2, id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer_rt", init)
+        function_data_static = function_data_static.replace("variable_name_rt", val)
+    else:
+        function_data_static = function_data_static.replace("initializer_rt", "")
+        function_data_static = function_data_static.replace("variable_name_rt", "\"\"")
+
+    new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
+    if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+        value_fetch_tp = new_tpsl_mode_data.get("value_fetch_tp")
+        row1_tp = value_fetch_tp.get("row1").get("label")
+        row2_tp = value_fetch_tp.get("row2").get("name")
+        id_val_tp = str(node.get("id")) + "_ntm_tp"
+
+        init_tp = get_value_fetch_init(row1_tp, row2_tp, id_val_tp)
+        val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
+
+        value_fetch_sl = new_tpsl_mode_data.get("value_fetch_sl")
+        row1_sl = value_fetch_sl.get("row1").get("label")
+        row2_sl = value_fetch_sl.get("row2").get("name")
+        id_val_sl = str(node.get("id")) + "_ntm_sl"
+
+        init_sl = get_value_fetch_init(row1_sl, row2_sl, id_val_sl)
+        val_sl = get_value_fetch_val(row1_sl, row2_sl, id_val_sl)
+
+        function_data_static = function_data_static.replace("initializer_ntm_tp", init_tp)
+        function_data_static = function_data_static.replace("variable_name_ntm_tp", val_tp)
+
+        function_data_static = function_data_static.replace("initializer_ntm_sl", init_sl)
+        function_data_static = function_data_static.replace("variable_name_ntm_sl", val_sl)
+    else:
+        function_data_static = function_data_static.replace("initializer_ntm_tp", "")
+        function_data_static = function_data_static.replace("variable_name_ntm_tp", "\"\"")
+
+        function_data_static = function_data_static.replace("initializer_ntm_sl", "")
+        function_data_static = function_data_static.replace("variable_name_ntm_sl", "\"\"")
+
+    return function_data_static
 
 def buy_sell_function_data(node, function_data_static):
     open_at_price_data = node.get("more").get("open_at_price")

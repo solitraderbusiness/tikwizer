@@ -151,6 +151,10 @@ def add_category(nodes):
                 node["category"] = "controlling_blocks"
             case "toggle_blocks":
                 node["category"] = "controlling_blocks"
+            case "set_current_market_for_next_blocks":
+                node["category"] = "controlling_blocks"
+            case "set_current_timeframe_for_next_blocks":
+                node["category"] = "controlling_blocks"
             case "pass_n_times":
                 node["category"] = "counters"
             case "for_each_trade":
@@ -191,5 +195,8 @@ def add_category(nodes):
                 node["category"] = "trailing_stop_break_even"
             case "comment":
                 node["category"] = "output_and_communication"
+            case "terminate":
+                node["category"] = "more"
             case _:
                 node["category"] = "not_specified"
+

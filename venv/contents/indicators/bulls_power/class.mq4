@@ -23,6 +23,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iBullsPower(symbol,timeframe,period, applied_price, shift);
       return result;
      }

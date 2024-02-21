@@ -27,6 +27,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
       return result;
      }

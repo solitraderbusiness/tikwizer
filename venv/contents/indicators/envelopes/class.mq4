@@ -31,6 +31,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iEnvelopes(symbol, timeframe, ma_period, ma_method, ma_shift, applied_price, deviation, mode, shift);
       return result;
      }

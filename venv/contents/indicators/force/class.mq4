@@ -25,6 +25,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iForce(symbol, timeframe, period, ma_method, applied_price, shift);
       return result;
      }

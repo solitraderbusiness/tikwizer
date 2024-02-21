@@ -25,6 +25,9 @@ public:
    double            calc()
 
      {
+     string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+
       double result = iADX(symbol,timeframe,period, applied_price, mode, shift);
       return result;
      }
