@@ -1,0 +1,3 @@
+{
+	"run_data" : "Task::run(block_id, block);\n\n      int size = ArraySize(symbols);\n      if(size==0) {\n        printf(\"task\"+block_id + \" passed route 2\");\n        block.onResult(ROUTE_2_PASSED);\n        return;\n      }\n\n\n      for(int i=0; i<size; i++)\n        {\n         overriding_symbol = symbols[i];\n         printf(\"task\"+block_id + \" passed route 1\");\n         block.onResult(ROUTE_1_PASSED);\n        }\n\n      overriding_symbol = \"\";\n      printf(\"task\"+block_id + \" passed route 2\");\n      block.onResult(ROUTE_2_PASSED);\n"
+}
