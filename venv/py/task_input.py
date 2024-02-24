@@ -101,7 +101,8 @@ def terminate(node):
 def modify_stops_of_trades(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -144,7 +145,8 @@ def modify_stops_of_trades(node):
 def trailing_pending_orders(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -344,7 +346,8 @@ def trailing_stop_each_trade(node):
     more = node.get("more")
     input_dic = {}
     # Filter params
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -385,7 +388,8 @@ def trailing_stop_each_trade(node):
 def break_even(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -432,7 +436,8 @@ def pass_task(node):
 def for_each_trade(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -446,7 +451,8 @@ def for_each_trade(node):
 def check_profit_unrealized(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -461,7 +467,8 @@ def check_profit_unrealized(node):
 def close_trades(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -474,7 +481,8 @@ def close_trades(node):
 def delete_pending_orders(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -486,7 +494,8 @@ def delete_pending_orders(node):
 def check_trades_orders_count(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")
@@ -498,7 +507,8 @@ def check_trades_orders_count(node):
 def check_trades_orders_nearby(node):
     more = node.get("more")
     input_dic = {}
-    input_dic["symbol"] = more.get("symbol").get("value")
+    input_dic["symbol_mode"] = more.get("symbol_mode").get("value")
+    input_dic["symbols_str"] = more.get("symbols_str").get("value")
     input_dic["group_mode"] = more.get("group_mode").get("value")
     input_dic["group_number"] = more.get("group_number").get("value")
     input_dic["type"] = more.get("type").get("value")

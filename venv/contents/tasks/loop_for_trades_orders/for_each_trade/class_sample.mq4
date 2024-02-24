@@ -9,7 +9,9 @@
 class Task12 : public Task
   {
    //defined by user
-   string            symbol;
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
@@ -17,13 +19,16 @@ class Task12 : public Task
    int               skip_n;
    int               not_more_than_n;
    int               every_n;
-   //defined by system
-   string            msymbol;
+
 
 public:
                      Task12(string name):Task(name)
      {
-      symbol = NULL;//STest, no lists yet, also all is not supported yet.
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "EURUSD,BTCUSD";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
       group_mode = ORDER_GROUP_MODE_NONE;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell
@@ -37,8 +42,6 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
-
       int trades[];
       getTrades(trades);
       int size = ArraySize(trades);
@@ -70,7 +73,7 @@ public:
      }
    bool              filterGeneral()
      {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
       bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());

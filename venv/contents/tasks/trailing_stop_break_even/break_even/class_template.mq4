@@ -2,7 +2,9 @@
 class Task_id : public Task
   {
    //defined by user
-   string            symbol;
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
@@ -10,12 +12,15 @@ class Task_id : public Task
    double            pips_on_profit;
    int               bep_offset_mode;
    double            bep_offset;
-   //defined by system
-   string            msymbol;
+
 public:
                      Task_id(string name):Task(name)
      {
-      symbol = symbol_val;//STest, no lists yet, also all is not supported yet.
+      symbol_mode = symbol_mode_val;
+      symbols_str = symbols_str_val;
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
       group_mode = group_mode_val;
       group_number = group_number_val;
       int mtype[] = type_val; //0 for buy and 1 for sell
@@ -29,7 +34,6 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
 
       for(int i = 0 ; i < OrdersTotal() ; i++)
         {
@@ -46,7 +50,7 @@ public:
 
             if(on_profit_mode == ON_PROFIT_MODE_FIXED_VALUE)
               {
-               distance = toDigits(pips_on_profit, msymbol);
+               distance = toDigits(pips_on_profit, OrderSymbol());
               }
             else
                if(on_profit_mode == ON_PROFIT_MODE_PERCENT_OF_CURRENT_SL)
@@ -58,16 +62,15 @@ public:
                     {
                      distance = MathAbs(OrderOpenPrice()-OrderTakeProfit())*pips_on_profit/100;
                     }
-            printf("AAAA "+(SymbolInfoDouble(msymbol,SYMBOL_ASK)-SymbolInfoDouble(msymbol,SYMBOL_BID)));
-            bool con1 = orderType == OP_BUY && (SymbolInfoDouble(msymbol,SYMBOL_ASK)-OrderOpenPrice() > distance) && (OrderStopLoss() < OrderOpenPrice());
-            bool con2 = orderType == OP_SELL && (OrderOpenPrice()-SymbolInfoDouble(msymbol,SYMBOL_BID) > distance) && ((OrderStopLoss() > OrderOpenPrice()) || OrderStopLoss() == 0);
+            bool con1 = orderType == OP_BUY && (SymbolInfoDouble(OrderSymbol(),SYMBOL_ASK)-OrderOpenPrice() > distance) && (OrderStopLoss() < OrderOpenPrice());
+            bool con2 = orderType == OP_SELL && (OrderOpenPrice()-SymbolInfoDouble(OrderSymbol(),SYMBOL_BID) > distance) && ((OrderStopLoss() > OrderOpenPrice()) || OrderStopLoss() == 0);
             if(con1 || con2)
               {
                double be_offset = 0;
 
                if(bep_offset_mode == BEP_OFFSET_MODE_PIPS_OFFSET)
                  {
-                  be_offset = toDigits(bep_offset,symbol);
+                  be_offset = toDigits(bep_offset,OrderSymbol());
                   if(orderType == OP_SELL)
                      be_offset *=-1;
                  }
@@ -92,7 +95,7 @@ public:
    //+------------------------------------------------------------------+
    bool              filterGeneral()
      {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
       bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());

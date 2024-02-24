@@ -15,7 +15,7 @@ public:
    string              calc()
      {
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
       string result = "";
       switch(type)
         {

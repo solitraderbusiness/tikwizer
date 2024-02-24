@@ -259,7 +259,7 @@ public:
    string              calc()
      {
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
       string result = "";
       switch(type)
         {
@@ -373,7 +373,7 @@ public:
    string              calc()
      {
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
       string result = "";
       switch(type)
         {
@@ -976,7 +976,7 @@ public:
      {
       Task::run(block_id, block);
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
 
       removeSpreadExtra();
       addSpread();
@@ -1261,7 +1261,7 @@ public:
      {
             Task::run(block_id, block);
 
-      msymbol = overriding_symbol=="" ? Symbol() : overriding_symbol;
+      msymbol = getSymbol(symbol);
 
       calc();
       if(!initialized)

@@ -230,3 +230,7 @@ def get_fun__get_symbol():
 def get_fun__get_timeframe():
     result = "int getTimeframe(int timeframe)\n  {\n   return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;\n  }\n"
     return result
+
+def get_fun__is_symbol_accepted():
+    result = "bool is_symbol_accepted(int symbol_mode, string &symbols[])\n  {\n   if(symbol_mode == SYMBOL_MODE_ANY)\n     {\n      return true;\n     }\n   else\n      if(ArraySize(symbols)==0)\n        {\n         bool case_1 = OrderSymbol() == getSymbol(\"\");\n         bool case_2 = OrderSymbol() == Symbol() && getSymbol(\"\")==\"\";\n         return case_1 || case_2;   \n        }\n      else\n        {\n         for(int i=ArraySize(symbols)-1; i>=0; i--)\n           {\n            string smb = StringTrimRight(symbols[i]);\n            smb = StringTrimLeft(smb);\n            if(smb==OrderSymbol())\n              {\n               return true;\n              }\n           }\n        }\n   return false;\n  }"
+    return result

@@ -1,3 +1,3 @@
 {
-	"field_data" : "string            symbol;\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n   string            msymbol;\n\n   int               trailing_distance_mode;\n   double            t_distance_pips;\n   double            t_step_pips;"
+	"field_data" : "     //defined by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n\n   int               trailing_distance_mode;\n   double            t_distance_pips;\n   double            t_step_pips;"
 }

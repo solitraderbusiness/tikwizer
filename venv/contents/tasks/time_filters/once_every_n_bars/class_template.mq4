@@ -19,8 +19,8 @@ public:
 
    virtual void      run(int block_id, BlockParent &block)
      {
-      string msymbol = syncSymbolOverriding(symbol);
-      int mtimeframe = syncTimeframeOverriding(timeframe);
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
 
       if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
         {

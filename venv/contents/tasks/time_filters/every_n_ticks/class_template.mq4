@@ -24,7 +24,7 @@ public:
 public:
    virtual void      run(int block_id, BlockParent &block)
      {
-      string msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      string msymbol = getSymbol(symbol);
 
       bool pass = false;
       double a  = SymbolInfoDouble(msymbol, SYMBOL_ASK);

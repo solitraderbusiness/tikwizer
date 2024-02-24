@@ -272,6 +272,9 @@ def add_global_functions(data):
     get_timeframe = global_functions.get_fun__get_timeframe()
     functions.append(get_timeframe)
 
+    is_symbol_accepted = global_functions.get_fun__is_symbol_accepted()
+    functions.append(is_symbol_accepted)
+
 def build():
     expert = ""
     expert += header

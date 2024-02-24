@@ -1,3 +1,3 @@
 {
-  "function_data" : "bool              filterGeneral()\n     {\n      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());\n      return con1 && con2 && con3 && con4;\n     }"
+  "function_data" : "bool              filterGeneral()\n     {\n      bool con1 = is_symbol_accepted(symbol_mode, symbols);\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());\n      return con1 && con2 && con3 && con4;\n     }"
 }

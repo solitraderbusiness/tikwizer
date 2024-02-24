@@ -2,21 +2,25 @@ class Task_id : public Task
   {
 public:
    //defined by user
-   string            symbol;
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
    int               profit_mode;
    double            profit_benchmark_filter;
    double            profit_benchmark_comparison;
-   //defined by system
-   string            msymbol;
+
 
 public:
    void              Task_id(string name): Task(name)
      {
-      symbol = symbol_val;//STest, no lists yet, also all is not supported yet.
-      group_mode = group_mode_val;
+      symbol_mode = symbol_mode_val;
+      symbols_str = symbols_str_val;
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
       group_number = group_number_val;
       int mtype[] = type_val; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
@@ -28,8 +32,6 @@ public:
 
    virtual void      run(int block_id, BlockParent &block)
      {
-      msymbol = getSymbol(symbol);
-
       double profitTotal=0;
       for(int i = 0 ; i < OrdersTotal() ; i++)
         {
@@ -60,7 +62,7 @@ public:
 
    bool              filterGeneral()
      {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
       bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
@@ -83,15 +85,13 @@ public:
          if(profit_mode == PROFIT_MODE_PIPS)
            {
             double profitVal = OrderType()==OP_BUY ? OrderClosePrice() - OrderOpenPrice() : OrderOpenPrice() - OrderClosePrice(); //STest, commission and swap
-            tradeProfit = toPips(profitVal, OrderSymbol());
+            tradeProfit = toPips(profitVal);
            }
       return tradeProfit;
      }
 
-   double            toPips(double price, string symbol)
+   double            toPips(double price)
      {
-      if(msymbol == "")
-         msymbol = Symbol();
-      return price/SymbolInfoDouble(msymbol, SYMBOL_POINT)/10;
+      return price/SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT)/10;
      }
   };

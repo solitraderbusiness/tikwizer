@@ -80,7 +80,9 @@ orders be at least 10.
 class Task17 : public Task
   {
    //specified by user
-   string            symbol;
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
@@ -97,7 +99,11 @@ public:
                      Task17(string name):Task(name)
      {
       //specified by user
-      symbol = NULL;
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 25;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
@@ -111,24 +117,20 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      msymbol = getSymbol(symbol);
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)
         {
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {
-            bool con1 = msymbol==NULL || msymbol==OrderSymbol();
-            bool con2 = sameOrderType(type, OrderType());
-            bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-            bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
-            if(con1 && con2 && con3 && con4)
+
+            if(filterGeneral())
               {
                int orderType = OrderType();
                double price;
-               double ask = SymbolInfoDouble(msymbol, SYMBOL_ASK);
-               double bid = SymbolInfoDouble(msymbol, SYMBOL_BID);
-               double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
+               double ask = SymbolInfoDouble(OrderSymbol(), SYMBOL_ASK);
+               double bid = SymbolInfoDouble(OrderSymbol(), SYMBOL_BID);
+               double point = SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT);
                if(price_mode==PRICE_AUTO)
                  {
                   if(MathMod(orderType,2)==0)
@@ -207,6 +209,14 @@ public:
 
      }
    virtual void      reset(int level) {}
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
   };
 
 

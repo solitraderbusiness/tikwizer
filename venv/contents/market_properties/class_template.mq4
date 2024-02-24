@@ -19,7 +19,7 @@ public:
 
    int               calc(MarketPropertiesResult &result)
      {
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
       mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
 
       //In time mode, first calc range start and range end, then calc the result just like range mode

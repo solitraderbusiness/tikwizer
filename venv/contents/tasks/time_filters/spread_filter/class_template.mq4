@@ -23,7 +23,7 @@ public:
      {
       Task::run(block_id, block);
 
-      msymbol = overriding_symbol=="" ? symbol : overriding_symbol;
+      msymbol = getSymbol(symbol);
 
       removeSpreadExtra();
       addSpread();

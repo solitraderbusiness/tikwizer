@@ -25,20 +25,26 @@ class Task33 : public Task
 
 public:
    //defined by user
-   string            symbol;
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
    int               profit_mode;
    double            profit_benchmark_filter;
    double            profit_benchmark_comparison;
-   //defined by system
-   string            msymbol;
+
 
 public:
    void              Task33(string name): Task(name)
      {
-      symbol = NULL;//STest, no lists yet, also all is not supported yet.
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
       group_mode = ORDER_GROUP_MODE_NONE;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell
@@ -51,8 +57,6 @@ public:
 
    virtual void      run(int block_id, BlockParent &block)
      {
-      msymbol = getSymbol(symbol);
-
       double profitTotal=0;
       for(int i = 0 ; i < OrdersTotal() ; i++)
         {
@@ -83,7 +87,7 @@ public:
 
    bool              filterGeneral()
      {
-      bool con1 = (msymbol==NULL && OrderSymbol()==Symbol()) || msymbol==OrderSymbol();
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
       bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
@@ -106,16 +110,14 @@ public:
          if(profit_mode == PROFIT_MODE_PIPS)
            {
             double profitVal = OrderType()==OP_BUY ? OrderClosePrice() - OrderOpenPrice() : OrderOpenPrice() - OrderClosePrice(); //STest, commission and swap
-            tradeProfit = toPips(profitVal, OrderSymbol());
+            tradeProfit = toPips(profitVal);
            }
       return tradeProfit;
      }
 
-   double            toPips(double price, string symbol)
+   double            toPips(double price)
      {
-      if(msymbol == "")
-         msymbol = Symbol();
-      return price/SymbolInfoDouble(msymbol, SYMBOL_POINT)/10;
+      return price/SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT)/10;
      }
   };
 
