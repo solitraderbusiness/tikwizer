@@ -74,8 +74,31 @@ def set_task_input_dic(nodes):
                 set_current_market_for_next_blocks(node)
             case "set_current_timeframe_for_next_blocks":
                 set_current_timeframe_for_next_blocks(node)
+            case "draw_arrow":
+                draw_arrow(node)
             case _:
                 default(node)
+
+
+def draw_arrow(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["object_per_bar"] = more.get("object_per_bar").get("value")
+    input_dic["object_update"] = more.get("object_update").get("value")
+    input_dic["obj_name"] = more.get("obj_name").get("value")
+    input_dic["object_type"] = more.get("object_type").get("value")
+    input_dic["obj_arrow_code"] = more.get("obj_arrow_code").get("value")
+    input_dic["obj_anchor"] = more.get("obj_anchor").get("value")
+    input_dic["obj_color"] = more.get("obj_color").get("value")
+    input_dic["obj_style"] = more.get("obj_style").get("value")
+    input_dic["obj_width"] = more.get("obj_width").get("value")
+    input_dic["obj_back"] = more.get("obj_back").get("value")
+    input_dic["obj_selectable"] = more.get("obj_selectable").get("value")
+    input_dic["obj_selected"] = more.get("obj_selected").get("value")
+    input_dic["obj_hidden"] = more.get("obj_hidden").get("value")
+    input_dic["obj_z_order"] = more.get("obj_z_order").get("value")
+    input_dic["obj_chart_subwindow"] = more.get("obj_chart_subwindow").get("value")
+    node["input_dic_task"] = input_dic
 
 
 def set_current_timeframe_for_next_blocks(node):
@@ -83,6 +106,7 @@ def set_current_timeframe_for_next_blocks(node):
     input_dic = {}
     input_dic["timeframes"] = more.get("timeframes").get("value")
     node["input_dic_task"] = input_dic
+
 
 def set_current_market_for_next_blocks(node):
     more = node.get("more")

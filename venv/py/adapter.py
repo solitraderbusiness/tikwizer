@@ -197,6 +197,8 @@ def add_category(nodes):
                 node["category"] = "output_and_communication"
             case "terminate":
                 node["category"] = "more"
+            case "draw_arrow":
+                node["category"] = "chart_and_objects"
             case _:
                 node["category"] = "not_specified"
 

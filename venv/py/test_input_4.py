@@ -4676,7 +4676,7 @@ input_data_6 = {
                                 "PRICE_LOW",
                                 "PRICE_MIDIAN",
                                 "PRICE_TYPICAL",
-                                "PRICE_WIGHTED"
+                                "PRICE_WEIGHTED"
                             ]
                         }
                     }
