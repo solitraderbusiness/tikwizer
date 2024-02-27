@@ -275,6 +275,10 @@ def add_global_functions(data):
     is_symbol_accepted = global_functions.get_fun__is_symbol_accepted()
     functions.append(is_symbol_accepted)
 
+    seconds_from_components = global_functions.get_fun__seconds_from_components()
+    functions.append(seconds_from_components)
+
+
 def build():
     expert = ""
     expert += header
@@ -478,6 +482,26 @@ def add_task_elements_specific(nodes):
             trailing_pending_orders(node)
         elif task_name == "modify_stops_of_trades":
             modify_stops_of_trades(node)
+        elif task_name == "draw_arrow":
+            draw_arrow(node)
+
+
+def draw_arrow(node):
+    obj_time_1_data = node.get("more").get("obj_time_1")
+    input_dic_time_1 = obj_time_1_data.get("input_dic")
+    value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+    row1_time_1 = value_fetch_time_1.get("row1").get("label")
+    row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    id_val_time_1 = str(node.get("id")) + "_time_1"
+    classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
+
+    obj_price_1_data = node.get("more").get("obj_price_1")
+    input_dic_price_1 = obj_price_1_data.get("input_dic")
+    value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+    row1_price_1 = value_fetch_price_1.get("row1").get("label")
+    row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    id_val_price_1 = str(node.get("id")) + "_price_1"
+    classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
 
 
 def modify_stops_of_trades(node):

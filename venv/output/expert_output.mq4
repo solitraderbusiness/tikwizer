@@ -187,6 +187,432 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
+
+class Value0_time_1
+  {
+public:
+       int               type;
+   string               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
+   string            symbol;
+   //for time (phase 2)
+   //defined by user
+   int               mode_time;
+   int               time_source;
+   string            time_stamp;
+   int               time_candle_id;
+   string            time_market;
+   ENUM_TIMEFRAMES   time_candle_timeframe;
+   int               time_component_year;
+   int               time_component_month;
+   double            time_component_day;
+   double            time_component_hour;
+   double            time_component_minute;
+   int               time_component_second;
+   datetime          time_value;
+   int               mode_time_shift;
+   int               time_shift_years;
+   int               time_shift_months;
+   int               time_shift_weeks;
+   double            time_shift_days;
+   double            time_shift_hours;
+   double            time_shift_minutes;
+   int               time_shift_seconds;
+   bool              time_skip_weekdays;
+   //defined by system
+   datetime          retval;
+   datetime          retval0;
+   datetime          Time[];
+   string            msymbol;
+
+public:
+
+   void              init()
+
+     {
+      type = VALUE_TYPE_TIME;
+      value = 20.4;
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = NULL;
+      //for time (phase 2)
+      //defined by user
+      mode_time = 0;
+      time_source = 0;
+      time_stamp = "00:00";
+      time_candle_id = 1;
+      time_market = "";
+      time_candle_timeframe = 0;
+      time_component_year = 0;
+      time_component_month = 0;
+      time_component_day = 0;
+      time_component_hour = 12;
+      time_component_minute = 0;
+      time_component_second = 0;
+      time_value = 0;
+      mode_time_shift = 0;
+      time_shift_years = 0;
+      time_shift_months = 0;
+      time_shift_weeks = 0;
+      time_shift_days = 0;
+      time_shift_hours = 0;
+      time_shift_minutes = 0;
+      time_shift_seconds = 0;
+      time_skip_weekdays = False;
+      //defined by system
+      retval =  0;
+      retval0 =  0;
+
+     }
+
+   string              calc()
+     {
+
+      msymbol = getSymbol(symbol);
+      string result = "";
+      switch(type)
+        {
+         case VALUE_TYPE_NUMERIC:
+         case VALUE_TYPE_BOOLEAN:
+         case VALUE_TYPE_COLOR:
+         case VALUE_TYPE_TEXT:
+            result = value;
+            break;
+
+         case VALUE_TYPE_TEXT_CODE_INPUT:
+            result = "\"" + value + "\"";
+            break;
+
+         case VALUE_TYPE_PIPS:
+            if(pips_mode == VALUE_PIPS_AS_IS)
+              {
+               result =  value;
+              }
+            else
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                 {
+                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                  result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
+                 }
+            break;
+
+         case VALUE_TYPE_TIME:
+
+            if(time_market == "")
+               time_market = Symbol();
+
+            if(mode_time == 0)
+              {
+               if(time_source == 0)
+                 {
+                  retval = TimeCurrent();
+                 }
+               else
+                  if(time_source == 1)
+                    {
+                     retval = TimeLocal() + (TimeCurrent() - TimeLocal());
+                    }
+                  else
+                     if(time_source == 2)
+                       {
+                        retval = TimeGMT() + (TimeCurrent() - TimeGMT());
+                       }
+              }
+            else
+               if(mode_time == 1)
+                 {
+                  retval  = StringToTime(time_stamp);
+                  retval0 = retval;
+                 }
+               else
+                  if(mode_time==2)
+                    {
+                     retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
+                    }
+                  else
+                     if(mode_time == 3)
+                       {
+                        ArraySetAsSeries(Time,true);
+                        CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
+                        retval = Time[0];
+                       }
+                     else
+                        if(mode_time == 4)
+                          {
+                           retval = time_value;
+                          }
+
+            if(mode_time_shift > 0)
+              {
+               int sh = 1;
+
+               if(mode_time_shift == 1)
+                 {
+                  sh = -1;
+                 }
+
+               if(time_shift_years > 0 || time_shift_months > 0)
+                 {
+                  int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
+
+                  if(mode_time == 3)
+                    {
+                     year   = time_component_year;
+                     month  = time_component_month;
+                     day    = (int)MathFloor(time_component_day);
+                     hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
+                     minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
+                     second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
+                    }
+                  else
+                    {
+                     year   = TimeYear(retval);
+                     month  = TimeMonth(retval);
+                     day    = TimeDay(retval);
+                     hour   = TimeHour(retval);
+                     minute = TimeMinute(retval);
+                     second = TimeSeconds(retval);
+                    }
+
+                  year  = year + time_component_year * sh;
+                  month = month + time_component_month * sh;
+
+                  if(month < 0)
+                    {
+                     month = 12 - month;
+                    }
+                  else
+                     if(month > 12)
+                       {
+                        month = month - 12;
+                       }
+
+                  retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
+                 }
+
+               retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
+
+               if(time_skip_weekdays == true)
+                 {
+                  int weekday = TimeDayOfWeek(retval);
+
+                  if(sh > 0)    // forward
+                    {
+                     if(weekday == 0)
+                       {
+                        retval = retval + 86400;
+                       }
+                     else
+                        if(weekday == 6)
+                          {
+                           retval = retval + 172800;
+                          }
+                    }
+                  else
+                     if(sh < 0)    // back
+                       {
+                        if(weekday == 0)
+                          {
+                           retval = retval - 172800;
+                          }
+                        else
+                           if(weekday == 6)
+                             {
+                              retval = retval - 86400;
+                             }
+                       }
+                 }
+              }
+
+            result = retval;
+            break;
+        }
+        return result;
+     }
+  };
+class Candle0_price_1
+
+  {
+
+public:
+
+   string            symbol;
+   int               timeframe;
+   int               find_method;
+   int               price_mode;
+   string            timestr;
+   int               shift;
+
+   string            msymbol;
+   int            mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = NULL;
+      timeframe = 0;
+      find_method = FIND_BY_ID;
+      price_mode = CANDLE_HIGH;
+      timestr = "2023.4.26 13:40:30";
+      shift = 20;
+     }
+
+
+
+   double            calc()
+
+     {
+       msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
+
+      int index = get_index();
+      double value = get_value(index);
+      return value + toDigits( 58,msymbol);
+     }
+
+private:
+   int               get_index()
+     {
+      int index = -1;
+      if(find_method==FIND_BY_DATE)
+        {
+         datetime date = StrToTime(timestr);
+         index = iBarShift(msymbol, mtimeframe, date, false);
+        }
+      else
+         if(find_method==FIND_BY_ID)
+           {
+            index = shift;
+           }
+      return index;
+     }
+
+   double            get_value(int index)
+     {
+      switch(price_mode)
+        {
+         case CANDLE_OPEN:
+            return iOpen(msymbol, mtimeframe, index);
+         case CANDLE_HIGH:
+            return iHigh(msymbol, mtimeframe, index);
+         case CANDLE_LOW:
+            return iLow(msymbol, mtimeframe, index);;
+         case CANDLE_CLOSE:
+            return iClose(msymbol, mtimeframe, index);;
+         case CANDLE_MEDIAN:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
+         case CANDLE_HLC3:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
+         case CANDLE_AVERAGE:
+            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
+         case CANDLE_GAP_TO_PREV:
+            //STest, is this calc right?
+            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
+            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
+            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
+            return gap;
+
+
+            double val, valPips;
+            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
+
+         case CANDLE_TOTAL_SIZE:
+            val = length(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BODY_SIZE:
+            val = body(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_TOP_WICK:
+            val = wickup(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BOTTOM_WICK:
+            val = wickdn(index);
+            valPips = val/point/10;
+            return valPips;
+
+
+
+         //STest, effect of bull here compared to code above
+         case BULL_CANDLE_TOTAL_SIZE:
+            val = isGreen(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BODY_SIZE:
+            val = isGreen(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_TOP_WICK:
+            val = isGreen(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BOTTOM_WICK:
+            val = isGreen(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+
+
+
+         //STest, effect of bull here compared to code above
+         case BEAR_CANDLE_TOTAL_SIZE:
+            val = isRed(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BODY_SIZE:
+            val = isRed(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_TOP_WICK:
+            val = isRed(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BOTTOM_WICK:
+            val = isRed(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+        }
+      return -1;
+     }
+
+
+
+
+   double            length(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
+     }
+   double            body(int i)
+     {
+      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickup(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickdn(int i)
+     {
+      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
+     }
+   bool              isGreen(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
+     }
+   bool              isRed(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
+     }
+   bool              isDoji(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
+     }
+
+  };
 
 class RSI1_left
   {
@@ -225,11 +651,38 @@ class Value1_right
 public:
        int               type;
    string               value;
+   string               adjust;
    //for pips
    int               pips_mode;
    string            symbol;
    //for time (phase 2)
-   
+   //defined by user
+   int               mode_time;
+   int               time_source;
+   string            time_stamp;
+   int               time_candle_id;
+   string            time_market;
+   ENUM_TIMEFRAMES   time_candle_timeframe;
+   int               time_component_year;
+   int               time_component_month;
+   double            time_component_day;
+   double            time_component_hour;
+   double            time_component_minute;
+   int               time_component_second;
+   datetime          time_value;
+   int               mode_time_shift;
+   int               time_shift_years;
+   int               time_shift_months;
+   int               time_shift_weeks;
+   double            time_shift_days;
+   double            time_shift_hours;
+   double            time_shift_minutes;
+   int               time_shift_seconds;
+   bool              time_skip_weekdays;
+   //defined by system
+   datetime          retval;
+   datetime          retval0;
+   datetime          Time[];
    string            msymbol;
 
 public:
@@ -237,12 +690,39 @@ public:
    void              init()
 
      {
-      type = VALUE_TYPE_NUMERIC;
+      type = VALUE_TYPE_TIME;
       value = 20.4;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
       //for time (phase 2)
+      //defined by user
+      mode_time = 0;
+      time_source = 0;
+      time_stamp = "00:00";
+      time_candle_id = 1;
+      time_market = "";
+      time_candle_timeframe = 0;
+      time_component_year = 0;
+      time_component_month = 0;
+      time_component_day = 0;
+      time_component_hour = 12;
+      time_component_minute = 0;
+      time_component_second = 0;
+      time_value = 0;
+      mode_time_shift = 0;
+      time_shift_years = 0;
+      time_shift_months = 0;
+      time_shift_weeks = 0;
+      time_shift_days = 0;
+      time_shift_hours = 0;
+      time_shift_minutes = 0;
+      time_shift_seconds = 0;
+      time_skip_weekdays = False;
+      //defined by system
+      retval =  0;
+      retval0 =  0;
+
      }
 
    string              calc()
@@ -277,9 +757,137 @@ public:
             break;
 
          case VALUE_TYPE_TIME:
+
+            if(time_market == "")
+               time_market = Symbol();
+
+            if(mode_time == 0)
+              {
+               if(time_source == 0)
+                 {
+                  retval = TimeCurrent();
+                 }
+               else
+                  if(time_source == 1)
+                    {
+                     retval = TimeLocal() + (TimeCurrent() - TimeLocal());
+                    }
+                  else
+                     if(time_source == 2)
+                       {
+                        retval = TimeGMT() + (TimeCurrent() - TimeGMT());
+                       }
+              }
+            else
+               if(mode_time == 1)
+                 {
+                  retval  = StringToTime(time_stamp);
+                  retval0 = retval;
+                 }
+               else
+                  if(mode_time==2)
+                    {
+                     retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
+                    }
+                  else
+                     if(mode_time == 3)
+                       {
+                        ArraySetAsSeries(Time,true);
+                        CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
+                        retval = Time[0];
+                       }
+                     else
+                        if(mode_time == 4)
+                          {
+                           retval = time_value;
+                          }
+
+            if(mode_time_shift > 0)
+              {
+               int sh = 1;
+
+               if(mode_time_shift == 1)
+                 {
+                  sh = -1;
+                 }
+
+               if(time_shift_years > 0 || time_shift_months > 0)
+                 {
+                  int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
+
+                  if(mode_time == 3)
+                    {
+                     year   = time_component_year;
+                     month  = time_component_month;
+                     day    = (int)MathFloor(time_component_day);
+                     hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
+                     minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
+                     second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
+                    }
+                  else
+                    {
+                     year   = TimeYear(retval);
+                     month  = TimeMonth(retval);
+                     day    = TimeDay(retval);
+                     hour   = TimeHour(retval);
+                     minute = TimeMinute(retval);
+                     second = TimeSeconds(retval);
+                    }
+
+                  year  = year + time_component_year * sh;
+                  month = month + time_component_month * sh;
+
+                  if(month < 0)
+                    {
+                     month = 12 - month;
+                    }
+                  else
+                     if(month > 12)
+                       {
+                        month = month - 12;
+                       }
+
+                  retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
+                 }
+
+               retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
+
+               if(time_skip_weekdays == true)
+                 {
+                  int weekday = TimeDayOfWeek(retval);
+
+                  if(sh > 0)    // forward
+                    {
+                     if(weekday == 0)
+                       {
+                        retval = retval + 86400;
+                       }
+                     else
+                        if(weekday == 6)
+                          {
+                           retval = retval + 172800;
+                          }
+                    }
+                  else
+                     if(sh < 0)    // back
+                       {
+                        if(weekday == 0)
+                          {
+                           retval = retval - 172800;
+                          }
+                        else
+                           if(weekday == 6)
+                             {
+                              retval = retval - 86400;
+                             }
+                       }
+                 }
+              }
+
+            result = retval;
             break;
         }
-        return (double)result*21/NormalizeDouble(100,0);
+        return result;
      }
   };
 
@@ -385,7 +993,7 @@ public:
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits(58,msymbol);
+      return value + toDigits( 58,msymbol);
      }
 
 private:
@@ -566,7 +1174,7 @@ public:
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits(58,msymbol);
+      return value + toDigits( 58,msymbol);
      }
 
 private:
@@ -804,7 +1412,7 @@ public:
       string symbol =  getSymbol(this.symbol);
       int timeframe = getTimeframe(this.timeframe);
       double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result / toDigits(20,symbol);
+      return result / toDigits( 20,symbol);
      }
 
   };
@@ -837,7 +1445,7 @@ public:
       string symbol =  getSymbol(this.symbol);
       int timeframe = getTimeframe(this.timeframe);
       double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result / toDigits(20,symbol);
+      return result / toDigits( 20,symbol);
      }
 
   };
@@ -1100,16 +1708,16 @@ public:
                ObjectSetInteger(obj_chart_id,name,OBJPROP_ARROWCODE,obj_arrow_code);
 
 
-            Value1_right value1_right_time;
-            value1_right_time.init();
-            int valueValue_time = value1_right_time.calc();
+            Value0_time_1 value0_time_1;
+   value0_time_1.init();
+   datetime valueValue0_time_1 = value0_time_1.calc();
 
-            MACD4_left1 macdx_price;
-            macdx_price.init();
-            double macdMACD_price = macdx_price.calc();
+            Candle0_price_1 candle0_price_1;
+   candle0_price_1.init();
+   double valueCandle0_price_1 = candle0_price_1.calc();
 
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,valueValue_time);
-            ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,macdMACD_price);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,valueValue0_time_1);
+            ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,valueCandle0_price_1);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_ANCHOR,obj_anchor);
 
             ObjectSetInteger(obj_chart_id,name,OBJPROP_STYLE,obj_style);
@@ -3565,7 +4173,17 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
            }
         }
    return false;
-  }int init(){
+  }int SecondsFromComponents(double days, double hours, double minutes, int seconds)
+  {
+   int retval =
+      86400 * (int)MathFloor(days)
+      + 3600 * (int)(MathFloor(hours) + (24 * (days - MathFloor(days))))
+      + 60 * (int)(MathFloor(minutes) + (60 * (hours - MathFloor(hours))))
+      + (int)((double)seconds + (60 * (minutes - MathFloor(minutes))));
+
+   return retval;
+  }
+int init(){
 addBlocksTick();
 }
 void OnTimer(){

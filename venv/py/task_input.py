@@ -100,6 +100,18 @@ def draw_arrow(node):
     input_dic["obj_chart_subwindow"] = more.get("obj_chart_subwindow").get("value")
     node["input_dic_task"] = input_dic
 
+    obj_time_1_data = node.get("more").get("obj_time_1")
+    value_time_1 = obj_time_1_data.get("value_fetch")
+    params_time_1 = value_time_1.get("params")
+    input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+    obj_time_1_data["input_dic"] = input_dic_time_1
+
+    obj_price_1_data = node.get("more").get("obj_price_1")
+    value_price_1 = obj_price_1_data.get("value_fetch")
+    params_price_1 = value_price_1.get("params")
+    input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+    obj_price_1_data["input_dic"] = input_dic_price_1
+
 
 def set_current_timeframe_for_next_blocks(node):
     more = node.get("more")
@@ -681,10 +693,13 @@ def value_fetch(node, input_items, row1, row2):
             "value")  # STest, should be lowercase
 
     # handle this fucking candle id thing!
-    # for condition
-    if "more" in node and "candleIDLeft" in node.get("more"):
-        input_dic["shift"] = node.get("more").get("candleIDLeft").get("value")
-    # for modify variable
+    # for condition asf
+    if "more" in node:
+        if "candleIDLeft" in node.get("more"):
+            input_dic["shift"] = node.get("more").get("candleIDLeft").get("value")
+        if "candleIDRight" in node.get("more"):
+            input_dic["shift"] = node.get("more").get("candleIDRight").get("value")
+    # for modify variable asf
     if "items" in node:
         for item in node.get("items"):
             value = item.get("value")

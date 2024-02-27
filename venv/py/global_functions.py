@@ -81,6 +81,9 @@ def get_fun__time_from_components():
     result = "datetime TimeFromComponents(\n   int time_src = 0,\n   int    y = 0,\n   int    m = 0,\n   double d = 0,\n   double h = 0,\n   double i = 0,\n   int    s = 0\n)\n  {\n   MqlDateTime tm;\n   int offset = 0;\n\n   if(time_src == 0)\n     {\n      TimeCurrent(tm);\n     }\n   else\n      if(time_src == 1)\n        {\n         TimeLocal(tm);\n         offset = (int)(TimeLocal() - TimeCurrent());\n        }\n      else\n         if(time_src == 2)\n           {\n            TimeGMT(tm);\n            offset = (int)(TimeGMT() - TimeCurrent());\n           }\n\n   if(y > 0)\n     {\n      if(y < 100)\n        {\n         y = 2000 + y;\n        }\n      tm.year = y;\n     }\n   if(m > 0)\n     {\n      tm.mon = m;\n     }\n   if(d > 0)\n     {\n      tm.day = (int)MathFloor(d);\n     }\n\n   tm.hour = (int)(MathFloor(h) + (24 * (d - MathFloor(d))));\n   tm.min  = (int)(MathFloor(i) + (60 * (h - MathFloor(h))));\n   tm.sec  = (int)((double)s + (60 * (i - MathFloor(i))));\n\n   datetime time = StructToTime(tm) - offset;\n\n   return time;\n  }\n"
     return result
 
+def get_fun__seconds_from_components():
+    result = "int SecondsFromComponents(double days, double hours, double minutes, int seconds)\n  {\n   int retval =\n      86400 * (int)MathFloor(days)\n      + 3600 * (int)(MathFloor(hours) + (24 * (days - MathFloor(days))))\n      + 60 * (int)(MathFloor(minutes) + (60 * (hours - MathFloor(hours))))\n      + (int)((double)seconds + (60 * (minutes - MathFloor(minutes))));\n\n   return retval;\n  }\n"
+    return result
 
 def get_fun__get_group_number():
     result = "//Considering each magic number is a 7 digit number like 2088100,\n//I choose to take first two digits as group number.\nint getGroupNumber (int magic){\n   return (int)(magic/100000);\n}"

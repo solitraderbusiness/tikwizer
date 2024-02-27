@@ -126,7 +126,9 @@ def run_data_dynamic_fun(node, run_data_static):
     elif task_name == "trailing_pending_orders":
         run_data = trailing_pending_orders_run_data(node, run_data_static)
     elif task_name == "modify_stops_of_trades":
-        run_data = modify_stops_of_trades_data(node, run_data_static)
+        run_data = modify_stops_of_trades_run_data(node, run_data_static)
+    elif task_name == "draw_arrow":
+        run_data = draw_arrow_run_data(node, run_data_static)
     return run_data
 
 
@@ -161,7 +163,32 @@ def function_data_dynamic_fun(node, function_data_static):
     return function_data
 
 
-def modify_stops_of_trades_data(node, function_data_static):
+def draw_arrow_run_data(node, function_data_static):
+    obj_time_1_data = node.get("more").get("obj_time_1")
+    value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+    row1_time_1 = value_fetch_time_1.get("row1").get("label")
+    row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    id_val_time_1 = str(node.get("id")) + "_time_1"
+
+    init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+    val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+    function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
+    function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
+
+    obj_price_1_data = node.get("more").get("obj_price_1")
+    value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+    row1_price_1 = value_fetch_price_1.get("row1").get("label")
+    row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    id_val_price_1 = str(node.get("id")) + "_price_1"
+
+    init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+    val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+    function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
+    function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
+
+    return function_data_static
+
+def modify_stops_of_trades_run_data(node, function_data_static):
     relative_to_data = node.get("more").get("relative_to")
     if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
         value_fetch = relative_to_data.get("value_fetch")
@@ -208,6 +235,7 @@ def modify_stops_of_trades_data(node, function_data_static):
         function_data_static = function_data_static.replace("variable_name_ntm_sl", "\"\"")
 
     return function_data_static
+
 
 def buy_sell_function_data(node, function_data_static):
     open_at_price_data = node.get("more").get("open_at_price")

@@ -3,6 +3,7 @@ import path_root
 
 path = path_root.get()
 
+
 def get_operator_symbol(id):
     return operators[id - 1]
 
@@ -39,10 +40,10 @@ def get_comparator_two_con_func(id, initializer_11, initializer_12, initializer_
                 .replace("initializer_12", initializer_12) \
                 .replace("initializer_21", initializer_21) \
                 .replace("initializer_22", initializer_22) \
-                .replace("var_name_11", str(var_name_11))  \
-                .replace("var_name_12", str(var_name_12))  \
-                .replace("var_name_21", str(var_name_21))  \
-                .replace("var_name_22", str(var_name_22))  \
+                .replace("var_name_11", str(var_name_11)) \
+                .replace("var_name_12", str(var_name_12)) \
+                .replace("var_name_21", str(var_name_21)) \
+                .replace("var_name_22", str(var_name_22)) \
                 .replace("statements_for_blue", statements_for_blue) \
                 .replace("statements_for_red", statements_for_red) \
                 .replace("operator_1", operator_1) \
@@ -62,22 +63,24 @@ def get_comparator_call(id):
 def correct_input_indicator(indicator_name, input_dic):
     with open(path + "/contents/indicators/" + indicator_name + "/input.json") as file:
         if file:
-            str = file.read()
-            dic = json.loads(str)
+            mstr = file.read()
+            dic = json.loads(mstr)
             for key in dic:
-                if not key in input_dic:
+                if key not in input_dic:
                     input_dic[key] = dic.get(key)
             return input_dic
+
 
 def correct_input_value(input_dic):
     with open(path + "/contents/value/input.json") as file:
         if file:
-            str = file.read()
-            dic = json.loads(str)
+            mstr = file.read()
+            dic = json.loads(mstr)
             for key in dic:
-                if not key in input_dic:
+                if key not in input_dic:
                     input_dic[key] = dic.get(key)
             return input_dic
+
 
 def string_to_digit(str):
     array = [char for char in str]
@@ -87,7 +90,7 @@ def string_to_digit(str):
     return total
 
 
-def correct_once_per_bar_sides (nodes, edges):
+def correct_once_per_bar_sides(nodes, edges):
     for node in nodes:
         is_target = False
         for edge in edges:
@@ -97,17 +100,15 @@ def correct_once_per_bar_sides (nodes, edges):
                 break
         if not is_target and node.get("data").get("blockName") == "Once per bar":
             for edge in edges:
-                if node.get("id") == edge.get("source") and edge.get("sourceHandle")=="blue":
-                     target_id = edge.get("target")
-                     for mnode in nodes:
-                         if mnode.get("id")==target_id and mnode.get("data").get("blockName")=="condition1":
-                             if mnode.get("more").get("left1").get("label")=="Indicator":
-                                 if mnode.get("more").get("candleIDLeft").get("value")==0:
-                                    mnode.get("more").get("candleIDLeft").update({"value":mnode.get("more").get("candleIDLeft").get("value")+1})
-                             if mnode.get("more").get("right1").get("label")=="Indicator":
-                                 if mnode.get("more").get("candleIDRight").get("value")==0:
-                                     mnode.get("more").get("candleIDRight").update({"value":mnode.get("more").get("candleIDRight").get("value")+1})
-
-
-
-
+                if node.get("id") == edge.get("source") and edge.get("sourceHandle") == "blue":
+                    target_id = edge.get("target")
+                    for mnode in nodes:
+                        if mnode.get("id") == target_id and mnode.get("data").get("blockName") == "condition1":
+                            if mnode.get("more").get("left1").get("label") == "Indicator":
+                                if mnode.get("more").get("candleIDLeft").get("value") == 0:
+                                    mnode.get("more").get("candleIDLeft").update(
+                                        {"value": mnode.get("more").get("candleIDLeft").get("value") + 1})
+                            if mnode.get("more").get("right1").get("label") == "Indicator":
+                                if mnode.get("more").get("candleIDRight").get("value") == 0:
+                                    mnode.get("more").get("candleIDRight").update(
+                                        {"value": mnode.get("more").get("candleIDRight").get("value") + 1})
