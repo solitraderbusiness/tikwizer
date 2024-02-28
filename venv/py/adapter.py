@@ -199,6 +199,8 @@ def add_category(nodes):
                 node["category"] = "more"
             case "draw_arrow":
                 node["category"] = "chart_and_objects"
+            case "draw_button":
+                node["category"] = "chart_and_objects"
             case _:
                 node["category"] = "not_specified"
 

@@ -68,6 +68,11 @@
 #define VALUE_TYPE_TIME 7
 #define VALUE_PIPS_AS_IS 1
 #define VALUE_PIPS_AS_PRICE_FRACTION 2
+#define MODE_TIME_NOW 1
+#define MODE_TIME_TIMESTAMP 2
+#define MODE_TIME_COMPONENTS 3
+#define MODE_TIME_CANDLE_TIME 4
+#define MODE_TIME_TIME_VALUE 5
 #define BLOCK_STATE_ENABLE 1
 #define BLOCK_STATE_DISABLE 2
 #define BLOCK_STATE_TOGGLE 3
@@ -191,7 +196,8 @@ public:
 class Value0_time_1
   {
 public:
-       int               type;
+
+      int               type;
    string               value;
    string               adjust;
    //for pips
@@ -232,14 +238,14 @@ public:
    void              init()
 
      {
-      type = VALUE_TYPE_TIME;
+        type = VALUE_TYPE_TIME;
       value = 20.4;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
       //for time (phase 2)
       //defined by user
-      mode_time = 0;
+      mode_time = MODE_TIME_NOW;
       time_source = 0;
       time_stamp = "00:00";
       time_candle_id = 1;
@@ -288,7 +294,7 @@ public:
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               result =  value;
+               result = value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
@@ -303,43 +309,43 @@ public:
             if(time_market == "")
                time_market = Symbol();
 
-            if(mode_time == 0)
+            if(mode_time == MODE_TIME_NOW)
               {
-               if(time_source == 0)
+               if(time_source == TIME_SERVER)
                  {
                   retval = TimeCurrent();
                  }
                else
-                  if(time_source == 1)
+                  if(time_source == TIME_LOCAL)
                     {
                      retval = TimeLocal() + (TimeCurrent() - TimeLocal());
                     }
                   else
-                     if(time_source == 2)
+                     if(time_source == TIME_GMT)
                        {
                         retval = TimeGMT() + (TimeCurrent() - TimeGMT());
                        }
               }
             else
-               if(mode_time == 1)
+               if(mode_time == MODE_TIME_TIMESTAMP)
                  {
                   retval  = StringToTime(time_stamp);
                   retval0 = retval;
                  }
                else
-                  if(mode_time==2)
+                  if(mode_time==MODE_TIME_COMPONENTS)
                     {
                      retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
                     }
                   else
-                     if(mode_time == 3)
+                     if(mode_time == MODE_TIME_CANDLE_TIME)
                        {
                         ArraySetAsSeries(Time,true);
                         CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
                         retval = Time[0];
                        }
                      else
-                        if(mode_time == 4)
+                        if(mode_time == MODE_TIME_TIME_VALUE)
                           {
                            retval = time_value;
                           }
@@ -357,7 +363,7 @@ public:
                  {
                   int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
 
-                  if(mode_time == 3)
+                  if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
                     {
                      year   = time_component_year;
                      month  = time_component_month;
@@ -411,7 +417,7 @@ public:
                           }
                     }
                   else
-                     if(sh < 0)    // back
+                     if(sh < 0) // back
                        {
                         if(weekday == 0)
                           {
@@ -429,7 +435,7 @@ public:
             result = retval;
             break;
         }
-        return result;
+      return result;
      }
   };
 class Candle0_price_1
@@ -649,7 +655,8 @@ public:
 class Value1_right
   {
 public:
-       int               type;
+
+      int               type;
    string               value;
    string               adjust;
    //for pips
@@ -690,7 +697,7 @@ public:
    void              init()
 
      {
-      type = VALUE_TYPE_TIME;
+        type = VALUE_TYPE_TIME;
       value = 20.4;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
@@ -746,7 +753,7 @@ public:
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               result =  value;
+               result = value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
@@ -761,43 +768,43 @@ public:
             if(time_market == "")
                time_market = Symbol();
 
-            if(mode_time == 0)
+            if(mode_time == MODE_TIME_NOW)
               {
-               if(time_source == 0)
+               if(time_source == TIME_SERVER)
                  {
                   retval = TimeCurrent();
                  }
                else
-                  if(time_source == 1)
+                  if(time_source == TIME_LOCAL)
                     {
                      retval = TimeLocal() + (TimeCurrent() - TimeLocal());
                     }
                   else
-                     if(time_source == 2)
+                     if(time_source == TIME_GMT)
                        {
                         retval = TimeGMT() + (TimeCurrent() - TimeGMT());
                        }
               }
             else
-               if(mode_time == 1)
+               if(mode_time == MODE_TIME_TIMESTAMP)
                  {
                   retval  = StringToTime(time_stamp);
                   retval0 = retval;
                  }
                else
-                  if(mode_time==2)
+                  if(mode_time==MODE_TIME_COMPONENTS)
                     {
                      retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
                     }
                   else
-                     if(mode_time == 3)
+                     if(mode_time == MODE_TIME_CANDLE_TIME)
                        {
                         ArraySetAsSeries(Time,true);
                         CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
                         retval = Time[0];
                        }
                      else
-                        if(mode_time == 4)
+                        if(mode_time == MODE_TIME_TIME_VALUE)
                           {
                            retval = time_value;
                           }
@@ -815,7 +822,7 @@ public:
                  {
                   int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
 
-                  if(mode_time == 3)
+                  if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
                     {
                      year   = time_component_year;
                      month  = time_component_month;
@@ -869,7 +876,7 @@ public:
                           }
                     }
                   else
-                     if(sh < 0)    // back
+                     if(sh < 0) // back
                        {
                         if(weekday == 0)
                           {
@@ -887,7 +894,7 @@ public:
             result = retval;
             break;
         }
-        return result;
+      return result;
      }
   };
 
@@ -1607,7 +1614,7 @@ public:
          //defined by user
       object_per_bar = True;
       object_update = True;
-      obj_name = True;
+      obj_name = "my_arrow";
       object_type = OBJ_ARROW_UP;
       obj_arrow_code = 58;
       obj_anchor = ANCHOR_TOP;

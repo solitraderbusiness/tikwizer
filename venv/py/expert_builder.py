@@ -484,6 +484,18 @@ def add_task_elements_specific(nodes):
             modify_stops_of_trades(node)
         elif task_name == "draw_arrow":
             draw_arrow(node)
+        elif task_name == "draw_button":
+            draw_button(node)
+
+
+def draw_button(node):
+    obj_text_data = node.get("more").get("obj_text")
+    input_dic = obj_text_data.get("input_dic")
+    value_fetch = obj_text_data.get("value_fetch")
+    row1 = value_fetch.get("row1").get("label")
+    row2 = value_fetch.get("row2").get("name")
+    id_val = str(node.get("id")) + "_obj_text"
+    classes.append(value_fetch_class(row1, row2, input_dic, id_val))
 
 
 def draw_arrow(node):

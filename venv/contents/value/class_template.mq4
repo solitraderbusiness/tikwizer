@@ -2,14 +2,15 @@
 class Value_id
   {
 public:
-    field_body
+
+   field_body
 
 public:
 
    void              init()
 
      {
-      init_body
+        init_body
      }
 
    string              calc()
@@ -33,7 +34,7 @@ public:
          case VALUE_TYPE_PIPS:
             if(pips_mode == VALUE_PIPS_AS_IS)
               {
-               result =  value;
+               result = value;
               }
             else
                if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
@@ -48,43 +49,43 @@ public:
             if(time_market == "")
                time_market = Symbol();
 
-            if(mode_time == 0)
+            if(mode_time == MODE_TIME_NOW)
               {
-               if(time_source == 0)
+               if(time_source == TIME_SERVER)
                  {
                   retval = TimeCurrent();
                  }
                else
-                  if(time_source == 1)
+                  if(time_source == TIME_LOCAL)
                     {
                      retval = TimeLocal() + (TimeCurrent() - TimeLocal());
                     }
                   else
-                     if(time_source == 2)
+                     if(time_source == TIME_GMT)
                        {
                         retval = TimeGMT() + (TimeCurrent() - TimeGMT());
                        }
               }
             else
-               if(mode_time == 1)
+               if(mode_time == MODE_TIME_TIMESTAMP)
                  {
                   retval  = StringToTime(time_stamp);
                   retval0 = retval;
                  }
                else
-                  if(mode_time==2)
+                  if(mode_time==MODE_TIME_COMPONENTS)
                     {
                      retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
                     }
                   else
-                     if(mode_time == 3)
+                     if(mode_time == MODE_TIME_CANDLE_TIME)
                        {
                         ArraySetAsSeries(Time,true);
                         CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
                         retval = Time[0];
                        }
                      else
-                        if(mode_time == 4)
+                        if(mode_time == MODE_TIME_TIME_VALUE)
                           {
                            retval = time_value;
                           }
@@ -102,7 +103,7 @@ public:
                  {
                   int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
 
-                  if(mode_time == 3)
+                  if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
                     {
                      year   = time_component_year;
                      month  = time_component_month;
@@ -156,7 +157,7 @@ public:
                           }
                     }
                   else
-                     if(sh < 0)    // back
+                     if(sh < 0) // back
                        {
                         if(weekday == 0)
                           {
@@ -174,6 +175,6 @@ public:
             result = retval;
             break;
         }
-        return result;
+      return result;
      }
   };

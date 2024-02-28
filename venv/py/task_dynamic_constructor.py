@@ -129,6 +129,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = modify_stops_of_trades_run_data(node, run_data_static)
     elif task_name == "draw_arrow":
         run_data = draw_arrow_run_data(node, run_data_static)
+    elif task_name == "draw_button":
+        run_data = draw_button_run_data(node, run_data_static)
     return run_data
 
 
@@ -163,6 +165,21 @@ def function_data_dynamic_fun(node, function_data_static):
     return function_data
 
 
+def draw_button_run_data(node, function_data_static):
+    obj_text_data = node.get("more").get("obj_text")
+    value_fetch = obj_text_data.get("value_fetch")
+    row1 = value_fetch.get("row1").get("label")
+    row2 = value_fetch.get("row2").get("name")
+    id_val = str(node.get("id")) + "_obj_text"
+
+    init = get_value_fetch_init(row1, row2, id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    function_data_static = function_data_static.replace("initializer_obj_text", init)
+    function_data_static = function_data_static.replace("variable_name_obj_text", val)
+
+    return function_data_static
+
+
 def draw_arrow_run_data(node, function_data_static):
     obj_time_1_data = node.get("more").get("obj_time_1")
     value_fetch_time_1 = obj_time_1_data.get("value_fetch")
@@ -187,6 +204,7 @@ def draw_arrow_run_data(node, function_data_static):
     function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
 
     return function_data_static
+
 
 def modify_stops_of_trades_run_data(node, function_data_static):
     relative_to_data = node.get("more").get("relative_to")

@@ -107,6 +107,12 @@ constants = [
     "#define VALUE_PIPS_AS_IS 1",
     "#define VALUE_PIPS_AS_PRICE_FRACTION 2",
 
+    "#define MODE_TIME_NOW 1",
+    "#define MODE_TIME_TIMESTAMP 2",
+    "#define MODE_TIME_COMPONENTS 3",
+    "#define MODE_TIME_CANDLE_TIME 4",
+    "#define MODE_TIME_TIME_VALUE 5",
+
     ###################### Blocks On/Off/Toggle ##########################
     "#define BLOCK_STATE_ENABLE 1",
     "#define BLOCK_STATE_DISABLE 2",

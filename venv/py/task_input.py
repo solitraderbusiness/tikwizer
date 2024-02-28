@@ -76,8 +76,42 @@ def set_task_input_dic(nodes):
                 set_current_timeframe_for_next_blocks(node)
             case "draw_arrow":
                 draw_arrow(node)
+            case "draw_button":
+                draw_button(node)
             case _:
                 default(node)
+
+
+def draw_button(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["object_per_bar"] = more.get("object_per_bar").get("value")
+    input_dic["object_update"] = more.get("object_update").get("value")
+    input_dic["obj_name"] = more.get("obj_name").get("value")
+    input_dic["obj_x"] = more.get("obj_x").get("value")
+    input_dic["obj_y"] = more.get("obj_y").get("value")
+    input_dic["obj_font"] = more.get("obj_font").get("value")
+    input_dic["obj_font_size"] = more.get("obj_font_size").get("value")
+    input_dic["obj_x_size"] = more.get("obj_x_size").get("value")
+    input_dic["obj_y_size"] = more.get("obj_y_size").get("value")
+    input_dic["obj_bg_color"] = more.get("obj_bg_color").get("value")
+    input_dic["obj_border_color"] = more.get("obj_border_color").get("value")
+    input_dic["obj_corner"] = more.get("obj_corner").get("value")
+    input_dic["obj_state"] = more.get("obj_state").get("value")
+    input_dic["obj_color"] = more.get("obj_color").get("value")
+    input_dic["obj_back"] = more.get("obj_back").get("value")
+    input_dic["obj_selectable"] = more.get("obj_selectable").get("value")
+    input_dic["obj_selected"] = more.get("obj_selected").get("value")
+    input_dic["obj_hidden"] = more.get("obj_hidden").get("value")
+    input_dic["obj_z_order"] = more.get("obj_z_order").get("value")
+    input_dic["obj_chart_subwindow"] = more.get("obj_chart_subwindow").get("value")
+    node["input_dic_task"] = input_dic
+
+    obj_text_data = node.get("more").get("obj_text")
+    value = obj_text_data.get("value_fetch")
+    params = value.get("params")
+    input_dic = value_fetch(node, params, value.get("row1").get("label"), value.get("row2").get("name"))
+    obj_text_data["input_dic"] = input_dic
 
 
 def draw_arrow(node):
@@ -103,13 +137,15 @@ def draw_arrow(node):
     obj_time_1_data = node.get("more").get("obj_time_1")
     value_time_1 = obj_time_1_data.get("value_fetch")
     params_time_1 = value_time_1.get("params")
-    input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+    input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"),
+                                   value_time_1.get("row2").get("name"))
     obj_time_1_data["input_dic"] = input_dic_time_1
 
     obj_price_1_data = node.get("more").get("obj_price_1")
     value_price_1 = obj_price_1_data.get("value_fetch")
     params_price_1 = value_price_1.get("params")
-    input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+    input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"),
+                                    value_price_1.get("row2").get("name"))
     obj_price_1_data["input_dic"] = input_dic_price_1
 
 
