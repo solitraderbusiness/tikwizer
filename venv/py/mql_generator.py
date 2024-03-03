@@ -15,7 +15,7 @@ def generate_mql(data_raw):
 
 
 def test():
-    data = test_input_5.input_data_1
+    data = test_input_5.input_data_4
     final_expert = generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"

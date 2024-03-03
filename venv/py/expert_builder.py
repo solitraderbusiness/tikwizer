@@ -486,6 +486,97 @@ def add_task_elements_specific(nodes):
             draw_arrow(node)
         elif task_name == "draw_button":
             draw_button(node)
+        elif task_name == "draw_shape":
+            draw_shape(node)
+        elif task_name == "draw_line":
+            draw_shape(node)
+
+
+def draw_line(node):
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        input_dic_time_1 = obj_time_1_data.get("input_dic")
+        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+        row1_time_1 = value_fetch_time_1.get("row1").get("label")
+        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        id_val_time_1 = str(node.get("id")) + "_time_1"
+        classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        input_dic_time_2 = obj_time_2_data.get("input_dic")
+        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+        row1_time_2 = value_fetch_time_2.get("row1").get("label")
+        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        id_val_time_2 = str(node.get("id")) + "_time_2"
+        classes.append(value_fetch_class(row1_time_2, row2_time_2, input_dic_time_2, id_val_time_2))
+
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        input_dic_price_1 = obj_price_1_data.get("input_dic")
+        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+        row1_price_1 = value_fetch_price_1.get("row1").get("label")
+        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        id_val_price_1 = str(node.get("id")) + "_price_1"
+        classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        input_dic_price_2 = obj_price_2_data.get("input_dic")
+        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+        row1_price_2 = value_fetch_price_2.get("row1").get("label")
+        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        id_val_price_2 = str(node.get("id")) + "_price_2"
+        classes.append(value_fetch_class(row1_price_2, row2_price_2, input_dic_price_2, id_val_price_2))
+
+def draw_shape(node):
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        input_dic_time_1 = obj_time_1_data.get("input_dic")
+        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+        row1_time_1 = value_fetch_time_1.get("row1").get("label")
+        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        id_val_time_1 = str(node.get("id")) + "_time_1"
+        classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        input_dic_time_2 = obj_time_2_data.get("input_dic")
+        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+        row1_time_2 = value_fetch_time_2.get("row1").get("label")
+        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        id_val_time_2 = str(node.get("id")) + "_time_2"
+        classes.append(value_fetch_class(row1_time_2, row2_time_2, input_dic_time_2, id_val_time_2))
+    if "obj_time_3" in node.get("more"):
+        obj_time_3_data = node.get("more").get("obj_time_3")
+        input_dic_time_3 = obj_time_3_data.get("input_dic")
+        value_fetch_time_3 = obj_time_3_data.get("value_fetch")
+        row1_time_3 = value_fetch_time_3.get("row1").get("label")
+        row2_time_3 = value_fetch_time_3.get("row2").get("name")
+        id_val_time_3 = str(node.get("id")) + "_time_3"
+        classes.append(value_fetch_class(row1_time_3, row2_time_3, input_dic_time_3, id_val_time_3))
+
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        input_dic_price_1 = obj_price_1_data.get("input_dic")
+        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+        row1_price_1 = value_fetch_price_1.get("row1").get("label")
+        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        id_val_price_1 = str(node.get("id")) + "_price_1"
+        classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        input_dic_price_2 = obj_price_2_data.get("input_dic")
+        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+        row1_price_2 = value_fetch_price_2.get("row1").get("label")
+        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        id_val_price_2 = str(node.get("id")) + "_price_2"
+        classes.append(value_fetch_class(row1_price_2, row2_price_2, input_dic_price_2, id_val_price_2))
+    if "obj_price_3" in node.get("more"):
+        obj_price_3_data = node.get("more").get("obj_price_3")
+        input_dic_price_3 = obj_price_3_data.get("input_dic")
+        value_fetch_price_3 = obj_price_3_data.get("value_fetch")
+        row1_price_3 = value_fetch_price_3.get("row1").get("label")
+        row2_price_3 = value_fetch_price_3.get("row2").get("name")
+        id_val_price_3 = str(node.get("id")) + "_price_3"
+        classes.append(value_fetch_class(row1_price_3, row2_price_3, input_dic_price_3, id_val_price_3))
 
 
 def draw_button(node):

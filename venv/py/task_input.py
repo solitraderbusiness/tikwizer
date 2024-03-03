@@ -1,4 +1,5 @@
 import expert_helper
+# from . import expert_helper
 
 
 def set_task_input_dic(nodes):
@@ -78,9 +79,126 @@ def set_task_input_dic(nodes):
                 draw_arrow(node)
             case "draw_button":
                 draw_button(node)
+            case "draw_shape":
+                draw_shape(node)
+            case "draw_line":
+                draw_line(node)
             case _:
                 default(node)
 
+
+def draw_line(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["object_per_bar"] = more.get("object_per_bar").get("value")
+    input_dic["object_update"] = more.get("object_update").get("value")
+    input_dic["obj_name"] = more.get("obj_name").get("value")
+    input_dic["object_type"] = more.get("object_type").get("value")
+    input_dic["obj_angle"] = more.get("obj_angle").get("value")
+    input_dic["obj_ray"] = more.get("obj_ray").get("value")
+    input_dic["obj_ray_left"] = more.get("obj_ray_left").get("value")
+    input_dic["obj_ray_right"] = more.get("obj_ray_right").get("value")
+    input_dic["obj_color"] = more.get("obj_color").get("value")
+    input_dic["obj_style"] = more.get("obj_style").get("value")
+    input_dic["obj_width"] = more.get("obj_width").get("value")
+    input_dic["obj_back"] = more.get("obj_back").get("value")
+    input_dic["obj_selectable"] = more.get("obj_selectable").get("value")
+    input_dic["obj_selected"] = more.get("obj_selected").get("value")
+    input_dic["obj_hidden"] = more.get("obj_hidden").get("value")
+    input_dic["obj_z_order"] = more.get("obj_z_order").get("value")
+    input_dic["obj_chart_subwindow"] = more.get("obj_chart_subwindow").get("value")
+    node["input_dic_task"] = input_dic
+
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        value_time_1 = obj_time_1_data.get("value_fetch")
+        params_time_1 = value_time_1.get("params")
+        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+        obj_time_1_data["input_dic"] = input_dic_time_1
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        value_time_2 = obj_time_2_data.get("value_fetch")
+        params_time_2 = value_time_2.get("params")
+        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"), value_time_2.get("row2").get("name"))
+        obj_time_2_data["input_dic"] = input_dic_time_2
+
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        value_price_1 = obj_price_1_data.get("value_fetch")
+        params_price_1 = value_price_1.get("params")
+        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+        obj_price_1_data["input_dic"] = input_dic_price_1
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        value_price_2 = obj_price_2_data.get("value_fetch")
+        params_price_2 = value_price_2.get("params")
+        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"), value_price_2.get("row2").get("name"))
+        obj_price_2_data["input_dic"] = input_dic_price_2
+
+def draw_shape(node):
+    more = node.get("more")
+    input_dic = {}
+    input_dic["object_per_bar"] = more.get("object_per_bar").get("value")
+    input_dic["object_update"] = more.get("object_update").get("value")
+    input_dic["obj_name"] = more.get("obj_name").get("value")
+    input_dic["object_type"] = more.get("object_type").get("value")
+    input_dic["obj_x"] = more.get("obj_x").get("value")
+    input_dic["obj_y"] = more.get("obj_y").get("value")
+    input_dic["obj_fill"] = more.get("obj_fill").get("value")
+    input_dic["obj_x_size"] = more.get("obj_x_size").get("value")
+    input_dic["obj_y_size"] = more.get("obj_y_size").get("value")
+    input_dic["obj_bg_color"] = more.get("obj_bg_color").get("value")
+    input_dic["obj_border_type"] = more.get("obj_border_type").get("value")
+    input_dic["obj_border_color"] = more.get("obj_border_color").get("value")
+    input_dic["obj_corner"] = more.get("obj_corner").get("value")
+    input_dic["obj_color"] = more.get("obj_color").get("value")
+    input_dic["obj_style"] = more.get("obj_style").get("value")
+    input_dic["obj_width"] = more.get("obj_width").get("value")
+    input_dic["obj_back"] = more.get("obj_back").get("value")
+    input_dic["obj_selectable"] = more.get("obj_selectable").get("value")
+    input_dic["obj_selected"] = more.get("obj_selected").get("value")
+    input_dic["obj_hidden"] = more.get("obj_hidden").get("value")
+    input_dic["obj_z_order"] = more.get("obj_z_order").get("value")
+    input_dic["obj_chart_subwindow"] = more.get("obj_chart_subwindow").get("value")
+    node["input_dic_task"] = input_dic
+
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        value_time_1 = obj_time_1_data.get("value_fetch")
+        params_time_1 = value_time_1.get("params")
+        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+        obj_time_1_data["input_dic"] = input_dic_time_1
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        value_time_2 = obj_time_2_data.get("value_fetch")
+        params_time_2 = value_time_2.get("params")
+        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"), value_time_2.get("row2").get("name"))
+        obj_time_2_data["input_dic"] = input_dic_time_2
+    if "obj_time_3" in node.get("more"):
+        obj_time_3_data = node.get("more").get("obj_time_3")
+        value_time_3 = obj_time_3_data.get("value_fetch")
+        params_time_3 = value_time_3.get("params")
+        input_dic_time_3 = value_fetch(node, params_time_3, value_time_3.get("row1").get("label"), value_time_3.get("row2").get("name"))
+        obj_time_3_data["input_dic"] = input_dic_time_3
+
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        value_price_1 = obj_price_1_data.get("value_fetch")
+        params_price_1 = value_price_1.get("params")
+        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+        obj_price_1_data["input_dic"] = input_dic_price_1
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        value_price_2 = obj_price_2_data.get("value_fetch")
+        params_price_2 = value_price_2.get("params")
+        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"), value_price_2.get("row2").get("name"))
+        obj_price_2_data["input_dic"] = input_dic_price_2
+    if "obj_price_3" in node.get("more"):
+        obj_price_3_data = node.get("more").get("obj_price_3")
+        value_price_3 = obj_price_3_data.get("value_fetch")
+        params_price_3 = value_price_3.get("params")
+        input_dic_price_3 = value_fetch(node, params_price_3, value_price_3.get("row1").get("label"), value_price_3.get("row2").get("name"))
+        obj_price_3_data["input_dic"] = input_dic_price_3
 
 def draw_button(node):
     more = node.get("more")

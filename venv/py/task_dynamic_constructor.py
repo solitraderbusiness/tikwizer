@@ -131,6 +131,10 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_arrow_run_data(node, run_data_static)
     elif task_name == "draw_button":
         run_data = draw_button_run_data(node, run_data_static)
+    elif task_name == "draw_shape":
+        run_data = draw_shape_run_data(node, run_data_static)
+    elif task_name == "draw_line":
+        run_data = draw_line_run_data(node, run_data_static)
     return run_data
 
 
@@ -164,6 +168,155 @@ def function_data_dynamic_fun(node, function_data_static):
 
     return function_data
 
+
+def draw_line_run_data(node, function_data_static):
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+        row1_time_1 = value_fetch_time_1.get("row1").get("label")
+        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        id_val_time_1 = str(node.get("id")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
+        function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        function_data_static = function_data_static.replace("initializer_time_1", "")
+        function_data_static = function_data_static.replace("variable_name_time_1", "\"\"")
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+        row1_time_2 = value_fetch_time_2.get("row1").get("label")
+        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        id_val_time_2 = str(node.get("id")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        function_data_static = function_data_static.replace("initializer_time_2", init_time_2)
+        function_data_static = function_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        function_data_static = function_data_static.replace("initializer_time_2", "")
+        function_data_static = function_data_static.replace("variable_name_time_2", "\"\"")
+
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+        row1_price_1 = value_fetch_price_1.get("row1").get("label")
+        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        id_val_price_1 = str(node.get("id")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
+        function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        function_data_static = function_data_static.replace("initializer_price_1", "")
+        function_data_static = function_data_static.replace("variable_name_price_1", "\"\"")
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+        row1_price_2 = value_fetch_price_2.get("row1").get("label")
+        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        id_val_price_2 = str(node.get("id")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        function_data_static = function_data_static.replace("initializer_price_2", init_price_2)
+        function_data_static = function_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        function_data_static = function_data_static.replace("initializer_price_2", "")
+        function_data_static = function_data_static.replace("variable_name_price_2", "\"\"")
+
+    return function_data_static
+
+def draw_shape_run_data(node, function_data_static):
+    if "obj_time_1" in node.get("more"):
+        obj_time_1_data = node.get("more").get("obj_time_1")
+        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+        row1_time_1 = value_fetch_time_1.get("row1").get("label")
+        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        id_val_time_1 = str(node.get("id")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
+        function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        function_data_static = function_data_static.replace("initializer_time_1", "")
+        function_data_static = function_data_static.replace("variable_name_time_1", "\"\"")
+    if "obj_time_2" in node.get("more"):
+        obj_time_2_data = node.get("more").get("obj_time_2")
+        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+        row1_time_2 = value_fetch_time_2.get("row1").get("label")
+        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        id_val_time_2 = str(node.get("id")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        function_data_static = function_data_static.replace("initializer_time_2", init_time_2)
+        function_data_static = function_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        function_data_static = function_data_static.replace("initializer_time_2", "")
+        function_data_static = function_data_static.replace("variable_name_time_2", "\"\"")
+    if "obj_time_3" in node.get("more"):
+        obj_time_3_data = node.get("more").get("obj_time_3")
+        value_fetch_time_3 = obj_time_3_data.get("value_fetch")
+        row1_time_3 = value_fetch_time_3.get("row1").get("label")
+        row2_time_3 = value_fetch_time_3.get("row2").get("name")
+        id_val_time_3 = str(node.get("id")) + "_time_3"
+
+        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, id_val_time_3)
+        val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
+        function_data_static = function_data_static.replace("initializer_time_3", init_time_3)
+        function_data_static = function_data_static.replace("variable_name_time_3", val_time_3)
+    else:
+        function_data_static = function_data_static.replace("initializer_time_3", "")
+        function_data_static = function_data_static.replace("variable_name_time_3", "\"\"")
+    if "obj_price_1" in node.get("more"):
+        obj_price_1_data = node.get("more").get("obj_price_1")
+        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+        row1_price_1 = value_fetch_price_1.get("row1").get("label")
+        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        id_val_price_1 = str(node.get("id")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
+        function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        function_data_static = function_data_static.replace("initializer_price_1", "")
+        function_data_static = function_data_static.replace("variable_name_price_1", "\"\"")
+    if "obj_price_2" in node.get("more"):
+        obj_price_2_data = node.get("more").get("obj_price_2")
+        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+        row1_price_2 = value_fetch_price_2.get("row1").get("label")
+        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        id_val_price_2 = str(node.get("id")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        function_data_static = function_data_static.replace("initializer_price_2", init_price_2)
+        function_data_static = function_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        function_data_static = function_data_static.replace("initializer_price_2", "")
+        function_data_static = function_data_static.replace("variable_name_price_2", "\"\"")
+    if "obj_price_3" in node.get("more"):
+        obj_price_3_data = node.get("more").get("obj_price_3")
+        value_fetch_price_3 = obj_price_3_data.get("value_fetch")
+        row1_price_3 = value_fetch_price_3.get("row1").get("label")
+        row2_price_3 = value_fetch_price_3.get("row2").get("name")
+        id_val_price_3 = str(node.get("id")) + "_price_3"
+
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, id_val_price_3)
+        val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
+        function_data_static = function_data_static.replace("initializer_price_3", init_price_3)
+        function_data_static = function_data_static.replace("variable_name_price_3", val_price_3)
+    else:
+        function_data_static = function_data_static.replace("initializer_price_3", "")
+        function_data_static = function_data_static.replace("variable_name_price_3", "\"\"")
+
+    return function_data_static
 
 def draw_button_run_data(node, function_data_static):
     obj_text_data = node.get("more").get("obj_text")
