@@ -1,0 +1,3 @@
+{
+	"constructor_data" : " //defined by user\n      object_per_bar = object_per_bar_val;\n      object_update = object_update_val;\n      obj_name = obj_name_val;\n      object_type = object_type_val;\n      obj_angle = obj_angle_val;\n      obj_ray = obj_ray_val;\n      obj_ray_left = obj_ray_left_val;\n      obj_ray_right = obj_ray_right_val;\n      obj_color = obj_color_val;\n      obj_style = obj_style_val;\n      obj_width = obj_width_val;\n      obj_back = obj_back_val;\n      obj_selectable = obj_selectable_val;\n      obj_selected = obj_selected_val;\n      obj_hidden = obj_hidden_val;\n      obj_z_order = obj_z_order_val;\n      obj_chart_subwindow = obj_chart_subwindow_val;\n      //defined by system\n      count =  0;\n      time0 =  0;"
+}
