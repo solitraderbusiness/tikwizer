@@ -1,9 +1,10 @@
 import json
-import path_root
-import adjust
+from . import path_root
+from . import adjust
 
 path = path_root.get()
-path_sub = "/contents/candle/"
+path_sub = "/contents/value/"
+
 
 def get_class(input_dic, class_id):
     mpath = path + path_sub
@@ -26,7 +27,7 @@ def get_class(input_dic, class_id):
             init_body_dic = json.loads(init_txt)
 
     for key in input_dic:
-        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", str(input_dic.get(key)))
+        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", str(input_dic.get(key)), 1)
 
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
@@ -34,20 +35,44 @@ def get_class(input_dic, class_id):
         .replace("init_body", init_body_dic.get("init_body"))
 
     if "adjust" in input_dic:
-        adjustment = adjust.get("value", input_dic.get("adjust"), "msymbol")
-        mql4_body = mql4_body.replace("return value;", "return " + adjustment + ";")
+        type = input_dic.get("type")
+        var_name = "result"
+        match type:
+            case "VALUE_TYPE_NUMERIC" | "VALUE_TYPE_BOOLEAN" | "VALUE_TYPE_COLOR" | "VALUE_TYPE_PIPS":
+                var_name = "(double)" + var_name
 
+        adjustment = adjust.get(var_name, input_dic.get("adjust"), "msymbol")
+        mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
     return mql4_body
 
 
-def get_initializer(var_id):
+def get_initializer(var_id, var_type):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
             initializer_dic = json.loads(initializer_str)
-            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
+
+            mtype = ""
+            match var_type:
+                case "Numeric":
+                    mtype = "double"
+                case "Boolean":
+                    mtype = "bool"
+                case "Color":
+                    mtype = "color"
+                case "Pips":
+                    mtype = "double"
+                case "Text":
+                    mtype = "string"
+                case "Text(code input)":
+                    mtype = "string"
+                case "Time":
+                    mtype = "datetime"
+
+            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id)).replace("type", mtype)
             return initializer_body
+
 
 def get_initializer_split(var_id):
     mpath = path + path_sub
@@ -59,6 +84,8 @@ def get_initializer_split(var_id):
             for i in range(len(initializer_list)):
                 initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
             return initializer_list
+
+
 def get_var_name(var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
@@ -68,16 +95,13 @@ def get_var_name(var_id):
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
 
-
-
-#Test
+# Test
 # input = {
-#   "symbol":"NULL",
-#   "timeframe":0,
-#   "find_method":"FIND_BY_ID",
-#   "price_mode":"CANDLE_HIGH",
-#   "timestr":"\"2023.4.26 13:40:30\"",
-#   "shift":10
+#     "type": "VALUE_TYPE_PIPS",
+#     "value": 10,
+#     "adjust": "20",
+#     "pips_type": "CANDLE_LOW",
+#     "symbol": "NULL"
 # }
 # print(get_class(input, 1040))
 # print(get_initializer(1040))

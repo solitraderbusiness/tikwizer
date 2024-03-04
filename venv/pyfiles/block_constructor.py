@@ -1,6 +1,6 @@
 import json
-import path_root
-import collections.abc
+from . import path_root
+from . import collections
 
 path = path_root.get()
 

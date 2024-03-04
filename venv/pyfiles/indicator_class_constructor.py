@@ -1,13 +1,12 @@
 import json
-import path_root
-import adjust
+from . import path_root
+from . import adjust
 
 path = path_root.get()
-path_sub = "/contents/market_properties/"
+path_sub = "/contents/indicators/"
 
-
-def get_class(input_dic, class_id):
-    mpath = path + path_sub
+def get_class(indicator_name, input_dic, class_id):
+    mpath = path + path_sub + indicator_name+"/"
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
         if class_file:
@@ -19,6 +18,12 @@ def get_class(input_dic, class_id):
         if field_file:
             field_txt = field_file.read()
             field_body_dic = json.loads(field_txt)
+
+    fun_body_dic = {}
+    with open(mpath + "fun_body.json") as fun_file:
+        if fun_file:
+            fun_txt = fun_file.read()
+            fun_body_dic = json.loads(fun_txt)
 
     init_body_dic = {}
     with open(mpath + "init_body.json") as init_file:
@@ -32,25 +37,19 @@ def get_class(input_dic, class_id):
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
-        .replace("init_body", init_body_dic.get("init_body"))
+        .replace("init_body", init_body_dic.get("init_body")) \
+        .replace("fun_body", fun_body_dic.get("fun_body"))
 
     if "adjust" in input_dic:
-        adjustment1 = adjust.get("result.price", input_dic.get("adjust"), "msymbol")
-        adjustment2 = adjust.get("result.index", input_dic.get("adjust"), "msymbol")
-        adjustment3 = adjust.get("result.time", input_dic.get("adjust"), "msymbol")
-
-        adj_line_1 = "result.price = " + adjustment1 + ";"
-        adj_line_2 = "result.index = " + adjustment2 + ";"
-        adj_line_3 = "result.time = " + adjustment3 + ";"
-
-        adjustment = adj_line_1 + "\n" + adj_line_2 + "\n" + adj_line_3 + "\n"
-        mql4_body = mql4_body.replace("getHiLo(result);", "getHiLo(result);\n" + adjustment)
+        adjustment = adjust.get("result", input_dic.get("adjust"), "symbol")
+        mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
 
     return mql4_body
 
 
-def get_initializer(var_id):
-    mpath = path + path_sub
+
+def get_initializer(indicator_name, var_id):
+    mpath = path + path_sub + indicator_name + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -58,8 +57,8 @@ def get_initializer(var_id):
             initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
             return initializer_body
 
-def get_initializer_split(var_id):
-    mpath = path + path_sub
+def get_initializer_split(indicator_name, var_id):
+    mpath = path + path_sub + indicator_name + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -68,8 +67,9 @@ def get_initializer_split(var_id):
             for i in range(len(initializer_list)):
                 initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
             return initializer_list
-def get_var_name(var_id):
-    mpath = path + path_sub
+
+def get_var_name(indicator_name, var_id):
+    mpath = path + path_sub + indicator_name + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -77,29 +77,4 @@ def get_var_name(var_id):
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
 
-def get_structs():
-    mpath = path + path_sub
-    with open(mpath + "structs.json") as structs_file:
-        if structs_file:
-            structs_str = structs_file.read()
-            structs_dic = json.loads(structs_str)
-            structs = structs_dic.get("structs")
-            return structs
 
-
-# Test
-# input = {
-#     "symbol": "NULL",
-#     "timeframe": 0,
-#     "find_method": "CANDLE_PERIOD",
-#     "price_mode": "LOWEST_PRICE",
-#     "what_to_get": "GET_PRICE",
-#     "timestr_start": "\"2023.11.23 7:30:30\"",
-#     "timestr_end": "\"2023.11.23 5:30:00\"",
-#     "day_offset": 2,
-#     "range_start": 50,
-#     "range_end": 100
-# }
-# print(get_class(input, 1040))
-# print(get_initializer(1040))
-# print(get_var_name(1040))

@@ -1,5 +1,5 @@
 import json
-import path_root
+from . import path_root
 
 path = path_root.get()
 path_sub = "/contents/tasks/time_filters/spread_filter/"

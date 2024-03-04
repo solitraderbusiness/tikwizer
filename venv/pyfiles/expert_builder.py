@@ -1,15 +1,15 @@
-import block_constructor
-import task_constructor
-import task_dynamic_constructor
-import global_functions
-import constants_constructor
-import global_vars
-import indicator_class_constructor
-import candle_class_constructor
-import value_class_constructor
-import market_properties_class_constructor
-import spread_filter_struct_constructor
-import close_partially_items
+from . import task_constructor
+from . import task_dynamic_constructor
+from . import global_functions
+from . import constants_constructor
+from . import global_vars
+from . import indicator_class_constructor
+from . import candle_class_constructor
+from . import value_class_constructor
+from . import market_properties_class_constructor
+from . import spread_filter_struct_constructor
+from . import close_partially_items
+
 
 header = ""
 properties = []

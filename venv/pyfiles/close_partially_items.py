@@ -1,5 +1,5 @@
 import json
-import path_root
+from . import path_root
 
 path = path_root.get()
 path_sub = "/contents/tasks/loop_for_trades_orders/close_partially/"

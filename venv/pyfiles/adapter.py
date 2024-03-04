@@ -1,9 +1,8 @@
 # This module adapts client data to mql generator
-import task_input
+from . import task_input
 
 
 def refactor(data):
-    correct_events(data)
     correct_enabled(data)
     events = data["events"]
     for key in events:
@@ -26,16 +25,6 @@ def correct_enabled(data):
             node["enabled"] = True
 
 
-# STest, remove later
-def correct_events(data):
-    on_tick = {}
-    on_tick["nodes"] = data.get("nodes")
-    on_tick["edges"] = data.get("edges")
-    data["events"] = {"on_tick": on_tick}
-    data.pop("nodes")
-    data.pop("edges")
-
-
 def overwrite_ids(nodes, edges):
     for i in range(len(nodes)):
         node = nodes[i]
@@ -51,36 +40,36 @@ def set_blocks_input_dic(nodes, edges):
     for node in nodes:
         input_dic = {}
         input_dic["id"] = node.get("id")
-        input_dic["id_by_user"] = node.get("data").get("blockId")
-        input_dic["name"] = "\"" + node.get("data").get("blockName") + "\""
+        input_dic["id_by_user"] = node.get("id_by_user")
+        input_dic["name"] = "\"" + node.get("blockName") + "\""
         input_dic["enabled"] = node.get("enabled")
-        input_dic["nexts_true"] = get_nexts_true(node, nodes, edges)
-        input_dic["nexts_false"] = get_nexts_false(node, nodes, edges)
-        input_dic["prevs_true"] = get_prevs_true(node, nodes, edges)
-        input_dic["prevs_false"] = get_prevs_false(node, nodes, edges)
+        input_dic["nexts_true"] = get_nexts_true(node, edges)
+        input_dic["nexts_false"] = get_nexts_false(node, edges)
+        input_dic["prevs_true"] = get_prevs_true(node, edges)
+        input_dic["prevs_false"] = get_prevs_false(node, edges)
         node["input_dic_block"] = input_dic
 
 
 def overwrite_task_names(nodes):
     for node in nodes:
-        block_name = node.get("data").get("blockName")
+        block_name = node.get("blockName")
         if block_name == "condition1":
-            operator = node.get("more").get("operator").get("label")
+            operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
-                node.get("data")["blockName"] = "condition_1_cross"
+                node["blockName"] = "condition_1_cross"
             else:
-                node.get("data")["blockName"] = "condition_1_normal"
+                node["blockName"] = "condition_1_normal"
         elif block_name == "Once per bar":
-            node.get("data")["blockName"] = "once_every_n_bars"
+            node["blockName"] = "once_every_n_bars"
         elif block_name == "No trade nearby" or block_name == "No pending order nearby":
-            node.get("data")["blockName"] = "check_trades_orders_nearby"
+            node["blockName"] = "check_trades_orders_nearby"
         elif block_name == "turn_on_blocks" or block_name == "turn_off_blocks" or block_name == "toggle_blocks":
-            node.get("data")["blockName"] = "blocks_on_off"
+            node["blockName"] = "blocks_on_off"
         elif block_name == "Buy now" or block_name == "Sell now" or block_name == "Buy pending order" or block_name == "Sell pending order":
-            node.get("data")["blockName"] = "buy_sell"
+            node["blockName"] = "buy_sell"
 
 
-def get_nexts_true(node, nodes, edges):
+def get_nexts_true(node, edges):
     result = []
     for edge in edges:
         if edge.get("source") == node.get("id"):
@@ -89,7 +78,7 @@ def get_nexts_true(node, nodes, edges):
     return result
 
 
-def get_nexts_false(node, nodes, edges):
+def get_nexts_false(node, edges):
     result = []
     for edge in edges:
         if edge.get("source") == node.get("id"):
@@ -98,7 +87,7 @@ def get_nexts_false(node, nodes, edges):
     return result
 
 
-def get_prevs_true(node, nodes, edges):
+def get_prevs_true(node, edges):
     result = []
     for edge in edges:
         if edge.get("target") == node.get("id"):
@@ -107,7 +96,7 @@ def get_prevs_true(node, nodes, edges):
     return result
 
 
-def get_prevs_false(node, nodes, edges):
+def get_prevs_false(node, edges):
     result = []
     for edge in edges:
         if edge.get("target") == node.get("id"):

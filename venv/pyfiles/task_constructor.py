@@ -1,9 +1,9 @@
 import json
-import path_root
+from . import path_root
 import collections.abc
-import indicator_class_constructor
-import candle_class_constructor
-import market_properties_class_constructor
+from . import indicator_class_constructor
+from . import candle_class_constructor
+from . import market_properties_class_constructor
 
 path = path_root.get()
 path_sub = "/contents/"

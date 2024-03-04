@@ -1,5 +1,7 @@
 import json
-import path_root
+from . import path_root
+
+
 
 path = path_root.get()
 
