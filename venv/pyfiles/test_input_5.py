@@ -7304,386 +7304,91 @@ input_data_5 = {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 1,
                     "blockName": "condition1",
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 462,
-                        "y": 263
+                    "params": {
+                        "left": {
+                            "row1": "Indicator",
+                            "row2": "RSI",
+                            "params": {
+                                "period": "10",
+                                "applied_price": "PRICE_CLOSE",
+                                "shift": "10"
+                            }
+                        },
+                        "right": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "type": "VALUE_TYPE_TIME",
+                                "value": 20.4,
+                                "adjust": "",
+                                "pips_mode": "VALUE_PIPS_AS_IS",
+                                "symbol": "NULL",
+
+                                "mode_time": 0,
+                                "time_source": 0,
+                                "time_stamp": "\"00:00\"",
+                                "time_candle_id": 1,
+                                "time_market": "\"\"",
+                                "time_candle_timeframe": 0,
+                                "time_component_year": 0,
+                                "time_component_month": 0,
+                                "time_component_day": 0,
+                                "time_component_hour": 12,
+                                "time_component_minute": 0,
+                                "time_component_second": 0,
+                                "time_value": 0,
+                                "mode_time_shift": 0,
+                                "time_shift_years": 0,
+                                "time_shift_months": 0,
+                                "time_shift_weeks": 0,
+                                "time_shift_days": 0,
+                                "time_shift_hours": 0,
+                                "time_shift_minutes": 0,
+                                "time_shift_seconds": 0,
+                                "time_skip_weekdays": False
+                            },
+                        },
                     },
-                    "width": 82,
-                    "height": 32,
-                    "selected": False,
-                    "dragging": False,
-                    "more": {
-                        "left1": {
-                            "id": 3,
-                            "label": "Indicator"
-                        },
-                        "left2": {
-                            "id": 2,
-                            "name": "RSI",
-                            "description": "this is RSI indicator"
-                        },
-                        "operator": {
-                            "value": 1,
-                            "label": ">"
-                        },
-                        "right1": {
-                            "id": 7,
-                            "label": "Value"
-                        },
-                        "right2": {
-                            "id": 1,
-                            "name": "Numeric"
-                        },
-                        "changeStatus": False,
-                        "changeStatusDesc": "",
-                        "left": [
-                            {
-                                "optionName": "rsi Period",
-                                "value": {
-                                    "id": 7,
-                                    "key": "rsi Period",
-                                    "value": 14,
-                                    "indicator_name": 2
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            }
-                        ],
-                        "right": [
-                            {
-                                "optionName": "type",
-                                "value": {
-                                    "optionName": "type",
-                                    "value": "VALUE_TYPE_TIME"
-                                }
-                            },
-                            {
-                                "optionName": "value",
-                                "value": {
-                                    "optionName": "value",
-                                    "value": 20.4
-                                }
-                            },
-                            {
-                                "optionName": "adjust",
-                                "value": {
-                                    "optionName": "adjust",
-                                    "value": ""
-                                }
-                            },
-                            {
-                                "optionName": "pips_mode",
-                                "value": {
-                                    "optionName": "pips_mode",
-                                    "value": "VALUE_PIPS_AS_IS"
-                                }
-                            },
-                            {
-                                "optionName": "symbol",
-                                "value": {
-                                    "value": "NULL"
-                                }
-                            },
+                    "operator": {
+                        "value": 1,
+                        "label": "×>",
+                        "cross_width": 10
+                    },
 
-                            {
-                                "optionName": "mode_time",
-                                "value": {
-                                    "optionName": "mode_time",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_source",
-                                "value": {
-                                    "optionName": "time_source",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_stamp",
-                                "value": {
-                                    "optionName": "time_stamp",
-                                    "value": "\"00:00\""
-                                }
-                            },
-                            {
-                                "optionName": "time_candle_id",
-                                "value": {
-                                    "optionName": "time_candle_id",
-                                    "value": 1
-                                }
-                            },
-                            {
-                                "optionName": "time_market",
-                                "value": {
-                                    "optionName": "time_market",
-                                    "value": "\"\""
-                                }
-                            },
-                            {
-                                "optionName": "time_candle_timeframe",
-                                "value": {
-                                    "optionName": "time_candle_timeframe",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_component_year",
-                                "value": {
-                                    "optionName": "time_component_year",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_component_month",
-                                "value": {
-                                    "optionName": "time_component_month",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_component_day",
-                                "value": {
-                                    "optionName": "time_component_day",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_component_hour",
-                                "value": {
-                                    "optionName": "time_component_hour",
-                                    "value": 12
-                                }
-                            },
-                            {
-                                "optionName": "time_component_minute",
-                                "value": {
-                                    "optionName": "time_component_minute",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_component_second",
-                                "value": {
-                                    "optionName": "time_component_second",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_value",
-                                "value": {
-                                    "optionName": "time_value",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "mode_time_shift",
-                                "value": {
-                                    "optionName": "mode_time_shift",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_years",
-                                "value": {
-                                    "optionName": "time_shift_years",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_months",
-                                "value": {
-                                    "optionName": "time_shift_months",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_weeks",
-                                "value": {
-                                    "optionName": "time_shift_weeks",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_days",
-                                "value": {
-                                    "optionName": "time_shift_days",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_hours",
-                                "value": {
-                                    "optionName": "time_shift_hours",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_minutes",
-                                "value": {
-                                    "optionName": "time_shift_minutes",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_shift_seconds",
-                                "value": {
-                                    "optionName": "time_shift_seconds",
-                                    "value": 0
-                                }
-                            },
-                            {
-                                "optionName": "time_skip_weekdays",
-                                "value": {
-                                    "optionName": "time_skip_weekdays",
-                                    "value": False
-                                }
-                            }
-
-                        ],
-                        "candleIDLeft": {
-                            "value": "1",
-                            "checked": False
-                        }
-                    }
                 },
                 {
                     "id": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
-                    "id_by_user": 1,
+                    "id_by_user": 2,
                     "blockName": "condition1",
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 462,
-                        "y": 263
+                    "params": {
+                        "left": {
+                            "row1": "Indicator",
+                            "row2": "RSI",
+                            "params": {
+                                "period": "10",
+                                "applied_price": "PRICE_CLOSE",
+                                "shift": "10"
+                            }
+                        },
+                        "right": {
+                            "row1": "Candle",
+                            "row2": "Candle",
+                            "params": {
+                                "symbol": "NULL",
+                                "timeframe": "0",
+                                "find_method": "FIND_BY_ID",
+                                "price_mode": "CANDLE_HIGH",
+                                "timestr": "\"2023.4.26 13:40:30\"",
+                                "adjust": "58pips"
+                            },
+                        },
                     },
-                    "width": 82,
-                    "height": 32,
-                    "selected": False,
-                    "dragging": False,
-                    "more": {
-                        "left1": {
-                            "id": 3,
-                            "label": "Indicator"
-                        },
-                        "left2": {
-                            "id": 2,
-                            "name": "RSI",
-                            "description": "this is RSI indicator"
-                        },
-                        "operator": {
-                            "value": 1,
-                            "label": "\u00d7<"
-                        },
-                        "right1": {
-                            "id": 7,
-                            "label": "Candle"
-                        },
-                        "right2": {
-                            "id": 1,
-                            "name": "Candle"
-                        },
-                        "changeStatus": False,
-                        "changeStatusDesc": "",
-                        "left": [
-                            {
-                                "optionName": "rsi Period",
-                                "value": {
-                                    "id": 7,
-                                    "key": "rsi Period",
-                                    "value": 14,
-                                    "indicator_name": 2
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            }
-                        ],
-                        "right": [
-                            {
-                                "optionName": "symbol",
-                                "value": {
-                                    "optionName": "symbol",
-                                    "value": "NULL"
-                                }
-                            },
-                            {
-                                "optionName": "timeframe",
-                                "value": {
-                                    "optionName": "timeframe",
-                                    "value": "0"
-                                }
-                            },
-                            {
-                                "optionName": "find_method",
-                                "value": {
-                                    "optionName": "find_method",
-                                    "value": "FIND_BY_ID"
-                                }
-                            },
-                            {
-                                "optionName": "price_mode",
-                                "value": {
-                                    "optionName": "price_mode",
-                                    "value": "CANDLE_HIGH"
-                                }
-                            },
-                            {
-                                "optionName": "timestr",
-                                "value": {
-                                    "optionName": "timestr",
-                                    "value": "\"2023.4.26 13:40:30\""
-                                }
-                            },
-                            {
-                                "optionName": "adjust",
-                                "value": {
-                                    "value": "58pips",
-                                }
-                            }
-                        ],
-                        "candleIDLeft": {
-                            "value": "1",
-                            "checked": False
-                        },
-                        "candleIDRight": {
-                            "value": "1",
-                            "checked": False
-                        }
-                    }
+                    "operator": {
+                        "value": 1,
+                        "label": "×>",
+                        "cross_width": 10
+                    },
+
                 },
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
