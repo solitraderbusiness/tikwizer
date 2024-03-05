@@ -10,7 +10,6 @@ from . import market_properties_class_constructor
 from . import spread_filter_struct_constructor
 from . import close_partially_items
 
-
 header = ""
 properties = []
 consts_system = []
@@ -401,7 +400,7 @@ def add_task_elements_common(nodes):
     spread_filter_done = False
     close_partially_done = False
     for node in nodes:
-        task_name = node.get("data").get("blockName")
+        task_name = node.get("blockName")
         match task_name:
             case "pass_n_times":
                 if pass_n_times_done: continue
@@ -409,52 +408,57 @@ def add_task_elements_common(nodes):
                 variables.append(var_data)
                 pass_n_times_done = True
             case "condition_1_normal" | "condition_1_cross" | "formula":
-                left_label = node.get("more").get("left1").get("label")
-                right_label = node.get("more").get("right1").get("label")
-                if (left_label == "Market Properties" or right_label == "Market Properties"):
-                    if market_properties_done: continue
+                left_label = node.get("params").get("left").get("row1")
+                right_label = node.get("params").get("right").get("row1")
+                if left_label == "Market Properties" or right_label == "Market Properties":
+                    if market_properties_done:
+                        continue
                     structs_data = market_properties_class_constructor.get_structs()
                     structs.append(structs_data)
                     market_properties_done = True
             case "modify_variables":
-                for item in node.get("items"):
-                    if (item.get("value").get("row1").get("label") == "Market Properties"):
-                        if market_properties_done: continue
+                for item in node.get("params"):
+                    if item.get("value_fetch").get("row1") == "Market Properties":
+                        if market_properties_done:
+                            continue
                         structs_data = market_properties_class_constructor.get_structs()
                         structs.append(structs_data)
                         market_properties_done = True
             case "comment":
-                if market_properties_done: continue
-                row1 = node.get("more").get("row1")
-                row2 = node.get("more").get("row2")
-                row3 = node.get("more").get("row3")
-                row4 = node.get("more").get("row4")
-                row5 = node.get("more").get("row5")
-                row6 = node.get("more").get("row6")
-                row7 = node.get("more").get("row7")
-                row8 = node.get("more").get("row8")
+                if market_properties_done:
+                    continue
+                row1 = node.get("params").get("row1")
+                row2 = node.get("params").get("row2")
+                row3 = node.get("params").get("row3")
+                row4 = node.get("params").get("row4")
+                row5 = node.get("params").get("row5")
+                row6 = node.get("params").get("row6")
+                row7 = node.get("params").get("row7")
+                row8 = node.get("params").get("row8")
 
-                con1 = "value_fetch" in row1 and row1.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con2 = "value_fetch" in row2 and row2.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con3 = "value_fetch" in row3 and row3.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con4 = "value_fetch" in row4 and row4.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con5 = "value_fetch" in row5 and row5.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con6 = "value_fetch" in row6 and row6.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con7 = "value_fetch" in row7 and row7.get("value_fetch").get("row1").get("label") == "Market Properties"
-                con8 = "value_fetch" in row8 and row8.get("value_fetch").get("row1").get("label") == "Market Properties"
+                con1 = "value_fetch" in row1 and row1.get("value_fetch").get("row1") == "Market Properties"
+                con2 = "value_fetch" in row2 and row2.get("value_fetch").get("row1") == "Market Properties"
+                con3 = "value_fetch" in row3 and row3.get("value_fetch").get("row1") == "Market Properties"
+                con4 = "value_fetch" in row4 and row4.get("value_fetch").get("row1") == "Market Properties"
+                con5 = "value_fetch" in row5 and row5.get("value_fetch").get("row1") == "Market Properties"
+                con6 = "value_fetch" in row6 and row6.get("value_fetch").get("row1") == "Market Properties"
+                con7 = "value_fetch" in row7 and row7.get("value_fetch").get("row1") == "Market Properties"
+                con8 = "value_fetch" in row8 and row8.get("value_fetch").get("row1") == "Market Properties"
 
                 con = con1 or con2 or con3 or con4 or con5 or con6 or con7 or con8
-                if (con):
+                if con:
                     structs_data = market_properties_class_constructor.get_structs()
                     structs.append(structs_data)
                     market_properties_done = True
             case "spread_filter":
-                if spread_filter_done: continue
+                if spread_filter_done:
+                    continue
                 structs_data = spread_filter_struct_constructor.get_structs()
                 structs.append(structs_data)
                 spread_filter_done = True
             case "close_partially":
-                if close_partially_done: continue
+                if close_partially_done:
+                    continue
                 structs_data = close_partially_items.get_structs()
                 structs.append(structs_data)
                 vars_data = close_partially_items.get_vars()
@@ -465,7 +469,7 @@ def add_task_elements_common(nodes):
 # Elements that are assigned to a specific instance of a specific task type
 def add_task_elements_specific(nodes):
     for node in nodes:
-        task_name = node.get("data").get("blockName")
+        task_name = node.get("blockName")
         if task_name == "condition_1_normal" or task_name == "formula":  # formula also use the same function as condition 1 normal
             condition_1_normal_elements(node)
         elif task_name == "condition_1_cross":
@@ -493,266 +497,267 @@ def add_task_elements_specific(nodes):
 
 
 def draw_line(node):
-    if "obj_time_1" in node.get("more"):
-        obj_time_1_data = node.get("more").get("obj_time_1")
-        input_dic_time_1 = obj_time_1_data.get("input_dic")
+    if "obj_time_1" in node.get("params"):
+        obj_time_1_data = node.get("params").get("obj_time_1")
         value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-        row1_time_1 = value_fetch_time_1.get("row1").get("label")
-        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        params_time_1 = value_fetch_time_1.get("params")
         id_val_time_1 = str(node.get("id")) + "_time_1"
-        classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
-    if "obj_time_2" in node.get("more"):
-        obj_time_2_data = node.get("more").get("obj_time_2")
-        input_dic_time_2 = obj_time_2_data.get("input_dic")
+        classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+    if "obj_time_2" in node.get("params"):
+        obj_time_2_data = node.get("params").get("obj_time_2")
         value_fetch_time_2 = obj_time_2_data.get("value_fetch")
-        row1_time_2 = value_fetch_time_2.get("row1").get("label")
-        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        params_time_2 = value_fetch_time_2.get("params")
         id_val_time_2 = str(node.get("id")) + "_time_2"
-        classes.append(value_fetch_class(row1_time_2, row2_time_2, input_dic_time_2, id_val_time_2))
+        classes.append(value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
 
-    if "obj_price_1" in node.get("more"):
-        obj_price_1_data = node.get("more").get("obj_price_1")
-        input_dic_price_1 = obj_price_1_data.get("input_dic")
+    if "obj_price_1" in node.get("params"):
+        obj_price_1_data = node.get("params").get("obj_price_1")
         value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-        row1_price_1 = value_fetch_price_1.get("row1").get("label")
-        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id")) + "_price_1"
-        classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
-    if "obj_price_2" in node.get("more"):
-        obj_price_2_data = node.get("more").get("obj_price_2")
-        input_dic_price_2 = obj_price_2_data.get("input_dic")
+        classes.append(value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+    if "obj_price_2" in node.get("params"):
+        obj_price_2_data = node.get("params").get("obj_price_2")
         value_fetch_price_2 = obj_price_2_data.get("value_fetch")
-        row1_price_2 = value_fetch_price_2.get("row1").get("label")
-        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        params_price_2 = value_fetch_price_2.get("params")
         id_val_price_2 = str(node.get("id")) + "_price_2"
-        classes.append(value_fetch_class(row1_price_2, row2_price_2, input_dic_price_2, id_val_price_2))
+        classes.append(value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+
 
 def draw_shape(node):
-    if "obj_time_1" in node.get("more"):
-        obj_time_1_data = node.get("more").get("obj_time_1")
-        input_dic_time_1 = obj_time_1_data.get("input_dic")
+    if "obj_time_1" in node.get("params"):
+        obj_time_1_data = node.get("params").get("obj_time_1")
         value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-        row1_time_1 = value_fetch_time_1.get("row1").get("label")
-        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        params_time_1 = value_fetch_time_1.get("params")
         id_val_time_1 = str(node.get("id")) + "_time_1"
-        classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
-    if "obj_time_2" in node.get("more"):
-        obj_time_2_data = node.get("more").get("obj_time_2")
-        input_dic_time_2 = obj_time_2_data.get("input_dic")
+        classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+    if "obj_time_2" in node.get("params"):
+        obj_time_2_data = node.get("params").get("obj_time_2")
         value_fetch_time_2 = obj_time_2_data.get("value_fetch")
-        row1_time_2 = value_fetch_time_2.get("row1").get("label")
-        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        params_time_2 = value_fetch_time_2.get("params")
         id_val_time_2 = str(node.get("id")) + "_time_2"
-        classes.append(value_fetch_class(row1_time_2, row2_time_2, input_dic_time_2, id_val_time_2))
-    if "obj_time_3" in node.get("more"):
-        obj_time_3_data = node.get("more").get("obj_time_3")
-        input_dic_time_3 = obj_time_3_data.get("input_dic")
+        classes.append(value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+    if "obj_time_3" in node.get("params"):
+        obj_time_3_data = node.get("params").get("obj_time_3")
         value_fetch_time_3 = obj_time_3_data.get("value_fetch")
-        row1_time_3 = value_fetch_time_3.get("row1").get("label")
-        row2_time_3 = value_fetch_time_3.get("row2").get("name")
+        row1_time_3 = value_fetch_time_3.get("row1")
+        row2_time_3 = value_fetch_time_3.get("row2")
+        params_time_3 = value_fetch_time_3.get("params")
         id_val_time_3 = str(node.get("id")) + "_time_3"
-        classes.append(value_fetch_class(row1_time_3, row2_time_3, input_dic_time_3, id_val_time_3))
+        classes.append(value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
 
-    if "obj_price_1" in node.get("more"):
-        obj_price_1_data = node.get("more").get("obj_price_1")
-        input_dic_price_1 = obj_price_1_data.get("input_dic")
+    if "obj_price_1" in node.get("params"):
+        obj_price_1_data = node.get("params").get("obj_price_1")
         value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-        row1_price_1 = value_fetch_price_1.get("row1").get("label")
-        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id")) + "_price_1"
-        classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
-    if "obj_price_2" in node.get("more"):
-        obj_price_2_data = node.get("more").get("obj_price_2")
-        input_dic_price_2 = obj_price_2_data.get("input_dic")
+        classes.append(value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+    if "obj_price_2" in node.get("params"):
+        obj_price_2_data = node.get("params").get("obj_price_2")
         value_fetch_price_2 = obj_price_2_data.get("value_fetch")
-        row1_price_2 = value_fetch_price_2.get("row1").get("label")
-        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        params_price_2 = value_fetch_price_2.get("params")
         id_val_price_2 = str(node.get("id")) + "_price_2"
-        classes.append(value_fetch_class(row1_price_2, row2_price_2, input_dic_price_2, id_val_price_2))
-    if "obj_price_3" in node.get("more"):
-        obj_price_3_data = node.get("more").get("obj_price_3")
-        input_dic_price_3 = obj_price_3_data.get("input_dic")
+        classes.append(value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+    if "obj_price_3" in node.get("params"):
+        obj_price_3_data = node.get("params").get("obj_price_3")
         value_fetch_price_3 = obj_price_3_data.get("value_fetch")
-        row1_price_3 = value_fetch_price_3.get("row1").get("label")
-        row2_price_3 = value_fetch_price_3.get("row2").get("name")
+        row1_price_3 = value_fetch_price_3.get("row1")
+        row2_price_3 = value_fetch_price_3.get("row2")
+        params_price_3 = value_fetch_price_3.get("params")
         id_val_price_3 = str(node.get("id")) + "_price_3"
-        classes.append(value_fetch_class(row1_price_3, row2_price_3, input_dic_price_3, id_val_price_3))
+        classes.append(value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
 
 
 def draw_button(node):
-    obj_text_data = node.get("more").get("obj_text")
-    input_dic = obj_text_data.get("input_dic")
+    obj_text_data = node.get("params").get("obj_text")
     value_fetch = obj_text_data.get("value_fetch")
-    row1 = value_fetch.get("row1").get("label")
-    row2 = value_fetch.get("row2").get("name")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    params = value_fetch.get("params")
     id_val = str(node.get("id")) + "_obj_text"
-    classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+    classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def draw_arrow(node):
-    obj_time_1_data = node.get("more").get("obj_time_1")
-    input_dic_time_1 = obj_time_1_data.get("input_dic")
+    obj_time_1_data = node.get("params").get("obj_time_1")
     value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-    row1_time_1 = value_fetch_time_1.get("row1").get("label")
-    row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    row1_time_1 = value_fetch_time_1.get("row1")
+    row2_time_1 = value_fetch_time_1.get("row2")
+    params_time_1 = value_fetch_time_1.get("params")
     id_val_time_1 = str(node.get("id")) + "_time_1"
-    classes.append(value_fetch_class(row1_time_1, row2_time_1, input_dic_time_1, id_val_time_1))
+    classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
 
-    obj_price_1_data = node.get("more").get("obj_price_1")
-    input_dic_price_1 = obj_price_1_data.get("input_dic")
+    obj_price_1_data = node.get("params").get("obj_price_1")
     value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-    row1_price_1 = value_fetch_price_1.get("row1").get("label")
-    row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    row1_price_1 = value_fetch_price_1.get("row1")
+    row2_price_1 = value_fetch_price_1.get("row2")
+    params_price_1 = value_fetch_price_1.get("params")
     id_val_price_1 = str(node.get("id")) + "_price_1"
-    classes.append(value_fetch_class(row1_price_1, row2_price_1, input_dic_price_1, id_val_price_1))
+    classes.append(value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
 
 
 def modify_stops_of_trades(node):
-    relative_to_data = node.get("more").get("relative_to")
+    relative_to_data = node.get("params").get("relative_to")
     if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
-        input_dic = relative_to_data.get("input_dic")
         value_fetch = relative_to_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "_rt"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
+    new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
     if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-        input_dic_tp = new_tpsl_mode_data.get("input_dic_tp")
         value_fetch_tp = new_tpsl_mode_data.get("value_fetch_tp")
-        row1_tp = value_fetch_tp.get("row1").get("label")
-        row2_tp = value_fetch_tp.get("row2").get("name")
+        row1_tp = value_fetch_tp.get("row1")
+        row2_tp = value_fetch_tp.get("row2")
+        params_tp = value_fetch_tp.get("params_tp")
         id_val_tp = str(node.get("id")) + "_ntm_tp"
 
-        input_dic_sl = new_tpsl_mode_data.get("input_dic_sl")
         value_fetch_sl = new_tpsl_mode_data.get("value_fetch_sl")
-        row1_sl = value_fetch_sl.get("row1").get("label")
-        row2_sl = value_fetch_sl.get("row2").get("name")
+        row1_sl = value_fetch_sl.get("row1")
+        row2_sl = value_fetch_sl.get("row2")
+        params_sl = value_fetch_sl.get("params_sl")
         id_val_sl = str(node.get("id")) + "_ntm_sl"
 
-        classes.append(value_fetch_class(row1_tp, row2_tp, input_dic_tp, id_val_tp))
-        classes.append(value_fetch_class(row1_sl, row2_sl, input_dic_sl, id_val_sl))
+        classes.append(value_fetch_class(row1_tp, row2_tp, params_tp, id_val_tp))
+        classes.append(value_fetch_class(row1_sl, row2_sl, params_sl, id_val_sl))
 
 
 def trailing_pending_orders(node):
-    trailing_distance_mode_data = node.get("more").get("trailing_distance_mode")
+    trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
     trailing_distance_mode = trailing_distance_mode_data.get("value")
     if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
-        input_dic = trailing_distance_mode_data.get("input_dic")
         value_fetch = trailing_distance_mode_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "_tdmd"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def buy_sell(node):
-    open_at_price_data = node.get("more").get("open_at_price")
+    open_at_price_data = node.get("params").get("open_at_price")
     open_at_price = open_at_price_data.get("value")
     if open_at_price == "OPEN_AT_CUSTOM_PRICE":
-        input_dic = open_at_price_data.get("input_dic")
         value_fetch = open_at_price_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "oacp"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def comment(node):
-    mrow1 = node.get("more").get("row1")
+    mrow1 = node.get("params").get("row1")
     if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
-        input_dic = mrow1.get("input_dic")
         value_fetch = mrow1.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r1"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow2 = node.get("more").get("row2")
+    mrow2 = node.get("params").get("row2")
     if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
-        input_dic = mrow2.get("input_dic")
         value_fetch = mrow2.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r2"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow3 = node.get("more").get("row3")
+    mrow3 = node.get("params").get("row3")
     if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
-        input_dic = mrow3.get("input_dic")
         value_fetch = mrow3.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r3"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow4 = node.get("more").get("row4")
+    mrow4 = node.get("params").get("row4")
     if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
-        input_dic = mrow4.get("input_dic")
         value_fetch = mrow4.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r4"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow5 = node.get("more").get("row5")
+    mrow5 = node.get("params").get("row5")
     if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
-        input_dic = mrow5.get("input_dic")
         value_fetch = mrow5.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r5"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow6 = node.get("more").get("row6")
+    mrow6 = node.get("params").get("row6")
     if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
-        input_dic = mrow6.get("input_dic")
         value_fetch = mrow6.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r6"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow7 = node.get("more").get("row7")
+    mrow7 = node.get("params").get("row7")
     if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
-        input_dic = mrow7.get("input_dic")
         value_fetch = mrow7.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r7"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
-    mrow8 = node.get("more").get("row8")
+    mrow8 = node.get("params").get("row8")
     if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
-        input_dic = mrow8.get("input_dic")
         value_fetch = mrow8.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "cm_r8"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def trailing_stop_each_trade(node):
-    trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
+    trailing_stop_mode_data = node.get("params").get("TrailingStopMode")
     trailing_stop_mode = trailing_stop_mode_data.get("value")
     if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-        input_dic = trailing_stop_mode_data.get("input_dic")
         value_fetch = trailing_stop_mode_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id")) + "tsm_cl"
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def modify_variables(node):
     for item in node.get("items"):
-        input_dic = item.get("input_dic")
-        value = item.get("value")
-        row1 = value.get("row1").get("label")
-        row2 = value.get("row2").get("name")
+        value_fetch = item.get("value_fetch")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
         id_val = str(node.get("id"))
-        classes.append(value_fetch_class(row1, row2, input_dic, id_val))
+        classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def condition_1_normal_elements(node):
@@ -795,14 +800,14 @@ def condition_1_cross_elements(node):
     classes.append(value_fetch_class(row1_right, row2_right, input_dic_right_2, id_val_right_2))
 
 
-def value_fetch_class(row1, row2, input_dic, id_val):
+def value_fetch_class(row1, row2, params, id_val):
     mclass = ""
     if row1 == "Indicator":
-        mclass = indicator_class_constructor.get_class(row2, input_dic, id_val)
+        mclass = indicator_class_constructor.get_class(row2, params, id_val)
     elif row1 == "Candle":
-        mclass = candle_class_constructor.get_class(input_dic, id_val)
+        mclass = candle_class_constructor.get_class(params, id_val)
     elif row1 == "Market Properties":
-        mclass = market_properties_class_constructor.get_class(input_dic, id_val)
+        mclass = market_properties_class_constructor.get_class(params, id_val)
     elif row1 == "Value":
-        mclass = value_class_constructor.get_class(input_dic, id_val)
+        mclass = value_class_constructor.get_class(params, id_val)
     return mclass

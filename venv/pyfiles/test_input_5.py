@@ -1093,123 +1093,94 @@ input_data_1 = {
         },
         {
             "id": "ddeb3db1-4333-4b54-b3d9-e3e4c27baaec",
-            "data": {
-                "blockId": 53,
-                "blockName": "Sell now"
-            },
-            "type": "testMojtaba",
-            "position": {
-                "x": 285,
-                "y": 515
-            },
-            "width": 70,
-            "height": 32,
-            "selected": True,
-            "dragging": False,
-            "more": {
-                "symbol": {
-                    "value": "NULL",
-                    "checked": False
-                },
-                "group": {
-                    "value": 11,
-                    "checked": False
-                },
-                "order_type": {
-                    "id": 1,
-                    "value": "ORDER_BUY_PENDING"
-                },
-                "money_management": {
-                    "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
-                    "checked": False
-                },
-                "how_much_volume": {
-                    "value": 35,
-                    "checked": False
-                },
-                "volume_upper_limit": {
-                    "id": 0,
-                    "value": 10
-                },
+            "blockId": 53,
+            "blockName": "Sell now",
+            "params": {
+                "symbol": "NULL",
+                "group": 11,
+                "order_type": "ORDER_BUY_PENDING",
+                "money_management": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
+                "how_much_volume": 35,
+                "volume_upper_limit": 10,
                 "open_at_price": {
-                    "id": 2,
-                    "value": "OPEN_AT_ASK"
+                    "value": "OPEN_AT_CUSTOM_PRICE",
+                    "value_fetch": {
+                        "row1": {
+                            "label": "Indicator"
+                        },
+                        "row2": {
+                            "name": "RSI",
+                            "description": "this is RSI indicator"
+                        },
+                        "candleId": {
+                            "value": 3,
+                            "description": ""
+                        },
+                        "params": [
+                            {
+                                "optionName": "symbol",
+                                "value": {
+                                    "value": "NULL"
+                                }
+                            },
+                            {
+                                "optionName": "timeframe",
+                                "value": {
+                                    "value": 0
+                                }
+                            },
+                            {
+                                "optionName": "period",
+                                "value": {
+                                    "value": 14
+                                }
+                            },
+                            {
+                                "optionName": "applied_price",
+                                "value": {
+                                    "value": "PRICE_CLOSE"
+                                }
+                            },
+                            {
+                                "optionName": "buy_threshold",
+                                "value": {
+                                    "value": 70
+                                }
+                            },
+                            {
+                                "optionName": "sell_threshold",
+                                "value": {
+                                    "value": 30
+                                }
+                            },
+                            {
+                                "optionName": "shift",
+                                "value": {
+                                    "value": 0
+                                }
+                            }
+                        ]
+                    }
                 },
-                "price_offset": {
-                    "id": 25,
-                    "value": 10
-                },
-                "price_offset_as_pip": {
-                    "value": True
-                },
-                "slippage": {
-                    "id": 1,
-                    "value": 4
-                },
-                "stoploss": {
-                    "value": 20,
-                    "checked": False
-                },
-                "takeprofit": {
-                    "value": 20,
-                    "checked": False
-                },
-                "take_profit_mode": {
-                    "id": 2,
-                    "value": "TPSL_MODE_FIXED_PIPS"
-                },
-                "stop_loss_mode": {
-                    "id": 2,
-                    "value": "TPSL_MODE_FIXED_PIPS"
-                },
-                "comment": {
-                    "id": 2,
-                    "value": "\"\""
-                },
-                "expiration": {
-                    "id": 2,
-                    "value": 0
-                },
-                "arrow_color": {
-                    "id": 2,
-                    "value": "clrYellow"
-                },
-                "look_up_on": {
-                    "id": 2,
-                    "value": "LOOK_UP_RUNNING_ONLY"
-                },
-                "type": {
-                    "id": 2,
-                    "value": [0, 1]
-                },
-                "martingale_init_vol": {
-                    "id": 2,
-                    "value": 0.1
-                },
-                "martingale_multiply_on_loss": {
-                    "id": 2,
-                    "value": 0
-                },
-                "martingale_multiply_on_profit": {
-                    "id": 2,
-                    "value": 0
-                },
-                "martingale_addlots_on_loss": {
-                    "id": 2,
-                    "value": 0.1
-                },
-                "martingale_addlots_on_profit": {
-                    "id": 2,
-                    "value": 0.1
-                },
-                "martingale_reset_on_n_losses": {
-                    "id": 2,
-                    "value": 5
-                },
-                "martingale_reset_on_n_profits": {
-                    "id": 2,
-                    "value": 5
-                }
+                "price_offset": 10,
+                "price_offset_as_pip": True,
+                "slippage": 4,
+                "stoploss": 20,
+                "takeprofit": 20,
+                "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                "comment": "\"\"",
+                "expiration": 0,
+                "arrow_color": "clrYellow",
+                "look_up_on": "LOOK_UP_RUNNING_ONLY",
+                "type": [0, 1],
+                "martingale_init_vol": 0.1,
+                "martingale_multiply_on_loss": 0,
+                "martingale_multiply_on_profit": 0,
+                "martingale_addlots_on_loss": 0.1,
+                "martingale_addlots_on_profit": 0.1,
+                "martingale_reset_on_n_losses": 5,
+                "martingale_reset_on_n_profits": 5
             }
         },
         {
@@ -7348,13 +7319,12 @@ input_data_5 = {
                                 "time_skip_weekdays": False
                             },
                         },
-                    },
-                    "operator": {
-                        "value": 1,
-                        "label": "×>",
-                        "cross_width": 10
-                    },
-
+                        "operator": {
+                            "value": 1,
+                            "label": "×>",
+                            "cross_width": 10
+                        }
+                    }
                 },
                 {
                     "id": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
@@ -7382,195 +7352,46 @@ input_data_5 = {
                                 "adjust": "58pips"
                             },
                         },
-                    },
-                    "operator": {
-                        "value": 1,
-                        "label": "×>",
-                        "cross_width": 10
-                    },
-
+                        "operator": {
+                            "value": 1,
+                            "label": "×>",
+                            "cross_width": 10
+                        }
+                    }
                 },
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 1,
                     "blockName": "condition1",
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 284,
-                        "y": 391
-                    },
-                    "width": 82,
-                    "height": 32,
-                    "selected": False,
-                    "dragging": False,
-                    "more": {
-                        "left1": {
-                            "id": 3,
-                            "label": "Indicator"
+                    "params": {
+                        "left": {
+                            "row1": "Indicator",
+                            "row2": "Macd",
+                            "params": {
+                                "Signal Period": 12,
+                                "slow EMA period": 29,
+                                "Fast EMA Period": 9,
+                                "applied_price": "PRICE_CLOSE",
+                                "mode": "MODE_MAIN",
+                                "shift": 1
+                            }
                         },
-                        "left2": {
-                            "id": 1,
-                            "name": "Macd",
-                            "description": "this is macd indicator"
+                        "right": {
+                            "row1": "Indicator",
+                            "row2": "Macd",
+                            "params": {
+                                "Signal Period": 12,
+                                "slow EMA period": 29,
+                                "Fast EMA Period": 9,
+                                "applied_price": "PRICE_CLOSE",
+                                "mode": "MODE_SIGNAL",
+                                "shift": 1
+                            }
                         },
                         "operator": {
-                            "value": 8,
-                            "label": "\u00d7<"
-                        },
-                        "right1": {
-                            "id": 3,
-                            "label": "Indicator"
-                        },
-                        "right2": {
-                            "id": 1,
-                            "name": "Macd",
-                            "description": "this is macd indicator"
-                        },
-                        "changeStatus": False,
-                        "changeStatusDesc": "",
-                        "left": [
-                            {
-                                "optionName": "Signal Period",
-                                "value": {
-                                    "id": 1,
-                                    "key": "Signal Period",
-                                    "value": 12,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "slow EMA period",
-                                "value": {
-                                    "id": 2,
-                                    "key": "slow EMA period",
-                                    "value": 29,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "Fast EMA Period",
-                                "value": {
-                                    "id": 3,
-                                    "key": "Fast EMA Period",
-                                    "value": 9,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "mode",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "MODE_MAIN",
-                                    "items": [
-                                        "MODE_MAIN",
-                                        "MODE_SIGNAL"
-                                    ]
-                                }
-                            }
-                        ],
-                        "right": [
-                            {
-                                "optionName": "Signal Period",
-                                "value": {
-                                    "id": 1,
-                                    "key": "Signal Period",
-                                    "value": 12,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "slow EMA period",
-                                "value": {
-                                    "id": 2,
-                                    "key": "slow EMA period",
-                                    "value": 29,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "Fast EMA Period",
-                                "value": {
-                                    "id": 3,
-                                    "key": "Fast EMA Period",
-                                    "value": 9,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "mode",
-                                "value": {
-                                    "multi": True,
-                                    "optionName": "mode",
-                                    "value": "MODE_SIGNAL",
-                                    "items": [
-                                        "MODE_MAIN",
-                                        "MODE_SIGNAL"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "adjust",
-                                "value": {
-                                    "multi": True,
-                                    "optionName": "mode",
-                                    "value": "/20pips",
-                                    "items": [
-                                        "MODE_MAIN",
-                                        "MODE_SIGNAL"
-                                    ]
-                                }
-                            }
-                        ],
-                        "candleIDLeft": {
-                            "value": "1",
-                            "checked": False
-                        },
-                        "candleIDRight": {
-                            "value": "1",
-                            "checked": False
+                            "value": 1,
+                            "label": "×>",
+                            "cross_width": 10
                         }
                     }
                 },
@@ -7578,365 +7399,86 @@ input_data_5 = {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 1,
                     "blockName": "condition1",
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 469,
-                        "y": 397
-                    },
-                    "width": 82,
-                    "height": 32,
-                    "selected": False,
-                    "dragging": False,
-                    "more": {
-                        "left1": {
-                            "id": 3,
-                            "label": "Indicator"
+                    "params": {
+                        "left": {
+                            "row1": "Indicator",
+                            "row2": "Macd",
+                            "params": {
+                                "Signal Period": 12,
+                                "slow EMA period": 29,
+                                "Fast EMA Period": 9,
+                                "applied_price": "PRICE_CLOSE",
+                                "mode": "MODE_MAIN",
+                                "shift": 1
+                            }
                         },
-                        "left2": {
-                            "id": 1,
-                            "name": "Macd",
-                            "description": "this is macd indicator"
+                        "right": {
+                            "row1": "Indicator",
+                            "row2": "Macd",
+                            "params": {
+                                "Signal Period": 12,
+                                "slow EMA period": 29,
+                                "Fast EMA Period": 9,
+                                "applied_price": "PRICE_CLOSE",
+                                "mode": "MODE_SIGNAL",
+                                "shift": 1
+                            }
                         },
                         "operator": {
-                            "value": 7,
-                            "label": "\u00d7>"
-                        },
-                        "right1": {
-                            "id": 3,
-                            "label": "Indicator"
-                        },
-                        "right2": {
-                            "id": 1,
-                            "name": "Macd",
-                            "description": "this is macd indicator"
-                        },
-                        "changeStatus": False,
-                        "changeStatusDesc": "",
-                        "left": [
-                            {
-                                "optionName": "Signal Period",
-                                "value": {
-                                    "id": 1,
-                                    "key": "Signal Period",
-                                    "value": 12,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "slow EMA period",
-                                "value": {
-                                    "id": 2,
-                                    "key": "slow EMA period",
-                                    "value": 29,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "Fast EMA Period",
-                                "value": {
-                                    "id": 3,
-                                    "key": "Fast EMA Period",
-                                    "value": 9,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "mode",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "MODE_MAIN",
-                                    "items": [
-                                        "MODE_MAIN",
-                                        "MODE_SIGNAL"
-                                    ]
-                                }
-                            }
-                        ],
-                        "right": [
-                            {
-                                "optionName": "Signal Period",
-                                "value": {
-                                    "id": 1,
-                                    "key": "Signal Period",
-                                    "value": 12,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "slow EMA period",
-                                "value": {
-                                    "id": 2,
-                                    "key": "slow EMA period",
-                                    "value": 29,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "optionName": "Fast EMA Period",
-                                "value": {
-                                    "id": 3,
-                                    "key": "Fast EMA Period",
-                                    "value": 9,
-                                    "indicator_name": 1
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "applied_price",
-                                "value": {
-                                    "id": 1,
-                                    "indicator_name": 1,
-                                    "key": "apiLater",
-                                    "value": "PRICE_CLOSE",
-                                    "items": [
-                                        "PRICE_CLOSE",
-                                        "PRICE_OPEN",
-                                        "PRICE_HIGH",
-                                        "PRICE_LOW",
-                                        "PRICE_MIDIAN",
-                                        "PRICE_TYPICAL",
-                                        "PRICE_WIGHTED"
-                                    ]
-                                }
-                            },
-                            {
-                                "multi": True,
-                                "optionName": "mode",
-                                "value": {
-                                    "multi": True,
-                                    "optionName": "mode",
-                                    "value": "MODE_SIGNAL",
-                                    "items": [
-                                        "MODE_MAIN",
-                                        "MODE_SIGNAL"
-                                    ]
-                                }
-                            }
-                        ],
-                        "candleIDLeft": {
-                            "value": "1",
-                            "checked": False
-                        },
-                        "candleIDRight": {
-                            "value": "1",
-                            "checked": False
+                            "value": 1,
+                            "label": "×<",
+                            "cross_width": 10
                         }
                     }
                 },
                 {
                     "id": "ddeb3db1-4333-4b54-b3d9-e3e4c27baaec",
-                    "data": {
-                        "id_by_user": 53,
-                        "blockName": "Sell now"
-                    },
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 285,
-                        "y": 515
-                    },
-                    "width": 70,
-                    "height": 32,
-                    "selected": True,
-                    "dragging": False,
-                    "more": {
-                        "symbol": {
-                            "value": "NULL",
-                            "checked": False
-                        },
-                        "group": {
-                            "value": 11,
-                            "checked": False
-                        },
-                        "order_type": {
-                            "id": 1,
-                            "value": "ORDER_BUY_PENDING"
-                        },
-                        "money_management": {
-                            "value": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
-                            "checked": False
-                        },
-                        "how_much_volume": {
-                            "value": 35,
-                            "checked": False
-                        },
-                        "volume_upper_limit": {
-                            "id": 0,
-                            "value": 10
-                        },
+                    "id_by_user": 53,
+                    "blockName": "Sell now",
+                    "params": {
+                        "symbol": "NULL",
+                        "group": 11,
+                        "order_type": "ORDER_BUY_PENDING",
+                        "money_management": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
+                        "how_much_volume": 35,
+                        "volume_upper_limit": 10,
                         "open_at_price": {
-                            "id": 2,
-                            "value": "OPEN_AT_ASK"
+                            "value": "OPEN_AT_CUSTOM_PRICE",
+                            "value_fetch": {
+                                "row1": "Indicator",
+                                "row2": "RSI",
+                                "params": {
+                                    "period": "10",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "shift": "10"
+                                }
+                            }
                         },
-                        "price_offset": {
-                            "id": 25,
-                            "value": 10
-                        },
-                        "price_offset_as_pip": {
-                            "value": True
-                        },
-                        "slippage": {
-                            "id": 1,
-                            "value": 4
-                        },
-                        "stoploss": {
-                            "value": 20,
-                            "checked": False
-                        },
-                        "takeprofit": {
-                            "value": 20,
-                            "checked": False
-                        },
-                        "take_profit_mode": {
-                            "id": 2,
-                            "value": "TPSL_MODE_FIXED_PIPS"
-                        },
-                        "stop_loss_mode": {
-                            "id": 2,
-                            "value": "TPSL_MODE_FIXED_PIPS"
-                        },
-                        "comment": {
-                            "id": 2,
-                            "value": "\"\""
-                        },
-                        "expiration": {
-                            "id": 2,
-                            "value": 0
-                        },
-                        "arrow_color": {
-                            "id": 2,
-                            "value": "clrYellow"
-                        },
-                        "look_up_on": {
-                            "id": 2,
-                            "value": "LOOK_UP_RUNNING_ONLY"
-                        },
-                        "type": {
-                            "id": 2,
-                            "value": [0, 1]
-                        },
-                        "martingale_init_vol": {
-                            "id": 2,
-                            "value": 0.1
-                        },
-                        "martingale_multiply_on_loss": {
-                            "id": 2,
-                            "value": 0
-                        },
-                        "martingale_multiply_on_profit": {
-                            "id": 2,
-                            "value": 0
-                        },
-                        "martingale_addlots_on_loss": {
-                            "id": 2,
-                            "value": 0.1
-                        },
-                        "martingale_addlots_on_profit": {
-                            "id": 2,
-                            "value": 0.1
-                        },
-                        "martingale_reset_on_n_losses": {
-                            "id": 2,
-                            "value": 5
-                        },
-                        "martingale_reset_on_n_profits": {
-                            "id": 2,
-                            "value": 5
-                        }
+                        "price_offset": 10,
+                        "price_offset_as_pip": True,
+                        "slippage": 4,
+                        "stoploss": 20,
+                        "takeprofit": 20,
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "comment": "\"\"",
+                        "expiration": 0,
+                        "arrow_color": "clrYellow",
+                        "look_up_on": "LOOK_UP_RUNNING_ONLY",
+                        "type": [0, 1],
+                        "martingale_init_vol": 0.1,
+                        "martingale_multiply_on_loss": 0,
+                        "martingale_multiply_on_profit": 0,
+                        "martingale_addlots_on_loss": 0.1,
+                        "martingale_addlots_on_profit": 0.1,
+                        "martingale_reset_on_n_losses": 5,
+                        "martingale_reset_on_n_profits": 5
                     }
                 },
                 {
                     "id": "cee1dff9-6c44-4b35-94a2-57d9d8f48a09",
                     "id_by_user": 50,
                     "blockName": "pass",
-                    "type": "testMojtaba",
-                    "position": {
-                        "x": 474,
-                        "y": 527
-                    },
-                    "width": 70,
-                    "height": 32,
-                    "selected": False,
-                    "dragging": False,
-                    "more": {
-                        "group": {
-                            "value": 0,
-                            "checked": False
-                        },
-                        "symbol": {
-                            "value": "NULL",
-                            "checked": False
-                        },
-                        "monyManagement": {
-                            "id": 1,
-                            "label": "Fixed volume"
-                        },
-                        "howMuch": {
-                            "value": 0.1,
-                            "checked": False
-                        },
-                        "volumeUpper": {
-                            "value": 0,
-                            "checked": False
-                        },
-                        "stopLoss": {
-                            "id": 2,
-                            "label": "Fixed pips"
-                        },
-                        "takeProfit": {
-                            "id": 2,
-                            "label": "Fixed pips"
-                        },
-                        "inPipStop": {
-                            "value": 50,
-                            "checked": False
-                        },
-                        "inPipTake": {
-                            "value": 10,
-                            "checked": False
-                        },
-                        "expirationMode": {
-                            "id": 1,
-                            "label": "No expiration"
-                        },
-                        "expirationModeToggle": False,
-                        "slippage": {
-                            "value": 4,
-                            "checked": False
-                        },
-                        "comment": {
-                            "value": 0,
-                            "checked": False
-                        },
-                        "arrowColor": {
-                            "id": 2,
-                            "label": "Blue"
-                        },
-                        "arrowColorToggle": False,
-                        "changeStatus": False,
-                        "changeStatusDesc": ""
-                    }
                 }
             ],
             "edges": [

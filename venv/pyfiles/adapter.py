@@ -14,7 +14,7 @@ def refactor(data):
         # Block input_dic
         set_blocks_input_dic(event["nodes"], event["edges"])
         # Task input_dic
-        task_input.set_task_input_dic(event["nodes"])
+        # task_input.set_task_input_dic(event["nodes"])
     return data
 
 
@@ -65,8 +65,18 @@ def overwrite_task_names(nodes):
             node["blockName"] = "check_trades_orders_nearby"
         elif block_name == "turn_on_blocks" or block_name == "turn_off_blocks" or block_name == "toggle_blocks":
             node["blockName"] = "blocks_on_off"
-        elif block_name == "Buy now" or block_name == "Sell now" or block_name == "Buy pending order" or block_name == "Sell pending order":
+        elif block_name == "Buy now":
             node["blockName"] = "buy_sell"
+            node.get("params")["order_type"] = "ORDER_BUY"
+        elif block_name == "Sell now":
+            node["blockName"] = "buy_sell"
+            node.get("params")["order_type"] = "ORDER_SELL"
+        elif block_name == "Buy pending order":
+            node["blockName"] = "buy_sell"
+            node.get("params")["order_type"] = "ORDER_BUY_PENDING"
+        elif block_name == "Sell pending order":
+            node["blockName"] = "buy_sell"
+            node.get("params")["order_type"] = "ORDER_SELL_PENDING"
 
 
 def get_nexts_true(node, edges):
@@ -196,4 +206,3 @@ def add_category(nodes):
                 node["category"] = "chart_and_objects"
             case _:
                 node["category"] = "not_specified"
-

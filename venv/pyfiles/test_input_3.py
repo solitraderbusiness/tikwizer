@@ -15093,7 +15093,7 @@ input_data_19 = {
             "items": [
                 {
                     "variable_name": "aaaaaaa",
-                    "value": {
+                    "value_fetch": {
                         "row1": {
                             "label": "Indicator"
                         },
@@ -15153,7 +15153,7 @@ input_data_19 = {
                 },
                 {
                     "variable_name": "aaaaaaa",
-                    "value": {
+                    "value_fetch": {
                         "row1": {
                             "label": "Indicator"
                         },

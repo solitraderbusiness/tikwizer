@@ -1,4 +1,6 @@
 from . import expert_helper
+
+
 # from . import expert_helper
 
 
@@ -113,27 +115,32 @@ def draw_line(node):
         obj_time_1_data = node.get("more").get("obj_time_1")
         value_time_1 = obj_time_1_data.get("value_fetch")
         params_time_1 = value_time_1.get("params")
-        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"),
+                                       value_time_1.get("row2").get("name"))
         obj_time_1_data["input_dic"] = input_dic_time_1
     if "obj_time_2" in node.get("more"):
         obj_time_2_data = node.get("more").get("obj_time_2")
         value_time_2 = obj_time_2_data.get("value_fetch")
         params_time_2 = value_time_2.get("params")
-        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"), value_time_2.get("row2").get("name"))
+        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"),
+                                       value_time_2.get("row2").get("name"))
         obj_time_2_data["input_dic"] = input_dic_time_2
 
     if "obj_price_1" in node.get("more"):
         obj_price_1_data = node.get("more").get("obj_price_1")
         value_price_1 = obj_price_1_data.get("value_fetch")
         params_price_1 = value_price_1.get("params")
-        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"),
+                                        value_price_1.get("row2").get("name"))
         obj_price_1_data["input_dic"] = input_dic_price_1
     if "obj_price_2" in node.get("more"):
         obj_price_2_data = node.get("more").get("obj_price_2")
         value_price_2 = obj_price_2_data.get("value_fetch")
         params_price_2 = value_price_2.get("params")
-        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"), value_price_2.get("row2").get("name"))
+        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"),
+                                        value_price_2.get("row2").get("name"))
         obj_price_2_data["input_dic"] = input_dic_price_2
+
 
 def draw_shape(node):
     more = node.get("more")
@@ -166,39 +173,46 @@ def draw_shape(node):
         obj_time_1_data = node.get("more").get("obj_time_1")
         value_time_1 = obj_time_1_data.get("value_fetch")
         params_time_1 = value_time_1.get("params")
-        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"), value_time_1.get("row2").get("name"))
+        input_dic_time_1 = value_fetch(node, params_time_1, value_time_1.get("row1").get("label"),
+                                       value_time_1.get("row2").get("name"))
         obj_time_1_data["input_dic"] = input_dic_time_1
     if "obj_time_2" in node.get("more"):
         obj_time_2_data = node.get("more").get("obj_time_2")
         value_time_2 = obj_time_2_data.get("value_fetch")
         params_time_2 = value_time_2.get("params")
-        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"), value_time_2.get("row2").get("name"))
+        input_dic_time_2 = value_fetch(node, params_time_2, value_time_2.get("row1").get("label"),
+                                       value_time_2.get("row2").get("name"))
         obj_time_2_data["input_dic"] = input_dic_time_2
     if "obj_time_3" in node.get("more"):
         obj_time_3_data = node.get("more").get("obj_time_3")
         value_time_3 = obj_time_3_data.get("value_fetch")
         params_time_3 = value_time_3.get("params")
-        input_dic_time_3 = value_fetch(node, params_time_3, value_time_3.get("row1").get("label"), value_time_3.get("row2").get("name"))
+        input_dic_time_3 = value_fetch(node, params_time_3, value_time_3.get("row1").get("label"),
+                                       value_time_3.get("row2").get("name"))
         obj_time_3_data["input_dic"] = input_dic_time_3
 
     if "obj_price_1" in node.get("more"):
         obj_price_1_data = node.get("more").get("obj_price_1")
         value_price_1 = obj_price_1_data.get("value_fetch")
         params_price_1 = value_price_1.get("params")
-        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"), value_price_1.get("row2").get("name"))
+        input_dic_price_1 = value_fetch(node, params_price_1, value_price_1.get("row1").get("label"),
+                                        value_price_1.get("row2").get("name"))
         obj_price_1_data["input_dic"] = input_dic_price_1
     if "obj_price_2" in node.get("more"):
         obj_price_2_data = node.get("more").get("obj_price_2")
         value_price_2 = obj_price_2_data.get("value_fetch")
         params_price_2 = value_price_2.get("params")
-        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"), value_price_2.get("row2").get("name"))
+        input_dic_price_2 = value_fetch(node, params_price_2, value_price_2.get("row1").get("label"),
+                                        value_price_2.get("row2").get("name"))
         obj_price_2_data["input_dic"] = input_dic_price_2
     if "obj_price_3" in node.get("more"):
         obj_price_3_data = node.get("more").get("obj_price_3")
         value_price_3 = obj_price_3_data.get("value_fetch")
         params_price_3 = value_price_3.get("params")
-        input_dic_price_3 = value_fetch(node, params_price_3, value_price_3.get("row1").get("label"), value_price_3.get("row2").get("name"))
+        input_dic_price_3 = value_fetch(node, params_price_3, value_price_3.get("row1").get("label"),
+                                        value_price_3.get("row2").get("name"))
         obj_price_3_data["input_dic"] = input_dic_price_3
+
 
 def draw_button(node):
     more = node.get("more")
