@@ -117,7 +117,7 @@ def get_prevs_false(node, edges):
 
 def add_category(nodes):
     for node in nodes:
-        match node.get("data").get("blockName"):
+        match node.get("blockName"):
             case "condition1":
                 node["category"] = "condition_formula"
             case "formula":

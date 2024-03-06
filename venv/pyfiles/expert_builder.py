@@ -1,4 +1,5 @@
 from . import task_constructor
+from . import block_constructor
 from . import task_dynamic_constructor
 from . import global_functions
 from . import constants_constructor
@@ -493,38 +494,35 @@ def add_task_elements_specific(nodes):
         elif task_name == "draw_shape":
             draw_shape(node)
         elif task_name == "draw_line":
-            draw_shape(node)
+            draw_line(node)
 
 
 def draw_line(node):
-    if "obj_time_1" in node.get("params"):
-        obj_time_1_data = node.get("params").get("obj_time_1")
-        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+    object_type = node.get("params").get("object_type")
+    if "time_1" in object_type:
+        value_fetch_time_1 = object_type.get("time_1")
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
         params_time_1 = value_fetch_time_1.get("params")
         id_val_time_1 = str(node.get("id")) + "_time_1"
         classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
-    if "obj_time_2" in node.get("params"):
-        obj_time_2_data = node.get("params").get("obj_time_2")
-        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+    if "time_2" in object_type:
+        value_fetch_time_2 = object_type.get("time_2")
         row1_time_2 = value_fetch_time_2.get("row1")
         row2_time_2 = value_fetch_time_2.get("row2")
         params_time_2 = value_fetch_time_2.get("params")
         id_val_time_2 = str(node.get("id")) + "_time_2"
         classes.append(value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
 
-    if "obj_price_1" in node.get("params"):
-        obj_price_1_data = node.get("params").get("obj_price_1")
-        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+    if "price_1" in object_type:
+        value_fetch_price_1 = object_type.get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
         params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id")) + "_price_1"
         classes.append(value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
-    if "obj_price_2" in node.get("params"):
-        obj_price_2_data = node.get("params").get("obj_price_2")
-        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+    if "price_2" in object_type:
+        value_fetch_price_2 = object_type.get("price_2")
         row1_price_2 = value_fetch_price_2.get("row1")
         row2_price_2 = value_fetch_price_2.get("row2")
         params_price_2 = value_fetch_price_2.get("params")
@@ -533,50 +531,44 @@ def draw_line(node):
 
 
 def draw_shape(node):
-    if "obj_time_1" in node.get("params"):
-        obj_time_1_data = node.get("params").get("obj_time_1")
-        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+    if "time_1" in node.get("params"):
+        value_fetch_time_1 = node.get("params").get("time_1")
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
         params_time_1 = value_fetch_time_1.get("params")
         id_val_time_1 = str(node.get("id")) + "_time_1"
         classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
-    if "obj_time_2" in node.get("params"):
-        obj_time_2_data = node.get("params").get("obj_time_2")
-        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
+    if "time_2" in node.get("params"):
+        value_fetch_time_2 = node.get("params").get("time_2")
         row1_time_2 = value_fetch_time_2.get("row1")
         row2_time_2 = value_fetch_time_2.get("row2")
         params_time_2 = value_fetch_time_2.get("params")
         id_val_time_2 = str(node.get("id")) + "_time_2"
         classes.append(value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
-    if "obj_time_3" in node.get("params"):
-        obj_time_3_data = node.get("params").get("obj_time_3")
-        value_fetch_time_3 = obj_time_3_data.get("value_fetch")
+    if "time_3" in node.get("params"):
+        value_fetch_time_3 = node.get("params").get("time_3")
         row1_time_3 = value_fetch_time_3.get("row1")
         row2_time_3 = value_fetch_time_3.get("row2")
         params_time_3 = value_fetch_time_3.get("params")
         id_val_time_3 = str(node.get("id")) + "_time_3"
         classes.append(value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
 
-    if "obj_price_1" in node.get("params"):
-        obj_price_1_data = node.get("params").get("obj_price_1")
-        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+    if "price_1" in node.get("params"):
+        value_fetch_price_1 = node.get("params").get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
         params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id")) + "_price_1"
         classes.append(value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
-    if "obj_price_2" in node.get("params"):
-        obj_price_2_data = node.get("params").get("obj_price_2")
-        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
+    if "price_2" in node.get("params"):
+        value_fetch_price_2 = node.get("params").get("price_2")
         row1_price_2 = value_fetch_price_2.get("row1")
         row2_price_2 = value_fetch_price_2.get("row2")
         params_price_2 = value_fetch_price_2.get("params")
         id_val_price_2 = str(node.get("id")) + "_price_2"
         classes.append(value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
-    if "obj_price_3" in node.get("params"):
-        obj_price_3_data = node.get("params").get("obj_price_3")
-        value_fetch_price_3 = obj_price_3_data.get("value_fetch")
+    if "price_3" in node.get("params"):
+        value_fetch_price_3 = node.get("params").get("price_3")
         row1_price_3 = value_fetch_price_3.get("row1")
         row2_price_3 = value_fetch_price_3.get("row2")
         params_price_3 = value_fetch_price_3.get("params")
@@ -585,8 +577,7 @@ def draw_shape(node):
 
 
 def draw_button(node):
-    obj_text_data = node.get("params").get("obj_text")
-    value_fetch = obj_text_data.get("value_fetch")
+    value_fetch = node.get("params").get("text")
     row1 = value_fetch.get("row1")
     row2 = value_fetch.get("row2")
     params = value_fetch.get("params")
@@ -595,16 +586,14 @@ def draw_button(node):
 
 
 def draw_arrow(node):
-    obj_time_1_data = node.get("params").get("obj_time_1")
-    value_fetch_time_1 = obj_time_1_data.get("value_fetch")
+    value_fetch_time_1 = node.get("params").get("time_1")
     row1_time_1 = value_fetch_time_1.get("row1")
     row2_time_1 = value_fetch_time_1.get("row2")
     params_time_1 = value_fetch_time_1.get("params")
     id_val_time_1 = str(node.get("id")) + "_time_1"
     classes.append(value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
 
-    obj_price_1_data = node.get("params").get("obj_price_1")
-    value_fetch_price_1 = obj_price_1_data.get("value_fetch")
+    value_fetch_price_1 = node.get("params").get("price_1")
     row1_price_1 = value_fetch_price_1.get("row1")
     row2_price_1 = value_fetch_price_1.get("row2")
     params_price_1 = value_fetch_price_1.get("params")
@@ -624,13 +613,13 @@ def modify_stops_of_trades(node):
 
     new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
     if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-        value_fetch_tp = new_tpsl_mode_data.get("value_fetch_tp")
+        value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
         row1_tp = value_fetch_tp.get("row1")
         row2_tp = value_fetch_tp.get("row2")
         params_tp = value_fetch_tp.get("params_tp")
         id_val_tp = str(node.get("id")) + "_ntm_tp"
 
-        value_fetch_sl = new_tpsl_mode_data.get("value_fetch_sl")
+        value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
         row1_sl = value_fetch_sl.get("row1")
         row2_sl = value_fetch_sl.get("row2")
         params_sl = value_fetch_sl.get("params_sl")
@@ -644,7 +633,14 @@ def trailing_pending_orders(node):
     trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
     trailing_distance_mode = trailing_distance_mode_data.get("value")
     if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
-        value_fetch = trailing_distance_mode_data.get("value_fetch")
+        key = ""
+        if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+            key = "dynamic_level"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+            key = "dynamic_size_pips_input"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+            key = "dynamic_size_digits_only"
+        value_fetch = trailing_distance_mode_data.get(key)
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         params = value_fetch.get("params")
@@ -656,7 +652,7 @@ def buy_sell(node):
     open_at_price_data = node.get("params").get("open_at_price")
     open_at_price = open_at_price_data.get("value")
     if open_at_price == "OPEN_AT_CUSTOM_PRICE":
-        value_fetch = open_at_price_data.get("value_fetch")
+        value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         params = value_fetch.get("params")
@@ -751,7 +747,7 @@ def trailing_stop_each_trade(node):
 
 
 def modify_variables(node):
-    for item in node.get("items"):
+    for item in node.get("params"):
         value_fetch = item.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -761,53 +757,54 @@ def modify_variables(node):
 
 
 def condition_1_normal_elements(node):
-    more = node.get("more")
+    params = node.get("params")
     # left data
-    row1_left = more.get("left1").get("label")
-    row2_left = more.get("left2").get("name")
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row1")
     id_val_left = str(node.get("id")) + "_" + "left"
-    input_dic_left = node.get("input_dic_left")
-    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left, id_val_left))
-
+    params_left = params.get("left").get("params")
+    classes.append(value_fetch_class(row1_left, row2_left, params_left, id_val_left))
     # right data
-    row1_right = more.get("right1").get("label")
-    row2_right = more.get("right2").get("name")
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row1")
     id_val_right = str(node.get("id")) + "_" + "right"
-    input_dic_right = node.get("input_dic_right")
-    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right, id_val_right))
+    params_right = params.get("right").get("params")
+    classes.append(value_fetch_class(row1_right, row2_right, params_right, id_val_right))
 
 
 def condition_1_cross_elements(node):
-    more = node.get("more")
+    params = node.get("params")
     # left data
-    row1_left = more.get("left1").get("label")
-    row2_left = more.get("left2").get("name")
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
     id_val_left_1 = str(node.get("id")) + "_" + "left1"
     id_val_left_2 = str(node.get("id")) + "_" + "left2"
-    input_dic_left_1 = node.get("input_dic_left_1")
-    input_dic_left_2 = node.get("input_dic_left_2")
-    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left_1, id_val_left_1))
-    classes.append(value_fetch_class(row1_left, row2_left, input_dic_left_2, id_val_left_2))
-
+    params_left_1 = params.get("left").get("params")
+    params_left_2 = params_left_1.copy()
+    if "shift" in params_left_2:
+        params_left_2["shift"] = int(params_left_2["shift"]) + params.get("operator").get("cross_width")
+    classes.append(value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
+    classes.append(value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
     # right data
-    row1_right = more.get("right1").get("label")
-    row2_right = more.get("right2").get("name")
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
     id_val_right_1 = str(node.get("id")) + "_" + "right1"
     id_val_right_2 = str(node.get("id")) + "_" + "right2"
-    input_dic_right_1 = node.get("input_dic_right_1")
-    input_dic_right_2 = node.get("input_dic_right_2")
-    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right_1, id_val_right_1))
-    classes.append(value_fetch_class(row1_right, row2_right, input_dic_right_2, id_val_right_2))
+    params_right_1 = params.get("right").get("params")
+    params_right_2 = params_right_1.copy()
+    if "shift" in params_right_2:
+        params_right_2["shift"] = int(params_right_2["shift"]) + params.get("operator").get("cross_width")
+    classes.append(value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
+    classes.append(value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
 
 
 def value_fetch_class(row1, row2, params, id_val):
-    mclass = ""
     if row1 == "Indicator":
-        mclass = indicator_class_constructor.get_class(row2, params, id_val)
+        return indicator_class_constructor.get_class(row2, params, id_val)
     elif row1 == "Candle":
-        mclass = candle_class_constructor.get_class(params, id_val)
+        return candle_class_constructor.get_class(params, id_val)
     elif row1 == "Market Properties":
-        mclass = market_properties_class_constructor.get_class(params, id_val)
+        return market_properties_class_constructor.get_class(params, id_val)
     elif row1 == "Value":
-        mclass = value_class_constructor.get_class(params, id_val)
-    return mclass
+        return value_class_constructor.get_class(params, id_val)
+

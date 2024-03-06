@@ -23,8 +23,8 @@ def get_task():
 
 def get_task_child(node):
     category = node.get("category")
-    task_name = node.get("data").get("blockName")
-    input_dic = node.get("input_dic_task")
+    task_name = node.get("blockName")
+    params = node.get("params")
     class_id = node.get("id")
 
     path_task_id_template = path + path_sub + "task_id" + "/"  # used to get template
@@ -35,10 +35,10 @@ def get_task_child(node):
     field_data_static = field_data_static_fun(path_task_id)
     field_data = field_data_dynamic_fun(field_data_static)
 
-    constructor_data_static = constructor_data_static_fun(path_task_id, input_dic)
+    constructor_data_static = constructor_data_static_fun(path_task_id, params)
     constructor_data = constructor_data_dynamic_fun(constructor_data_static)
 
-    run_data_static = run_data_static_fun(path_task_id, input_dic)
+    run_data_static = run_data_static_fun(path_task_id, params)
     run_data = run_data_dynamic_fun(node, run_data_static)
 
     reset_data_static = reset_data_static_fun(path_task_id)
@@ -82,12 +82,12 @@ def field_data_dynamic_fun(field_data_static):
     return field_data_static
 
 
-def constructor_data_static_fun(path_task_id, input_dic):
+def constructor_data_static_fun(path_task_id, params):
     with open(path_task_id + "constructor_data.json") as constructor_file:
         if constructor_file:
             constructor_text = constructor_file.read()
             constructor_data = json.loads(constructor_text).get("constructor_data")
-            constructor_data = replace_input_values(constructor_data, input_dic)
+            constructor_data = replace_input_values(constructor_data, params)
             return constructor_data
     return ""
 
@@ -107,7 +107,7 @@ def run_data_static_fun(path_task_id, input_dic):
 
 
 def run_data_dynamic_fun(node, run_data_static):
-    task_name = node.get("data").get("blockName")
+    task_name = node.get("blockName")
     run_data = run_data_static
     if task_name == "condition_1_normal":
         run_data = condition_1_run_data_normal(node, run_data_static)
@@ -161,7 +161,7 @@ def function_data_static_fun(path_task_id):
 
 
 def function_data_dynamic_fun(node, function_data_static):
-    task_name = node.get("data").get("blockName")
+    task_name = node.get("blockName")
     function_data = function_data_static
     if task_name == "buy_sell":
         function_data = buy_sell_function_data(node, function_data_static)
@@ -170,11 +170,11 @@ def function_data_dynamic_fun(node, function_data_static):
 
 
 def draw_line_run_data(node, function_data_static):
-    if "obj_time_1" in node.get("more"):
-        obj_time_1_data = node.get("more").get("obj_time_1")
-        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-        row1_time_1 = value_fetch_time_1.get("row1").get("label")
-        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    object_type = node.get("params").get("object_type")
+    if "time_1" in object_type:
+        value_fetch_time_1 = object_type.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
         id_val_time_1 = str(node.get("id")) + "_time_1"
 
         init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
@@ -184,11 +184,10 @@ def draw_line_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_time_1", "")
         function_data_static = function_data_static.replace("variable_name_time_1", "\"\"")
-    if "obj_time_2" in node.get("more"):
-        obj_time_2_data = node.get("more").get("obj_time_2")
-        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
-        row1_time_2 = value_fetch_time_2.get("row1").get("label")
-        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+    if "time_2" in object_type:
+        value_fetch_time_2 = object_type.get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
         id_val_time_2 = str(node.get("id")) + "_time_2"
 
         init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
@@ -199,11 +198,10 @@ def draw_line_run_data(node, function_data_static):
         function_data_static = function_data_static.replace("initializer_time_2", "")
         function_data_static = function_data_static.replace("variable_name_time_2", "\"\"")
 
-    if "obj_price_1" in node.get("more"):
-        obj_price_1_data = node.get("more").get("obj_price_1")
-        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-        row1_price_1 = value_fetch_price_1.get("row1").get("label")
-        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    if "price_1" in object_type:
+        value_fetch_price_1 = object_type.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id")) + "_price_1"
 
         init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
@@ -213,11 +211,10 @@ def draw_line_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_price_1", "")
         function_data_static = function_data_static.replace("variable_name_price_1", "\"\"")
-    if "obj_price_2" in node.get("more"):
-        obj_price_2_data = node.get("more").get("obj_price_2")
-        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
-        row1_price_2 = value_fetch_price_2.get("row1").get("label")
-        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+    if "price_2" in object_type:
+        value_fetch_price_2 = object_type.get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id")) + "_price_2"
 
         init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
@@ -230,12 +227,12 @@ def draw_line_run_data(node, function_data_static):
 
     return function_data_static
 
+
 def draw_shape_run_data(node, function_data_static):
-    if "obj_time_1" in node.get("more"):
-        obj_time_1_data = node.get("more").get("obj_time_1")
-        value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-        row1_time_1 = value_fetch_time_1.get("row1").get("label")
-        row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    if "time_1" in node.get("params"):
+        value_fetch_time_1 = node.get("params").get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
         id_val_time_1 = str(node.get("id")) + "_time_1"
 
         init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
@@ -245,11 +242,10 @@ def draw_shape_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_time_1", "")
         function_data_static = function_data_static.replace("variable_name_time_1", "\"\"")
-    if "obj_time_2" in node.get("more"):
-        obj_time_2_data = node.get("more").get("obj_time_2")
-        value_fetch_time_2 = obj_time_2_data.get("value_fetch")
-        row1_time_2 = value_fetch_time_2.get("row1").get("label")
-        row2_time_2 = value_fetch_time_2.get("row2").get("name")
+    if "time_2" in node.get("params"):
+        value_fetch_time_2 = node.get("params").get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
         id_val_time_2 = str(node.get("id")) + "_time_2"
 
         init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
@@ -259,11 +255,10 @@ def draw_shape_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_time_2", "")
         function_data_static = function_data_static.replace("variable_name_time_2", "\"\"")
-    if "obj_time_3" in node.get("more"):
-        obj_time_3_data = node.get("more").get("obj_time_3")
-        value_fetch_time_3 = obj_time_3_data.get("value_fetch")
-        row1_time_3 = value_fetch_time_3.get("row1").get("label")
-        row2_time_3 = value_fetch_time_3.get("row2").get("name")
+    if "time_3" in node.get("params"):
+        value_fetch_time_3 = node.get("params").get("time_3")
+        row1_time_3 = value_fetch_time_3.get("row1")
+        row2_time_3 = value_fetch_time_3.get("row2")
         id_val_time_3 = str(node.get("id")) + "_time_3"
 
         init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, id_val_time_3)
@@ -273,11 +268,10 @@ def draw_shape_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_time_3", "")
         function_data_static = function_data_static.replace("variable_name_time_3", "\"\"")
-    if "obj_price_1" in node.get("more"):
-        obj_price_1_data = node.get("more").get("obj_price_1")
-        value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-        row1_price_1 = value_fetch_price_1.get("row1").get("label")
-        row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    if "price_1" in node.get("params"):
+        value_fetch_price_1 = node.get("params").get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id")) + "_price_1"
 
         init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
@@ -287,11 +281,10 @@ def draw_shape_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_price_1", "")
         function_data_static = function_data_static.replace("variable_name_price_1", "\"\"")
-    if "obj_price_2" in node.get("more"):
-        obj_price_2_data = node.get("more").get("obj_price_2")
-        value_fetch_price_2 = obj_price_2_data.get("value_fetch")
-        row1_price_2 = value_fetch_price_2.get("row1").get("label")
-        row2_price_2 = value_fetch_price_2.get("row2").get("name")
+    if "price_2" in node.get("params"):
+        value_fetch_price_2 = node.get("params").get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id")) + "_price_2"
 
         init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
@@ -301,11 +294,10 @@ def draw_shape_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_price_2", "")
         function_data_static = function_data_static.replace("variable_name_price_2", "\"\"")
-    if "obj_price_3" in node.get("more"):
-        obj_price_3_data = node.get("more").get("obj_price_3")
-        value_fetch_price_3 = obj_price_3_data.get("value_fetch")
-        row1_price_3 = value_fetch_price_3.get("row1").get("label")
-        row2_price_3 = value_fetch_price_3.get("row2").get("name")
+    if "price_3" in node.get("params"):
+        value_fetch_price_3 = node.get("params").get("price_3")
+        row1_price_3 = value_fetch_price_3.get("row1")
+        row2_price_3 = value_fetch_price_3.get("row2")
         id_val_price_3 = str(node.get("id")) + "_price_3"
 
         init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, id_val_price_3)
@@ -318,11 +310,11 @@ def draw_shape_run_data(node, function_data_static):
 
     return function_data_static
 
+
 def draw_button_run_data(node, function_data_static):
-    obj_text_data = node.get("more").get("obj_text")
-    value_fetch = obj_text_data.get("value_fetch")
-    row1 = value_fetch.get("row1").get("label")
-    row2 = value_fetch.get("row2").get("name")
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
     id_val = str(node.get("id")) + "_obj_text"
 
     init = get_value_fetch_init(row1, row2, id_val)
@@ -334,10 +326,9 @@ def draw_button_run_data(node, function_data_static):
 
 
 def draw_arrow_run_data(node, function_data_static):
-    obj_time_1_data = node.get("more").get("obj_time_1")
-    value_fetch_time_1 = obj_time_1_data.get("value_fetch")
-    row1_time_1 = value_fetch_time_1.get("row1").get("label")
-    row2_time_1 = value_fetch_time_1.get("row2").get("name")
+    value_fetch_time_1 = node.get("params").get("time_1")
+    row1_time_1 = value_fetch_time_1.get("row1")
+    row2_time_1 = value_fetch_time_1.get("row2")
     id_val_time_1 = str(node.get("id")) + "_time_1"
 
     init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
@@ -345,10 +336,9 @@ def draw_arrow_run_data(node, function_data_static):
     function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
     function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
 
-    obj_price_1_data = node.get("more").get("obj_price_1")
-    value_fetch_price_1 = obj_price_1_data.get("value_fetch")
-    row1_price_1 = value_fetch_price_1.get("row1").get("label")
-    row2_price_1 = value_fetch_price_1.get("row2").get("name")
+    value_fetch_price_1 = node.get("params").get("price_1")
+    row1_price_1 = value_fetch_price_1.get("row1")
+    row2_price_1 = value_fetch_price_1.get("row2")
     id_val_price_1 = str(node.get("id")) + "_price_1"
 
     init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
@@ -360,11 +350,11 @@ def draw_arrow_run_data(node, function_data_static):
 
 
 def modify_stops_of_trades_run_data(node, function_data_static):
-    relative_to_data = node.get("more").get("relative_to")
+    relative_to_data = node.get("params").get("relative_to")
     if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
         value_fetch = relative_to_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "_rt"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -375,19 +365,19 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         function_data_static = function_data_static.replace("initializer_rt", "")
         function_data_static = function_data_static.replace("variable_name_rt", "\"\"")
 
-    new_tpsl_mode_data = node.get("more").get("new_tpsl_mode")
+    new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
     if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-        value_fetch_tp = new_tpsl_mode_data.get("value_fetch_tp")
-        row1_tp = value_fetch_tp.get("row1").get("label")
-        row2_tp = value_fetch_tp.get("row2").get("name")
+        value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
+        row1_tp = value_fetch_tp.get("row1")
+        row2_tp = value_fetch_tp.get("row2")
         id_val_tp = str(node.get("id")) + "_ntm_tp"
 
         init_tp = get_value_fetch_init(row1_tp, row2_tp, id_val_tp)
         val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
 
-        value_fetch_sl = new_tpsl_mode_data.get("value_fetch_sl")
-        row1_sl = value_fetch_sl.get("row1").get("label")
-        row2_sl = value_fetch_sl.get("row2").get("name")
+        value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
+        row1_sl = value_fetch_sl.get("row1")
+        row2_sl = value_fetch_sl.get("row2")
         id_val_sl = str(node.get("id")) + "_ntm_sl"
 
         init_sl = get_value_fetch_init(row1_sl, row2_sl, id_val_sl)
@@ -409,11 +399,11 @@ def modify_stops_of_trades_run_data(node, function_data_static):
 
 
 def buy_sell_function_data(node, function_data_static):
-    open_at_price_data = node.get("more").get("open_at_price")
+    open_at_price_data = node.get("params").get("open_at_price")
     if open_at_price_data.get("value") == "OPEN_AT_CUSTOM_PRICE":
-        value_fetch = open_at_price_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "oacp"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -427,13 +417,15 @@ def buy_sell_function_data(node, function_data_static):
     return function_data_static
 
 
-def replace_input_values(data, input_dic):
-    for key in input_dic:
-        if isinstance(input_dic.get(key), collections.abc.Sequence) and not isinstance(input_dic.get(key), str):
-            items = str(set(input_dic.get(key))) if set(input_dic.get(key)) else "{}"
+def replace_input_values(data, params):
+    for key, value in params.items():
+        if isinstance(value, collections.abc.Sequence) and not isinstance(value, str):
+            items = str(set(value)) if set(value) else "{}"
             data = data.replace(key + "_val", items)
-        else:
-            data = data.replace(key + "_val", str(input_dic.get(key)))
+        elif isinstance(value, dict):
+            data = data.replace(key + "_val", str(value.get("value")))
+        else:  # So it's a string (or number)
+            data = data.replace(key + "_val", str(value))
     return data
 
 
@@ -443,11 +435,11 @@ def spread_filter_run_data(node, run_data):
 
 
 def comment_run_data(node, run_data):
-    mrow1 = node.get("more").get("row1")
+    mrow1 = node.get("params").get("row1")
     if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
         value_fetch = mrow1.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r1"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -458,11 +450,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_1", "")
         run_data = run_data.replace("variable_name_1", "\"\"")
 
-    mrow2 = node.get("more").get("row2")
+    mrow2 = node.get("params").get("row2")
     if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
         value_fetch = mrow2.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r2"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -473,11 +465,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_2", "")
         run_data = run_data.replace("variable_name_2", "\"\"")
 
-    mrow3 = node.get("more").get("row3")
+    mrow3 = node.get("params").get("row3")
     if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
         value_fetch = mrow3.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r3"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -488,11 +480,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_3", "")
         run_data = run_data.replace("variable_name_3", "\"\"")
 
-    mrow4 = node.get("more").get("row4")
+    mrow4 = node.get("params").get("row4")
     if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
         value_fetch = mrow4.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r4"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -503,11 +495,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_4", "")
         run_data = run_data.replace("variable_name_4", "\"\"")
 
-    mrow5 = node.get("more").get("row5")
+    mrow5 = node.get("params").get("row5")
     if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
         value_fetch = mrow5.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r5"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -518,11 +510,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_5", "")
         run_data = run_data.replace("variable_name_5", "\"\"")
 
-    mrow6 = node.get("more").get("row6")
+    mrow6 = node.get("params").get("row6")
     if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
         value_fetch = mrow6.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r6"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -533,11 +525,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_6", "")
         run_data = run_data.replace("variable_name_6", "\"\"")
 
-    mrow7 = node.get("more").get("row7")
+    mrow7 = node.get("params").get("row7")
     if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
         value_fetch = mrow7.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r7"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -548,11 +540,11 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_7", "")
         run_data = run_data.replace("variable_name_7", "\"\"")
 
-    mrow8 = node.get("more").get("row8")
+    mrow8 = node.get("params").get("row8")
     if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
         value_fetch = mrow8.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "cm_r8"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -567,12 +559,19 @@ def comment_run_data(node, run_data):
 
 
 def trailing_pending_orders_run_data(node, run_data):
-    trailing_distance_mode_data = node.get("more").get("trailing_distance_mode")
+    trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
     trailing_distance_mode = trailing_distance_mode_data.get("value")
     if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
-        value_fetch = trailing_distance_mode_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        key = ""
+        if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+            key = "dynamic_level"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+            key = "dynamic_size_pips_input"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+            key = "dynamic_size_digits_only"
+        value_fetch = trailing_distance_mode_data.get(key)
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "_tdmd"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -586,7 +585,6 @@ def trailing_pending_orders_run_data(node, run_data):
             run_data = run_data.replace("initializer_dynamic_digits", "")
             run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
 
-
         elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
             run_data = run_data.replace("initializer_dynamic", "", 1)
             run_data = run_data.replace("variable_name_dynamic", "0", 1)
@@ -594,7 +592,6 @@ def trailing_pending_orders_run_data(node, run_data):
             run_data = run_data.replace("variable_name_dynamic_pips", val)
             run_data = run_data.replace("initializer_dynamic_digits", "")
             run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
-
 
         elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
             run_data = run_data.replace("initializer_dynamic", "", 1)
@@ -615,12 +612,12 @@ def trailing_pending_orders_run_data(node, run_data):
 
 
 def trailing_stop_each_trade_run_data(node, run_data):
-    trailing_stop_mode_data = node.get("more").get("TrailingStopMode")
+    trailing_stop_mode_data = node.get("params").get("TrailingStopMode")
     trailing_stop_mode = trailing_stop_mode_data.get("value")
     if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
         value_fetch = trailing_stop_mode_data.get("value_fetch")
-        row1 = value_fetch.get("row1").get("label")
-        row2 = value_fetch.get("row2").get("name")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
         id_val = str(node.get("id")) + "tsm_cl"
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -635,9 +632,9 @@ def trailing_stop_each_trade_run_data(node, run_data):
 
 def modify_variable_run_data(node, run_data):
     modify_variables = ""
-    for item in node.get("items"):
-        row1 = item.get("value").get("row1").get("label")
-        row2 = item.get("value").get("row2").get("name")
+    for item in node.get("params"):
+        row1 = item.get("value_fetch").get("row1")
+        row2 = item.get("value_fetch").get("row2")
         id_val = str(node.get("id"))
 
         init = get_value_fetch_init(row1, row2, id_val)
@@ -649,27 +646,27 @@ def modify_variable_run_data(node, run_data):
 
 
 def formula(node, run_data):
-    more = node.get("more")
+    params = node.get("params")
 
     # Left data
-    row1_left = more.get("left1").get("label")
-    row2_left = more.get("left2").get("name")
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
     id_val_1 = str(node.get("id")) + "_" + "left"
 
     init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
 
     # Right data
-    row1_right = more.get("right1").get("label")
-    row2_right = more.get("right2").get("name")
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
     id_val_2 = str(node.get("id")) + "_" + "right"
 
     init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
-    operator = more.get("operator").get("label")
+    operator = params.get("operator").get("label")
 
-    variable_name = more.get("variable").get("name")
+    variable_name = params.get("variable_name")
 
     run_data = run_data.replace("initializer_1", init_1) \
         .replace("initializer_2", init_2) \
@@ -681,25 +678,25 @@ def formula(node, run_data):
 
 
 def condition_1_run_data_normal(node, run_data):
-    more = node.get("more")
+    params = node.get("params")
 
     # Left data
-    row1_left = more.get("left1").get("label")
-    row2_left = more.get("left2").get("name")
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
     id_val_1 = str(node.get("id")) + "_" + "left"
 
     init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
 
     # Right data
-    row1_right = more.get("right1").get("label")
-    row2_right = more.get("right2").get("name")
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
     id_val_2 = str(node.get("id")) + "_" + "right"
 
     init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
-    operator = more.get("operator").get("label")
+    operator = params.get("operator").get("label")
 
     run_data = run_data.replace("initializer_1", init_1) \
         .replace("initializer_2", init_2) \
@@ -710,11 +707,11 @@ def condition_1_run_data_normal(node, run_data):
 
 
 def condition_1_run_data_cross(node, run_data):
-    more = node.get("more")
+    params = node.get("params")
 
     # Left data
-    row1_left = more.get("left1").get("label")
-    row2_left = more.get("left2").get("name")
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
     id_val_11 = str(node.get("id")) + "_" + "left" + "1"
     id_val_12 = str(node.get("id")) + "_" + "left" + "2"
 
@@ -724,8 +721,8 @@ def condition_1_run_data_cross(node, run_data):
     val_12 = get_value_fetch_val(row1_left, row2_left, id_val_12)
 
     # Right data
-    row1_right = more.get("right1").get("label")
-    row2_right = more.get("right2").get("name")
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
     id_val_21 = str(node.get("id")) + "_" + "right" + "1"
     id_val_22 = str(node.get("id")) + "_" + "right" + "2"
 
@@ -737,7 +734,7 @@ def condition_1_run_data_cross(node, run_data):
     # Operator
     operator_1 = ""
     operator_2 = ""
-    operator = node.get("more").get("operator").get("label")
+    operator = node.get("params").get("operator").get("label")
     if operator == "×>":
         operator_1 = ">"
         operator_2 = "<"
@@ -773,6 +770,7 @@ def get_value_fetch_init(row1, row2, suffix):
 
 
 def get_value_fetch_val(row1, row2, suffix):
+    val = ""
     if row1 == "Indicator":
         val = indicator_class_constructor.get_var_name(row2, suffix)
     elif row1 == "Candle":
@@ -813,12 +811,3 @@ def get_var_data(task_name):
             var_data = var_dic.get("var_data")
             return var_data
 
-# input_dic = {
-#     "n": 3
-# }
-#
-# print(get_task())
-# print(get_task_child("pass_n_times", input_dic, 4))
-# print(get_initializer(4))
-# print(get_var_name())
-# print(get_var_data("pass_n_times"))

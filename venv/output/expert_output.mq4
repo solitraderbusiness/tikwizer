@@ -1,3 +1,8 @@
+//+------------------------------------------------------------------+
+//|                                                      ProjectName |
+//|                                      Copyright 2018, CompanyName |
+//|                                       http://www.companyname.net |
+//+------------------------------------------------------------------+
 #define ROUTE_1_PASSED 1
 #define ROUTE_2_PASSED 0
 #define RESET_LEVEL_DEFAULT 0
@@ -161,7 +166,17 @@
 #define NEW_STOPS_FIXED 1
 #define NEW_STOPS_PERCENT_OF_CURRENT_TPSL 2
 #define NEW_STOPS_CUSTOM_PRICE_LEVEL 3
-double a734 = 45; // 
+double a734 = 45; //
+struct MarketPropertiesResult
+  {
+   double            price;
+   int               index;
+   datetime          time;
+  };
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class BlockParent
   {
 public:
@@ -174,6 +189,9 @@ public:
 public:
    virtual void      onResult(int result) = NULL;
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task
   {
 public:
@@ -181,7 +199,7 @@ public:
 public:
                      Task(string name)
      {
-        this.name = name;
+      this.name = name;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -193,11 +211,14 @@ public:
 
   };
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Value0_time_1
   {
 public:
 
-      int               type;
+   int               type;
    string               value;
    string               adjust;
    //for pips
@@ -238,8 +259,8 @@ public:
    void              init()
 
      {
-        type = VALUE_TYPE_TIME;
-      value = 20.4;
+      type = VALUE_TYPE_TIME;
+      value = 30.4;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -439,11 +460,14 @@ public:
      }
   };
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Value0_time_2
   {
 public:
 
-      int               type;
+   int               type;
    string               value;
    string               adjust;
    //for pips
@@ -484,8 +508,8 @@ public:
    void              init()
 
      {
-        type = VALUE_TYPE_TIME;
-      value = 20.4;
+      type = VALUE_TYPE_TIME;
+      value = 40.4;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -698,7 +722,7 @@ public:
    int               shift;
 
    string            msymbol;
-   int            mtimeframe;
+   int               mtimeframe;
 
 public:
 
@@ -718,12 +742,12 @@ public:
    double            calc()
 
      {
-       msymbol = getSymbol(symbol);
+      msymbol = getSymbol(symbol);
       mtimeframe = getTimeframe(timeframe);
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits( 58,msymbol);
+      return value + toDigits(58,msymbol);
      }
 
 private:
@@ -879,7 +903,7 @@ public:
    int               shift;
 
    string            msymbol;
-   int            mtimeframe;
+   int               mtimeframe;
 
 public:
 
@@ -891,7 +915,7 @@ public:
       find_method = FIND_BY_ID;
       price_mode = CANDLE_HIGH;
       timestr = "2023.4.26 13:40:30";
-      shift = 20;
+      shift = 0;
      }
 
 
@@ -899,12 +923,12 @@ public:
    double            calc()
 
      {
-       msymbol = getSymbol(symbol);
+      msymbol = getSymbol(symbol);
       mtimeframe = getTimeframe(timeframe);
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits( 58,msymbol);
+      return value + toDigits(58,msymbol);
      }
 
 private:
@@ -1046,44 +1070,121 @@ private:
      }
 
   };
-
-class RSI1_left
-  {
+
+
+class RSI1_left1
+
+  {
+
    string            symbol;
    int               timeframe;
    int               period;
    int               applied_price;
    int               shift;
-    
-   int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
-      shift = 1;
+
+   int               buy_threshold;
+   int               sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 10;
+
+      applied_price = PRICE_CLOSE;
+
+      shift = 10;
       buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
       string symbol =  getSymbol(this.symbol);
       int timeframe = getTimeframe(this.timeframe);
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
   };
-class Value1_right
+
+class RSI1_left2
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+
+   int               buy_threshold;
+   int               sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 10;
+
+      applied_price = PRICE_CLOSE;
+
+      shift = 20;
+      buy_threshold = 70;
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Value1_right1
   {
 public:
 
-      int               type;
+   int               type;
    string               value;
    string               adjust;
    //for pips
@@ -1124,8 +1225,8 @@ public:
    void              init()
 
      {
-        type = VALUE_TYPE_TIME;
-      value = 20.4;
+      type = VALUE_TYPE_TIME;
+      value = 25.1;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -1324,71 +1425,450 @@ public:
       return result;
      }
   };
-
-class RSI2_left1
-  {
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Value1_right2
+  {
+public:
+
+   int               type;
+   string               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
+   string            symbol;
+   //for time (phase 2)
+   //defined by user
+   int               mode_time;
+   int               time_source;
+   string            time_stamp;
+   int               time_candle_id;
+   string            time_market;
+   ENUM_TIMEFRAMES   time_candle_timeframe;
+   int               time_component_year;
+   int               time_component_month;
+   double            time_component_day;
+   double            time_component_hour;
+   double            time_component_minute;
+   int               time_component_second;
+   datetime          time_value;
+   int               mode_time_shift;
+   int               time_shift_years;
+   int               time_shift_months;
+   int               time_shift_weeks;
+   double            time_shift_days;
+   double            time_shift_hours;
+   double            time_shift_minutes;
+   int               time_shift_seconds;
+   bool              time_skip_weekdays;
+   //defined by system
+   datetime          retval;
+   datetime          retval0;
+   datetime          Time[];
+   string            msymbol;
+
+public:
+
+   void              init()
+
+     {
+      type = VALUE_TYPE_TIME;
+      value = 25.1;
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = NULL;
+      //for time (phase 2)
+      //defined by user
+      mode_time = 0;
+      time_source = 0;
+      time_stamp = "00:00";
+      time_candle_id = 1;
+      time_market = "";
+      time_candle_timeframe = 0;
+      time_component_year = 0;
+      time_component_month = 0;
+      time_component_day = 0;
+      time_component_hour = 12;
+      time_component_minute = 0;
+      time_component_second = 0;
+      time_value = 0;
+      mode_time_shift = 0;
+      time_shift_years = 0;
+      time_shift_months = 0;
+      time_shift_weeks = 0;
+      time_shift_days = 0;
+      time_shift_hours = 0;
+      time_shift_minutes = 0;
+      time_shift_seconds = 0;
+      time_skip_weekdays = False;
+      //defined by system
+      retval =  0;
+      retval0 =  0;
+
+     }
+
+   string              calc()
+     {
+
+      msymbol = getSymbol(symbol);
+      string result = "";
+      switch(type)
+        {
+         case VALUE_TYPE_NUMERIC:
+         case VALUE_TYPE_BOOLEAN:
+         case VALUE_TYPE_COLOR:
+         case VALUE_TYPE_TEXT:
+            result = value;
+            break;
+
+         case VALUE_TYPE_TEXT_CODE_INPUT:
+            result = "\"" + value + "\"";
+            break;
+
+         case VALUE_TYPE_PIPS:
+            if(pips_mode == VALUE_PIPS_AS_IS)
+              {
+               result = value;
+              }
+            else
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                 {
+                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                  result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
+                 }
+            break;
+
+         case VALUE_TYPE_TIME:
+
+            if(time_market == "")
+               time_market = Symbol();
+
+            if(mode_time == MODE_TIME_NOW)
+              {
+               if(time_source == TIME_SERVER)
+                 {
+                  retval = TimeCurrent();
+                 }
+               else
+                  if(time_source == TIME_LOCAL)
+                    {
+                     retval = TimeLocal() + (TimeCurrent() - TimeLocal());
+                    }
+                  else
+                     if(time_source == TIME_GMT)
+                       {
+                        retval = TimeGMT() + (TimeCurrent() - TimeGMT());
+                       }
+              }
+            else
+               if(mode_time == MODE_TIME_TIMESTAMP)
+                 {
+                  retval  = StringToTime(time_stamp);
+                  retval0 = retval;
+                 }
+               else
+                  if(mode_time==MODE_TIME_COMPONENTS)
+                    {
+                     retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
+                    }
+                  else
+                     if(mode_time == MODE_TIME_CANDLE_TIME)
+                       {
+                        ArraySetAsSeries(Time,true);
+                        CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
+                        retval = Time[0];
+                       }
+                     else
+                        if(mode_time == MODE_TIME_TIME_VALUE)
+                          {
+                           retval = time_value;
+                          }
+
+            if(mode_time_shift > 0)
+              {
+               int sh = 1;
+
+               if(mode_time_shift == 1)
+                 {
+                  sh = -1;
+                 }
+
+               if(time_shift_years > 0 || time_shift_months > 0)
+                 {
+                  int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
+
+                  if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
+                    {
+                     year   = time_component_year;
+                     month  = time_component_month;
+                     day    = (int)MathFloor(time_component_day);
+                     hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
+                     minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
+                     second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
+                    }
+                  else
+                    {
+                     year   = TimeYear(retval);
+                     month  = TimeMonth(retval);
+                     day    = TimeDay(retval);
+                     hour   = TimeHour(retval);
+                     minute = TimeMinute(retval);
+                     second = TimeSeconds(retval);
+                    }
+
+                  year  = year + time_component_year * sh;
+                  month = month + time_component_month * sh;
+
+                  if(month < 0)
+                    {
+                     month = 12 - month;
+                    }
+                  else
+                     if(month > 12)
+                       {
+                        month = month - 12;
+                       }
+
+                  retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
+                 }
+
+               retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
+
+               if(time_skip_weekdays == true)
+                 {
+                  int weekday = TimeDayOfWeek(retval);
+
+                  if(sh > 0)    // forward
+                    {
+                     if(weekday == 0)
+                       {
+                        retval = retval + 86400;
+                       }
+                     else
+                        if(weekday == 6)
+                          {
+                           retval = retval + 172800;
+                          }
+                    }
+                  else
+                     if(sh < 0) // back
+                       {
+                        if(weekday == 0)
+                          {
+                           retval = retval - 172800;
+                          }
+                        else
+                           if(weekday == 6)
+                             {
+                              retval = retval - 86400;
+                             }
+                       }
+                 }
+              }
+
+            result = retval;
+            break;
+        }
+      return result;
+     }
+  };
+
+
+class MarketProperties2_left1
+
+  {
+
+public:
    string            symbol;
    int               timeframe;
-   int               period;
-   int               applied_price;
-   int               shift;
-    
-   int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
-      shift = 1;
-      buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
-  };
-class RSI2_left2
-  {
+   int               find_method;
+   int               price_mode;
+   int               time_mode;
+   //what to return
+   int               what_to_get;
+   //used for time period
+   string            timestr_start;
+   string            timestr_end;
+   int               day_offset;
+   //used for candle period
+   int               range_start;
+   int               range_end;
+
+   string            msymbol;
+   int               mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = NULL;
+      timeframe = 0;
+      find_method = CANDLE_PERIOD;
+      price_mode = LOWEST_PRICE;
+      what_to_get = GET_PRICE;
+      timestr_start = "2023.11.23 7:30:30";
+      timestr_end   = "2023.11.23 21:30:30";
+      day_offset = 0;
+      range_start = 50;
+      range_end   = 100;
+     }
+
+
+
+   int               calc(MarketPropertiesResult &result)
+     {
+      msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
+
+      //In time mode, first calc range start and range end, then calc the result just like range mode
+      //STest, what is the effect of time mode? For now, it is ignored.
+      //STest, in iBarsShift, exact = false?
+      if(find_method == TIME_PERIOD)
+        {
+         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
+         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
+         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
+         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
+        }
+      getHiLo(result);
+      result.price = result.price / toDigits(a734,msymbol);
+      result.index = result.index / toDigits(a734,msymbol);
+      result.time = result.time / toDigits(a734,msymbol);
+
+
+     }
+
+
+   void              getHiLo(MarketPropertiesResult &result)
+     {
+      if(price_mode == HIGHEST_PRICE)
+         getHighest(result);
+      else
+         if(price_mode == LOWEST_PRICE)
+            getLowest(result);
+     }
+
+
+
+   void              getHighest(MarketPropertiesResult &result)
+     {
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
+      result.price = iHigh(msymbol, mtimeframe, hi);
+      result.index = hi;
+      result.time = iTime(msymbol, mtimeframe, hi);
+     }
+
+
+   void              getLowest(MarketPropertiesResult &result)
+     {
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
+      result.price = iLow(msymbol, mtimeframe, li);
+      result.index = li;
+      result.time = iTime(msymbol, mtimeframe, li);
+     }
+
+  };
+
+
+class MarketProperties2_left2
+
+  {
+
+public:
    string            symbol;
    int               timeframe;
-   int               period;
-   int               applied_price;
-   int               shift;
-    
-   int              buy_threshold;
-   int              sell_threshold;
-
-public:
-   void              init()
-     {
-      symbol = NULL;
-      timeframe = 0;
-      period = 14;
-      applied_price = PRICE_CLOSE;
-      shift = 2;
-      buy_threshold = 70;
-      sell_threshold = 30;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-      return result;
-     }
-
-  };class Candle2_right1
+   int               find_method;
+   int               price_mode;
+   int               time_mode;
+   //what to return
+   int               what_to_get;
+   //used for time period
+   string            timestr_start;
+   string            timestr_end;
+   int               day_offset;
+   //used for candle period
+   int               range_start;
+   int               range_end;
+
+   string            msymbol;
+   int               mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = NULL;
+      timeframe = 0;
+      find_method = CANDLE_PERIOD;
+      price_mode = LOWEST_PRICE;
+      what_to_get = GET_PRICE;
+      timestr_start = "2023.11.23 7:30:30";
+      timestr_end   = "2023.11.23 21:30:30";
+      day_offset = 0;
+      range_start = 50;
+      range_end   = 100;
+     }
+
+
+
+   int               calc(MarketPropertiesResult &result)
+     {
+      msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
+
+      //In time mode, first calc range start and range end, then calc the result just like range mode
+      //STest, what is the effect of time mode? For now, it is ignored.
+      //STest, in iBarsShift, exact = false?
+      if(find_method == TIME_PERIOD)
+        {
+         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
+         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
+         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
+         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
+        }
+      getHiLo(result);
+      result.price = result.price / toDigits(a734,msymbol);
+      result.index = result.index / toDigits(a734,msymbol);
+      result.time = result.time / toDigits(a734,msymbol);
+
+
+     }
+
+
+   void              getHiLo(MarketPropertiesResult &result)
+     {
+      if(price_mode == HIGHEST_PRICE)
+         getHighest(result);
+      else
+         if(price_mode == LOWEST_PRICE)
+            getLowest(result);
+     }
+
+
+
+   void              getHighest(MarketPropertiesResult &result)
+     {
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
+      result.price = iHigh(msymbol, mtimeframe, hi);
+      result.index = hi;
+      result.time = iTime(msymbol, mtimeframe, hi);
+     }
+
+
+   void              getLowest(MarketPropertiesResult &result)
+     {
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
+      result.price = iLow(msymbol, mtimeframe, li);
+      result.index = li;
+      result.time = iTime(msymbol, mtimeframe, li);
+     }
+
+  };
+class Candle2_right1
 
   {
 
@@ -1402,7 +1882,7 @@ public:
    int               shift;
 
    string            msymbol;
-   int            mtimeframe;
+   int               mtimeframe;
 
 public:
 
@@ -1414,7 +1894,7 @@ public:
       find_method = FIND_BY_ID;
       price_mode = CANDLE_HIGH;
       timestr = "2023.4.26 13:40:30";
-      shift = 1;
+      shift = 5;
      }
 
 
@@ -1422,12 +1902,12 @@ public:
    double            calc()
 
      {
-       msymbol = getSymbol(symbol);
+      msymbol = getSymbol(symbol);
       mtimeframe = getTimeframe(timeframe);
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits( 58,msymbol);
+      return value + toDigits(58,msymbol);
      }
 
 private:
@@ -1583,7 +2063,7 @@ public:
    int               shift;
 
    string            msymbol;
-   int            mtimeframe;
+   int               mtimeframe;
 
 public:
 
@@ -1595,7 +2075,7 @@ public:
       find_method = FIND_BY_ID;
       price_mode = CANDLE_HIGH;
       timestr = "2023.4.26 13:40:30";
-      shift = 2;
+      shift = 15;
      }
 
 
@@ -1603,12 +2083,12 @@ public:
    double            calc()
 
      {
-       msymbol = getSymbol(symbol);
+      msymbol = getSymbol(symbol);
       mtimeframe = getTimeframe(timeframe);
 
       int index = get_index();
       double value = get_value(index);
-      return value + toDigits( 58,msymbol);
+      return value + toDigits(58,msymbol);
      }
 
 private:
@@ -1750,273 +2230,578 @@ private:
      }
 
   };
-
-class MACD3_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD3_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result / toDigits( 20,symbol);
-     }
-
-  };
-class MACD3_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result / toDigits( 20,symbol);
-     }
-
-  };
-class MACD4_left1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_left2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_MAIN;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right1
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 1;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };
-class MACD4_right2
-  {
-   string            symbol;
-   int               timeframe;
-   int               fast_ema_period;
-   int               slow_ema_period;
-   int               signal_period;
-   int               applied_price;
-   int               mode;
-   int               shift;
-
-public:
-   void              init()
-     {
-       symbol = NULL;
-      timeframe = 0;
-      fast_ema_period = 9;
-      slow_ema_period = 29;
-      signal_period = 12;
-      applied_price = PRICE_CLOSE;
-      mode = MODE_SIGNAL;
-      shift = 2;
-     }
-
-   double            calc()
-     {
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
-      return result;
-     }
-
-  };class Task0 : public Task
+
+
+class MACD3_left1
+
   {
-    //defined by user
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 11;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD3_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 11;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_left2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_MAIN;
+
+      shift = 11;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right1
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 1;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MACD4_right2
+
+  {
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               fast_ema_period;
+
+   int               slow_ema_period;
+
+   int               signal_period;
+
+   int               applied_price;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      fast_ema_period = 9;
+
+      slow_ema_period = 29;
+
+      signal_period = 12;
+
+      applied_price = PRICE_CLOSE;
+
+      mode = MODE_SIGNAL;
+
+      shift = 11;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMACD(symbol,timeframe,fast_ema_period,slow_ema_period,signal_period, applied_price, mode, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class RSI5oacp
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               period;
+   int               applied_price;
+   int               shift;
+
+   int               buy_threshold;
+   int               sell_threshold;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = NULL;
+
+      timeframe = 0;
+
+      period = 10;
+
+      applied_price = PRICE_CLOSE;
+
+      shift = 10;
+      buy_threshold = 70;
+      sell_threshold = 30;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iRSI(symbol,timeframe,period, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Task0 : public Task
+  {
+   //defined by user
    bool                object_per_bar;
    bool                object_update;
    string              obj_name;
@@ -2041,7 +2826,7 @@ public:
 public:
                      Task0(string name):Task(name)
      {
-          //defined by user
+      //defined by user
       object_per_bar = False;
       object_update = True;
       obj_name = "my_line";
@@ -2049,7 +2834,7 @@ public:
       obj_angle = 45.0;
       obj_ray = False;
       obj_ray_left = False;
-      obj_ray_right = True;
+      obj_ray_right = False;
       obj_color = clrDeepPink;
       obj_style = STYLE_SOLID;
       obj_width = 1;
@@ -2065,7 +2850,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
+      Task::run(block_id, block);
 
       string obj_name_prefix = "goldbox_line_";
       long obj_chart_id      = 0;
@@ -2163,29 +2948,29 @@ public:
             if(t1 == 1)
               {
                Value0_time_1 value0_time_1;
-   value0_time_1.init();
-   datetime valueValue0_time_1 = value0_time_1.calc();
+               value0_time_1.init();
+               datetime valueValue0_time_1 = value0_time_1.calc();
                ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,valueValue0_time_1);
               }
             if(t2 == 1)
               {
                Value0_time_2 value0_time_2;
-   value0_time_2.init();
-   datetime valueValue0_time_2 = value0_time_2.calc();
+               value0_time_2.init();
+               datetime valueValue0_time_2 = value0_time_2.calc();
                ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,1,valueValue0_time_2);
               }
             if(p1 == 1)
               {
                Candle0_price_1 candle0_price_1;
-   candle0_price_1.init();
-   double valueCandle0_price_1 = candle0_price_1.calc();
+               candle0_price_1.init();
+               double valueCandle0_price_1 = candle0_price_1.calc();
                ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,valueCandle0_price_1);
               }
             if(p2 == 1)
               {
                Candle0_price_2 candle0_price_2;
-   candle0_price_2.init();
-   double valueCandle0_price_2 = candle0_price_2.calc();
+               candle0_price_2.init();
+               double valueCandle0_price_2 = candle0_price_2.calc();
                ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,1,valueCandle0_price_2);
               }
 
@@ -2210,31 +2995,41 @@ public:
       printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task1 : public Task
   {
-   
+
 public:
                      Task1(string name):Task(name)
      {
-         
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      RSI1_left rsi1_left;
-   rsi1_left.init();
-   double valueRSI1_left = rsi1_left.calc();
-      Value1_right value1_right;
-   value1_right.init();
-   double valueValue1_right = value1_right.calc();
+      RSI1_left1 rsi1_left1;
+      rsi1_left1.init();
+      double valueRSI1_left1 = rsi1_left1.calc();
+      RSI1_left2 rsi1_left2;
+      rsi1_left2.init();
+      double valueRSI1_left2 = rsi1_left2.calc();
+      Value1_right1 value1_right1;
+      value1_right1.init();
+      double valueValue1_right1 = value1_right1.calc();
+      Value1_right2 value1_right2;
+      value1_right2.init();
+      double valueValue1_right2 = value1_right2.calc();
 
-      if(valueRSI1_left > valueValue1_right)
+      if(valueRSI1_left1 > valueValue1_right1 && valueRSI1_left2 < valueValue1_right2)
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -2245,37 +3040,43 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task2 : public Task
   {
-   
+
 public:
                      Task2(string name):Task(name)
      {
-         
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      RSI2_left1 rsi2_left1;
-   rsi2_left1.init();
-   double valueRSI2_left1 = rsi2_left1.calc();
-      RSI2_left2 rsi2_left2;
-   rsi2_left2.init();
-   double valueRSI2_left2 = rsi2_left2.calc();
+      MarketProperties2_left1 marketproperties2_left1;
+      marketproperties2_left1.init();
+      MarketPropertiesResult mp_result2_left1;
+      marketproperties2_left1.calc(mp_result2_left1);
+      MarketProperties2_left2 marketproperties2_left2;
+      marketproperties2_left2.init();
+      MarketPropertiesResult mp_result2_left2;
+      marketproperties2_left2.calc(mp_result2_left2);
       Candle2_right1 candle2_right1;
-   candle2_right1.init();
-   double valueCandle2_right1 = candle2_right1.calc();
+      candle2_right1.init();
+      double valueCandle2_right1 = candle2_right1.calc();
       Candle2_right2 candle2_right2;
-   candle2_right2.init();
-   double valueCandle2_right2 = candle2_right2.calc();
-      
-      if(valueRSI2_left1 < valueCandle2_right1 && valueRSI2_left2 > valueCandle2_right2)
+      candle2_right2.init();
+      double valueCandle2_right2 = candle2_right2.calc();
+
+      if(marketproperties2_left1.what_to_get == GET_PRICE ? mp_result2_left1.price : marketproperties2_left1.what_to_get == GET_CANDLE_ID ? mp_result2_left1.index : mp_result2_left1.time > valueCandle2_right1 && marketproperties2_left2.what_to_get == GET_PRICE ? mp_result2_left2.price : marketproperties2_left2.what_to_get == GET_CANDLE_ID ? mp_result2_left2.index : mp_result2_left2.time < valueCandle2_right2)
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -2286,37 +3087,41 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task3 : public Task
   {
-   
+
 public:
                      Task3(string name):Task(name)
      {
-         
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-         MACD3_left1 macd3_left1;
-   macd3_left1.init();
-   double valueMACD3_left1 = macd3_left1.calc();
-         MACD3_left2 macd3_left2;
-   macd3_left2.init();
-   double valueMACD3_left2 = macd3_left2.calc();
-         MACD3_right1 macd3_right1;
-   macd3_right1.init();
-   double valueMACD3_right1 = macd3_right1.calc();
-         MACD3_right2 macd3_right2;
-   macd3_right2.init();
-   double valueMACD3_right2 = macd3_right2.calc();
-      
-      if(valueMACD3_left1 < valueMACD3_right1 && valueMACD3_left2 > valueMACD3_right2)
+      MACD3_left1 macd3_left1;
+      macd3_left1.init();
+      double valueMACD3_left1 = macd3_left1.calc();
+      MACD3_left2 macd3_left2;
+      macd3_left2.init();
+      double valueMACD3_left2 = macd3_left2.calc();
+      MACD3_right1 macd3_right1;
+      macd3_right1.init();
+      double valueMACD3_right1 = macd3_right1.calc();
+      MACD3_right2 macd3_right2;
+      macd3_right2.init();
+      double valueMACD3_right2 = macd3_right2.calc();
+
+      if(valueMACD3_left1 > valueMACD3_right1 && valueMACD3_left2 < valueMACD3_right2)
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -2327,37 +3132,41 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task4 : public Task
   {
-   
+
 public:
                      Task4(string name):Task(name)
      {
-         
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-         MACD4_left1 macd4_left1;
-   macd4_left1.init();
-   double valueMACD4_left1 = macd4_left1.calc();
-         MACD4_left2 macd4_left2;
-   macd4_left2.init();
-   double valueMACD4_left2 = macd4_left2.calc();
-         MACD4_right1 macd4_right1;
-   macd4_right1.init();
-   double valueMACD4_right1 = macd4_right1.calc();
-         MACD4_right2 macd4_right2;
-   macd4_right2.init();
-   double valueMACD4_right2 = macd4_right2.calc();
-      
-      if(valueMACD4_left1 > valueMACD4_right1 && valueMACD4_left2 < valueMACD4_right2)
+      MACD4_left1 macd4_left1;
+      macd4_left1.init();
+      double valueMACD4_left1 = macd4_left1.calc();
+      MACD4_left2 macd4_left2;
+      macd4_left2.init();
+      double valueMACD4_left2 = macd4_left2.calc();
+      MACD4_right1 macd4_right1;
+      macd4_right1.init();
+      double valueMACD4_right1 = macd4_right1.calc();
+      MACD4_right2 macd4_right2;
+      macd4_right2.init();
+      double valueMACD4_right2 = macd4_right2.calc();
+
+      if(valueMACD4_left1 < valueMACD4_right1 && valueMACD4_left2 > valueMACD4_right2)
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -2368,11 +3177,15 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task5 : public Task
   {
    //values set by user
@@ -2418,13 +3231,13 @@ class Task5 : public Task
 public:
                      Task5(string name):Task(name)
      {
-         symbol = NULL;
+      symbol = NULL;
       group = 11;
-      order_type = ORDER_BUY_PENDING;
+      order_type = ORDER_SELL;
       money_management = MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI;
       how_much_volume = 35;
       volume_upper_limit = 10;
-      open_at_price = OPEN_AT_ASK;
+      open_at_price = OPEN_AT_CUSTOM_PRICE;
       price_offset = 10;
       price_offset_as_pip = True;
 
@@ -2451,7 +3264,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
+      Task::run(block_id, block);
 
       msymbol = getSymbol(symbol);
 
@@ -2477,7 +3290,7 @@ public:
          ResetLastError();
 
          ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
-         if (ticket>0) //Must be here
+         if(ticket>0)  //Must be here
             break;
          //-- error check --------------------------------------------------
          string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
@@ -2508,14 +3321,15 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
-   private:
+   virtual void      reset(int level)
+     {
+
+     }
+private:
    //does needed calculations
    void              calc()
      {
-     fitGroup();
+      fitGroup();
       buildMagic();
       if(order_type==ORDER_BUY)
         {
@@ -2591,8 +3405,10 @@ public:
                   price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
                   break;
                case OPEN_AT_CUSTOM_PRICE:
-                  
-                  price = "";
+                  RSI5oacp rsi5oacp;
+                  rsi5oacp.init();
+                  double valueRSI5oacp = rsi5oacp.calc();
+                  price = valueRSI5oacp;
                   break;
               }
            }
@@ -2604,8 +3420,10 @@ public:
 
       if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
          price -= offset;
-      else if (cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
-         price += offset;        }
+      else
+         if(cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
+            price += offset;
+     }
 
    ////////////////////////////////////////////////////////////
 
@@ -2753,27 +3571,34 @@ public:
 
    void              buildMagic()
      {
-         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task6 : public Task
   {
-   
+
 public:
                      Task6(string name):Task(name)
      {
-         
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
       block.onResult(ROUTE_1_PASSED);
      }
-   virtual void      reset(int level) {
-      
-   }
-   
+   virtual void      reset(int level)
+     {
+
+     }
+
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block : BlockParent
   {
 
@@ -2877,6 +3702,9 @@ public:
 
   };
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block0 : public Block
   {
 public:
@@ -2899,6 +3727,9 @@ public:
       task = new Task0(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block1 : public Block
   {
 public:
@@ -2906,7 +3737,7 @@ public:
      {
       id = 1;
       id_by_user = 1;
-      name = "condition_1_normal";
+      name = "condition_1_cross";
       enabled = True;
 
       int mnexts_true[] = {4};
@@ -2921,13 +3752,16 @@ public:
       task = new Task1(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block2 : public Block
   {
 public:
                      Block2()
      {
       id = 2;
-      id_by_user = 1;
+      id_by_user = 2;
       name = "condition_1_cross";
       enabled = True;
 
@@ -2943,6 +3777,9 @@ public:
       task = new Task2(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block3 : public Block
   {
 public:
@@ -2965,6 +3802,9 @@ public:
       task = new Task3(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
@@ -2987,6 +3827,9 @@ public:
       task = new Task4(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block5 : public Block
   {
 public:
@@ -3009,6 +3852,9 @@ public:
       task = new Task5(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block6 : public Block
   {
 public:
@@ -3040,71 +3886,105 @@ Block *blocks_deinit[];
 string overriding_symbol = "";
 int overriding_timeframe = -1;
 template <typename T>
- void AddToArray(T& A[], T &value) {
- ArrayResize(A, ArraySize(A)+1);
- A[ArraySize(A)-1] = value;
- }template <typename T>
- void RemoveIndexFromArray(T& A[], int iPos) {
- int iLast;
- for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
- A[iPos] = A[iPos + 1];
- ArrayResize(A, iLast);
- }// Function to join two arrays into one
- void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[]) {
- int size1 = ArraySize(array1);
- int size2 = ArraySize(array2);
- int newSize = size1 + size2;
- ArrayCopy(arrayJoined, array1, 0, 0, size1);
- ArrayCopy(arrayJoined, array2, 0, size1, size2);
- }
-// Check if all items in arrayB are in ArrayA
- bool areAllItemsPresent(int &arrayA[], int &arrayB[]) {
- for(int i = 0; i < ArraySize(arrayA); i++) {
- bool isPresent = false;
- for(int j = 0; j < ArraySize(arrayB); j++) {
- if(arrayA[i] == arrayB[j]) {
- isPresent = true;
- break;
- }
- }
- if(!isPresent) {
- return false;
- }
- } 
-return true;
- }
-void runBlockTick(int source_id, int source_result, int dest_id)
-{
-blocks_tick[dest_id].run(source_id, source_result);
-}void addBlocksTick()
-{
-ArrayResize(blocks_tick, 7);
-Block0 *block0 = new Block0();
-Block1 *block1 = new Block1();
-Block2 *block2 = new Block2();
-Block3 *block3 = new Block3();
-Block4 *block4 = new Block4();
-Block5 *block5 = new Block5();
-Block6 *block6 = new Block6();
-
-blocks_tick[0] = block0;
-blocks_tick[1] = block1;
-blocks_tick[2] = block2;
-blocks_tick[3] = block3;
-blocks_tick[4] = block4;
-blocks_tick[5] = block5;
-blocks_tick[6] = block6;
+void AddToArray(T& A[], T &value)
+  {
+   ArrayResize(A, ArraySize(A)+1);
+   A[ArraySize(A)-1] = value;
   }
+template <typename T>
+void RemoveIndexFromArray(T& A[], int iPos)
+  {
+   int iLast;
+   for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
+      A[iPos] = A[iPos + 1];
+   ArrayResize(A, iLast);
+  }// Function to join two arrays into one
+void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[])
+  {
+   int size1 = ArraySize(array1);
+   int size2 = ArraySize(array2);
+   int newSize = size1 + size2;
+   ArrayCopy(arrayJoined, array1, 0, 0, size1);
+   ArrayCopy(arrayJoined, array2, 0, size1, size2);
+  }
+// Check if all items in arrayB are in ArrayA
+bool areAllItemsPresent(int &arrayA[], int &arrayB[])
+  {
+   for(int i = 0; i < ArraySize(arrayA); i++)
+     {
+      bool isPresent = false;
+      for(int j = 0; j < ArraySize(arrayB); j++)
+        {
+         if(arrayA[i] == arrayB[j])
+           {
+            isPresent = true;
+            break;
+           }
+        }
+      if(!isPresent)
+        {
+         return false;
+        }
+     }
+   return true;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockTick(int source_id, int source_result, int dest_id)
+  {
+   blocks_tick[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksTick()
+  {
+   ArrayResize(blocks_tick, 7);
+   Block0 *block0 = new Block0();
+   Block1 *block1 = new Block1();
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
+   Block4 *block4 = new Block4();
+   Block5 *block5 = new Block5();
+   Block6 *block6 = new Block6();
+
+   blocks_tick[0] = block0;
+   blocks_tick[1] = block1;
+   blocks_tick[2] = block2;
+   blocks_tick[3] = block3;
+   blocks_tick[4] = block4;
+   blocks_tick[5] = block5;
+   blocks_tick[6] = block6;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksTick(int level)
-{
-    for(int i=0; i<ArraySize(blocks_tick); i++){
-        blocks_tick[i].reset(level);
-    }
-}string syncSymbolOverriding(string symbol) {
- return overriding_symbol == "" ? symbol : overriding_symbol;
-}int syncTimeframeOverriding(int timeframe) {
- return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
- }datetime TimeFromString(int mode_time, string stamp)
+  {
+   for(int i=0; i<ArraySize(blocks_tick); i++)
+     {
+      blocks_tick[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+string syncSymbolOverriding(string symbol)
+  {
+   return overriding_symbol == "" ? symbol : overriding_symbol;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int syncTimeframeOverriding(int timeframe)
+  {
+   return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+datetime TimeFromString(int mode_time, string stamp)
   {
    datetime t = 0;
 
@@ -3142,6 +4022,9 @@ void resetBlocksTick(int level)
    return StringToTime(stamp);
   }
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 datetime TimeFromComponents(
    int time_src = 0,
    int    y = 0,
@@ -3199,19 +4082,25 @@ datetime TimeFromComponents(
   }
 //Considering each magic number is a 7 digit number like 2088100,
 //I choose to take first two digits as group number.
-int getGroupNumber (int magic){
+int getGroupNumber(int magic)
+  {
    return (int)(magic/100000);
-}//This just checks if order is buy or sell
-bool sameOrderType (int type[], int orderType){
-   for (int i=0; i<ArraySize(type); i++)
-      if (orderType==type[i])
+  }//This just checks if order is buy or sell
+bool sameOrderType(int type[], int orderType)
+  {
+   for(int i=0; i<ArraySize(type); i++)
+      if(orderType==type[i])
          return true;
    return false;
-}//72 is the number in magic 3rd and 4th
+  }//72 is the number in magic 3rd and 4th
 //digits that show it is opened by the expert
-bool isAutomated (int magic){
+bool isAutomated(int magic)
+  {
    return MathMod((int)(magic/1000), 100) == 72;
-}
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void ReverseList(int &arr[])
   {
    int size = ArraySize(arr);
@@ -3228,6 +4117,9 @@ void ReverseList(int &arr[])
 bool SleepEx(int ms, bool bAlertable);
 #import
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
   {
    bool success=false;
@@ -3258,6 +4150,9 @@ bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
    return(false);
   }
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void WaitTradeContextIfBusy()
   {
    if(IsTradeContextBusy())
@@ -3274,6 +4169,9 @@ void WaitTradeContextIfBusy()
      }
    return;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int CheckForTradingError(int error_code=-1, string msg_prefix="")
   {
 // return 0 -> no error
@@ -3475,6 +4373,9 @@ int CheckForTradingError(int error_code=-1, string msg_prefix="")
 
    return(retval);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string ErrorMessage(int error_code=-1)
   {
    string e = "";
@@ -3932,7 +4833,11 @@ string ErrorMessage(int error_code=-1)
    e = StringConcatenate(e, " (", error_code, ")");
 
    return e;
-  }double BetMartingale(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double BetMartingale(
    string symbol,
    int look_up_on,
    int group,
@@ -3995,7 +4900,11 @@ string ErrorMessage(int error_code=-1)
      }
 
    return lots;
-  }void GetBetTradesInfo(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void GetBetTradesInfo(
    double &output[],
    string symbol,
    int look_up_on, // 0: try running trades first and then history trades, 1: try running only, 2: try history only
@@ -4084,6 +4993,9 @@ string ErrorMessage(int error_code=-1)
       GetBetTradesInfo(output, symbol, look_up_on, group, type, findConsecutive);
      }
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool TradeSelectByIndex(
    int index,
    string group_mode,
@@ -4102,7 +5014,11 @@ bool TradeSelectByIndex(
 
 
 
-  }bool HistoryTradeSelectByIndex(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool HistoryTradeSelectByIndex(
    int index,
    string group_mode,
    string group,
@@ -4118,6 +5034,9 @@ bool TradeSelectByIndex(
 
    return false;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool              filterGeneral(string symbol, int type[], int group_mode, int group_number)
   {
    bool con1 = (symbol==NULL && OrderSymbol()==Symbol()) || symbol==OrderSymbol();
@@ -4126,18 +5045,29 @@ bool              filterGeneral(string symbol, int type[], int group_mode, int g
    bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
    return con1 && con2 && con3 && con4;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int SymbolDigits(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-  }bool IsOrderTypeSell()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeSell()
   {
    int type = OrderType();
 
    return (type == OP_SELL || type == OP_SELLSTOP || type == OP_SELLLIMIT);
-  }double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
   {
    double size=0;
    double LotStep=MarketInfo(symbol,MODE_LOTSTEP);
@@ -4282,13 +5212,20 @@ int SymbolDigits(string symbol)
    size=MathRound(size/LotStep)*LotStep;
    return (size);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double PipValue(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return CustomPoint(symbol) / SymbolInfoDouble(symbol, SYMBOL_POINT);
-  }double CustomPoint(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double CustomPoint(string symbol)
   {
    static string symbols[];
    static double points[];
@@ -4472,6 +5409,9 @@ void StringExplode(string delimiter, string inputString, T &output[])
       output[element] = empty_val;
      }
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double toDigits(double pips, string symbol)
   {
    if(symbol == "")
@@ -4482,6 +5422,9 @@ double toDigits(double pips, string symbol)
 
    return NormalizeDouble(pips * PipValue(symbol) * point, digits);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string StringTrim(string str)
   {
    str = StringTrimRight(str);
@@ -4570,6 +5513,9 @@ string FormatValueForPrinting(
   {
    return value;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int WindowFindVisible(long chart_id, string term)
   {
 //-- the search term can be chart name, such as Force(13), or subwindow index
@@ -4592,35 +5538,61 @@ int WindowFindVisible(long chart_id, string term)
 
    return subwindow;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double SymbolAsk(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_ASK);
-  }double SymbolBid(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double SymbolBid(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_BID);
-  }bool IsOrderTypeBuy()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeBuy()
   {
    int type = OrderType();
 
    return (type == OP_BUY || type == OP_BUYSTOP || type == OP_BUYLIMIT);
-  }bool IsOrderTypeStop()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeStop()
   {
    int type = OrderType();
 
    return (type == OP_BUYSTOP || type == OP_SELLSTOP);
-  }string getSymbol(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+string getSymbol(string symbol)
   {
    return (symbol==NULL || symbol=="") && overriding_symbol != "" ? overriding_symbol : symbol;
-  }int getTimeframe(int timeframe)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int getTimeframe(int timeframe)
   {
    return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool is_symbol_accepted(int symbol_mode, string &symbols[])
   {
    if(symbol_mode == SYMBOL_MODE_ANY)
@@ -4632,7 +5604,7 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
         {
          bool case_1 = OrderSymbol() == getSymbol("");
          bool case_2 = OrderSymbol() == Symbol() && getSymbol("")=="";
-         return case_1 || case_2;   
+         return case_1 || case_2;
         }
       else
         {
@@ -4647,7 +5619,11 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
            }
         }
    return false;
-  }int SecondsFromComponents(double days, double hours, double minutes, int seconds)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int SecondsFromComponents(double days, double hours, double minutes, int seconds)
   {
    int retval =
       86400 * (int)MathFloor(days)
@@ -4657,25 +5633,51 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
 
    return retval;
   }
-int init(){
-addBlocksTick();
-}
-void OnTimer(){
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int init()
+  {
+   addBlocksTick();
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTimer()
+  {
 
-}
-void OnTick(){
-resetBlocksTick(RESET_LEVEL_TICK);runBlockTick(-1, -1, 0);
-}
-void OnTrade(){
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTick()
+  {
+   resetBlocksTick(RESET_LEVEL_TICK);
+   runBlockTick(-1, -1, 0);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTrade()
+  {
 
-}
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void OnChartEvent(const int id,         // Event identifier
-const long& lparam,   // Event parameter of long type
-const double& dparam, // Event parameter of double type
-const string& sparam  // Event parameter of string type
-){
+                  const long& lparam,   // Event parameter of long type
+                  const double& dparam, // Event parameter of double type
+                  const string& sparam  // Event parameter of string type
+                 )
+  {
 
-}
-void deinit(const int reason){
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void deinit(const int reason)
+  {
 
-}
+  }
+//+------------------------------------------------------------------+

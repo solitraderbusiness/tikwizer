@@ -36,7 +36,6 @@ def get_class(input_dic, class_id):
 
     #4_ create init body of all params (both common and specific params) and place values
     custom_init = ""
-    print(input_dic)
     for key in input_dic:
         custom_init += key + " = " + str(input_dic.get(key)) + ";" + "\n"
 
