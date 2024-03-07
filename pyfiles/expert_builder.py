@@ -121,8 +121,7 @@ def add_consts_system():
 
 def add_consts_user(const_inputs):  # Defined by user
     for input in const_inputs:
-        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + input.get(
-            "value") + "; // " + input.get("description") + "\n"
+        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + str(input.get("value")) + "; // " + input.get("description") + "\n"
         consts_user.append(input_str)
 
 
@@ -406,7 +405,7 @@ def add_task_elements_common(nodes):
             case "pass_n_times":
                 if pass_n_times_done: continue
                 var_data = task_constructor.get_var_data(task_name)
-                variables.append(var_data)
+                vars_system.append(var_data)
                 pass_n_times_done = True
             case "condition_1_normal" | "condition_1_cross" | "formula":
                 left_label = node.get("params").get("left").get("row1")

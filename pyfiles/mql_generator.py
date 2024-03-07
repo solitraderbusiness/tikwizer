@@ -10,16 +10,19 @@ from . import path_root
 
 
 def generate_mql(data_raw):
-    data_refactored = adapter.refactor(data_raw)
-    expert = expert_builder.process_input(data_refactored)
-    return expert
+    try:
+        data_refactored = adapter.refactor(data_raw)
+        expert = expert_builder.process_input(data_refactored)
+        return expert
+    except Exception as e:
+        return e
 
 
 def test():
-    data = test_input_6.input_data_1
+    data = test_input_6.input_data_2
     result = generate_mql(data)
     if isinstance(result, Exception):
-        print("Error occured")
+        print("Error occurred")
     else:
         path = path_root.get()
         path_sub = "/output/"
