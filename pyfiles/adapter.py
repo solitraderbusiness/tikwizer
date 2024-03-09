@@ -204,5 +204,16 @@ def add_category(nodes):
                 node["category"] = "chart_and_objects"
             case "draw_line":
                 node["category"] = "chart_and_objects"
+            case "draw_editfield":
+                node["category"] = "chart_and_objects"
+            case "for_each_object":
+                node["category"] = "loop_for_chart_objects"
+            case "select_object_by_name":
+                node["category"] = "loop_for_chart_objects"
+            case "delete":
+                node["category"] = "loop_for_chart_objects"
+            case "once_per_object":
+                node["category"] = "loop_for_chart_objects"
             case _:
                 node["category"] = "not_specified"
+

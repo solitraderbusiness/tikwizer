@@ -121,7 +121,8 @@ def add_consts_system():
 
 def add_consts_user(const_inputs):  # Defined by user
     for input in const_inputs:
-        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + str(input.get("value")) + "; // " + input.get("description") + "\n"
+        input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + str(
+            input.get("value")) + "; // " + input.get("description") + "\n"
         consts_user.append(input_str)
 
 
@@ -276,6 +277,27 @@ def add_global_functions(data):
 
     seconds_from_components = global_functions.get_fun__seconds_from_components()
     functions.append(seconds_from_components)
+
+    load_object = global_functions.get_fun__load_object()
+    functions.append(load_object)
+
+    loaded_object_chart_id = global_functions.get_fun__loaded_object_chart_id()
+    functions.append(loaded_object_chart_id)
+
+    loaded_object_name = global_functions.get_fun__loaded_object_name()
+    functions.append(loaded_object_name)
+
+    loaded_object_subwindow = global_functions.get_fun__loaded_object_subwindow()
+    functions.append(loaded_object_subwindow)
+
+    loaded_object_type = global_functions.get_fun__loaded_object_type()
+    functions.append(loaded_object_type)
+
+    array_ensure_value = global_functions.get_fun__array_ensure_value()
+    functions.append(array_ensure_value)
+
+    in_array = global_functions.get_fun__in_array()
+    functions.append(in_array)
 
 
 def build():
@@ -494,6 +516,17 @@ def add_task_elements_specific(nodes):
             draw_shape(node)
         elif task_name == "draw_line":
             draw_line(node)
+        elif task_name == "draw_editfield":
+            draw_editfield(node)
+
+
+def draw_editfield(node):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    params = value_fetch.get("params")
+    id_val = str(node.get("id")) + "_text"
+    classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def draw_line(node):
@@ -806,4 +839,3 @@ def value_fetch_class(row1, row2, params, id_val):
         return market_properties_class_constructor.get_class(params, id_val)
     elif row1 == "Value":
         return value_class_constructor.get_class(params, id_val)
-

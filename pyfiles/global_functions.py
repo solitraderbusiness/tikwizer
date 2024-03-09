@@ -81,9 +81,11 @@ def get_fun__time_from_components():
     result = "datetime TimeFromComponents(\n   int time_src = 0,\n   int    y = 0,\n   int    m = 0,\n   double d = 0,\n   double h = 0,\n   double i = 0,\n   int    s = 0\n)\n  {\n   MqlDateTime tm;\n   int offset = 0;\n\n   if(time_src == 0)\n     {\n      TimeCurrent(tm);\n     }\n   else\n      if(time_src == 1)\n        {\n         TimeLocal(tm);\n         offset = (int)(TimeLocal() - TimeCurrent());\n        }\n      else\n         if(time_src == 2)\n           {\n            TimeGMT(tm);\n            offset = (int)(TimeGMT() - TimeCurrent());\n           }\n\n   if(y > 0)\n     {\n      if(y < 100)\n        {\n         y = 2000 + y;\n        }\n      tm.year = y;\n     }\n   if(m > 0)\n     {\n      tm.mon = m;\n     }\n   if(d > 0)\n     {\n      tm.day = (int)MathFloor(d);\n     }\n\n   tm.hour = (int)(MathFloor(h) + (24 * (d - MathFloor(d))));\n   tm.min  = (int)(MathFloor(i) + (60 * (h - MathFloor(h))));\n   tm.sec  = (int)((double)s + (60 * (i - MathFloor(i))));\n\n   datetime time = StructToTime(tm) - offset;\n\n   return time;\n  }\n"
     return result
 
+
 def get_fun__seconds_from_components():
     result = "int SecondsFromComponents(double days, double hours, double minutes, int seconds)\n  {\n   int retval =\n      86400 * (int)MathFloor(days)\n      + 3600 * (int)(MathFloor(hours) + (24 * (days - MathFloor(days))))\n      + 60 * (int)(MathFloor(minutes) + (60 * (hours - MathFloor(hours))))\n      + (int)((double)seconds + (60 * (minutes - MathFloor(minutes))));\n\n   return retval;\n  }\n"
     return result
+
 
 def get_fun__get_group_number():
     result = "//Considering each magic number is a 7 digit number like 2088100,\n//I choose to take first two digits as group number.\nint getGroupNumber (int magic){\n   return (int)(magic/100000);\n}"
@@ -234,6 +236,42 @@ def get_fun__get_timeframe():
     result = "int getTimeframe(int timeframe)\n  {\n   return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;\n  }\n"
     return result
 
+
 def get_fun__is_symbol_accepted():
     result = "bool is_symbol_accepted(int symbol_mode, string &symbols[])\n  {\n   if(symbol_mode == SYMBOL_MODE_ANY)\n     {\n      return true;\n     }\n   else\n      if(ArraySize(symbols)==0)\n        {\n         bool case_1 = OrderSymbol() == getSymbol(\"\");\n         bool case_2 = OrderSymbol() == Symbol() && getSymbol(\"\")==\"\";\n         return case_1 || case_2;   \n        }\n      else\n        {\n         for(int i=ArraySize(symbols)-1; i>=0; i--)\n           {\n            string smb = StringTrimRight(symbols[i]);\n            smb = StringTrimLeft(smb);\n            if(smb==OrderSymbol())\n              {\n               return true;\n              }\n           }\n        }\n   return false;\n  }"
+    return result
+
+
+def get_fun__load_object():
+    result = "bool load_object(int index, long chart_id,int sub_window, int obj_type)\n  {\n   string name = ObjectName(chart_id,index,sub_window, obj_type);\n\n   if(name == \"\")\n     {\n      return false;\n     }\n\n   loaded_object_chart_id(chart_id);\n   loaded_object_name(name);\n   loaded_object_subwindow(sub_window);\n   loaded_object_type((int)ObjectGetInteger(chart_id,name,OBJPROP_TYPE));\n\n   return true;\n  }\n"
+    return result
+
+
+def get_fun__loaded_object_chart_id():
+    result = "long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}\n"
+    return result
+
+
+def get_fun__loaded_object_name():
+    result = "string loaded_object_name(string name=\"\") {static string memory=\"\"; if(name!=\"\") {memory=name;} return(memory);}\n"
+    return result
+
+
+def get_fun__loaded_object_subwindow():
+    result = "int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}\n"
+    return result
+
+
+def get_fun__loaded_object_type():
+    result = "int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}\n"
+    return result
+
+
+def get_fun__array_ensure_value():
+    result = "template<typename T>\nbool array_ensure_value(T &array[], T value)\n  {\n   int size   = ArraySize(array);\n\n   if(size > 0)\n     {\n      if(in_array(array, value))\n        {\n         // value found -> exit\n         return false; // no value added\n        }\n     }\n\n// value does not exists -> add it\n   ArrayResize(array, size+1);\n   array[size] = value;\n\n   return true; // value added\n  }\n"
+    return result
+
+
+def get_fun__in_array():
+    result = "template<typename T>\nbool in_array(T &array[], T value)\n  {\n   int size = ArraySize(array);\n\n   if(size > 0)\n     {\n      for(int i = 0; i < size; i++)\n        {\n         if(array[i] == value)\n           {\n            return true;\n           }\n        }\n     }\n\n   return false;\n  }\n"
     return result

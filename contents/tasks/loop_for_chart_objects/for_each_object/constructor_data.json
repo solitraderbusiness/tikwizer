@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "obj_chart_id = obj_chart_id_val;\n      obj_subwindow = obj_subwindow_val;\n      obj_type = obj_type_val;\n      is_arrow_type = is_arrow_type_val;\n      arrow_code = arrow_code_val;\n      obj_color = obj_color_val;\n      obj_name_prefix = obj_name_prefix_val;\n      obj_name_contains = obj_name_contains_val;\n      loop_direction = loop_direction_val;\n      loop_skip = loop_skip_val;\n      loop_limit = loop_limit_val;"
+}

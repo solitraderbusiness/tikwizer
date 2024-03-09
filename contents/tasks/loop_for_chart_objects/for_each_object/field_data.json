@@ -1,0 +1,3 @@
+{
+	"field_data" : " long              obj_chart_id;\n   int               obj_subwindow;\n   ENUM_OBJECT       obj_type; //-1 for any type, and ENUM_OBJECT items for other object types\n   int               is_arrow_type;\n   int               arrow_code; //search arrow code in MQL4 documentation\n   color             obj_color;\n   string            obj_name_prefix;\n   string            obj_name_contains;\n   string            loop_direction;\n   int               loop_skip;\n   int               loop_limit;"
+}

@@ -135,6 +135,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_shape_run_data(node, run_data_static)
     elif task_name == "draw_line":
         run_data = draw_line_run_data(node, run_data_static)
+    elif task_name == "draw_editfield":
+        run_data = draw_editfield_run_data(node, run_data_static)
     return run_data
 
 
@@ -167,6 +169,20 @@ def function_data_dynamic_fun(node, function_data_static):
         function_data = buy_sell_function_data(node, function_data_static)
 
     return function_data
+
+
+def draw_editfield_run_data(node, function_data_static):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id")) + "_text"
+
+    init = get_value_fetch_init(row1, row2, id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    function_data_static = function_data_static.replace("initializer_text", init)
+    function_data_static = function_data_static.replace("variable_name_text", val)
+
+    return function_data_static
 
 
 def draw_line_run_data(node, function_data_static):
