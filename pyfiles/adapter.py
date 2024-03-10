@@ -206,6 +206,10 @@ def add_category(nodes):
                 node["category"] = "chart_and_objects"
             case "draw_editfield":
                 node["category"] = "chart_and_objects"
+            case "delete_objects":
+                node["category"] = "chart_and_objects"
+            case "delete_objects_by_type":
+                node["category"] = "chart_and_objects"
             case "for_each_object":
                 node["category"] = "loop_for_chart_objects"
             case "select_object_by_name":
@@ -213,6 +217,10 @@ def add_category(nodes):
             case "delete":
                 node["category"] = "loop_for_chart_objects"
             case "once_per_object":
+                node["category"] = "loop_for_chart_objects"
+            case "check_color":
+                node["category"] = "loop_for_chart_objects"
+            case "check_trendline_price_level":
                 node["category"] = "loop_for_chart_objects"
             case _:
                 node["category"] = "not_specified"

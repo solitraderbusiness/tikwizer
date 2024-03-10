@@ -137,6 +137,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_line_run_data(node, run_data_static)
     elif task_name == "draw_editfield":
         run_data = draw_editfield_run_data(node, run_data_static)
+    elif task_name == "check_trendline_price_level":
+        run_data = check_trendline_price_level_run_data(node, run_data_static)
     return run_data
 
 
@@ -169,6 +171,20 @@ def function_data_dynamic_fun(node, function_data_static):
         function_data = buy_sell_function_data(node, function_data_static)
 
     return function_data
+
+
+def check_trendline_price_level_run_data(node, function_data_static):
+    value_fetch = node.get("params").get("price_level")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id")) + "_price_level"
+
+    init = get_value_fetch_init(row1, row2, id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    function_data_static = function_data_static.replace("initializer_price_level", init)
+    function_data_static = function_data_static.replace("variable_name_price_level", val)
+
+    return function_data_static
 
 
 def draw_editfield_run_data(node, function_data_static):
@@ -826,4 +842,3 @@ def get_var_data(task_name):
             var_dic = json.loads(var_str)
             var_data = var_dic.get("var_data")
             return var_data
-

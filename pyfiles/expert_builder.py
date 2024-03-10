@@ -29,25 +29,28 @@ on_deinit = []
 
 
 def process_input(data):
-    # process global functions
+
     add_global_functions(data)
-
-    # process system constants
+    add_global_structs()
     add_consts_system()
-
-    # process user constants (inputs)
     add_consts_user(data.get("constants"))
-
-    # process system vars
     add_vars_system()
-
-    # process user vars
     add_vars_user(data.get("variables"))
 
     process_tick_blocks(data.get("events").get("on_tick"))
     # process on init blocks
     # process on trade blocks ...
+
+    # last thing to do
+    reset_vars()
     return build()
+
+
+def reset_vars():
+    add_task_elements_common.pass_n_times_done = False
+    add_task_elements_common.and_done = False
+    add_task_elements_common.spread_filter_done = False
+    add_task_elements_common.close_partially_done = False
 
 
 def process_tick_blocks(data):
@@ -59,6 +62,44 @@ def process_tick_blocks(data):
     task_blue_print = task_constructor.get_task()
     classes.append(block_parent_blue_print)
     classes.append(task_blue_print)
+
+    # Find entries
+    entries = get_entries_sorted(nodes, edges)
+
+    add_task_elements_common(nodes)
+    add_task_elements_specific(nodes)
+
+    # Add tasks
+    for node in nodes:
+        task = get_task_child(node)
+        classes.append(task)
+
+    # Add block blueprint
+    block_blue_print = block_constructor.get_block()
+    classes.append(block_blue_print)
+
+    # Add blocks and tasks
+    for node in nodes:
+        block = get_block_child(node.get("input_dic_block"), node.get("id"))
+        classes.append(block)
+
+    # addBlocks call
+    call_add_blocks = global_functions.get_call__add_blocks_tick()
+    on_init.append(call_add_blocks)
+
+    # resetBlocks call
+    call_reset_blocks = global_functions.get_call__reset_blocks_tick()
+    on_tick.append(call_reset_blocks)
+
+    # runBlocks call
+    for id_block in entries:
+        call_run_block = global_functions.get_call__run_block_tick(-1, -1, id_block)
+        on_tick.append(call_run_block)
+
+
+def process_on_chart_blocks(data):
+    nodes = data.get("nodes")
+    edges = data.get("edges")
 
     # Find entries
     entries = get_entries_sorted(nodes, edges)
@@ -299,6 +340,14 @@ def add_global_functions(data):
     in_array = global_functions.get_fun__in_array()
     functions.append(in_array)
 
+    object_get_value_by_shift = global_functions.get_fun__object_get_value_by_shift()
+    functions.append(object_get_value_by_shift)
+
+
+def add_global_structs():
+    structs_data = market_properties_class_constructor.get_structs()
+    structs.append(structs_data)
+
 
 def build():
     expert = ""
@@ -416,76 +465,55 @@ def is_entry(id_node, edges):
 # Elements that are assigned to multiple
 # tasks of same type or to multiple task types
 def add_task_elements_common(nodes):
-    pass_n_times_done = False
-    and_done = False
-    market_properties_done = False
-    spread_filter_done = False
-    close_partially_done = False
+    if not hasattr(add_task_elements_common, "pass_n_times_done"):
+        add_task_elements_common.pass_n_times_done = False
+    if not hasattr(add_task_elements_common, "and_done"):
+        add_task_elements_common.and_done = False
+    if not hasattr(add_task_elements_common, "spread_filter_done"):
+        add_task_elements_common.spread_filter_done = False
+    if not hasattr(add_task_elements_common, "close_partially_done"):
+        add_task_elements_common.close_partially_done = False
+
     for node in nodes:
         task_name = node.get("blockName")
         match task_name:
             case "pass_n_times":
-                if pass_n_times_done: continue
+                if add_task_elements_common.pass_n_times_done:
+                    continue
                 var_data = task_constructor.get_var_data(task_name)
                 vars_system.append(var_data)
-                pass_n_times_done = True
-            case "condition_1_normal" | "condition_1_cross" | "formula":
-                left_label = node.get("params").get("left").get("row1")
-                right_label = node.get("params").get("right").get("row1")
-                if left_label == "Market Properties" or right_label == "Market Properties":
-                    if market_properties_done:
-                        continue
-                    structs_data = market_properties_class_constructor.get_structs()
-                    structs.append(structs_data)
-                    market_properties_done = True
-            case "modify_variables":
-                for item in node.get("params"):
-                    if item.get("value_fetch").get("row1") == "Market Properties":
-                        if market_properties_done:
-                            continue
-                        structs_data = market_properties_class_constructor.get_structs()
-                        structs.append(structs_data)
-                        market_properties_done = True
-            case "comment":
-                if market_properties_done:
-                    continue
-                row1 = node.get("params").get("row1")
-                row2 = node.get("params").get("row2")
-                row3 = node.get("params").get("row3")
-                row4 = node.get("params").get("row4")
-                row5 = node.get("params").get("row5")
-                row6 = node.get("params").get("row6")
-                row7 = node.get("params").get("row7")
-                row8 = node.get("params").get("row8")
-
-                con1 = "value_fetch" in row1 and row1.get("value_fetch").get("row1") == "Market Properties"
-                con2 = "value_fetch" in row2 and row2.get("value_fetch").get("row1") == "Market Properties"
-                con3 = "value_fetch" in row3 and row3.get("value_fetch").get("row1") == "Market Properties"
-                con4 = "value_fetch" in row4 and row4.get("value_fetch").get("row1") == "Market Properties"
-                con5 = "value_fetch" in row5 and row5.get("value_fetch").get("row1") == "Market Properties"
-                con6 = "value_fetch" in row6 and row6.get("value_fetch").get("row1") == "Market Properties"
-                con7 = "value_fetch" in row7 and row7.get("value_fetch").get("row1") == "Market Properties"
-                con8 = "value_fetch" in row8 and row8.get("value_fetch").get("row1") == "Market Properties"
-
-                con = con1 or con2 or con3 or con4 or con5 or con6 or con7 or con8
-                if con:
-                    structs_data = market_properties_class_constructor.get_structs()
-                    structs.append(structs_data)
-                    market_properties_done = True
+                add_task_elements_common.pass_n_times_done = True
             case "spread_filter":
-                if spread_filter_done:
+                if add_task_elements_common.spread_filter_done:
                     continue
                 structs_data = spread_filter_struct_constructor.get_structs()
                 structs.append(structs_data)
-                spread_filter_done = True
+                add_task_elements_common.spread_filter_done = True
             case "close_partially":
-                if close_partially_done:
+                if add_task_elements_common.close_partially_done:
                     continue
                 structs_data = close_partially_items.get_structs()
                 structs.append(structs_data)
                 vars_data = close_partially_items.get_vars()
                 vars_system.append(vars_data)
-                spread_filter_done = True
+                add_task_elements_common.close_partially_done = True
+
+
+def foo():
+    if not hasattr(foo, "has_run"):
+        foo.has_run = False
+
+    if not foo.has_run:
+        # This code will only run once
+        print("This is the first time foo() is called")
+        foo.has_run = True
+
+    # This code will run every time foo() is called
+    print("foo() is called")
+
+
+# Call foo() multiple times
+foo.has_run = False
 
 
 # Elements that are assigned to a specific instance of a specific task type
@@ -518,6 +546,17 @@ def add_task_elements_specific(nodes):
             draw_line(node)
         elif task_name == "draw_editfield":
             draw_editfield(node)
+        elif task_name == "check_trendline_price_level":
+            check_trendline_price_level(node)
+
+
+def check_trendline_price_level(node):
+    value_fetch = node.get("params").get("price_level")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    params = value_fetch.get("params")
+    id_val = str(node.get("id")) + "_price_level"
+    classes.append(value_fetch_class(row1, row2, params, id_val))
 
 
 def draw_editfield(node):

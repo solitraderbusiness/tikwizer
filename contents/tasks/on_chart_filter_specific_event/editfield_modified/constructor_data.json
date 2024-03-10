@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "name_starts_with = name_starts_with_val;\n      name_contains = name_contains_val;\n      obj_color = obj_color_val;\n      sort_mode = sort_mode_val;\n      max_objects = max_objects_val;\n      skip_objects = skip_objects_val;"
+}

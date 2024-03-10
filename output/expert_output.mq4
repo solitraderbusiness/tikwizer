@@ -1942,32 +1942,25 @@ public:
 //+------------------------------------------------------------------+
 class Task0 : public Task
   {
-   string            memory[];
+   int                window;
+   int                type;
 public:
                      Task0(string name):Task(name)
      {
-
+      window = 0;
+      type = OBJ_VLINE;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-
-      string value = IntegerToString(loaded_object_chart_id() + loaded_object_name());
-
-      if(in_array(memory, value) == false)
+      if(ObjectsDeleteAll(0, window, type) > 0)
         {
-         array_ensure_value(memory, value);
-
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
+         ChartRedraw();
         }
 
+      printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
@@ -2686,7 +2679,7 @@ public:
      {
       id = 0;
       id_by_user = 20;
-      name = "once_per_object";
+      name = "delete_objects_by_type";
       enabled = True;
 
       int mnexts_true[] = {1, 2};
@@ -4630,17 +4623,11 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
@@ -4679,6 +4666,16 @@ bool in_array(T &array[], T value)
      }
 
    return false;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double ObjectGetValueByShift(long chart_id, string name, int shift)
+  {
+   MqlRates rates[];
+   CopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);
+
+   return ObjectGetValueByTime(chart_id, name, rates[0].time, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

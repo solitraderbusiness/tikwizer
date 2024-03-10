@@ -275,3 +275,8 @@ def get_fun__array_ensure_value():
 def get_fun__in_array():
     result = "template<typename T>\nbool in_array(T &array[], T value)\n  {\n   int size = ArraySize(array);\n\n   if(size > 0)\n     {\n      for(int i = 0; i < size; i++)\n        {\n         if(array[i] == value)\n           {\n            return true;\n           }\n        }\n     }\n\n   return false;\n  }\n"
     return result
+
+
+def get_fun__object_get_value_by_shift():
+    result = "double ObjectGetValueByShift(long chart_id, string name, int shift)\n{\n\tMqlRates rates[];\n\tCopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);\n\n\treturn ObjectGetValueByTime(chart_id, name, rates[0].time, 0);\n}"
+    return result
