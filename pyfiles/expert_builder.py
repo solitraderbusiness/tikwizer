@@ -18,7 +18,12 @@ consts_user = []
 vars_system = []
 vars_user = []
 structs = []
-classes = []
+block_parent_blueprint = ""
+task_blueprint = ""
+task_elements = []
+tasks = []
+block_blueprint = ""
+blocks = []
 functions = []
 on_init = []
 on_timer = []
@@ -36,7 +41,7 @@ def process_input(data):
     add_consts_user(data.get("constants"))
     add_vars_system()
     add_vars_user(data.get("variables"))
-
+    add_blueprints(block_parent_blueprint)
     process_tick_blocks(data.get("events").get("on_tick"))
     # process on init blocks
     # process on trade blocks ...
@@ -53,15 +58,17 @@ def reset_vars():
     add_task_elements_common.close_partially_done = False
 
 
+def add_blueprints(block_parent_blueprint):
+    # Add block_parent and task class blueprint
+    block_parent_blueprint += block_constructor.get_block_parent()
+    task_blueprint = task_constructor.get_task()
+    classes.append(task_blue_print)
+
 def process_tick_blocks(data):
     nodes = data.get("nodes")
     edges = data.get("edges")
 
-    # Add block_parent and task class blueprint
-    block_parent_blue_print = block_constructor.get_block_parent()
-    task_blue_print = task_constructor.get_task()
-    classes.append(block_parent_blue_print)
-    classes.append(task_blue_print)
+
 
     # Find entries
     entries = get_entries_sorted(nodes, edges)

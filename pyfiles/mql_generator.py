@@ -1,5 +1,5 @@
 from . import adapter
-from . import expert_builder
+from . import expert_builder_class
 from . import test_input_2
 from . import test_input_3
 from . import test_input_4
@@ -10,16 +10,14 @@ from . import path_root
 
 
 def generate_mql(data_raw):
-    try:
-        data_refactored = adapter.refactor(data_raw)
-        expert = expert_builder.process_input(data_refactored)
-        return expert
-    except Exception as e:
-        return e
+    data_refactored = adapter.refactor(data_raw)
+    expert_builder = expert_builder_class.ExpertBuilder(data_refactored)
+    expert = expert_builder.process_input()
+    return expert
 
 
 def test():
-    data = test_input_6.input_data_11
+    data = test_input_6.input_data_13
     result = generate_mql(data)
     if isinstance(result, Exception):
         print("Error occurred")

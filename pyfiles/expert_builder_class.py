@@ -1,0 +1,1059 @@
+# node is entry if is not target and has target
+def is_entry(id_node, edges):
+    is_target = False
+    for edge in edges:
+        if id_node == edge.get("target"):
+            is_target = True
+            break
+    if is_target:
+        return False
+    has_target = False
+    for edge in edges:
+        if id_node == edge.get("source"):
+            has_target = True
+            break
+    return has_target
+
+
+def get_entries_sorted(nodes, edges):
+    entries = []
+    for node in nodes:
+        id_node = node.get("id")
+        if is_entry(id_node, edges):
+            entries.append(id_node)
+    entries.sort()
+    return entries
+
+
+class ExpertBuilder:
+    from . import task_constructor
+    from . import block_constructor
+    from . import task_dynamic_constructor
+    from . import global_functions
+    from . import constants_constructor
+    from . import global_vars
+    from . import indicator_class_constructor
+    from . import candle_class_constructor
+    from . import value_class_constructor
+    from . import market_properties_class_constructor
+    from . import spread_filter_struct_constructor
+    from . import close_partially_items
+
+    def __init__(self, data):
+        self.data = data
+        self.header = ""
+        self.properties = []
+        self.consts_system = []
+        self.consts_user = []
+        self.vars_system = []
+        self.vars_user = []
+        self.structs = []
+        self.block_parent_blueprint = ""
+        self.task_blueprint = ""
+        self.task_elements = []
+        self.tasks = []
+        self.block_blueprint = ""
+        self.blocks = []
+        self.functions = []
+        self.on_init = []
+        self.on_timer = []
+        self.on_tick = []
+        self.on_trade = []
+        self.on_chart = []
+        self.on_deinit = []
+
+        self.pass_n_times_done = False
+        self.and_done = False
+        self.spread_filter_done = False
+        self.close_partially_done = False
+
+    # Main function
+    def process_input(self):
+        self.add_global_functions(self.data)
+        self.add_global_structs()
+        self.add_consts_system()
+        self.add_consts_user(self.data.get("constants"))
+        self.add_vars_system()
+        self.add_vars_user(self.data.get("variables"))
+        self.add_blueprints()
+        self.process_blocks_tick(self.data.get("events").get("on_tick"))
+        self.process_blocks_chart(self.data.get("events").get("on_chart"))
+        self.process_blocks_trade(self.data.get("events").get("on_trade"))
+        self.process_blocks_timer(self.data.get("events").get("on_timer"))
+        self.process_blocks_init(self.data.get("events").get("on_init"))
+        self.process_blocks_deinit(self.data.get("events").get("on_deinit"))
+
+        return self.build()
+
+    def add_blueprints(self):
+        # Add block_parent and task class blueprint
+        self.block_parent_blueprint += self.block_constructor.get_block_parent()
+        # Add task blueprint
+        self.task_blueprint = self.task_constructor.get_task()
+        # Add block blueprint
+        self.block_blueprint = self.block_constructor.get_block()
+
+    def process_blocks_tick(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_tick()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_tick()
+        self.on_tick.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_tick(-1, -1, id_block)
+            self.on_tick.append(call_run_block)
+
+    def process_blocks_chart(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_chart()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_chart()
+        self.on_chart.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_chart(-1, -1, id_block)
+            self.on_chart.append(call_run_block)
+
+    def process_blocks_init(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_init()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_init()
+        self.on_init.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_init(-1, -1, id_block)
+            self.on_init.append(call_run_block)
+
+    def process_blocks_timer(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_timer()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_timer()
+        self.on_timer.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_timer(-1, -1, id_block)
+            self.on_timer.append(call_run_block)
+
+    def process_blocks_trade(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_trade()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_trade()
+        self.on_trade.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_trade(-1, -1, id_block)
+            self.on_trade.append(call_run_block)
+
+    def process_blocks_deinit(self, data):
+        if data is None:
+            return
+
+        nodes = data.get("nodes")
+        edges = data.get("edges")
+
+        # Find entries
+        entries = get_entries_sorted(nodes, edges)
+
+        self.add_task_elements_common(nodes)
+        self.add_task_elements_specific(nodes)
+
+        # Add tasks
+        for node in nodes:
+            task = self.get_task_child(node)
+            self.tasks.append(task)
+
+        # Add blocks and tasks
+        for node in nodes:
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            self.blocks.append(block)
+
+        # addBlocks call
+        call_add_blocks = self.global_functions.get_call__add_blocks_deinit()
+        self.on_init.append(call_add_blocks)
+
+        # resetBlocks call
+        call_reset_blocks = self.global_functions.get_call__reset_blocks_deinit()
+        self.on_deinit.append(call_reset_blocks)
+
+        # runBlocks call
+        for id_block in entries:
+            call_run_block = self.global_functions.get_call__run_block_deinit(-1, -1, id_block)
+            self.on_deinit.append(call_run_block)
+
+    def add_vars_system(self):
+        # blocks_tick var
+        blocks_vars = self.global_vars.get__blocks()
+        self.vars_system.append(blocks_vars)
+
+        # overriding_symbol
+        overriding_symbol = self.global_vars.get__overriding_symbol()
+        self.vars_system.append(overriding_symbol)
+
+        # overriding_timeframe
+        overriding_timeframe = self.global_vars.get__overriding_timeframe()
+        self.vars_system.append(overriding_timeframe)
+
+    def add_vars_user(self, mvars):
+        for var in mvars:
+            var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get(
+                "description") + "\n"
+            self.vars_user.append(var_str)
+
+    def add_consts_system(self):
+        self.consts_system.extend(self.constants_constructor.get_constants())
+
+    def add_consts_user(self, const_inputs):  # Defined by user
+        for input in const_inputs:
+            input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + str(
+                input.get("value")) + "; // " + input.get("description") + "\n"
+            self.consts_user.append(input_str)
+
+    def add_global_functions(self, data):
+        # AddToArray function
+        fun_add_to_array = self.global_functions.get_fun__add_to_array()
+        self.functions.append(fun_add_to_array)
+
+        # RemoveIndexFromArray function
+        fun_remove_index_from_array = self.global_functions.get_fun__remove_index_from_array()
+        self.functions.append(fun_remove_index_from_array)
+
+        # joinArrays function
+        fun_join_arrays = self.global_functions.get_fun__join_arrays()
+        self.functions.append(fun_join_arrays)
+
+        # areAllItemsPresent function
+        are_all_items_present = self.global_functions.get_fun__are_all_items_present()
+        self.functions.append(are_all_items_present)
+
+        # runBlock function tick ##############################
+        fun_run_block_tick = self.global_functions.get_fun__run_block_tick()
+        self.functions.append(fun_run_block_tick)
+
+        # addBlocks function tick
+        no_blocks_tick = 0
+        if "on_tick" in data.get("events") and "nodes" in data.get("events").get("on_tick"):
+            no_blocks_tick = len(data.get("events").get("on_tick").get("nodes"))
+        fun_add_blocks_tick = self.global_functions.get_fun__add_blocks_tick(no_blocks_tick)
+        self.functions.append(fun_add_blocks_tick)
+
+        # resetBlocks function tick
+        fun_reset_blocks_tick = self.global_functions.get_fun__reset_blocks_tick()
+        self.functions.append(fun_reset_blocks_tick)
+
+        # runBlock function chart ##############################
+        fun_run_block_chart = self.global_functions.get_fun__run_block_chart()
+        self.functions.append(fun_run_block_chart)
+
+        # addBlocks function chart
+        no_blocks_chart = 0
+        if "on_chart" in data.get("events") and "nodes" in data.get("events").get("on_chart"):
+            no_blocks_chart = len(data.get("events").get("on_chart").get("nodes"))
+        fun_add_blocks_chart = self.global_functions.get_fun__add_blocks_chart(no_blocks_chart)
+        self.functions.append(fun_add_blocks_chart)
+
+        # resetBlocks function chart
+        fun_reset_blocks_chart = self.global_functions.get_fun__reset_blocks_chart()
+        self.functions.append(fun_reset_blocks_chart)
+
+        # runBlock function trade ##############################
+        fun_run_block_trade = self.global_functions.get_fun__run_block_trade()
+        self.functions.append(fun_run_block_trade)
+
+        # addBlocks function trade
+        no_blocks_trade = 0
+        if "on_trade" in data.get("events") and "nodes" in data.get("events").get("on_trade"):
+            no_blocks_trade = len(data.get("events").get("on_trade").get("nodes"))
+        fun_add_blocks_trade = self.global_functions.get_fun__add_blocks_trade(no_blocks_trade)
+        self.functions.append(fun_add_blocks_trade)
+
+        # resetBlocks function trade
+        fun_reset_blocks_trade = self.global_functions.get_fun__reset_blocks_trade()
+        self.functions.append(fun_reset_blocks_trade)
+
+        # runBlock function timer ##############################
+        fun_run_block_timer = self.global_functions.get_fun__run_block_timer()
+        self.functions.append(fun_run_block_timer)
+
+        # addBlocks function timer
+        no_blocks_timer = 0
+        if "on_timer" in data.get("events") and "nodes" in data.get("events").get("on_timer"):
+            no_blocks_timer = len(data.get("events").get("on_timer").get("nodes"))
+        fun_add_blocks_timer = self.global_functions.get_fun__add_blocks_timer(no_blocks_timer)
+        self.functions.append(fun_add_blocks_timer)
+
+        # resetBlocks function timer
+        fun_reset_blocks_timer = self.global_functions.get_fun__reset_blocks_timer()
+        self.functions.append(fun_reset_blocks_timer)
+
+        # runBlock function init ##############################
+        fun_run_block_init = self.global_functions.get_fun__run_block_init()
+        self.functions.append(fun_run_block_init)
+
+        # addBlocks function init
+        no_blocks_init = 0
+        if "on_init" in data.get("events") and "nodes" in data.get("events").get("on_init"):
+            no_blocks_init = len(data.get("events").get("on_init").get("nodes"))
+        fun_add_blocks_init = self.global_functions.get_fun__add_blocks_init(no_blocks_init)
+        self.functions.append(fun_add_blocks_init)
+
+        # resetBlocks function init
+        fun_reset_blocks_init = self.global_functions.get_fun__reset_blocks_init()
+        self.functions.append(fun_reset_blocks_init)
+
+        # runBlock function deinit ##############################
+        fun_run_block_deinit = self.global_functions.get_fun__run_block_deinit()
+        self.functions.append(fun_run_block_deinit)
+
+        # addBlocks function deinit
+        no_blocks_deinit = 0
+        if "on_deinit" in data.get("events") and "nodes" in data.get("events").get("on_deinit"):
+            no_blocks_deinit = len(data.get("events").get("on_deinit").get("nodes"))
+        fun_add_blocks_deinit = self.global_functions.get_fun__add_blocks_deinit(no_blocks_deinit)
+        self.functions.append(fun_add_blocks_deinit)
+
+        # resetBlocks function deinit
+        fun_reset_blocks_deinit = self.global_functions.get_fun__reset_blocks_deinit()
+        self.functions.append(fun_reset_blocks_deinit)
+
+        # syncSymbolOverriding function
+        fun_sync_symbol_overriding = self.global_functions.get_fun__sync_symbol_overriding()
+        self.functions.append(fun_sync_symbol_overriding)
+
+        # syncTimeframeOverriding function
+        fun_sync_timeframe_overriding = self.global_functions.get_fun__sync_timeframe_overriding()
+        self.functions.append(fun_sync_timeframe_overriding)
+
+        # TimeFromString function
+        fun_time_from_string = self.global_functions.get_fun__time_from_string()
+        self.functions.append(fun_time_from_string)
+
+        # TimeFromComponent function
+        fun_time_from_components = self.global_functions.get_fun__time_from_components()
+        self.functions.append(fun_time_from_components)
+
+        # getGroupNumber function
+        fun_get_group_number = self.global_functions.get_fun__get_group_number()
+        self.functions.append(fun_get_group_number)
+
+        # sameOrderType function
+        fun_same_order_type = self.global_functions.get_fun__same_order_type()
+        self.functions.append(fun_same_order_type)
+
+        # isAutomated function
+        fun_is_automated = self.global_functions.get_fun__is_automated()
+        self.functions.append(fun_is_automated)
+
+        # ReverseList function
+        fun_reverse_list = self.global_functions.get_fun__reverse_list()
+        self.functions.append(fun_reverse_list)
+
+        # sleepex function
+        fun_sleepex = self.global_functions.get_fun__sleepex()
+        self.functions.append(fun_sleepex)
+
+        # delete order function
+        delete_order = self.global_functions.get_fun__delete_order()
+        self.functions.append(delete_order)
+
+        # wait trade context if busy function
+        wait_trade_context_if_busy = self.global_functions.get_fun__wait_trade_context_if_busy()
+        self.functions.append(wait_trade_context_if_busy)
+
+        # check for trading error function
+        check_for_trading_error = self.global_functions.get_fun__check_for_trading_error()
+        self.functions.append(check_for_trading_error)
+
+        # error message function
+        error_message = self.global_functions.get_fun__error_message()
+        self.functions.append(error_message)
+
+        # Buy Sell + Pending + Money Management functions
+
+        bet_martingale = self.global_functions.get_fun__bet_martingale()
+        self.functions.append(bet_martingale)
+
+        get_bet_trades_info = self.global_functions.get_fun__get_bet_trades_info()
+        self.functions.append(get_bet_trades_info)
+
+        trade_select_by_index = self.global_functions.get_fun__trade_select_by_index()
+        self.functions.append(trade_select_by_index)
+
+        history_trade_select_by_index = self.global_functions.get_fun__history_trade_select_by_index()
+        self.functions.append(history_trade_select_by_index)
+
+        filter_general = self.global_functions.get_fun__filter_general()
+        self.functions.append(filter_general)
+
+        symbol_digits = self.global_functions.get_fun__symbol_digits()
+        self.functions.append(symbol_digits)
+
+        is_order_type_sell = self.global_functions.get_fun__is_order_type_sell()
+        self.functions.append(is_order_type_sell)
+
+        dynamic_lots = self.global_functions.get_fun__dynamic_lots()
+        self.functions.append(dynamic_lots)
+
+        pip_value = self.global_functions.get_fun__pip_value()
+        self.functions.append(pip_value)
+
+        custom_point = self.global_functions.get_fun__custom_point()
+        self.functions.append(custom_point)
+
+        string_explode = self.global_functions.get_fun__string_explode()
+        self.functions.append(string_explode)
+
+        to_digits = self.global_functions.get_fun__to_digits()
+        self.functions.append(to_digits)
+
+        string_trim = self.global_functions.get_fun__string_trim()
+        self.functions.append(string_trim)
+
+        format_value_for_printing_all = self.global_functions.get_fun__format_value_for_printing_all()
+        self.functions.append(format_value_for_printing_all)
+
+        window_find_visible = self.global_functions.get_fun__window_find_visible()
+        self.functions.append(window_find_visible)
+
+        symbol_ask = self.global_functions.get_fun__symbol_ask()
+        self.functions.append(symbol_ask)
+
+        symbol_bid = self.global_functions.get_fun__symbol_bid()
+        self.functions.append(symbol_bid)
+
+        is_order_type_buy = self.global_functions.get_fun__is_order_type_buy()
+        self.functions.append(is_order_type_buy)
+
+        is_order_type_stop = self.global_functions.get_fun__is_order_type_stop()
+        self.functions.append(is_order_type_stop)
+
+        get_symbol = self.global_functions.get_fun__get_symbol()
+        self.functions.append(get_symbol)
+
+        get_timeframe = self.global_functions.get_fun__get_timeframe()
+        self.functions.append(get_timeframe)
+
+        is_symbol_accepted = self.global_functions.get_fun__is_symbol_accepted()
+        self.functions.append(is_symbol_accepted)
+
+        seconds_from_components = self.global_functions.get_fun__seconds_from_components()
+        self.functions.append(seconds_from_components)
+
+        load_object = self.global_functions.get_fun__load_object()
+        self.functions.append(load_object)
+
+        loaded_object_chart_id = self.global_functions.get_fun__loaded_object_chart_id()
+        self.functions.append(loaded_object_chart_id)
+
+        loaded_object_name = self.global_functions.get_fun__loaded_object_name()
+        self.functions.append(loaded_object_name)
+
+        loaded_object_subwindow = self.global_functions.get_fun__loaded_object_subwindow()
+        self.functions.append(loaded_object_subwindow)
+
+        loaded_object_type = self.global_functions.get_fun__loaded_object_type()
+        self.functions.append(loaded_object_type)
+
+        array_ensure_value = self.global_functions.get_fun__array_ensure_value()
+        self.functions.append(array_ensure_value)
+
+        in_array = self.global_functions.get_fun__in_array()
+        self.functions.append(in_array)
+
+        object_get_value_by_shift = self.global_functions.get_fun__object_get_value_by_shift()
+        self.functions.append(object_get_value_by_shift)
+
+    def add_global_structs(self):
+        structs_data = self.market_properties_class_constructor.get_structs()
+        self.structs.append(structs_data)
+
+    def build(self):
+        expert = ""
+        expert += self.header
+        for prop in self.properties:
+            expert += prop
+        for const in self.consts_system:
+            expert += const
+        for const in self.consts_user:
+            expert += const
+        for var in self.vars_user:
+            expert += var
+        for struct in self.structs:
+            expert += struct
+        expert += self.block_parent_blueprint
+        expert += self.task_blueprint
+        for cls in self.task_elements:
+            expert += cls
+        for cls in self.tasks:
+            expert += cls
+        expert += self.block_blueprint
+        for cls in self.blocks:
+            expert += cls
+        for var in self.vars_system:
+            expert += var
+        for fun in self.functions:
+            expert += fun
+        expert += self.get_on_init_items()
+        expert += self.get_on_timer_items()
+        expert += self.get_on_tick_items()
+        expert += self.get_on_trade_items()
+        expert += self.get_on_chart_items()
+        expert += self.get_on_deinit_items()
+
+        return expert
+
+    def get_on_init_items(self):
+        result = "int init(){\n"
+        for item in self.on_init:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_on_timer_items(self):
+        result = "void OnTimer(){\n"
+        for item in self.on_timer:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_on_tick_items(self):
+        result = "void OnTick(){\n"
+        for item in self.on_tick:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_on_trade_items(self):
+        result = "void OnTrade(){\n"
+        for item in self.on_trade:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_on_chart_items(self):
+        result = "void OnChartEvent(const int id,         // Event identifier\nconst long& lparam,   // Event parameter of long type\nconst double& dparam, // Event parameter of double type\nconst string& sparam  // Event parameter of string type\n){\n"
+        for item in self.on_chart:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_on_deinit_items(self):
+        result = "void deinit(const int reason){\n"
+        for item in self.on_deinit:
+            result += item
+        result += "\n}\n"
+        return result
+
+    def get_task_child(self, node):
+        return self.task_dynamic_constructor.get_task_child(node)
+
+    def get_block_child(self, input_dic, id_block):
+        return self.block_constructor.get_block_child(input_dic, id_block)
+
+    # Elements that are assigned to multiple
+    # tasks of same type or to multiple task types
+    def add_task_elements_common(self, nodes):
+        for node in nodes:
+            task_name = node.get("blockName")
+            match task_name:
+                case "pass_n_times":
+                    if self.pass_n_times_done:
+                        continue
+                    var_data = self.task_constructor.get_var_data(task_name)
+                    self.vars_system.append(var_data)
+                    self.pass_n_times_done = True
+                case "spread_filter":
+                    if self.spread_filter_done:
+                        continue
+                    structs_data = self.spread_filter_struct_constructor.get_structs()
+                    self.structs.append(structs_data)
+                    self.spread_filter_done = True
+                case "close_partially":
+                    if self.close_partially_done:
+                        continue
+                    structs_data = self.close_partially_items.get_structs()
+                    self.structs.append(structs_data)
+                    vars_data = self.close_partially_items.get_vars()
+                    self.vars_system.append(vars_data)
+                    self.close_partially_done = True
+
+    # Elements that are assigned to a specific instance of a specific task type
+    def add_task_elements_specific(self, nodes):
+        for node in nodes:
+            task_name = node.get("blockName")
+            if task_name == "condition_1_normal" or task_name == "formula":  # formula also use the same function as condition 1 normal
+                self.condition_1_normal_elements(node)
+            elif task_name == "condition_1_cross":
+                self.condition_1_cross_elements(node)
+            elif task_name == "modify_variables":
+                self.modify_variables(node)
+            elif task_name == "trailing_stop_each_trade":
+                self.trailing_stop_each_trade(node)
+            elif task_name == "comment":
+                self.comment(node)
+            elif task_name == "buy_sell":
+                self.buy_sell(node)
+            elif task_name == "trailing_pending_orders":
+                self.trailing_pending_orders(node)
+            elif task_name == "modify_stops_of_trades":
+                self.modify_stops_of_trades(node)
+            elif task_name == "draw_arrow":
+                self.draw_arrow(node)
+            elif task_name == "draw_button":
+                self.draw_button(node)
+            elif task_name == "draw_shape":
+                self.draw_shape(node)
+            elif task_name == "draw_line":
+                self.draw_line(node)
+            elif task_name == "draw_editfield":
+                self.draw_editfield(node)
+            elif task_name == "check_trendline_price_level":
+                self.check_trendline_price_level(node)
+
+    def check_trendline_price_level(self, node):
+        value_fetch = node.get("params").get("price_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
+        id_val = str(node.get("id")) + "_price_level"
+        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def draw_editfield(self, node):
+        value_fetch = node.get("params").get("text")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
+        id_val = str(node.get("id")) + "_text"
+        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def draw_line(self, node):
+        object_type = node.get("params").get("object_type")
+        if "time_1" in object_type:
+            value_fetch_time_1 = object_type.get("time_1")
+            row1_time_1 = value_fetch_time_1.get("row1")
+            row2_time_1 = value_fetch_time_1.get("row2")
+            params_time_1 = value_fetch_time_1.get("params")
+            id_val_time_1 = str(node.get("id")) + "_time_1"
+            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+        if "time_2" in object_type:
+            value_fetch_time_2 = object_type.get("time_2")
+            row1_time_2 = value_fetch_time_2.get("row1")
+            row2_time_2 = value_fetch_time_2.get("row2")
+            params_time_2 = value_fetch_time_2.get("params")
+            id_val_time_2 = str(node.get("id")) + "_time_2"
+            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+
+        if "price_1" in object_type:
+            value_fetch_price_1 = object_type.get("price_1")
+            row1_price_1 = value_fetch_price_1.get("row1")
+            row2_price_1 = value_fetch_price_1.get("row2")
+            params_price_1 = value_fetch_price_1.get("params")
+            id_val_price_1 = str(node.get("id")) + "_price_1"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+        if "price_2" in object_type:
+            value_fetch_price_2 = object_type.get("price_2")
+            row1_price_2 = value_fetch_price_2.get("row1")
+            row2_price_2 = value_fetch_price_2.get("row2")
+            params_price_2 = value_fetch_price_2.get("params")
+            id_val_price_2 = str(node.get("id")) + "_price_2"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+
+    def draw_shape(self, node):
+        if "time_1" in node.get("params"):
+            value_fetch_time_1 = node.get("params").get("time_1")
+            row1_time_1 = value_fetch_time_1.get("row1")
+            row2_time_1 = value_fetch_time_1.get("row2")
+            params_time_1 = value_fetch_time_1.get("params")
+            id_val_time_1 = str(node.get("id")) + "_time_1"
+            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+        if "time_2" in node.get("params"):
+            value_fetch_time_2 = node.get("params").get("time_2")
+            row1_time_2 = value_fetch_time_2.get("row1")
+            row2_time_2 = value_fetch_time_2.get("row2")
+            params_time_2 = value_fetch_time_2.get("params")
+            id_val_time_2 = str(node.get("id")) + "_time_2"
+            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+        if "time_3" in node.get("params"):
+            value_fetch_time_3 = node.get("params").get("time_3")
+            row1_time_3 = value_fetch_time_3.get("row1")
+            row2_time_3 = value_fetch_time_3.get("row2")
+            params_time_3 = value_fetch_time_3.get("params")
+            id_val_time_3 = str(node.get("id")) + "_time_3"
+            self.task_elements.append(self.value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
+
+        if "price_1" in node.get("params"):
+            value_fetch_price_1 = node.get("params").get("price_1")
+            row1_price_1 = value_fetch_price_1.get("row1")
+            row2_price_1 = value_fetch_price_1.get("row2")
+            params_price_1 = value_fetch_price_1.get("params")
+            id_val_price_1 = str(node.get("id")) + "_price_1"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+        if "price_2" in node.get("params"):
+            value_fetch_price_2 = node.get("params").get("price_2")
+            row1_price_2 = value_fetch_price_2.get("row1")
+            row2_price_2 = value_fetch_price_2.get("row2")
+            params_price_2 = value_fetch_price_2.get("params")
+            id_val_price_2 = str(node.get("id")) + "_price_2"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+        if "price_3" in node.get("params"):
+            value_fetch_price_3 = node.get("params").get("price_3")
+            row1_price_3 = value_fetch_price_3.get("row1")
+            row2_price_3 = value_fetch_price_3.get("row2")
+            params_price_3 = value_fetch_price_3.get("params")
+            id_val_price_3 = str(node.get("id")) + "_price_3"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
+
+    def draw_button(self, node):
+        value_fetch = node.get("params").get("text")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params = value_fetch.get("params")
+        id_val = str(node.get("id")) + "_obj_text"
+        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def draw_arrow(self, node):
+        value_fetch_time_1 = node.get("params").get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        params_time_1 = value_fetch_time_1.get("params")
+        id_val_time_1 = str(node.get("id")) + "_time_1"
+        self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+
+        value_fetch_price_1 = node.get("params").get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        params_price_1 = value_fetch_price_1.get("params")
+        id_val_price_1 = str(node.get("id")) + "_price_1"
+        self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+
+    def modify_stops_of_trades(self, node):
+        relative_to_data = node.get("params").get("relative_to")
+        if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+            value_fetch = relative_to_data.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "_rt"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
+        if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+            value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
+            row1_tp = value_fetch_tp.get("row1")
+            row2_tp = value_fetch_tp.get("row2")
+            params_tp = value_fetch_tp.get("params_tp")
+            id_val_tp = str(node.get("id")) + "_ntm_tp"
+
+            value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
+            row1_sl = value_fetch_sl.get("row1")
+            row2_sl = value_fetch_sl.get("row2")
+            params_sl = value_fetch_sl.get("params_sl")
+            id_val_sl = str(node.get("id")) + "_ntm_sl"
+
+            self.task_elements.append(self.value_fetch_class(row1_tp, row2_tp, params_tp, id_val_tp))
+            self.task_elements.append(self.value_fetch_class(row1_sl, row2_sl, params_sl, id_val_sl))
+
+    def trailing_pending_orders(self, node):
+        trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
+        trailing_distance_mode = trailing_distance_mode_data.get("value")
+        if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
+            key = ""
+            if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+                key = "dynamic_level"
+            elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+                key = "dynamic_size_pips_input"
+            elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+                key = "dynamic_size_digits_only"
+            value_fetch = trailing_distance_mode_data.get(key)
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "_tdmd"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def buy_sell(self, node):
+        open_at_price_data = node.get("params").get("open_at_price")
+        open_at_price = open_at_price_data.get("value")
+        if open_at_price == "OPEN_AT_CUSTOM_PRICE":
+            value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "oacp"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def comment(self, node):
+        mrow1 = node.get("params").get("row1")
+        if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
+            value_fetch = mrow1.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r1"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow2 = node.get("params").get("row2")
+        if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
+            value_fetch = mrow2.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r2"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow3 = node.get("params").get("row3")
+        if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
+            value_fetch = mrow3.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r3"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow4 = node.get("params").get("row4")
+        if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
+            value_fetch = mrow4.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r4"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow5 = node.get("params").get("row5")
+        if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
+            value_fetch = mrow5.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r5"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow6 = node.get("params").get("row6")
+        if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
+            value_fetch = mrow6.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r6"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow7 = node.get("params").get("row7")
+        if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
+            value_fetch = mrow7.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r7"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+        mrow8 = node.get("params").get("row8")
+        if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
+            value_fetch = mrow8.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "cm_r8"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def trailing_stop_each_trade(self, node):
+        trailing_stop_mode_data = node.get("params").get("TrailingStopMode")
+        trailing_stop_mode = trailing_stop_mode_data.get("value")
+        if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+            value_fetch = trailing_stop_mode_data.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id")) + "tsm_cl"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def modify_variables(self, node):
+        for item in node.get("params"):
+            value_fetch = item.get("value_fetch")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params = value_fetch.get("params")
+            id_val = str(node.get("id"))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def condition_1_normal_elements(self, node):
+        params = node.get("params")
+        # left data
+        row1_left = params.get("left").get("row1")
+        row2_left = params.get("left").get("row1")
+        id_val_left = str(node.get("id")) + "_" + "left"
+        params_left = params.get("left").get("params")
+        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
+        # right data
+        row1_right = params.get("right").get("row1")
+        row2_right = params.get("right").get("row1")
+        id_val_right = str(node.get("id")) + "_" + "right"
+        params_right = params.get("right").get("params")
+        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
+
+    def condition_1_cross_elements(self, node):
+        params = node.get("params")
+        # left data
+        row1_left = params.get("left").get("row1")
+        row2_left = params.get("left").get("row2")
+        id_val_left_1 = str(node.get("id")) + "_" + "left1"
+        id_val_left_2 = str(node.get("id")) + "_" + "left2"
+        params_left_1 = params.get("left").get("params")
+        params_left_2 = params_left_1.copy()
+        if "shift" in params_left_2:
+            params_left_2["shift"] = int(params_left_2["shift"]) + params.get("operator").get("cross_width")
+        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
+        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
+        # right data
+        row1_right = params.get("right").get("row1")
+        row2_right = params.get("right").get("row2")
+        id_val_right_1 = str(node.get("id")) + "_" + "right1"
+        id_val_right_2 = str(node.get("id")) + "_" + "right2"
+        params_right_1 = params.get("right").get("params")
+        params_right_2 = params_right_1.copy()
+        if "shift" in params_right_2:
+            params_right_2["shift"] = int(params_right_2["shift"]) + params.get("operator").get("cross_width")
+        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
+        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
+
+    def value_fetch_class(self, row1, row2, params, id_val):
+        if row1 == "Indicator":
+            return self.indicator_class_constructor.get_class(row2, params, id_val)
+        elif row1 == "Candle":
+            return self.candle_class_constructor.get_class(params, id_val)
+        elif row1 == "Market Properties":
+            return self.market_properties_class_constructor.get_class(params, id_val)
+        elif row1 == "Value":
+            return self.value_class_constructor.get_class(params, id_val)

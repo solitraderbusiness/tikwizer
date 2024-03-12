@@ -42,6 +42,217 @@ def get_call__run_block_tick(source_id, source_result, target_id):
     return result
 
 
+#################################
+def get_fun__add_blocks_chart(n):
+    result = "void addBlocksChart()\n{\nArrayResize(blocks_chart, blocks_size_val);\n"
+    result = result.replace("blocks_size_val", str(n))
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result += "\n"
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    result += "  }\n"
+    return result
+
+
+def get_call__add_blocks_chart():
+    result = "addBlocksChart();"
+    return result
+
+
+def get_fun__reset_blocks_chart():
+    result = "void resetBlocksChart(int level)\n{\n    for(int i=0; i<ArraySize(blocks_chart); i++){\n        blocks_chart[i].reset(level);\n    }\n}"
+    return result
+
+
+def get_call__reset_blocks_chart():
+    result = "resetBlocksChart(RESET_LEVEL_DEFAULT);"
+    return result
+
+
+def get_fun__run_block_chart():
+    result = "void runBlockChart(int source_id, int source_result, int dest_id)\n{\nblocks_chart[dest_id].run(source_id, source_result);\n}"
+    return result
+
+
+def get_call__run_block_chart(source_id, source_result, target_id):
+    result = "runBlockChart(source_id_val, source_result_val, target_id_val);"
+    result = result.replace("source_id_val", str(source_id)) \
+        .replace("source_result_val", str(source_result)) \
+        .replace("target_id_val", str(target_id))
+    return result
+
+
+#################################
+
+def get_fun__add_blocks_trade(n):
+    result = "void addBlocksTrade()\n{\nArrayResize(blocks_trade, blocks_size_val);\n"
+    result = result.replace("blocks_size_val", str(n))
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result += "\n"
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    result += "  }\n"
+    return result
+
+
+def get_call__add_blocks_trade():
+    result = "addBlocksTrade();"
+    return result
+
+
+def get_fun__reset_blocks_trade():
+    result = "void resetBlocksTrade(int level)\n{\n    for(int i=0; i<ArraySize(blocks_trade); i++){\n        blocks_trade[i].reset(level);\n    }\n}"
+    return result
+
+
+def get_call__reset_blocks_trade():
+    result = "resetBlocksTrade(RESET_LEVEL_DEFAULT);"
+    return result
+
+
+def get_fun__run_block_trade():
+    result = "void runBlockTrade(int source_id, int source_result, int dest_id)\n{\nblocks_trade[dest_id].run(source_id, source_result);\n}"
+    return result
+
+
+def get_call__run_block_trade(source_id, source_result, target_id):
+    result = "runBlockTrade(source_id_val, source_result_val, target_id_val);"
+    result = result.replace("source_id_val", str(source_id)) \
+        .replace("source_result_val", str(source_result)) \
+        .replace("target_id_val", str(target_id))
+    return result
+
+
+#################################
+
+def get_fun__add_blocks_timer(n):
+    result = "void addBlocksTimer()\n{\nArrayResize(blocks_timer, blocks_size_val);\n"
+    result = result.replace("blocks_size_val", str(n))
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result += "\n"
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    result += "  }\n"
+    return result
+
+
+def get_call__add_blocks_timer():
+    result = "addBlocksTimer();"
+    return result
+
+
+def get_fun__reset_blocks_timer():
+    result = "void resetBlocksTimer(int level)\n{\n    for(int i=0; i<ArraySize(blocks_timer); i++){\n        blocks_timer[i].reset(level);\n    }\n}"
+    return result
+
+
+def get_call__reset_blocks_timer():
+    result = "resetBlocksTimer(RESET_LEVEL_DEFAULT);"
+    return result
+
+
+def get_fun__run_block_timer():
+    result = "void runBlockTimer(int source_id, int source_result, int dest_id)\n{\nblocks_timer[dest_id].run(source_id, source_result);\n}"
+    return result
+
+
+def get_call__run_block_timer(source_id, source_result, target_id):
+    result = "runBlockTimer(source_id_val, source_result_val, target_id_val);"
+    result = result.replace("source_id_val", str(source_id)) \
+        .replace("source_result_val", str(source_result)) \
+        .replace("target_id_val", str(target_id))
+    return result
+
+
+#################################
+
+def get_fun__add_blocks_init(n):
+    result = "void addBlocksInit()\n{\nArrayResize(blocks_init, blocks_size_val);\n"
+    result = result.replace("blocks_size_val", str(n))
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result += "\n"
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    result += "  }\n"
+    return result
+
+
+def get_call__add_blocks_init():
+    result = "addBlocksInit();"
+    return result
+
+
+def get_fun__reset_blocks_init():
+    result = "void resetBlocksInit(int level)\n{\n    for(int i=0; i<ArraySize(blocks_init); i++){\n        blocks_init[i].reset(level);\n    }\n}"
+    return result
+
+
+def get_call__reset_blocks_init():
+    result = "resetBlocksInit(RESET_LEVEL_DEFAULT);"
+    return result
+
+
+def get_fun__run_block_init():
+    result = "void runBlockInit(int source_id, int source_result, int dest_id)\n{\nblocks_init[dest_id].run(source_id, source_result);\n}"
+    return result
+
+
+def get_call__run_block_init(source_id, source_result, target_id):
+    result = "runBlockInit(source_id_val, source_result_val, target_id_val);"
+    result = result.replace("source_id_val", str(source_id)) \
+        .replace("source_result_val", str(source_result)) \
+        .replace("target_id_val", str(target_id))
+    return result
+
+
+#################################
+
+def get_fun__add_blocks_deinit(n):
+    result = "void addBlocksDeinit()\n{\nArrayResize(blocks_deinit, blocks_size_val);\n"
+    result = result.replace("blocks_size_val", str(n))
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result += "\n"
+    for i in range(n):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    result += "  }\n"
+    return result
+
+
+def get_call__add_blocks_deinit():
+    result = "addBlocksDeinit();"
+    return result
+
+
+def get_fun__reset_blocks_deinit():
+    result = "void resetBlocksDeinit(int level)\n{\n    for(int i=0; i<ArraySize(blocks_deinit); i++){\n        blocks_deinit[i].reset(level);\n    }\n}"
+    return result
+
+
+def get_call__reset_blocks_deinit():
+    result = "resetBlocksDeinit(RESET_LEVEL_DEFAULT);"
+    return result
+
+
+def get_fun__run_block_deinit():
+    result = "void runBlockDeinit(int source_id, int source_result, int dest_id)\n{\nblocks_deinit[dest_id].run(source_id, source_result);\n}"
+    return result
+
+
+def get_call__run_block_deinit(source_id, source_result, target_id):
+    result = "runBlockDeinit(source_id_val, source_result_val, target_id_val);"
+    result = result.replace("source_id_val", str(source_id)) \
+        .replace("source_result_val", str(source_result)) \
+        .replace("target_id_val", str(target_id))
+    return result
+
+#################################
+
+
 def get_fun__remove_index_from_array():
     result = "template <typename T>\n void RemoveIndexFromArray(T& A[], int iPos) {\n int iLast;\n for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)\n A[iPos] = A[iPos + 1];\n ArrayResize(A, iLast);\n }"
     return result
