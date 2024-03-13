@@ -25,7 +25,7 @@ def get_task_child(node):
     category = node.get("category")
     task_name = node.get("blockName")
     params = node.get("params")
-    class_id = node.get("id")
+    class_id = node.get("id_by_user")
 
     path_task_id_template = path + path_sub + "task_id" + "/"  # used to get template
     path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
@@ -177,7 +177,7 @@ def check_trendline_price_level_run_data(node, function_data_static):
     value_fetch = node.get("params").get("price_level")
     row1 = value_fetch.get("row1")
     row2 = value_fetch.get("row2")
-    id_val = str(node.get("id")) + "_price_level"
+    id_val = str(node.get("id_by_user")) + "_price_level"
 
     init = get_value_fetch_init(row1, row2, id_val)
     val = get_value_fetch_val(row1, row2, id_val)
@@ -191,7 +191,7 @@ def draw_editfield_run_data(node, function_data_static):
     value_fetch = node.get("params").get("text")
     row1 = value_fetch.get("row1")
     row2 = value_fetch.get("row2")
-    id_val = str(node.get("id")) + "_text"
+    id_val = str(node.get("id_by_user")) + "_text"
 
     init = get_value_fetch_init(row1, row2, id_val)
     val = get_value_fetch_val(row1, row2, id_val)
@@ -207,7 +207,7 @@ def draw_line_run_data(node, function_data_static):
         value_fetch_time_1 = object_type.get("time_1")
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
-        id_val_time_1 = str(node.get("id")) + "_time_1"
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
         init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
         val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
@@ -220,7 +220,7 @@ def draw_line_run_data(node, function_data_static):
         value_fetch_time_2 = object_type.get("time_2")
         row1_time_2 = value_fetch_time_2.get("row1")
         row2_time_2 = value_fetch_time_2.get("row2")
-        id_val_time_2 = str(node.get("id")) + "_time_2"
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
 
         init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
         val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
@@ -234,7 +234,7 @@ def draw_line_run_data(node, function_data_static):
         value_fetch_price_1 = object_type.get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
-        id_val_price_1 = str(node.get("id")) + "_price_1"
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
         init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
         val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
@@ -247,7 +247,7 @@ def draw_line_run_data(node, function_data_static):
         value_fetch_price_2 = object_type.get("price_2")
         row1_price_2 = value_fetch_price_2.get("row1")
         row2_price_2 = value_fetch_price_2.get("row2")
-        id_val_price_2 = str(node.get("id")) + "_price_2"
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
 
         init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
         val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
@@ -265,7 +265,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_time_1 = node.get("params").get("time_1")
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
-        id_val_time_1 = str(node.get("id")) + "_time_1"
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
         init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
         val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
@@ -278,7 +278,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_time_2 = node.get("params").get("time_2")
         row1_time_2 = value_fetch_time_2.get("row1")
         row2_time_2 = value_fetch_time_2.get("row2")
-        id_val_time_2 = str(node.get("id")) + "_time_2"
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
 
         init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
         val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
@@ -291,7 +291,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_time_3 = node.get("params").get("time_3")
         row1_time_3 = value_fetch_time_3.get("row1")
         row2_time_3 = value_fetch_time_3.get("row2")
-        id_val_time_3 = str(node.get("id")) + "_time_3"
+        id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
 
         init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, id_val_time_3)
         val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
@@ -304,7 +304,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_price_1 = node.get("params").get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
-        id_val_price_1 = str(node.get("id")) + "_price_1"
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
         init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
         val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
@@ -317,7 +317,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_price_2 = node.get("params").get("price_2")
         row1_price_2 = value_fetch_price_2.get("row1")
         row2_price_2 = value_fetch_price_2.get("row2")
-        id_val_price_2 = str(node.get("id")) + "_price_2"
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
 
         init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
         val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
@@ -330,7 +330,7 @@ def draw_shape_run_data(node, function_data_static):
         value_fetch_price_3 = node.get("params").get("price_3")
         row1_price_3 = value_fetch_price_3.get("row1")
         row2_price_3 = value_fetch_price_3.get("row2")
-        id_val_price_3 = str(node.get("id")) + "_price_3"
+        id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
 
         init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, id_val_price_3)
         val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
@@ -347,7 +347,7 @@ def draw_button_run_data(node, function_data_static):
     value_fetch = node.get("params").get("text")
     row1 = value_fetch.get("row1")
     row2 = value_fetch.get("row2")
-    id_val = str(node.get("id")) + "_obj_text"
+    id_val = str(node.get("id_by_user")) + "_obj_text"
 
     init = get_value_fetch_init(row1, row2, id_val)
     val = get_value_fetch_val(row1, row2, id_val)
@@ -361,7 +361,7 @@ def draw_arrow_run_data(node, function_data_static):
     value_fetch_time_1 = node.get("params").get("time_1")
     row1_time_1 = value_fetch_time_1.get("row1")
     row2_time_1 = value_fetch_time_1.get("row2")
-    id_val_time_1 = str(node.get("id")) + "_time_1"
+    id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
     init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
     val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
@@ -371,7 +371,7 @@ def draw_arrow_run_data(node, function_data_static):
     value_fetch_price_1 = node.get("params").get("price_1")
     row1_price_1 = value_fetch_price_1.get("row1")
     row2_price_1 = value_fetch_price_1.get("row2")
-    id_val_price_1 = str(node.get("id")) + "_price_1"
+    id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
     init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
     val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
@@ -387,7 +387,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         value_fetch = relative_to_data.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "_rt"
+        id_val = str(node.get("id_by_user")) + "_rt"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -402,7 +402,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
         row1_tp = value_fetch_tp.get("row1")
         row2_tp = value_fetch_tp.get("row2")
-        id_val_tp = str(node.get("id")) + "_ntm_tp"
+        id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
 
         init_tp = get_value_fetch_init(row1_tp, row2_tp, id_val_tp)
         val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
@@ -410,7 +410,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
         row1_sl = value_fetch_sl.get("row1")
         row2_sl = value_fetch_sl.get("row2")
-        id_val_sl = str(node.get("id")) + "_ntm_sl"
+        id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
 
         init_sl = get_value_fetch_init(row1_sl, row2_sl, id_val_sl)
         val_sl = get_value_fetch_val(row1_sl, row2_sl, id_val_sl)
@@ -436,7 +436,7 @@ def buy_sell_function_data(node, function_data_static):
         value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "oacp"
+        id_val = str(node.get("id_by_user")) + "oacp"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -472,7 +472,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow1.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r1"
+        id_val = str(node.get("id_by_user")) + "cm_r1"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -487,7 +487,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow2.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r2"
+        id_val = str(node.get("id_by_user")) + "cm_r2"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -502,7 +502,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow3.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r3"
+        id_val = str(node.get("id_by_user")) + "cm_r3"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -517,7 +517,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow4.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r4"
+        id_val = str(node.get("id_by_user")) + "cm_r4"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -532,7 +532,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow5.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r5"
+        id_val = str(node.get("id_by_user")) + "cm_r5"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -547,7 +547,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow6.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r6"
+        id_val = str(node.get("id_by_user")) + "cm_r6"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -562,7 +562,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow7.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r7"
+        id_val = str(node.get("id_by_user")) + "cm_r7"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -577,7 +577,7 @@ def comment_run_data(node, run_data):
         value_fetch = mrow8.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "cm_r8"
+        id_val = str(node.get("id_by_user")) + "cm_r8"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -604,7 +604,7 @@ def trailing_pending_orders_run_data(node, run_data):
         value_fetch = trailing_distance_mode_data.get(key)
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "_tdmd"
+        id_val = str(node.get("id_by_user")) + "_tdmd"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -650,7 +650,7 @@ def trailing_stop_each_trade_run_data(node, run_data):
         value_fetch = trailing_stop_mode_data.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id")) + "tsm_cl"
+        id_val = str(node.get("id_by_user")) + "tsm_cl"
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -667,7 +667,7 @@ def modify_variable_run_data(node, run_data):
     for item in node.get("params"):
         row1 = item.get("value_fetch").get("row1")
         row2 = item.get("value_fetch").get("row2")
-        id_val = str(node.get("id"))
+        id_val = str(node.get("id_by_user"))
 
         init = get_value_fetch_init(row1, row2, id_val)
         val = get_value_fetch_val(row1, row2, id_val)
@@ -683,7 +683,7 @@ def formula(node, run_data):
     # Left data
     row1_left = params.get("left").get("row1")
     row2_left = params.get("left").get("row2")
-    id_val_1 = str(node.get("id")) + "_" + "left"
+    id_val_1 = str(node.get("id_by_user")) + "_" + "left"
 
     init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
@@ -691,7 +691,7 @@ def formula(node, run_data):
     # Right data
     row1_right = params.get("right").get("row1")
     row2_right = params.get("right").get("row2")
-    id_val_2 = str(node.get("id")) + "_" + "right"
+    id_val_2 = str(node.get("id_by_user")) + "_" + "right"
 
     init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
@@ -715,7 +715,7 @@ def condition_1_run_data_normal(node, run_data):
     # Left data
     row1_left = params.get("left").get("row1")
     row2_left = params.get("left").get("row2")
-    id_val_1 = str(node.get("id")) + "_" + "left"
+    id_val_1 = str(node.get("id_by_user")) + "_" + "left"
 
     init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
@@ -723,7 +723,7 @@ def condition_1_run_data_normal(node, run_data):
     # Right data
     row1_right = params.get("right").get("row1")
     row2_right = params.get("right").get("row2")
-    id_val_2 = str(node.get("id")) + "_" + "right"
+    id_val_2 = str(node.get("id_by_user")) + "_" + "right"
 
     init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
@@ -744,8 +744,8 @@ def condition_1_run_data_cross(node, run_data):
     # Left data
     row1_left = params.get("left").get("row1")
     row2_left = params.get("left").get("row2")
-    id_val_11 = str(node.get("id")) + "_" + "left" + "1"
-    id_val_12 = str(node.get("id")) + "_" + "left" + "2"
+    id_val_11 = str(node.get("id_by_user")) + "_" + "left" + "1"
+    id_val_12 = str(node.get("id_by_user")) + "_" + "left" + "2"
 
     init11 = get_value_fetch_init(row1_left, row2_left, id_val_11)
     init12 = get_value_fetch_init(row1_left, row2_left, id_val_12)
@@ -755,8 +755,8 @@ def condition_1_run_data_cross(node, run_data):
     # Right data
     row1_right = params.get("right").get("row1")
     row2_right = params.get("right").get("row2")
-    id_val_21 = str(node.get("id")) + "_" + "right" + "1"
-    id_val_22 = str(node.get("id")) + "_" + "right" + "2"
+    id_val_21 = str(node.get("id_by_user")) + "_" + "right" + "1"
+    id_val_22 = str(node.get("id_by_user")) + "_" + "right" + "2"
 
     init21 = get_value_fetch_init(row1_right, row2_right, id_val_21)
     init22 = get_value_fetch_init(row1_right, row2_right, id_val_22)

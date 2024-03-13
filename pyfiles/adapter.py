@@ -1,5 +1,4 @@
 # This module adapts client data to mql generator
-from . import task_input
 
 
 def refactor(data):
@@ -13,8 +12,6 @@ def refactor(data):
         overwrite_task_names(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(event["nodes"], event["edges"])
-        # Task input_dic
-        # task_input.set_task_input_dic(event["nodes"])
     return data
 
 
@@ -53,7 +50,7 @@ def set_blocks_input_dic(nodes, edges):
 def overwrite_task_names(nodes):
     for node in nodes:
         block_name = node.get("blockName")
-        if block_name == "condition1":
+        if block_name == "condition":
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
                 node["blockName"] = "condition_1_cross"
@@ -118,7 +115,7 @@ def get_prevs_false(node, edges):
 def add_category(nodes):
     for node in nodes:
         match node.get("blockName"):
-            case "condition1":
+            case "condition":
                 node["category"] = "condition_formula"
             case "formula":
                 node["category"] = "condition_formula"

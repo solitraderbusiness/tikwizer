@@ -1688,7 +1688,7 @@ input_data_6 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -1959,7 +1959,7 @@ input_data_7 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -2239,7 +2239,7 @@ input_data_8 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -2510,7 +2510,7 @@ input_data_9 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -2781,7 +2781,7 @@ input_data_10 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -3160,7 +3160,7 @@ input_data_11 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "condition1"
+                    "blockName": "condition"
                 },
                 "type": "testMojtaba",
                 "position": {

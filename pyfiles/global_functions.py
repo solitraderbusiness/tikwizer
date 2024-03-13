@@ -2,14 +2,14 @@ TEMPLATE_ADD_BLOCKS = "Block_id *block_id = new Block_id();\n"
 TEMPLATE_ADD_BLOCKS_FUNCTION = "blocks_tick[_id] = block_id;\n"
 
 
-def get_fun__add_blocks_tick(n):
+def get_fun__add_blocks_tick(nodes):
     result = "void addBlocksTick()\n{\nArrayResize(blocks_tick, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -43,14 +43,14 @@ def get_call__run_block_tick(source_id, source_result, target_id):
 
 
 #################################
-def get_fun__add_blocks_chart(n):
+def get_fun__add_blocks_chart(nodes):
     result = "void addBlocksChart()\n{\nArrayResize(blocks_chart, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -85,14 +85,14 @@ def get_call__run_block_chart(source_id, source_result, target_id):
 
 #################################
 
-def get_fun__add_blocks_trade(n):
+def get_fun__add_blocks_trade(nodes):
     result = "void addBlocksTrade()\n{\nArrayResize(blocks_trade, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -127,14 +127,14 @@ def get_call__run_block_trade(source_id, source_result, target_id):
 
 #################################
 
-def get_fun__add_blocks_timer(n):
+def get_fun__add_blocks_timer(nodes):
     result = "void addBlocksTimer()\n{\nArrayResize(blocks_timer, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -169,14 +169,14 @@ def get_call__run_block_timer(source_id, source_result, target_id):
 
 #################################
 
-def get_fun__add_blocks_init(n):
+def get_fun__add_blocks_init(nodes):
     result = "void addBlocksInit()\n{\nArrayResize(blocks_init, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -211,14 +211,14 @@ def get_call__run_block_init(source_id, source_result, target_id):
 
 #################################
 
-def get_fun__add_blocks_deinit(n):
+def get_fun__add_blocks_deinit(nodes):
     result = "void addBlocksDeinit()\n{\nArrayResize(blocks_deinit, blocks_size_val);\n"
-    result = result.replace("blocks_size_val", str(n))
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(i))
+    result = result.replace("blocks_size_val", str(len(nodes)))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for i in range(n):
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(i))
+    for node in nodes:
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 

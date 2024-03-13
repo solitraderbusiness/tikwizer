@@ -26,7 +26,6 @@ def get_entries_sorted(nodes, edges):
 
 
 class ExpertBuilder:
-    from . import task_constructor
     from . import block_constructor
     from . import task_dynamic_constructor
     from . import global_functions
@@ -89,7 +88,7 @@ class ExpertBuilder:
         # Add block_parent and task class blueprint
         self.block_parent_blueprint += self.block_constructor.get_block_parent()
         # Add task blueprint
-        self.task_blueprint = self.task_constructor.get_task()
+        self.task_blueprint = self.task_dynamic_constructor.get_task()
         # Add block blueprint
         self.block_blueprint = self.block_constructor.get_block()
 
@@ -113,7 +112,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -149,7 +148,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -185,7 +184,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -221,7 +220,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -257,7 +256,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -293,7 +292,7 @@ class ExpertBuilder:
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id"))
+            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -359,10 +358,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_tick)
 
         # addBlocks function tick
-        no_blocks_tick = 0
-        if "on_tick" in data.get("events") and "nodes" in data.get("events").get("on_tick"):
-            no_blocks_tick = len(data.get("events").get("on_tick").get("nodes"))
-        fun_add_blocks_tick = self.global_functions.get_fun__add_blocks_tick(no_blocks_tick)
+        fun_add_blocks_tick = self.global_functions.get_fun__add_blocks_tick(data.get("events").get("on_tick").get("nodes"))
         self.functions.append(fun_add_blocks_tick)
 
         # resetBlocks function tick
@@ -374,10 +370,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_chart)
 
         # addBlocks function chart
-        no_blocks_chart = 0
-        if "on_chart" in data.get("events") and "nodes" in data.get("events").get("on_chart"):
-            no_blocks_chart = len(data.get("events").get("on_chart").get("nodes"))
-        fun_add_blocks_chart = self.global_functions.get_fun__add_blocks_chart(no_blocks_chart)
+        fun_add_blocks_chart = self.global_functions.get_fun__add_blocks_chart(data.get("events").get("on_chart").get("nodes"))
         self.functions.append(fun_add_blocks_chart)
 
         # resetBlocks function chart
@@ -389,10 +382,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_trade)
 
         # addBlocks function trade
-        no_blocks_trade = 0
-        if "on_trade" in data.get("events") and "nodes" in data.get("events").get("on_trade"):
-            no_blocks_trade = len(data.get("events").get("on_trade").get("nodes"))
-        fun_add_blocks_trade = self.global_functions.get_fun__add_blocks_trade(no_blocks_trade)
+        fun_add_blocks_trade = self.global_functions.get_fun__add_blocks_trade(data.get("events").get("on_trade").get("nodes"))
         self.functions.append(fun_add_blocks_trade)
 
         # resetBlocks function trade
@@ -404,10 +394,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_timer)
 
         # addBlocks function timer
-        no_blocks_timer = 0
-        if "on_timer" in data.get("events") and "nodes" in data.get("events").get("on_timer"):
-            no_blocks_timer = len(data.get("events").get("on_timer").get("nodes"))
-        fun_add_blocks_timer = self.global_functions.get_fun__add_blocks_timer(no_blocks_timer)
+        fun_add_blocks_timer = self.global_functions.get_fun__add_blocks_timer(data.get("events").get("on_timer").get("nodes"))
         self.functions.append(fun_add_blocks_timer)
 
         # resetBlocks function timer
@@ -419,10 +406,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_init)
 
         # addBlocks function init
-        no_blocks_init = 0
-        if "on_init" in data.get("events") and "nodes" in data.get("events").get("on_init"):
-            no_blocks_init = len(data.get("events").get("on_init").get("nodes"))
-        fun_add_blocks_init = self.global_functions.get_fun__add_blocks_init(no_blocks_init)
+        fun_add_blocks_init = self.global_functions.get_fun__add_blocks_init(data.get("events").get("on_init").get("nodes"))
         self.functions.append(fun_add_blocks_init)
 
         # resetBlocks function init
@@ -434,10 +418,7 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_deinit)
 
         # addBlocks function deinit
-        no_blocks_deinit = 0
-        if "on_deinit" in data.get("events") and "nodes" in data.get("events").get("on_deinit"):
-            no_blocks_deinit = len(data.get("events").get("on_deinit").get("nodes"))
-        fun_add_blocks_deinit = self.global_functions.get_fun__add_blocks_deinit(no_blocks_deinit)
+        fun_add_blocks_deinit = self.global_functions.get_fun__add_blocks_deinit(data.get("events").get("on_deinit").get("nodes"))
         self.functions.append(fun_add_blocks_deinit)
 
         # resetBlocks function deinit
@@ -687,7 +668,7 @@ class ExpertBuilder:
                 case "pass_n_times":
                     if self.pass_n_times_done:
                         continue
-                    var_data = self.task_constructor.get_var_data(task_name)
+                    var_data = self.task_dynamic_constructor.get_var_data(task_name)
                     self.vars_system.append(var_data)
                     self.pass_n_times_done = True
                 case "spread_filter":
@@ -743,7 +724,7 @@ class ExpertBuilder:
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         params = value_fetch.get("params")
-        id_val = str(node.get("id")) + "_price_level"
+        id_val = str(node.get("id_by_user")) + "_price_level"
         self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def draw_editfield(self, node):
@@ -751,7 +732,7 @@ class ExpertBuilder:
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         params = value_fetch.get("params")
-        id_val = str(node.get("id")) + "_text"
+        id_val = str(node.get("id_by_user")) + "_text"
         self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def draw_line(self, node):
@@ -761,14 +742,14 @@ class ExpertBuilder:
             row1_time_1 = value_fetch_time_1.get("row1")
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
-            id_val_time_1 = str(node.get("id")) + "_time_1"
+            id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
             self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
         if "time_2" in object_type:
             value_fetch_time_2 = object_type.get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             params_time_2 = value_fetch_time_2.get("params")
-            id_val_time_2 = str(node.get("id")) + "_time_2"
+            id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
             self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
 
         if "price_1" in object_type:
@@ -776,7 +757,7 @@ class ExpertBuilder:
             row1_price_1 = value_fetch_price_1.get("row1")
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
-            id_val_price_1 = str(node.get("id")) + "_price_1"
+            id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
         if "price_2" in object_type:
@@ -784,7 +765,7 @@ class ExpertBuilder:
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             params_price_2 = value_fetch_price_2.get("params")
-            id_val_price_2 = str(node.get("id")) + "_price_2"
+            id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
 
@@ -794,21 +775,21 @@ class ExpertBuilder:
             row1_time_1 = value_fetch_time_1.get("row1")
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
-            id_val_time_1 = str(node.get("id")) + "_time_1"
+            id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
             self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
         if "time_2" in node.get("params"):
             value_fetch_time_2 = node.get("params").get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             params_time_2 = value_fetch_time_2.get("params")
-            id_val_time_2 = str(node.get("id")) + "_time_2"
+            id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
             self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
         if "time_3" in node.get("params"):
             value_fetch_time_3 = node.get("params").get("time_3")
             row1_time_3 = value_fetch_time_3.get("row1")
             row2_time_3 = value_fetch_time_3.get("row2")
             params_time_3 = value_fetch_time_3.get("params")
-            id_val_time_3 = str(node.get("id")) + "_time_3"
+            id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
             self.task_elements.append(self.value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
 
         if "price_1" in node.get("params"):
@@ -816,7 +797,7 @@ class ExpertBuilder:
             row1_price_1 = value_fetch_price_1.get("row1")
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
-            id_val_price_1 = str(node.get("id")) + "_price_1"
+            id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
         if "price_2" in node.get("params"):
@@ -824,7 +805,7 @@ class ExpertBuilder:
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             params_price_2 = value_fetch_price_2.get("params")
-            id_val_price_2 = str(node.get("id")) + "_price_2"
+            id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
         if "price_3" in node.get("params"):
@@ -832,7 +813,7 @@ class ExpertBuilder:
             row1_price_3 = value_fetch_price_3.get("row1")
             row2_price_3 = value_fetch_price_3.get("row2")
             params_price_3 = value_fetch_price_3.get("params")
-            id_val_price_3 = str(node.get("id")) + "_price_3"
+            id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
 
@@ -841,7 +822,7 @@ class ExpertBuilder:
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         params = value_fetch.get("params")
-        id_val = str(node.get("id")) + "_obj_text"
+        id_val = str(node.get("id_by_user")) + "_obj_text"
         self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def draw_arrow(self, node):
@@ -849,14 +830,14 @@ class ExpertBuilder:
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
         params_time_1 = value_fetch_time_1.get("params")
-        id_val_time_1 = str(node.get("id")) + "_time_1"
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
         self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
 
         value_fetch_price_1 = node.get("params").get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
         params_price_1 = value_fetch_price_1.get("params")
-        id_val_price_1 = str(node.get("id")) + "_price_1"
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
         self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
 
     def modify_stops_of_trades(self, node):
@@ -866,7 +847,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "_rt"
+            id_val = str(node.get("id_by_user")) + "_rt"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
@@ -875,13 +856,13 @@ class ExpertBuilder:
             row1_tp = value_fetch_tp.get("row1")
             row2_tp = value_fetch_tp.get("row2")
             params_tp = value_fetch_tp.get("params_tp")
-            id_val_tp = str(node.get("id")) + "_ntm_tp"
+            id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
 
             value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
             row1_sl = value_fetch_sl.get("row1")
             row2_sl = value_fetch_sl.get("row2")
             params_sl = value_fetch_sl.get("params_sl")
-            id_val_sl = str(node.get("id")) + "_ntm_sl"
+            id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
 
             self.task_elements.append(self.value_fetch_class(row1_tp, row2_tp, params_tp, id_val_tp))
             self.task_elements.append(self.value_fetch_class(row1_sl, row2_sl, params_sl, id_val_sl))
@@ -901,7 +882,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "_tdmd"
+            id_val = str(node.get("id_by_user")) + "_tdmd"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def buy_sell(self, node):
@@ -912,7 +893,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "oacp"
+            id_val = str(node.get("id_by_user")) + "oacp"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def comment(self, node):
@@ -922,7 +903,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r1"
+            id_val = str(node.get("id_by_user")) + "cm_r1"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow2 = node.get("params").get("row2")
@@ -931,7 +912,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r2"
+            id_val = str(node.get("id_by_user")) + "cm_r2"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow3 = node.get("params").get("row3")
@@ -940,7 +921,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r3"
+            id_val = str(node.get("id_by_user")) + "cm_r3"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow4 = node.get("params").get("row4")
@@ -949,7 +930,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r4"
+            id_val = str(node.get("id_by_user")) + "cm_r4"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow5 = node.get("params").get("row5")
@@ -958,7 +939,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r5"
+            id_val = str(node.get("id_by_user")) + "cm_r5"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow6 = node.get("params").get("row6")
@@ -967,7 +948,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r6"
+            id_val = str(node.get("id_by_user")) + "cm_r6"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow7 = node.get("params").get("row7")
@@ -976,7 +957,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r7"
+            id_val = str(node.get("id_by_user")) + "cm_r7"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
         mrow8 = node.get("params").get("row8")
@@ -985,7 +966,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "cm_r8"
+            id_val = str(node.get("id_by_user")) + "cm_r8"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def trailing_stop_each_trade(self, node):
@@ -996,7 +977,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id")) + "tsm_cl"
+            id_val = str(node.get("id_by_user")) + "tsm_cl"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def modify_variables(self, node):
@@ -1005,7 +986,7 @@ class ExpertBuilder:
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id"))
+            id_val = str(node.get("id_by_user"))
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def condition_1_normal_elements(self, node):
@@ -1013,13 +994,13 @@ class ExpertBuilder:
         # left data
         row1_left = params.get("left").get("row1")
         row2_left = params.get("left").get("row1")
-        id_val_left = str(node.get("id")) + "_" + "left"
+        id_val_left = str(node.get("id_by_user")) + "_" + "left"
         params_left = params.get("left").get("params")
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
         # right data
         row1_right = params.get("right").get("row1")
         row2_right = params.get("right").get("row1")
-        id_val_right = str(node.get("id")) + "_" + "right"
+        id_val_right = str(node.get("id_by_user")) + "_" + "right"
         params_right = params.get("right").get("params")
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
 
@@ -1028,8 +1009,8 @@ class ExpertBuilder:
         # left data
         row1_left = params.get("left").get("row1")
         row2_left = params.get("left").get("row2")
-        id_val_left_1 = str(node.get("id")) + "_" + "left1"
-        id_val_left_2 = str(node.get("id")) + "_" + "left2"
+        id_val_left_1 = str(node.get("id_by_user")) + "_" + "left1"
+        id_val_left_2 = str(node.get("id_by_user")) + "_" + "left2"
         params_left_1 = params.get("left").get("params")
         params_left_2 = params_left_1.copy()
         if "shift" in params_left_2:
@@ -1039,8 +1020,8 @@ class ExpertBuilder:
         # right data
         row1_right = params.get("right").get("row1")
         row2_right = params.get("right").get("row2")
-        id_val_right_1 = str(node.get("id")) + "_" + "right1"
-        id_val_right_2 = str(node.get("id")) + "_" + "right2"
+        id_val_right_1 = str(node.get("id_by_user")) + "_" + "right1"
+        id_val_right_2 = str(node.get("id_by_user")) + "_" + "right2"
         params_right_1 = params.get("right").get("params")
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:

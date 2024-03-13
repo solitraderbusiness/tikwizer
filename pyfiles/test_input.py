@@ -1,5 +1,5 @@
 input_data_1 = {"nodes": [
-    {"id": "682d29de-5a15-4d5a-ba63-1f8dfcc70db7", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "682d29de-5a15-4d5a-ba63-1f8dfcc70db7", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 425, "y": -36}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 1, "name": "Macd", "description": "this is macd indicator"},
@@ -12,7 +12,7 @@ input_data_1 = {"nodes": [
             {"optionName": "rsi Period", "value": {"optionName": "rsi Period", "value": "4"}}],
                                  "candleIDLeft": {"value": 0, "checked": False},
                                  "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "cb32d416-282e-464f-be8c-bf27555397b1", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "cb32d416-282e-464f-be8c-bf27555397b1", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 272, "y": 37}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 272, "y": 37}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                           "left2": {"id": 2, "name": "RSI",
@@ -33,7 +33,7 @@ input_data_1 = {"nodes": [
                                                                                            "checked": False},
                                                                           "candleIDRight": {"value": 0,
                                                                                             "checked": False}}},
-    {"id": "d685af4d-c07a-4d94-87eb-bd426b0c18fe", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "d685af4d-c07a-4d94-87eb-bd426b0c18fe", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 692, "y": 89}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 2, "name": "RSI", "description": "this is RSI indicator"},
@@ -44,7 +44,7 @@ input_data_1 = {"nodes": [
             {"optionName": "rsi Period", "value": {"optionName": "rsi Period", "value": "575"}}],
                                  "candleIDLeft": {"value": 0, "checked": False},
                                  "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "da97eca4-8367-4e0e-9ca2-883e1ab40df0", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "da97eca4-8367-4e0e-9ca2-883e1ab40df0", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 167, "y": 128}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 167, "y": 128}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -63,7 +63,7 @@ input_data_1 = {"nodes": [
                                                                                             "checked": False},
                                                                            "candleIDRight": {"value": 0,
                                                                                              "checked": False}}},
-    {"id": "3b399d0c-2ae0-4bf1-8fb7-d9ff318541fd", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "3b399d0c-2ae0-4bf1-8fb7-d9ff318541fd", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 322, "y": 132}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 322, "y": 132}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -82,7 +82,7 @@ input_data_1 = {"nodes": [
                                                                                             "checked": False},
                                                                            "candleIDRight": {"value": 0,
                                                                                              "checked": False}}},
-    {"id": "f683a536-67ff-45fb-ab99-9b981e4fa9e8", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "f683a536-67ff-45fb-ab99-9b981e4fa9e8", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 676, "y": 165}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 1, "name": "Macd", "description": "this is macd indicator"},
@@ -97,7 +97,7 @@ input_data_1 = {"nodes": [
             {"optionName": "Fast EMA Period", "value": {"optionName": "Fast EMA Period", "value": "9678"}}],
                                  "candleIDLeft": {"value": 0, "checked": False},
                                  "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "b7c25c3e-db64-436d-aaf0-031c97782445", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "b7c25c3e-db64-436d-aaf0-031c97782445", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 967, "y": 177}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 1, "name": "Macd", "description": "this is macd indicator"},
@@ -146,7 +146,7 @@ input_data_1 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "check second", "value": "123456", "description": ""}]}
 
 input_data_2 = {"nodes": [
-    {"id": "6cd6fd03-b9b1-4513-a1f7-c31538fcdd4e", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "6cd6fd03-b9b1-4513-a1f7-c31538fcdd4e", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 538, "y": 70}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 1, "name": "Macd", "description": "this is macd indicator"},
@@ -161,7 +161,7 @@ input_data_2 = {"nodes": [
                                  "candleIDLeft": {"value": 0, "checked": False},
                                  "candleIDRight": {"value": 0, "checked": False}},
      "positionAbsolute": {"x": 538, "y": 70}},
-    {"id": "c42a7a04-4d40-4727-90fe-3b3231e29298", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "c42a7a04-4d40-4727-90fe-3b3231e29298", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 419, "y": 185}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 419, "y": 185}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -182,7 +182,7 @@ input_data_2 = {"nodes": [
                                                                                             "checked": False},
                                                                            "candleIDRight": {"value": 0,
                                                                                              "checked": False}}},
-    {"id": "a457caa6-df9d-4d91-b991-0ab9b2d5bcab", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "a457caa6-df9d-4d91-b991-0ab9b2d5bcab", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 676, "y": 187}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 676, "y": 187}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -245,7 +245,7 @@ input_data_2 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_3 = {"nodes": [
-    {"id": "ddc865b8-7270-4459-a6ab-f8ae8045cb94", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "ddc865b8-7270-4459-a6ab-f8ae8045cb94", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 699.2929006178282, "y": -89.54536809217798}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 2, "name": "RSI",
@@ -291,7 +291,7 @@ input_data_3 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_4 = {"nodes": [
-    {"id": "ddc865b8-7270-4459-a6ab-f8ae8045cb94", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "ddc865b8-7270-4459-a6ab-f8ae8045cb94", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 655.0893856069363, "y": -102.74044719990692}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 2, "name": "RSI",
@@ -306,7 +306,7 @@ input_data_4 = {"nodes": [
                                                     "candleIDLeft": {"value": 0, "checked": False},
                                                     "candleIDRight": {"value": 0, "checked": False}},
      "positionAbsolute": {"x": 655.0893856069363, "y": -102.74044719990692}},
-    {"id": "d336cf2a-5d48-42df-bab1-9e44a9ad4098", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "d336cf2a-5d48-42df-bab1-9e44a9ad4098", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 543, "y": -27}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 543, "y": -27}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -344,7 +344,7 @@ input_data_4 = {"nodes": [
               "expirationModeToggle": False, "slippage": {"value": 4, "checked": False},
               "comment": {"value": 0, "checked": False}, "arrowColor": {"id": 2, "label": "Blue"},
               "arrowColorToggle": False, "changeStatus": False, "changeStatusDesc": ""}},
-    {"id": "570ec837-3eb1-415c-8061-b99b7d607bc3", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "570ec837-3eb1-415c-8061-b99b7d607bc3", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 825, "y": -17}, "width": 82, "height": 32, "selected": False,
      "positionAbsolute": {"x": 825, "y": -17}, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                            "left2": {"id": 1, "name": "Macd",
@@ -399,7 +399,7 @@ input_data_4 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_5 = {"nodes": [
-    {"id": "e0c7e391-e59f-458d-b856-0575f1a96f63", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "e0c7e391-e59f-458d-b856-0575f1a96f63", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 549, "y": 35}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "positionAbsolute": {"x": 549, "y": 35}, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                                           "left2": {"id": 1, "name": "Macd",
@@ -451,7 +451,7 @@ input_data_5 = {"nodes": [
               "expirationModeToggle": False, "slippage": {"value": 4, "checked": False},
               "comment": {"value": 0, "checked": False}, "arrowColor": {"id": 2, "label": "Blue"},
               "arrowColorToggle": False, "changeStatus": False, "changeStatusDesc": ""}},
-    {"id": "7926215e-b327-456e-aaaf-bf19bc893e10", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "7926215e-b327-456e-aaaf-bf19bc893e10", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 887, "y": 56}, "width": 82, "height": 32, "selected": False,
      "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                  "left2": {"id": 1, "name": "Macd", "description": "this is macd indicator"},
@@ -508,7 +508,7 @@ input_data_5 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_6 = {"nodes": [
-    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 357.7625621572218, "y": 85.12515614406236}, "width": 82, "height": 32,
      "selected": True, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                    "left2": {"id": 1, "name": "Macd",
@@ -532,7 +532,7 @@ input_data_6 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                    "candleIDLeft": {"value": 0, "checked": False},
                                                    "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 278.665655704718, "y": 192.35365538531488}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 1, "name": "Macd",
@@ -556,7 +556,7 @@ input_data_6 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                     "candleIDLeft": {"value": 0, "checked": False},
                                                     "candleIDRight": {"value": "3", "checked": False}}},
-    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 603.0290009379432, "y": 200.69009650112207}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 2, "name": "RSI",
@@ -609,7 +609,7 @@ input_data_6 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_7 = {"nodes": [
-    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 357.7625621572218, "y": 85.12515614406236}, "width": 82, "height": 32,
      "selected": True, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                    "left2": {"id": 1, "name": "Macd",
@@ -633,7 +633,7 @@ input_data_7 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                    "candleIDLeft": {"value": 0, "checked": False},
                                                    "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 278.665655704718, "y": 192.35365538531488}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 1, "name": "Macd",
@@ -657,7 +657,7 @@ input_data_7 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                     "candleIDLeft": {"value": 0, "checked": False},
                                                     "candleIDRight": {"value": "3", "checked": False}}},
-    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 603.0290009379432, "y": 200.69009650112207}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 2, "name": "RSI",
@@ -724,7 +724,7 @@ input_data_7 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_8 = {"nodes": [
-    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "a4762ee0-6f14-4589-b8d6-6804cd809be9", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 357.7625621572218, "y": 85.12515614406236}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 1, "name": "Macd",
@@ -748,7 +748,7 @@ input_data_8 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                     "candleIDLeft": {"value": 0, "checked": False},
                                                     "candleIDRight": {"value": 0, "checked": False}}},
-    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "d00127ea-658d-4b67-aaa2-27617be5f85c", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 278.665655704718, "y": 192.35365538531488}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 1, "name": "Macd",
@@ -772,7 +772,7 @@ input_data_8 = {"nodes": [
              "value": {"id": 3, "key": "Fast EMA Period", "value": 9, "indicator_name": 1}}],
                                                     "candleIDLeft": {"value": 0, "checked": False},
                                                     "candleIDRight": {"value": "3", "checked": False}}},
-    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "21cd72c5-00a5-4dfd-8760-df9b8bdd63ed", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 603.0290009379432, "y": 200.69009650112207}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 2, "name": "RSI",
@@ -810,7 +810,7 @@ input_data_8 = {"nodes": [
               "expirationModeToggle": False, "slippage": {"value": 4, "checked": False},
               "comment": {"value": 0, "checked": False}, "arrowColor": {"id": 2, "label": "Red"},
               "arrowColorToggle": False, "changeStatus": False, "changeStatusDesc": ""}},
-    {"id": "ba349676-65c9-4432-912b-1e3f13a82090", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "ba349676-65c9-4432-912b-1e3f13a82090", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 336.50150968951107, "y": 372.1227047845417}, "width": 82, "height": 32,
      "selected": False, "positionAbsolute": {"x": 336.50150968951107, "y": 372.1227047845417}, "dragging": False,
      "more": {"left1": {"id": 3, "label": "Indicator"},
@@ -877,7 +877,7 @@ input_data_8 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_9 = {"nodes": [
-    {"id": "b1afc05b-1148-4173-9604-f655cca7835d", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "b1afc05b-1148-4173-9604-f655cca7835d", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 358.6180032075592, "y": 46.608899976265775}, "width": 82, "height": 32,
      "selected": False, "dragging": False, "more": {"left1": {"id": 3, "label": "Indicator"},
                                                     "left2": {"id": 1, "name": "Macd",
@@ -919,7 +919,7 @@ input_data_9 = {"nodes": [
     "variables": [{"id": 0, "type": "double", "name": "gfg", "value": "78", "description": ""}]}
 
 input_data_10 = {"nodes": [
-    {"id": "a52b4611-1462-4ba5-817e-12dbe05abf79", "data": {"blockId": 1, "blockName": "condition1"},
+    {"id": "a52b4611-1462-4ba5-817e-12dbe05abf79", "data": {"blockId": 1, "blockName": "condition"},
      "type": "testMojtaba", "position": {"x": 291.7931794363558, "y": 73.21032020826408}, "width": 82, "height": 32,
      "selected": False, "positionAbsolute": {"x": 291.7931794363558, "y": 73.21032020826408}, "dragging": False,
      "more": {"left1": {"id": 3, "label": "Indicator"},
@@ -961,7 +961,7 @@ input_data_11 = {
             "id": "a52b4611-1462-4ba5--12dbe05abf79",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -1165,7 +1165,7 @@ input_data_12 = {
             "id": "a52b4611-1462-4ba5-817e-12dbe05abf79",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -1369,7 +1369,7 @@ input_data_13 = {
             "id": "a52b4611-1462-4ba5-817e-12dbe05abf79",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -1573,7 +1573,7 @@ input_data_14 = {
             "id": "a52b4611-1462-4ba5-817e-12dbe05abf79",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -1777,7 +1777,7 @@ input_data_15 = {
             "id": "a52b4611-1462-4ba5-817e-12dbe05abf79",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -1980,7 +1980,7 @@ input_data_16 = {
             "id": "ca03c2fb-6e38-4aa9-9606-0cdab0d8c8b0",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -2261,7 +2261,7 @@ input_data_17 = {
             "id": "ca03c2fb-6e38-4aa9-9606-0cdab0d8c8b0",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -2493,7 +2493,7 @@ input_data_17 = {
             "id": "72421fa1-6858-4c96-bc92-0ae2f75148db",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -2692,7 +2692,7 @@ input_data_18 = {
             "id": "8f5fbd72-435b-4225-9eb2-b1b4eaa4c9c6",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -2786,7 +2786,7 @@ input_data_18 = {
             "id": "703cd797-dc2c-494d-ba6b-e17ddfaf031c",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -2880,7 +2880,7 @@ input_data_18 = {
             "id": "337cc93f-aeb8-48ca-aeb3-9f652acc21a1",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -3064,7 +3064,7 @@ input_data_19 = {
             "id": "8f5fbd72-435b-4225-9eb2-b1b4eaa4c9c6",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -3256,7 +3256,7 @@ input_data_19 = {
             "id": "8c31ed7e-d566-4d60-a937-8e1a1c2ec85a",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -3476,7 +3476,7 @@ input_data_20 = {
             "id": "7c38671f-687b-483c-8813-2481d7df3ff7",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -3667,7 +3667,7 @@ input_data_21 = {
             "id": "ca03c2fb-6e38-4aa9-9606-0cdab0d8c8b0",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -3922,7 +3922,7 @@ input_data_21 = {
             "id": "771d2929-35a4-4333-8cd1-eea50bd116e7",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -4141,7 +4141,7 @@ input_data_22 = {
             "id": "7c38671f-687b-483c-8813-2481d7df3ff7",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -4451,7 +4451,7 @@ input_data_23 = {
             "id": "7c38671f-687b-483c-8813-2481d7df3ff7",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -4697,7 +4697,7 @@ input_data_23 = {
             "id": "fd3909f9-5ffb-49bd-b3bb-a5f56867fad2",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -4856,7 +4856,7 @@ input_data_24 = {
             "id": "7c38671f-687b-483c-8813-2481d7df3ff7",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5077,7 +5077,7 @@ input_data_25 = {
             "id": "f18612cf-71f4-4d89-85a1-ab1ac5334969",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5287,7 +5287,7 @@ input_data_25 = {
             "id": "9e67eb79-5612-4556-83f7-0db1d2f42cae",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5379,7 +5379,7 @@ input_data_25 = {
             "id": "31961ada-e124-407f-b319-a6007740e8be",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5619,7 +5619,7 @@ input_data_26 = {
             "id": "f18612cf-71f4-4d89-85a1-ab1ac5334969",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5829,7 +5829,7 @@ input_data_26 = {
             "id": "9e67eb79-5612-4556-83f7-0db1d2f42cae",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -5921,7 +5921,7 @@ input_data_26 = {
             "id": "31961ada-e124-407f-b319-a6007740e8be",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -6097,7 +6097,7 @@ input_data_26 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -6275,7 +6275,7 @@ input_data_26 = {
             "id": "95e8af8f-1581-4b12-9a64-e4ad53591b1a",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -6399,7 +6399,7 @@ input_data_26 = {
             "id": "0d3249ac-665c-4d20-bea6-7158f8f84a71",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -6585,7 +6585,7 @@ input_data_27 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -6831,7 +6831,7 @@ input_data_28 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -7186,7 +7186,7 @@ input_data_28 = {
             "id": "9002c823-862a-4d7c-982c-645ea070bb29",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -7433,7 +7433,7 @@ input_data_29 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -7788,7 +7788,7 @@ input_data_29 = {
             "id": "9002c823-862a-4d7c-982c-645ea070bb29",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -7965,7 +7965,7 @@ input_data_29 = {
             "id": "76e77b21-d23d-4734-a9b5-5792ee99a847",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8057,7 +8057,7 @@ input_data_29 = {
             "id": "8cc4fba9-8e45-4466-9b6a-e42793b1b558",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8235,7 +8235,7 @@ input_data_30 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -8459,7 +8459,7 @@ input_data_30 = {
             "id": "9002c823-862a-4d7c-982c-645ea070bb29",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8636,7 +8636,7 @@ input_data_30 = {
             "id": "76e77b21-d23d-4734-a9b5-5792ee99a847",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8728,7 +8728,7 @@ input_data_30 = {
             "id": "8cc4fba9-8e45-4466-9b6a-e42793b1b558",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8820,7 +8820,7 @@ input_data_30 = {
             "id": "1190b3aa-7f5b-43f4-a4bc-c871b9cee36b",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -8944,7 +8944,7 @@ input_data_30 = {
             "id": "9ec6562e-8643-4f0d-8baa-983494fd8da3",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -9303,7 +9303,7 @@ input_data_31 = {
         {
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "width": 82,
@@ -9527,7 +9527,7 @@ input_data_31 = {
             "id": "9002c823-862a-4d7c-982c-645ea070bb29",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -9704,7 +9704,7 @@ input_data_31 = {
             "id": "76e77b21-d23d-4734-a9b5-5792ee99a847",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -9796,7 +9796,7 @@ input_data_31 = {
             "id": "8cc4fba9-8e45-4466-9b6a-e42793b1b558",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -9888,7 +9888,7 @@ input_data_31 = {
             "id": "1190b3aa-7f5b-43f4-a4bc-c871b9cee36b",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
@@ -10012,7 +10012,7 @@ input_data_31 = {
             "id": "9ec6562e-8643-4f0d-8baa-983494fd8da3",
             "data": {
                 "blockId": 1,
-                "blockName": "condition1"
+                "blockName": "condition"
             },
             "type": "testMojtaba",
             "position": {
