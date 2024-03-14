@@ -155,6 +155,9 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_chart()
         self.on_init.append(call_add_blocks)
 
+        hold_events = "\n//hold event params then process blocks\n   onchartEventHolder.id     = id;\n   onchartEventHolder.lparam = lparam;\n   onchartEventHolder.dparam = dparam;\n   onchartEventHolder.sparam = sparam;"
+        self.on_chart.append(hold_events)
+
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_chart()
         self.on_chart.append(call_reset_blocks)
@@ -320,6 +323,10 @@ class ExpertBuilder:
         # overriding_timeframe
         overriding_timeframe = self.global_vars.get__overriding_timeframe()
         self.vars_system.append(overriding_timeframe)
+
+        # onchartEventHolder
+        onchart_event_holder = self.global_vars.get__onchart_event_holder()
+        self.vars_system.append(onchart_event_holder)
 
     def add_vars_user(self, mvars):
         for var in mvars:
@@ -573,8 +580,11 @@ class ExpertBuilder:
         self.functions.append(object_get_value_by_shift)
 
     def add_global_structs(self):
-        structs_data = self.market_properties_class_constructor.get_structs()
-        self.structs.append(structs_data)
+        structs_data_mp = self.market_properties_class_constructor.get_structs()
+        self.structs.append(structs_data_mp)
+
+        structs_data_chart_event =  "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
+        self.structs.append(structs_data_chart_event)
 
     def build(self):
         expert = ""

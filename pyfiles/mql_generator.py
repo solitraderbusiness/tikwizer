@@ -1,12 +1,7 @@
 from . import adapter
 from . import expert_builder_class
-from . import test_input_2
-from . import test_input_3
-from . import test_input_4
-from . import test_input_5
 from . import test_input_6
 from . import test_input_7
-from . import test_input
 from . import path_root
 
 
@@ -18,7 +13,7 @@ def generate_mql(data_raw):
 
 
 def test():
-    data = test_input_7.input_data_2
+    data = test_input_7.input_data_4
     result = generate_mql(data)
     if isinstance(result, Exception):
         print("Error occurred")

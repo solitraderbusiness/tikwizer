@@ -219,6 +219,10 @@ def add_category(nodes):
                 node["category"] = "loop_for_chart_objects"
             case "check_trendline_price_level":
                 node["category"] = "loop_for_chart_objects"
+            case "editfield_modified":
+                node["category"] = "on_chart_filter_specific_event"
+            case "object_modified":
+                node["category"] = "on_chart_filter_specific_event"
             case _:
                 node["category"] = "not_specified"
 

@@ -1,3 +1,3 @@
 {
-	"field_data" : "   string                name_starts_with;\n   string                name_contains;\n   color                 obj_color;\n   string                sort_mode;\n   int                   max_objects;\n   int                   skip_objects;"
+	"field_data" : "   string            name_filter_mode;\n   string            obj_name;"
 }
