@@ -374,7 +374,7 @@ public:
    void              init()
 
      {
-      type = VALUE_TYPE_TIME;
+      type = VALUE_TYPE_NUMERIC;
       value = 25.1;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
@@ -442,7 +442,7 @@ public:
 
          case VALUE_TYPE_TIME:
 
-            if(time_market == "")
+            if(time_market == "" || time_market == NULL)
                time_market = Symbol();
 
             if(mode_time == MODE_TIME_NOW)
@@ -571,7 +571,7 @@ public:
             result = retval;
             break;
         }
-      return result;
+      return (double)result;
      }
   };
 
@@ -623,7 +623,7 @@ public:
    void              init()
 
      {
-      type = VALUE_TYPE_TIME;
+      type = VALUE_TYPE_NUMERIC;
       value = 25.1;
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
@@ -691,7 +691,7 @@ public:
 
          case VALUE_TYPE_TIME:
 
-            if(time_market == "")
+            if(time_market == "" || time_market == NULL)
                time_market = Symbol();
 
             if(mode_time == MODE_TIME_NOW)
@@ -820,7 +820,7 @@ public:
             result = retval;
             break;
         }
-      return result;
+      return (double)result;
      }
   };
 
@@ -1566,13 +1566,13 @@ public:
                      Task2(string name):Task(name)
      {
       name_filter_mode = "names";
-      obj_name = "test_name_obj_1, test_name_obj_2";
+      obj_name = "test_name_obj_yy, test_name_obj_zz";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
       bool next = false;
-      if(onchartEventHolder.id == CHARTEVENT_OBJECT_CHANGE || onchartEventHolder.id == CHARTEVENT_OBJECT_ENDEDIT)
+      if(onchartEventHolder.id == CHARTEVENT_OBJECT_DRAG)
         {
          if(name_filter_mode == "name" || name_filter_mode == "names")
            {
@@ -2362,7 +2362,7 @@ public:
      {
       id = 0;
       id_by_user = 2;
-      name = "object_modified";
+      name = "object_dragged";
       enabled = True;
 
       int mnexts_true[] = {3};

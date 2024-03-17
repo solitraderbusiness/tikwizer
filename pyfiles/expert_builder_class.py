@@ -1003,13 +1003,13 @@ class ExpertBuilder:
         params = node.get("params")
         # left data
         row1_left = params.get("left").get("row1")
-        row2_left = params.get("left").get("row1")
+        row2_left = params.get("left").get("row2")
         id_val_left = str(node.get("id_by_user")) + "_" + "left"
         params_left = params.get("left").get("params")
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
         # right data
         row1_right = params.get("right").get("row1")
-        row2_right = params.get("right").get("row1")
+        row2_right = params.get("right").get("row2")
         id_val_right = str(node.get("id_by_user")) + "_" + "right"
         params_right = params.get("right").get("params")
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
@@ -1024,7 +1024,7 @@ class ExpertBuilder:
         params_left_1 = params.get("left").get("params")
         params_left_2 = params_left_1.copy()
         if "shift" in params_left_2:
-            params_left_2["shift"] = int(params_left_2["shift"]) + params.get("operator").get("cross_width")
+            params_left_2["shift"] = int(params_left_2["shift"]) + int(params.get("operator").get("cross_width"))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
         # right data
@@ -1035,7 +1035,7 @@ class ExpertBuilder:
         params_right_1 = params.get("right").get("params")
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:
-            params_right_2["shift"] = int(params_right_2["shift"]) + params.get("operator").get("cross_width")
+            params_right_2["shift"] = int(params_right_2["shift"]) + int(params.get("operator").get("cross_width"))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
 

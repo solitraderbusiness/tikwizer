@@ -3,6 +3,6 @@
   "timeframe":0,
   "find_method":"FIND_BY_ID",
   "price_mode":"CANDLE_HIGH",
-  "timestr":"\"2023.4.26 13:40:30\"",
+  "timestr":"2023.4.26 13:40:30",
   "shift":10
 }

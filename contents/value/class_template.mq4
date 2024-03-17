@@ -46,7 +46,7 @@ public:
 
          case VALUE_TYPE_TIME:
 
-            if(time_market == "")
+            if(time_market == "" || time_market == NULL)
                time_market = Symbol();
 
             if(mode_time == MODE_TIME_NOW)

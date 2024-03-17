@@ -455,10 +455,17 @@ def replace_input_values(data, params):
             items = str(set(value)) if set(value) else "{}"
             data = data.replace(key + "_val", items)
         elif isinstance(value, dict):
-            data = data.replace(key + "_val", str(value.get("value")))
+            data = data.replace(key + "_val", get_proper_value(value.get("value")))
         else:  # So it's a string (or number)
-            data = data.replace(key + "_val", str(value))
+            data = data.replace(key + "_val", get_proper_value(value))
     return data
+
+
+def get_proper_value(value):
+    if isinstance(value, str):
+        return value
+    else:
+        return str(value)
 
 
 def spread_filter_run_data(node, run_data):

@@ -1,5 +1,8 @@
 # This module adapts client data to mql generator
 
+from . import path_root
+import json
+
 
 def refactor(data):
     correct_enabled(data)
@@ -9,10 +12,152 @@ def refactor(data):
         event = events[key]
         overwrite_ids(event["nodes"], event["edges"])
         add_category(event["nodes"])
+        create_specific_input(event["nodes"])
         overwrite_task_names(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(event["nodes"], event["edges"])
+        # Set input items that are not present in user input form front end
+        add_not_present_input(event)
+        # Correct double quotation issue with string values
+        correct_double_quotation_strings(event, data.get("constants"), data.get("variables"))
+    add_extra_double_quotation_vars_consts(data.get("constants"), data.get("variables"))
     return data
+
+
+# This function creates generator specific input like order_type in buy_sell or type in value
+def create_specific_input(nodes):
+    for node in nodes:
+        block_name = node.get("blockName")
+        params = node.get("params")
+        if block_name == "condition":
+            left = params.get("left")
+            right = params.get("right")
+            if left.get("row1") == "Value":
+                left.get("params")["type"] = get_value_type(left.get("row2"))
+            if right.get("row1") == "Value":
+                right.get("params")["type"] = get_value_type(right.get("row2"))
+        elif block_name == "Buy now":
+            node.get("params")["order_type"] = "ORDER_BUY"
+        elif block_name == "Sell now":
+            node.get("params")["order_type"] = "ORDER_SELL"
+        elif block_name == "Buy pending order":
+            node.get("params")["order_type"] = "ORDER_BUY_PENDING"
+        elif block_name == "Sell pending order":
+            node.get("params")["order_type"] = "ORDER_SELL_PENDING"
+
+
+def get_value_type(row2):
+    match row2:
+        case "Numeric":
+            return "VALUE_TYPE_NUMERIC"
+        case "Boolean":
+            return "VALUE_TYPE_BOOLEAN"
+        case "Color":
+            return "VALUE_TYPE_COLOR"
+        case "Pips":
+            return "VALUE_TYPE_PIPS"
+        case "Text":
+            return "VALUE_TYPE_TEXT"
+        case "Text(code input)":
+            return "VALUE_TYPE_TEXT_CODE_INPUT"
+        case "Time":
+            return "VALUE_TYPE_TIME"
+
+
+# Correct string values that are expected with extra double quotations: "\"\""
+def correct_double_quotation_strings(event, constants, variables):
+    nodes = event.get("nodes")
+    for node in nodes:
+        if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
+                "blockName") == "Formula":
+            add_extra_double_quotation_if_any(node.get("params").get("left").get("params"), constants, variables)
+            add_extra_double_quotation_if_any(node.get("params").get("right").get("params"), constants, variables)
+        else:
+            add_extra_double_quotation_if_any(node.get("params"), constants, variables)
+
+
+def add_extra_double_quotation_if_any(params, constants, variables):
+    for key, value in params.items():
+        match key:
+            case "timestr_start" | "timestr_end" | "time_stamp" | "time_market" \
+                 | "timestr" | "comment" | "obj_name" | "name_filter_mode" | "symbols_str":
+                for constant in constants:
+                    if constant.get("name") is value:
+                        continue
+                for variable in variables:
+                    if variable.get("name") is value:
+                        continue
+                params[key] = '\"' + value + '\"'
+            case "value":  # STest, in future this may make trouble. This supports Value class, text types
+                if isinstance(value, str):
+                    for constant in constants:
+                        if constant.get("name") is value:
+                            continue
+                    for variable in variables:
+                        if variable.get("name") is value:
+                            continue
+                    params[key] = '\"' + value + '\"'
+
+
+def add_extra_double_quotation_vars_consts(constants, variables):
+    for const in constants:
+        if const.get("type").lower().strip() == "string":
+            const["value"] = '\"' + const.get("value") + '\"'
+    for variable in variables:
+        if variable.get("type").lower().strip() == "string":
+            variable["value"] = '\"' + variable.get("value") + '\"'
+
+
+# Adds the input that are not passed by front end
+def add_not_present_input(event):
+    nodes = event.get("nodes")
+    for node in nodes:
+        if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
+                "blockName") == "Formula":
+            params_main = node.get("params")
+            left = params_main.get("left")
+            right = params_main.get("right")
+            check_condition_params(left)
+            check_condition_params(right)
+        else:
+            path = path_root.get()
+            path_sub = "/contents/"
+            category = node.get("category")
+            task_name = node.get("blockName")
+            params = node.get("params")
+            path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
+            with open(path_task_id + "input.json") as input_file:
+                if input_file:
+                    input_text = input_file.read()
+                    input_saved = json.loads(input_text)
+                    replace_params(input_saved, params)
+
+
+def check_condition_params(side):  # Side means left or right
+    path = path_root.get()
+    path_sub = "/contents/"
+    path_module = ""
+    params = side.get("params")
+    match side.get("row1"):
+        case "Indicator":
+            path_module = "indicators" + "/" + side.get("row2").lower() + "/"
+        case "Market Properties":
+            path_module = "market_properties" + "/"
+        case "Value":
+            path_module = "value" + "/"
+        case "Candle":
+            path_module = "candle" + "/"
+    with open(path + path_sub + path_module + "input.json") as input_file:
+        if input_file:
+            input_text = input_file.read()
+            input_saved = json.loads(input_text)
+            replace_params(input_saved, params)
+
+
+def replace_params(input_saved, params):
+    for key, value in input_saved.items():
+        if key not in params:
+            params[key] = value
 
 
 def correct_enabled(data):
@@ -223,6 +368,9 @@ def add_category(nodes):
                 node["category"] = "on_chart_filter_specific_event"
             case "object_modified":
                 node["category"] = "on_chart_filter_specific_event"
+            case "mouse_clicked_on_object":
+                node["category"] = "on_chart_filter_specific_event"
+            case "object_dragged":
+                node["category"] = "on_chart_filter_specific_event"
             case _:
                 node["category"] = "not_specified"
-

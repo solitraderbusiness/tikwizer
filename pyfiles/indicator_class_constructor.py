@@ -5,8 +5,9 @@ from . import adjust
 path = path_root.get()
 path_sub = "/contents/indicators/"
 
+
 def get_class(indicator_name, input_dic, class_id):
-    mpath = path + path_sub + indicator_name+"/"
+    mpath = path + path_sub + indicator_name + "/"
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
         if class_file:
@@ -47,7 +48,6 @@ def get_class(indicator_name, input_dic, class_id):
     return mql4_body
 
 
-
 def get_initializer(indicator_name, var_id):
     mpath = path + path_sub + indicator_name + "/"
     with open(mpath + "initializer.json") as initializer_file:
@@ -56,6 +56,7 @@ def get_initializer(indicator_name, var_id):
             initializer_dic = json.loads(initializer_str)
             initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
             return initializer_body
+
 
 def get_initializer_split(indicator_name, var_id):
     mpath = path + path_sub + indicator_name + "/"
@@ -68,6 +69,7 @@ def get_initializer_split(indicator_name, var_id):
                 initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
             return initializer_list
 
+
 def get_var_name(indicator_name, var_id):
     mpath = path + path_sub + indicator_name + "/"
     with open(mpath + "initializer.json") as initializer_file:
@@ -76,5 +78,3 @@ def get_var_name(indicator_name, var_id):
             initializer_dic = json.loads(initializer_str)
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
-
-
