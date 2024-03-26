@@ -250,6 +250,7 @@ def get_call__run_block_deinit(source_id, source_result, target_id):
         .replace("target_id_val", str(target_id))
     return result
 
+
 #################################
 
 
@@ -490,4 +491,19 @@ def get_fun__in_array():
 
 def get_fun__object_get_value_by_shift():
     result = "double ObjectGetValueByShift(long chart_id, string name, int shift)\n{\n\tMqlRates rates[];\n\tCopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);\n\n\treturn ObjectGetValueByTime(chart_id, name, rates[0].time, 0);\n}"
+    return result
+
+
+def get_fun__array_strip_key():
+    result = "template<typename T>\nbool ArrayStripKey(T &array[], int key)\n  {\n   int x    = 0;\n   int size = ArraySize(array);\n\n   for(int i=0; i<size; i++)\n     {\n      if(i != key)\n        {\n         array[x] = array[i];\n         x++;\n        }\n     }\n\n   if(x < size)\n     {\n      ArrayResize(array, x);\n\n      return true; // stripped\n     }\n\n   return false; // not stripped\n  }\n\n"
+    return result
+
+
+def get_fun__attr_ticket_parent():
+    result = "long attrTicketParent(long ticket)\n  {\n   int pos = 0;\n   int total = 0;\n   long retval = 0;\n   static long cacheTickets[];\n   static long cacheValues[];\n\n//-- return cached value if possible\n   int size = ArraySize(cacheTickets);\n   int idx  = -1;\n\n   for(int i = size-1; i >= 0; i--)\n     {\n      if(cacheTickets[i] == ticket)\n        {\n         return cacheValues[i];\n        }\n     }\n\n   if(!OrderSelect((int)ticket, SELECT_BY_TICKET))\n     {\n      retval = ticket;\n     }\n\n//-- check if trade is added to volume\n   if(retval == 0)\n     {\n      string comment = OrderComment();\n      int tagPos     = StringFind(comment, \"[p=\");\n\n      if(tagPos >= 0)\n        {\n         string tag = StringSubstr(comment, tagPos);\n         tag        = StringSubstr(tag, 0, StringFind(tag, \"]\") + 1);\n         retval     = (int)StringToInteger(StringSubstr(tag, 3, -1));\n        }\n     }\n\n   double OP   = OrderOpenPrice();\n   datetime OT = OrderOpenTime();\n   string S    = OrderSymbol();\n   int M       = OrderMagicNumber();\n   int T       = OrderType();\n   double L    = OrderLots();\n   int D       = (int)MarketInfo(S, MODE_DIGITS);\n\n//-- check if trade is partially closed\n   if(retval == 0)\n     {\n      total = OrdersHistoryTotal();\n\n      for(pos = total-1; pos >= 0; pos--)\n        {\n         if(OrderSelect(pos, SELECT_BY_POS, MODE_HISTORY))\n           {\n            if(OrderOpenTime() < OT)\n              {\n               break;\n              }\n\n            if(\n               (OrderMagicNumber() == M)\n               && (OrderTicket() < ticket)\n               && (OrderType() == T)\n               && (OrderOpenTime() == OT)\n               && (NormalizeDouble(OrderOpenPrice(), D) == NormalizeDouble(OP, D))\n               && (OrderSymbol() == S)\n            )\n              {\n               retval = OrderTicket();\n              }\n           }\n        }\n     }\n\n   if(retval > 0)\n     {\n      size = ArraySize(cacheTickets);\n      ArrayResize(cacheTickets, size + 1);\n      ArrayResize(cacheValues,size + 1);\n      cacheTickets[size] = ticket;\n      cacheValues[size]  = retval;\n     }\n\n// Load the original trade again\n   if(!OrderSelect((int)ticket,SELECT_BY_TICKET))\n     {\n      retval = ticket;\n     }\n\n   if(retval <= 0)\n     {\n      retval = ticket;\n     }\n\n   return retval;\n  }\n"
+    return result
+
+
+def get_fun__e_functions():
+    result = "string e_Reason() {return onTradeEventDetector.EventValueReason();}\n\nstring e_ReasonDetail() {return onTradeEventDetector.EventValueDetail();}\n\ndouble e_attrClosePrice() {return onTradeEventDetector.EventValuePriceClose();}\n\ndatetime e_attrCloseTime() {return onTradeEventDetector.EventValueTimeClose();}\n\nstring e_attrComment() {return onTradeEventDetector.EventValueComment();}\n\ndatetime e_attrExpiration() {return onTradeEventDetector.EventValueTimeExpiration();}\n\ndouble e_attrLots() {return onTradeEventDetector.EventValueVolume();}\n\nint e_attrMagicNumber() {return (int)onTradeEventDetector.EventValueMagic();}\n\ndouble e_attrOpenPrice() {return onTradeEventDetector.EventValuePriceOpen();}\n\ndatetime e_attrOpenTime() {return onTradeEventDetector.EventValueTimeOpen();}\n\ndouble e_attrProfit() {return onTradeEventDetector.EventValueProfit();}\n\ndouble e_attrStopLoss() {return onTradeEventDetector.EventValueStopLoss();}\n\ndouble e_attrSwap() {return onTradeEventDetector.EventValueSwap();}\n\nstring e_attrSymbol() {return onTradeEventDetector.EventValueSymbol();}\n\ndouble e_attrTakeProfit() {return onTradeEventDetector.EventValueTakeProfit();}\n\nint e_attrTicket() {return (int)onTradeEventDetector.EventValueTicket();}\n\nint e_attrType() {return onTradeEventDetector.EventValueType();}\n\n"
     return result

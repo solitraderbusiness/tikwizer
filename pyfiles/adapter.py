@@ -80,7 +80,7 @@ def add_extra_double_quotation_if_any(params, constants, variables):
     for key, value in params.items():
         match key:
             case "timestr_start" | "timestr_end" | "time_stamp" | "time_market" \
-                 | "timestr" | "comment" | "obj_name" | "name_filter_mode" | "symbols_str":
+                 | "timestr" | "comment" | "obj_name" | "name_filter_mode" | "symbols_str" | "close_mode":
                 for constant in constants:
                     if constant.get("name") is value:
                         continue
@@ -96,6 +96,9 @@ def add_extra_double_quotation_if_any(params, constants, variables):
                     for variable in variables:
                         if variable.get("name") is value:
                             continue
+                    params[key] = '\"' + value + '\"'
+            case "symbol":
+                if value != "NULL":
                     params[key] = '\"' + value + '\"'
 
 
@@ -155,6 +158,8 @@ def check_condition_params(side):  # Side means left or right
 
 
 def replace_params(input_saved, params):
+    keys_lost = set(params.keys()) - set(input_saved.keys())
+    print("keys_lost: " + str(keys_lost))  # STest, remove later
     for key, value in input_saved.items():
         if key not in params:
             params[key] = value
@@ -372,5 +377,7 @@ def add_category(nodes):
                 node["category"] = "on_chart_filter_specific_event"
             case "object_dragged":
                 node["category"] = "on_chart_filter_specific_event"
+            case "order_deleted":
+                node["category"] = "on_trade_filter_specific_event"
             case _:
                 node["category"] = "not_specified"

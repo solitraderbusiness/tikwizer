@@ -591,6 +591,15 @@ class ExpertBuilder:
         object_get_value_by_shift = self.global_functions.get_fun__object_get_value_by_shift()
         self.functions.append(object_get_value_by_shift)
 
+        array_strip_key = self.global_functions.get_fun__array_strip_key()
+        self.functions.append(array_strip_key)
+
+        attr_ticket_parent = self.global_functions.get_fun__attr_ticket_parent()
+        self.functions.append(attr_ticket_parent)
+
+        e_functions = self.global_functions.get_fun__e_functions()
+        self.functions.append(e_functions)
+
     def add_global_classes_structs(self):
         structs_data_mp = self.market_properties_class_constructor.get_structs()
         self.classes_structs.append(structs_data_mp)
