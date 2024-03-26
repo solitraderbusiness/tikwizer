@@ -5599,7 +5599,7 @@ input_data_13 = {
                             "row2": "RSI",
                             "params": {
                                 "symbol": "NULL",
-                                "timeframe": 0,
+                                "t-imeframe": 0,
                                 "period": "10",
                                 "applied_price": "PRICE_CLOSE",
                                 "shift": "10",

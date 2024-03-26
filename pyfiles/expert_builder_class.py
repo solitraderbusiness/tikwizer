@@ -36,6 +36,7 @@ class ExpertBuilder:
     from . import value_class_constructor
     from . import market_properties_class_constructor
     from . import spread_filter_struct_constructor
+    from . import on_trade_event_detector_class_constructor
     from . import close_partially_items
 
     def __init__(self, data):
@@ -46,7 +47,7 @@ class ExpertBuilder:
         self.consts_user = []
         self.vars_system = []
         self.vars_user = []
-        self.structs = []
+        self.classes_structs = []
         self.block_parent_blueprint = ""
         self.task_blueprint = ""
         self.task_elements = []
@@ -69,7 +70,7 @@ class ExpertBuilder:
     # Main function
     def process_input(self):
         self.add_global_functions(self.data)
-        self.add_global_structs()
+        self.add_global_classes_structs()
         self.add_consts_system()
         self.add_consts_user(self.data.get("constants"))
         self.add_vars_system()
@@ -271,9 +272,11 @@ class ExpertBuilder:
         self.on_trade.append(call_reset_blocks)
 
         # runBlocks call
+        self.on_trade.append("   while(onTradeEventDetector.Start())\n{\n")
         for id_block in entries:
             call_run_block = self.global_functions.get_call__run_block_trade(-1, -1, id_block)
             self.on_trade.append(call_run_block)
+        self.on_trade.append("     }\n\n    onTradeEventDetector.End();")
 
     def process_blocks_deinit(self, data):
         if data is None:
@@ -328,6 +331,9 @@ class ExpertBuilder:
         onchart_event_holder = self.global_vars.get__onchart_event_holder()
         self.vars_system.append(onchart_event_holder)
 
+        on_trade_event_detector_var = self.on_trade_event_detector_class_constructor.get_var()
+        self.vars_system.append(on_trade_event_detector_var)
+
     def add_vars_user(self, mvars):
         for var in mvars:
             var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get(
@@ -365,7 +371,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_tick)
 
         # addBlocks function tick
-        fun_add_blocks_tick = self.global_functions.get_fun__add_blocks_tick(data.get("events").get("on_tick").get("nodes"))
+        fun_add_blocks_tick = self.global_functions.get_fun__add_blocks_tick(
+            data.get("events").get("on_tick").get("nodes"))
         self.functions.append(fun_add_blocks_tick)
 
         # resetBlocks function tick
@@ -377,7 +384,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_chart)
 
         # addBlocks function chart
-        fun_add_blocks_chart = self.global_functions.get_fun__add_blocks_chart(data.get("events").get("on_chart").get("nodes"))
+        fun_add_blocks_chart = self.global_functions.get_fun__add_blocks_chart(
+            data.get("events").get("on_chart").get("nodes"))
         self.functions.append(fun_add_blocks_chart)
 
         # resetBlocks function chart
@@ -389,7 +397,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_trade)
 
         # addBlocks function trade
-        fun_add_blocks_trade = self.global_functions.get_fun__add_blocks_trade(data.get("events").get("on_trade").get("nodes"))
+        fun_add_blocks_trade = self.global_functions.get_fun__add_blocks_trade(
+            data.get("events").get("on_trade").get("nodes"))
         self.functions.append(fun_add_blocks_trade)
 
         # resetBlocks function trade
@@ -401,7 +410,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_timer)
 
         # addBlocks function timer
-        fun_add_blocks_timer = self.global_functions.get_fun__add_blocks_timer(data.get("events").get("on_timer").get("nodes"))
+        fun_add_blocks_timer = self.global_functions.get_fun__add_blocks_timer(
+            data.get("events").get("on_timer").get("nodes"))
         self.functions.append(fun_add_blocks_timer)
 
         # resetBlocks function timer
@@ -413,7 +423,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_init)
 
         # addBlocks function init
-        fun_add_blocks_init = self.global_functions.get_fun__add_blocks_init(data.get("events").get("on_init").get("nodes"))
+        fun_add_blocks_init = self.global_functions.get_fun__add_blocks_init(
+            data.get("events").get("on_init").get("nodes"))
         self.functions.append(fun_add_blocks_init)
 
         # resetBlocks function init
@@ -425,7 +436,8 @@ class ExpertBuilder:
         self.functions.append(fun_run_block_deinit)
 
         # addBlocks function deinit
-        fun_add_blocks_deinit = self.global_functions.get_fun__add_blocks_deinit(data.get("events").get("on_deinit").get("nodes"))
+        fun_add_blocks_deinit = self.global_functions.get_fun__add_blocks_deinit(
+            data.get("events").get("on_deinit").get("nodes"))
         self.functions.append(fun_add_blocks_deinit)
 
         # resetBlocks function deinit
@@ -579,12 +591,15 @@ class ExpertBuilder:
         object_get_value_by_shift = self.global_functions.get_fun__object_get_value_by_shift()
         self.functions.append(object_get_value_by_shift)
 
-    def add_global_structs(self):
+    def add_global_classes_structs(self):
         structs_data_mp = self.market_properties_class_constructor.get_structs()
-        self.structs.append(structs_data_mp)
+        self.classes_structs.append(structs_data_mp)
 
-        structs_data_chart_event =  "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
-        self.structs.append(structs_data_chart_event)
+        structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
+        self.classes_structs.append(structs_data_chart_event)
+
+        on_trade_event_detector_class = self.on_trade_event_detector_class_constructor.get_class()
+        self.classes_structs.append(on_trade_event_detector_class)
 
     def build(self):
         expert = ""
@@ -597,7 +612,7 @@ class ExpertBuilder:
             expert += const
         for var in self.vars_user:
             expert += var
-        for struct in self.structs:
+        for struct in self.classes_structs:
             expert += struct
         expert += self.block_parent_blueprint
         expert += self.task_blueprint
@@ -685,13 +700,13 @@ class ExpertBuilder:
                     if self.spread_filter_done:
                         continue
                     structs_data = self.spread_filter_struct_constructor.get_structs()
-                    self.structs.append(structs_data)
+                    self.classes_structs.append(structs_data)
                     self.spread_filter_done = True
                 case "close_partially":
                     if self.close_partially_done:
                         continue
                     structs_data = self.close_partially_items.get_structs()
-                    self.structs.append(structs_data)
+                    self.classes_structs.append(structs_data)
                     vars_data = self.close_partially_items.get_vars()
                     self.vars_system.append(vars_data)
                     self.close_partially_done = True
