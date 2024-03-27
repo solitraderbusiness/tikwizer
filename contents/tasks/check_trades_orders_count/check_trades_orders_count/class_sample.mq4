@@ -30,7 +30,7 @@ public:
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
-      group_mode = ORDER_GROUP_MODE_NONE;
+      group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 25;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);

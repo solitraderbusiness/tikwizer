@@ -705,7 +705,7 @@ def formula(node, run_data):
 
     operator = params.get("operator").get("label")
 
-    variable_name = params.get("variable_name")
+    variable_name = params.get("variable")
 
     run_data = run_data.replace("initializer_1", init_1) \
         .replace("initializer_2", init_2) \

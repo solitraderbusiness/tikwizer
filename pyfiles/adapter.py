@@ -69,7 +69,7 @@ def correct_double_quotation_strings(event, constants, variables):
     nodes = event.get("nodes")
     for node in nodes:
         if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
-                "blockName") == "Formula":
+                "blockName") == "formula":
             add_extra_double_quotation_if_any(node.get("params").get("left").get("params"), constants, variables)
             add_extra_double_quotation_if_any(node.get("params").get("right").get("params"), constants, variables)
         else:
@@ -116,7 +116,7 @@ def add_not_present_input(event):
     nodes = event.get("nodes")
     for node in nodes:
         if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
-                "blockName") == "Formula":
+                "blockName") == "formula":
             params_main = node.get("params")
             left = params_main.get("left")
             right = params_main.get("right")
@@ -378,6 +378,12 @@ def add_category(nodes):
             case "object_dragged":
                 node["category"] = "on_chart_filter_specific_event"
             case "order_deleted":
+                node["category"] = "on_trade_filter_specific_event"
+            case "trade_closed":
+                node["category"] = "on_trade_filter_specific_event"
+            case "order_created":
+                node["category"] = "on_trade_filter_specific_event"
+            case "trade_created":
                 node["category"] = "on_trade_filter_specific_event"
             case _:
                 node["category"] = "not_specified"

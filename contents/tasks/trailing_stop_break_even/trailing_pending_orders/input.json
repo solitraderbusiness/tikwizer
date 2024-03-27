@@ -1,7 +1,7 @@
 {
   "symbol_mode": "SYMBOL_MODE_SPECIFIED",
   "symbols_str": "EURUSD,GBPUSD",
-  "group_mode": "ORDER_GROUP_MODE_NONE",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
   "group_number": 15,
   "type": [2, 3, 4, 5],
 

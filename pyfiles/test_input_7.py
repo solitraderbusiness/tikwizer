@@ -554,7 +554,7 @@ input_data_2 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 15,
                         "type": [0, 1],
                         "profit_mode": "PROFIT_MODE_MONEY",
@@ -571,7 +571,7 @@ input_data_2 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
                         "type": [1, 2],
                         "count_limit": 0,
@@ -1060,7 +1060,7 @@ input_data_3 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 15,
                         "type": [0, 1],
                         "profit_mode": "PROFIT_MODE_MONEY",
@@ -1077,7 +1077,7 @@ input_data_3 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
                         "type": [1, 2],
                         "count_limit": 0,
@@ -1533,7 +1533,7 @@ input_data_4 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 15,
                         "type": [0, 1],
                         "profit_mode": "PROFIT_MODE_MONEY",
@@ -1550,7 +1550,7 @@ input_data_4 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
                         "type": [1, 2],
                         "count_limit": 0,
@@ -2006,7 +2006,7 @@ input_data_5 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "profit_filter_operator": "==",
                         "profit_comparison_operator": "<="
                     }
@@ -2018,7 +2018,7 @@ input_data_5 = {
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": "\",EURUSD,GBPUSD\"",
-                        "group_mode": "ORDER_GROUP_MODE_NONE",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
                         "type": [1, 2],
                         "count_limit": 0,

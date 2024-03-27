@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      symbol_mode = symbol_mode_val;\n      symbols_str = symbols_str_val;\n      ushort u_sep=StringGetCharacter(\",\",0);\n      StringSplit(symbols_str, u_sep, symbols);\n\n      group_mode = group_mode_val;\n      group_number = group_number_val;\n      int mtype[] = {0, 1}; //0 for buy and 1 for sell\n      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.\n\n      close_mode = close_mode_val;\n      close_partial_mode = close_partial_mode_val;"
+}

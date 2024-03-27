@@ -1,0 +1,3 @@
+{
+	"field_data" : "   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[];"
+}

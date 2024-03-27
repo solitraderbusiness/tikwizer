@@ -21,7 +21,7 @@ constants = [
 
     ###################### Trade/Order filter ########################
 
-    "#define ORDER_GROUP_MODE_NONE -1",  # STest, better name is ORDER_GROUP_MODE_ALL
+    "#define ORDER_GROUP_MODE_ALL -1",  # STest, better name is ORDER_GROUP_MODE_ALL
     "#define ORDER_GROUP_MODE_NUMBER 1",
     "#define ORDER_GROUP_MODE_AUTOMATED 2",
     "#define SYMBOL_MODE_SPECIFIED 1",

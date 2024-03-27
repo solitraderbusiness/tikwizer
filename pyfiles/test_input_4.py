@@ -1025,7 +1025,7 @@ input_data_3 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -1978,7 +1978,7 @@ input_data_4 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -3032,7 +3032,7 @@ input_data_5 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -12635,7 +12635,7 @@ input_data_14 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -13706,7 +13706,7 @@ input_data_15 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -17915,7 +17915,7 @@ input_data_19 = {
                 },
                 "group_mode": {
                     "id": 2,
-                    "value": "ORDER_GROUP_MODE_NONE"
+                    "value": "ORDER_GROUP_MODE_ALL"
                 },
                 "group_number": {
                     "id": 2,
@@ -18939,7 +18939,7 @@ input_data_20 = {
                 },
                 "group_mode": {
                     "id": 2,
-                    "value": "ORDER_GROUP_MODE_NONE"
+                    "value": "ORDER_GROUP_MODE_ALL"
                 },
                 "group_number": {
                     "id": 2,
@@ -19980,7 +19980,7 @@ input_data_21 = {
                 },
                 "group_mode": {
                     "id": 1,
-                    "value": "ORDER_GROUP_MODE_NONE"
+                    "value": "ORDER_GROUP_MODE_ALL"
                 },
                 "group_number": {
                     "value": 15,
@@ -21015,7 +21015,7 @@ input_data_22 = {
                     "checked": False
                 },
                 "group_mode": {
-                    "value": "ORDER_GROUP_MODE_NONE",
+                    "value": "ORDER_GROUP_MODE_ALL",
                     "checked": False
                 },
                 "group_number": {
@@ -22048,7 +22048,7 @@ input_data_23 = {
                 },
                 "group_mode": {
                     "id": 2,
-                    "value": "ORDER_GROUP_MODE_NONE"
+                    "value": "ORDER_GROUP_MODE_ALL"
                 },
                 "group_number": {
                     "id": 2,
@@ -23076,7 +23076,7 @@ input_data_24 = {
                 },
                 "group_mode": {
                     "id": 2,
-                    "value": "ORDER_GROUP_MODE_NONE"
+                    "value": "ORDER_GROUP_MODE_ALL"
                 },
                 "group_number": {
                     "id": 2,
