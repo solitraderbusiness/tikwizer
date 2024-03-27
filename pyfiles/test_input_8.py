@@ -3631,3 +3631,350 @@ input_data_11 = {
         }
     ]
 }
+
+# test filter data change (either buy or sell as string like "{0,1}")
+input_data_12 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "id": "14e307ec-0bb1-45c5-8eac-10ca8630c149",
+                    "id_by_user": 8,
+                    "blockName": "If trade",
+                    "params": {
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "symbols_str": ",EURUSD,GBPUSD",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
+                        "group_number": 25,
+                        "type": "{1, 2}",
+                        "count_limit": 0,
+                        "operator": ">"
+                    }
+                },
+                {
+                    "id": "71c814ef-49fb-4272-8b21-b60dea986a32",
+                    "id_by_user": 9,
+                    "blockName": "Buy now",
+                    "params": {
+                        "group": "0",
+                        "symbol": "NULL",
+                        "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                        "ExpMode": "None",
+                        "stop_loss_mode": "TPSL_MODE_NO_SL",
+                        "take_profit_mode": "TPSL_MODE_NO_TP",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "how_much_volume": "100",
+                        "volume_upper_limit": "0",
+                        "martingale_init_vol": "0.1",
+                        "martingale_multiply_on_loss": "2",
+                        "martingale_multiply_on_profit": "1",
+                        "martingale_addlots_on_loss": "0",
+                        "martingale_addlots_on_profit": "0",
+                        "martingale_reset_on_n_losses": "1",
+                        "martingale_reset_on_n_profits": "1",
+                        "look_up_on": "LOOK_UP_HISTORY_ONLY",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0",
+                        "stoploss": "50",
+                        "takeprofit": "50"
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "source": "14e307ec-0bb1-45c5-8eac-10ca8630c149",
+                    "sourceHandle": "blue",
+                    "target": "71c814ef-49fb-4272-8b21-b60dea986a32",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-14e307ec-0bb1-45c5-8eac-10ca8630c149blue-71c814ef-49fb-4272-8b21-b60dea986a32c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "variable_test_",
+            "value": "55",
+            "description": "asd"
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "constant_test_",
+            "value": "12",
+            "description": "test"
+        }
+    ]
+}
+
+# test if trade by front
+input_data_13 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "id": "5569520f-852b-470d-b1e6-aebfedd1ceec",
+                    "id_by_user": 3,
+                    "blockName": "If trade",
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{0}",
+                        "group_number": "11",
+                        "symbols_str": ""
+                    }
+                },
+                {
+                    "id": "eb013875-b664-46cd-b932-f2dbde72ee79",
+                    "id_by_user": 4,
+                    "blockName": "If trade",
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_MANUAL",
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "type": "{1}",
+                        "symbols_str": "XAU"
+                    }
+                },
+                {
+                    "id": "c970e08e-de1b-4dd8-a4da-39ac4f67b08a",
+                    "id_by_user": 5,
+                    "blockName": "If trade",
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{1}",
+                        "symbols_str": ""
+                    }
+                }
+            ],
+            "edges": [
+                {
+                    "source": "5569520f-852b-470d-b1e6-aebfedd1ceec",
+                    "sourceHandle": "blue",
+                    "target": "c970e08e-de1b-4dd8-a4da-39ac4f67b08a",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-5569520f-852b-470d-b1e6-aebfedd1ceecblue-c970e08e-de1b-4dd8-a4da-39ac4f67b08ac"
+                },
+                {
+                    "source": "5569520f-852b-470d-b1e6-aebfedd1ceec",
+                    "sourceHandle": "red",
+                    "target": "eb013875-b664-46cd-b932-f2dbde72ee79",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-5569520f-852b-470d-b1e6-aebfedd1ceecred-eb013875-b664-46cd-b932-f2dbde72ee79c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# test pending order by front
+input_data_14 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "group": "11",
+                        "symbol": "NULL",
+                        "price_offset": "20",
+                        "open_at_price": "OPEN_AT_BID",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                        "stop_loss_mode": "TPSL_MODE_NO_SL",
+                        "take_profit_mode": "TPSL_MODE_NO_TP",
+                        "ExpMode": "None",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "how_much_volume": "100",
+                        "martingale_multiply_on_profit": "1",
+                        "martingale_multiply_on_loss": "2",
+                        "martingale_addlots_on_loss": "0",
+                        "martingale_addlots_on_profit": "0",
+                        "martingale_reset_on_n_losses": "1",
+                        "martingale_reset_on_n_profits": "1",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0"
+                    },
+                    "id": "0cdd234e-34df-4385-88e6-5779f3585866",
+                    "id_by_user": 1,
+                    "blockName": "Buy pending order"
+                },
+                {
+                    "params": {
+                        "group": "0",
+                        "symbol": "XAU",
+                        "price_offset": "2",
+                        "open_at_price": "OPEN_AT_MID",
+                        "volume_upper_limit": "9",
+                        "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "ExpMode": "today",
+                        "oco": "oco1",
+                        "slippage": "4",
+                        "arrow_color": "clrBlue",
+                        "comment": "Short trade",
+                        "stoploss": "13",
+                        "takeprofit": "13",
+                        "how_much_volume": "67"
+                    },
+                    "id": "4e82a131-d802-4c94-9f56-33daf3d09069",
+                    "id_by_user": 2,
+                    "blockName": "Sell pending order"
+                },
+                {
+                    "params": {
+                        "group": "const_double",
+                        "symbol": "const_string",
+                        "price_offset": "variable_double",
+                        "open_at_price": "OPEN_AT_ASK",
+                        "volume_upper_limit": "3",
+                        "money_management": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
+                        "stop_loss_mode": "TPSL_MODE_NO_SL",
+                        "take_profit_mode": "TPSL_MODE_NO_TP",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "variable_string",
+                        "martingale_multiply_on_profit": "1",
+                        "martingale_multiply_on_loss": "2",
+                        "martingale_addlots_on_loss": "0",
+                        "martingale_addlots_on_profit": "0",
+                        "martingale_reset_on_n_losses": "1",
+                        "martingale_reset_on_n_profits": "1",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "1",
+                        "ExpHours": "variable_double",
+                        "ExpMinutes": "const_double",
+                        "ExpMode": "specified"
+                    },
+                    "id": "eb6c21da-b8f7-4e53-9221-420d69170d28",
+                    "id_by_user": 3,
+                    "blockName": "Buy pending order"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "0cdd234e-34df-4385-88e6-5779f3585866",
+                    "sourceHandle": "blue",
+                    "target": "4e82a131-d802-4c94-9f56-33daf3d09069",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-0cdd234e-34df-4385-88e6-5779f3585866blue-4e82a131-d802-4c94-9f56-33daf3d09069c"
+                },
+                {
+                    "source": "4e82a131-d802-4c94-9f56-33daf3d09069",
+                    "sourceHandle": "blue",
+                    "target": "eb6c21da-b8f7-4e53-9221-420d69170d28",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-4e82a131-d802-4c94-9f56-33daf3d09069blue-eb6c21da-b8f7-4e53-9221-420d69170d28c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "string",
+            "name": "variable_string",
+            "value": "test",
+            "description": "string"
+        },
+        {
+            "type": "double",
+            "name": "variable_double",
+            "value": "12",
+            "description": "double"
+        }
+    ],
+    "constants": [
+        {
+            "type": "string",
+            "name": "const_string",
+            "value": "test const ",
+            "description": "string"
+        },
+        {
+            "type": "double",
+            "name": "const_double",
+            "value": "13",
+            "description": "double"
+        }
+    ]
+}

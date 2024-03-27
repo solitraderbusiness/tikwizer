@@ -573,7 +573,7 @@ input_data_2 = {
                         "symbols_str": "\",EURUSD,GBPUSD\"",
                         "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
-                        "type": [1, 2],
+                        "type": "{1, 2}",
                         "count_limit": 0,
                         "operator": ">"
                     }
@@ -2731,3 +2731,5 @@ input_data_6 = {
         }
     ]
 }
+
+
