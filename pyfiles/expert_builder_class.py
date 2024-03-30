@@ -600,6 +600,9 @@ class ExpertBuilder:
         e_functions = self.global_functions.get_fun__e_functions()
         self.functions.append(e_functions)
 
+        to_pips = self.global_functions.get_fun__to_pips()
+        self.functions.append(to_pips)
+
     def add_global_classes_structs(self):
         structs_data_mp = self.market_properties_class_constructor.get_structs()
         self.classes_structs.append(structs_data_mp)

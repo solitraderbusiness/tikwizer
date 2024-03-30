@@ -507,3 +507,8 @@ def get_fun__attr_ticket_parent():
 def get_fun__e_functions():
     result = "string e_Reason() {return onTradeEventDetector.EventValueReason();}\n\nstring e_ReasonDetail() {return onTradeEventDetector.EventValueDetail();}\n\ndouble e_attrClosePrice() {return onTradeEventDetector.EventValuePriceClose();}\n\ndatetime e_attrCloseTime() {return onTradeEventDetector.EventValueTimeClose();}\n\nstring e_attrComment() {return onTradeEventDetector.EventValueComment();}\n\ndatetime e_attrExpiration() {return onTradeEventDetector.EventValueTimeExpiration();}\n\ndouble e_attrLots() {return onTradeEventDetector.EventValueVolume();}\n\nint e_attrMagicNumber() {return (int)onTradeEventDetector.EventValueMagic();}\n\ndouble e_attrOpenPrice() {return onTradeEventDetector.EventValuePriceOpen();}\n\ndatetime e_attrOpenTime() {return onTradeEventDetector.EventValueTimeOpen();}\n\ndouble e_attrProfit() {return onTradeEventDetector.EventValueProfit();}\n\ndouble e_attrStopLoss() {return onTradeEventDetector.EventValueStopLoss();}\n\ndouble e_attrSwap() {return onTradeEventDetector.EventValueSwap();}\n\nstring e_attrSymbol() {return onTradeEventDetector.EventValueSymbol();}\n\ndouble e_attrTakeProfit() {return onTradeEventDetector.EventValueTakeProfit();}\n\nint e_attrTicket() {return (int)onTradeEventDetector.EventValueTicket();}\n\nint e_attrType() {return onTradeEventDetector.EventValueType();}\n\n"
     return result
+
+
+def get_fun__to_pips():
+    result = "double toPips(double digits, string symbol)\n  {\n   if(symbol == \"\")\n      symbol = Symbol();\n\n   return digits / (PipValue(symbol) * SymbolInfoDouble(symbol, SYMBOL_POINT));\n  }\n\n"
+    return result

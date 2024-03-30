@@ -1,3 +1,8 @@
+//+------------------------------------------------------------------+
+//|                                                      ProjectName |
+//|                                      Copyright 2018, CompanyName |
+//|                                       http://www.companyname.net |
+//+------------------------------------------------------------------+
 #define ROUTE_1_PASSED 1
 #define ROUTE_2_PASSED 0
 #define RESET_LEVEL_DEFAULT 0
@@ -175,7 +180,11 @@ struct OnChartEventHolder
    long              lparam;
    double            dparam;
    string            sparam;
-  };class OnTradeEventDetector
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class OnTradeEventDetector
   {
 private:
    //--- structures
@@ -909,7 +918,11 @@ public:
 
    string            EventValueComment() {return eventValues[eventValuesQueueIndex].comment;}
    string            EventValueSymbol()  {return eventValues[eventValuesQueueIndex].symbol;}
-  };class BlockParent
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class BlockParent
   {
 public:
    int               current_source_id;
@@ -921,6 +934,9 @@ public:
 public:
    virtual void      onResult(int result) = NULL;
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task
   {
 public:
@@ -928,7 +944,7 @@ public:
 public:
                      Task(string name)
      {
-        this.name = name;
+      this.name = name;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -939,6 +955,9 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task3 : public Task
   {
    //specified by user
@@ -952,7 +971,7 @@ class Task3 : public Task
 public:
                      Task3(string name):Task(name)
      {
-         //specified by user
+      //specified by user
       symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = "";
       ushort u_sep=StringGetCharacter(",",0);
@@ -966,7 +985,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
+      Task::run(block_id, block);
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)
@@ -990,9 +1009,10 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
+   virtual void      reset(int level)
+     {
+
+     }
    bool              filterGeneral()
      {
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
@@ -1002,6 +1022,9 @@ public:
       return con1 && con2 && con3 && con4;
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task4 : public Task
   {
    //specified by user
@@ -1015,13 +1038,13 @@ class Task4 : public Task
 public:
                      Task4(string name):Task(name)
      {
-         //specified by user
+      //specified by user
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "XAU";
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
-      group_mode = ORDER_GROUP_MODE_MANUAL;
+      group_mode = ORDER_GROUP_MODE_AUTOMATED;
       group_number = 25;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
@@ -1029,7 +1052,7 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
+      Task::run(block_id, block);
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)
@@ -1053,9 +1076,10 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
+   virtual void      reset(int level)
+     {
+
+     }
    bool              filterGeneral()
      {
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
@@ -1065,6 +1089,9 @@ public:
       return con1 && con2 && con3 && con4;
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Task5 : public Task
   {
    //specified by user
@@ -1074,11 +1101,19 @@ class Task5 : public Task
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
+
+   string            EachProfitMode;
+   string            EachCompare;
+   double            EachProfitAmount;
+   double            EachProfitAmountPips;
+   string            ProfitMode;
+   string            Compare;
+   double            ProfitAmount;
+   double            ProfitAmountPips;
 public:
                      Task5(string name):Task(name)
      {
-         //specified by user
+      //specified by user
       symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = "";
       ushort u_sep=StringGetCharacter(",",0);
@@ -1088,24 +1123,123 @@ public:
       group_number = 25;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      count_limit = 0;
+
+      each_profit_mode = (string)"";
+      each_compare = (string)">";
+      each_profit_amount = (double)0.0;
+      each_profit_amount_pips = (double)10.0;
+      profit_mode = (string)"money";
+      compare = (string)">";
+      profit_amount = (double)0.0;
+      profit_amount_pips = (double)10.0;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-            Task::run(block_id, block);
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
+      Task::run(block_id, block);
+
+      double avgPrice    = 0;
+      double avgLoad     = 0;
+      double avgLots     = 0;
+      double profitMoney = 0;
+      double profitPips  = 0;
+      double pipsSum     = 0;
+      int tradesCount    = 0;
+
+      for(int index = OrdersTotal()-1; index >= 0; index--)
         {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+         if(filterGeneral())
            {
-            if(filterGeneral())
-               count++;
+            double OrderOpenPrice = OrderOpenPrice();//STest, this should be replaced with another value which is more exact
+            double tradeProfit    = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2);
+
+            // Filter out individual trades
+            if(each_profit_mode == "money")
+              {
+               if(tradeProfit > each_profit_amount)
+                 {
+                 }
+               else
+                 {
+                  continue;
+                 }
+              }
+            else
+               if(each_profit_mode == "pips")
+                 {
+                  double individual_profit = toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
+
+                  if(OrderType() == 1)
+                    {
+                     individual_profit = -1 * individual_profit;
+                    }
+
+                  if(individual_profit <= each_profit_amount)
+                    {
+
+                    }
+                  else
+                    {
+                     continue;
+                    }
+                 }
+
+            profitMoney += tradeProfit;
+
+            if(ProfitMode == "pips" || ProfitMode == "pips-sum")
+              {
+               if(IsOrderTypeBuy())
+                 {
+                  pipsSum += toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
+                  avgLoad += OrderOpenPrice * OrderLots();
+                  avgLots += OrderLots();
+                 }
+               else
+                 {
+                  pipsSum += toPips(OrderOpenPrice - OrderClosePrice(), OrderSymbol());
+                  avgLoad -= OrderOpenPrice * OrderLots();
+                  avgLots -= OrderLots();
+                 }
+              }
+
+            tradesCount += 1;
            }
         }
 
-      bool result = count>count_limit;
-      if(result)
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(ProfitMode == "pips")
+        {
+         avgPrice = 0;
+
+         if(avgLots != 0)
+           {
+            avgPrice = (avgLoad / avgLots);
+           }
+
+         if(avgPrice != 0)
+           {
+            if(avgLots > 0)
+              {
+               profitPips = SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_BID) - avgPrice;
+              }
+            else
+              {
+               profitPips = avgPrice - SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_ASK);
+              }
+
+            profitPips = toPips(profitPips, getSymbol(OrderSymbol()));
+           }
+        }
+
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(
+         (ProfitMode == "money"    && (profitMoney >= ProfitAmount))
+         || (ProfitMode == "pips"     && (profitPips <= ProfitAmountPips))
+         || (ProfitMode == "pips-sum" && (pipsSum == ProfitAmountPips))
+      )
         {
          printf("task" + block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1116,9 +1250,16 @@ public:
          block.onResult(ROUTE_2_PASSED);
         }
      }
-   virtual void      reset(int level) {
-      
-   }
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   virtual void      reset(int level)
+     {
+
+     }
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
    bool              filterGeneral()
      {
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
@@ -1128,6 +1269,24 @@ public:
       return con1 && con2 && con3 && con4;
      }
   };
+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double toPips(double digits, string symbol)
+  {
+   if(symbol == "")
+      symbol = Symbol();
+
+   return digits / (PipValue(symbol) * SymbolInfoDouble(symbol, SYMBOL_POINT));
+  }
+
+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block : BlockParent
   {
 
@@ -1231,6 +1390,9 @@ public:
 
   };
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block3 : public Block
   {
 public:
@@ -1253,6 +1415,9 @@ public:
       task = new Task3(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
@@ -1275,6 +1440,9 @@ public:
       task = new Task4(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block5 : public Block
   {
 public:
@@ -1305,130 +1473,225 @@ Block *blocks_chart[];
 Block *blocks_deinit[];
 string overriding_symbol = "";
 int overriding_timeframe = -1;
-OnChartEventHolder onchartEventHolder; 
-OnTradeEventDetector onTradeEventDetector;template <typename T>
- void AddToArray(T& A[], T &value) {
- ArrayResize(A, ArraySize(A)+1);
- A[ArraySize(A)-1] = value;
- }template <typename T>
- void RemoveIndexFromArray(T& A[], int iPos) {
- int iLast;
- for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
- A[iPos] = A[iPos + 1];
- ArrayResize(A, iLast);
- }// Function to join two arrays into one
- void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[]) {
- int size1 = ArraySize(array1);
- int size2 = ArraySize(array2);
- int newSize = size1 + size2;
- ArrayCopy(arrayJoined, array1, 0, 0, size1);
- ArrayCopy(arrayJoined, array2, 0, size1, size2);
- }
+OnChartEventHolder onchartEventHolder;
+OnTradeEventDetector onTradeEventDetector;
+template <typename T>
+void AddToArray(T& A[], T &value)
+  {
+   ArrayResize(A, ArraySize(A)+1);
+   A[ArraySize(A)-1] = value;
+  }
+template <typename T>
+void RemoveIndexFromArray(T& A[], int iPos)
+  {
+   int iLast;
+   for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
+      A[iPos] = A[iPos + 1];
+   ArrayResize(A, iLast);
+  }// Function to join two arrays into one
+void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[])
+  {
+   int size1 = ArraySize(array1);
+   int size2 = ArraySize(array2);
+   int newSize = size1 + size2;
+   ArrayCopy(arrayJoined, array1, 0, 0, size1);
+   ArrayCopy(arrayJoined, array2, 0, size1, size2);
+  }
 // Check if all items in arrayB are in ArrayA
- bool areAllItemsPresent(int &arrayA[], int &arrayB[]) {
- for(int i = 0; i < ArraySize(arrayA); i++) {
- bool isPresent = false;
- for(int j = 0; j < ArraySize(arrayB); j++) {
- if(arrayA[i] == arrayB[j]) {
- isPresent = true;
- break;
- }
- }
- if(!isPresent) {
- return false;
- }
- } 
-return true;
- }
+bool areAllItemsPresent(int &arrayA[], int &arrayB[])
+  {
+   for(int i = 0; i < ArraySize(arrayA); i++)
+     {
+      bool isPresent = false;
+      for(int j = 0; j < ArraySize(arrayB); j++)
+        {
+         if(arrayA[i] == arrayB[j])
+           {
+            isPresent = true;
+            break;
+           }
+        }
+      if(!isPresent)
+        {
+         return false;
+        }
+     }
+   return true;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void runBlockTick(int source_id, int source_result, int dest_id)
-{
-blocks_tick[dest_id].run(source_id, source_result);
-}void addBlocksTick()
-{
-ArrayResize(blocks_tick, 3);
-Block3 *block3 = new Block3();
-Block4 *block4 = new Block4();
-Block5 *block5 = new Block5();
-
-blocks_tick[3] = block3;
-blocks_tick[4] = block4;
-blocks_tick[5] = block5;
+  {
+   blocks_tick[dest_id].run(source_id, source_result);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksTick()
+  {
+   ArrayResize(blocks_tick, 3);
+   Block3 *block3 = new Block3();
+   Block4 *block4 = new Block4();
+   Block5 *block5 = new Block5();
+
+   blocks_tick[3] = block3;
+   blocks_tick[4] = block4;
+   blocks_tick[5] = block5;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksTick(int level)
-{
-    for(int i=0; i<ArraySize(blocks_tick); i++){
-        blocks_tick[i].reset(level);
-    }
-}void runBlockChart(int source_id, int source_result, int dest_id)
-{
-blocks_chart[dest_id].run(source_id, source_result);
-}void addBlocksChart()
-{
-ArrayResize(blocks_chart, 0);
+  {
+   for(int i=0; i<ArraySize(blocks_tick); i++)
+     {
+      blocks_tick[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockChart(int source_id, int source_result, int dest_id)
+  {
+   blocks_chart[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksChart()
+  {
+   ArrayResize(blocks_chart, 0);
 
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksChart(int level)
-{
-    for(int i=0; i<ArraySize(blocks_chart); i++){
-        blocks_chart[i].reset(level);
-    }
-}void runBlockTrade(int source_id, int source_result, int dest_id)
-{
-blocks_trade[dest_id].run(source_id, source_result);
-}void addBlocksTrade()
-{
-ArrayResize(blocks_trade, 0);
+  {
+   for(int i=0; i<ArraySize(blocks_chart); i++)
+     {
+      blocks_chart[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockTrade(int source_id, int source_result, int dest_id)
+  {
+   blocks_trade[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksTrade()
+  {
+   ArrayResize(blocks_trade, 0);
 
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksTrade(int level)
-{
-    for(int i=0; i<ArraySize(blocks_trade); i++){
-        blocks_trade[i].reset(level);
-    }
-}void runBlockTimer(int source_id, int source_result, int dest_id)
-{
-blocks_timer[dest_id].run(source_id, source_result);
-}void addBlocksTimer()
-{
-ArrayResize(blocks_timer, 0);
+  {
+   for(int i=0; i<ArraySize(blocks_trade); i++)
+     {
+      blocks_trade[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockTimer(int source_id, int source_result, int dest_id)
+  {
+   blocks_timer[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksTimer()
+  {
+   ArrayResize(blocks_timer, 0);
 
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksTimer(int level)
-{
-    for(int i=0; i<ArraySize(blocks_timer); i++){
-        blocks_timer[i].reset(level);
-    }
-}void runBlockInit(int source_id, int source_result, int dest_id)
-{
-blocks_init[dest_id].run(source_id, source_result);
-}void addBlocksInit()
-{
-ArrayResize(blocks_init, 0);
+  {
+   for(int i=0; i<ArraySize(blocks_timer); i++)
+     {
+      blocks_timer[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockInit(int source_id, int source_result, int dest_id)
+  {
+   blocks_init[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksInit()
+  {
+   ArrayResize(blocks_init, 0);
 
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksInit(int level)
-{
-    for(int i=0; i<ArraySize(blocks_init); i++){
-        blocks_init[i].reset(level);
-    }
-}void runBlockDeinit(int source_id, int source_result, int dest_id)
-{
-blocks_deinit[dest_id].run(source_id, source_result);
-}void addBlocksDeinit()
-{
-ArrayResize(blocks_deinit, 0);
+  {
+   for(int i=0; i<ArraySize(blocks_init); i++)
+     {
+      blocks_init[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void runBlockDeinit(int source_id, int source_result, int dest_id)
+  {
+   blocks_deinit[dest_id].run(source_id, source_result);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void addBlocksDeinit()
+  {
+   ArrayResize(blocks_deinit, 0);
 
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void resetBlocksDeinit(int level)
-{
-    for(int i=0; i<ArraySize(blocks_deinit); i++){
-        blocks_deinit[i].reset(level);
-    }
-}string syncSymbolOverriding(string symbol) {
- return overriding_symbol == "" ? symbol : overriding_symbol;
-}int syncTimeframeOverriding(int timeframe) {
- return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
- }datetime TimeFromString(int mode_time, string stamp)
+  {
+   for(int i=0; i<ArraySize(blocks_deinit); i++)
+     {
+      blocks_deinit[i].reset(level);
+     }
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+string syncSymbolOverriding(string symbol)
+  {
+   return overriding_symbol == "" ? symbol : overriding_symbol;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int syncTimeframeOverriding(int timeframe)
+  {
+   return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+datetime TimeFromString(int mode_time, string stamp)
   {
    datetime t = 0;
 
@@ -1466,6 +1729,9 @@ void resetBlocksDeinit(int level)
    return StringToTime(stamp);
   }
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 datetime TimeFromComponents(
    int time_src = 0,
    int    y = 0,
@@ -1523,19 +1789,25 @@ datetime TimeFromComponents(
   }
 //Considering each magic number is a 7 digit number like 2088100,
 //I choose to take first two digits as group number.
-int getGroupNumber (int magic){
+int getGroupNumber(int magic)
+  {
    return (int)(magic/100000);
-}//This just checks if order is buy or sell
-bool sameOrderType (int type[], int orderType){
-   for (int i=0; i<ArraySize(type); i++)
-      if (orderType==type[i])
+  }//This just checks if order is buy or sell
+bool sameOrderType(int type[], int orderType)
+  {
+   for(int i=0; i<ArraySize(type); i++)
+      if(orderType==type[i])
          return true;
    return false;
-}//72 is the number in magic 3rd and 4th
+  }//72 is the number in magic 3rd and 4th
 //digits that show it is opened by the expert
-bool isAutomated (int magic){
+bool isAutomated(int magic)
+  {
    return MathMod((int)(magic/1000), 100) == 72;
-}
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void ReverseList(int &arr[])
   {
    int size = ArraySize(arr);
@@ -1552,6 +1824,9 @@ void ReverseList(int &arr[])
 bool SleepEx(int ms, bool bAlertable);
 #import
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
   {
    bool success=false;
@@ -1582,6 +1857,9 @@ bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
    return(false);
   }
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void WaitTradeContextIfBusy()
   {
    if(IsTradeContextBusy())
@@ -1598,6 +1876,9 @@ void WaitTradeContextIfBusy()
      }
    return;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int CheckForTradingError(int error_code=-1, string msg_prefix="")
   {
 // return 0 -> no error
@@ -1799,6 +2080,9 @@ int CheckForTradingError(int error_code=-1, string msg_prefix="")
 
    return(retval);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string ErrorMessage(int error_code=-1)
   {
    string e = "";
@@ -2256,7 +2540,11 @@ string ErrorMessage(int error_code=-1)
    e = StringConcatenate(e, " (", error_code, ")");
 
    return e;
-  }double BetMartingale(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double BetMartingale(
    string symbol,
    int look_up_on,
    int group,
@@ -2319,7 +2607,11 @@ string ErrorMessage(int error_code=-1)
      }
 
    return lots;
-  }void GetBetTradesInfo(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void GetBetTradesInfo(
    double &output[],
    string symbol,
    int look_up_on, // 0: try running trades first and then history trades, 1: try running only, 2: try history only
@@ -2408,6 +2700,9 @@ string ErrorMessage(int error_code=-1)
       GetBetTradesInfo(output, symbol, look_up_on, group, type, findConsecutive);
      }
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool TradeSelectByIndex(
    int index,
    string group_mode,
@@ -2426,7 +2721,11 @@ bool TradeSelectByIndex(
 
 
 
-  }bool HistoryTradeSelectByIndex(
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool HistoryTradeSelectByIndex(
    int index,
    string group_mode,
    string group,
@@ -2442,6 +2741,9 @@ bool TradeSelectByIndex(
 
    return false;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool              filterGeneral(string symbol, int type[], int group_mode, int group_number)
   {
    bool con1 = (symbol==NULL && OrderSymbol()==Symbol()) || symbol==OrderSymbol();
@@ -2450,18 +2752,29 @@ bool              filterGeneral(string symbol, int type[], int group_mode, int g
    bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
    return con1 && con2 && con3 && con4;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int SymbolDigits(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-  }bool IsOrderTypeSell()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeSell()
   {
    int type = OrderType();
 
    return (type == OP_SELL || type == OP_SELLSTOP || type == OP_SELLLIMIT);
-  }double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
   {
    double size=0;
    double LotStep=MarketInfo(symbol,MODE_LOTSTEP);
@@ -2606,13 +2919,20 @@ int SymbolDigits(string symbol)
    size=MathRound(size/LotStep)*LotStep;
    return (size);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double PipValue(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return CustomPoint(symbol) / SymbolInfoDouble(symbol, SYMBOL_POINT);
-  }double CustomPoint(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double CustomPoint(string symbol)
   {
    static string symbols[];
    static double points[];
@@ -2796,6 +3116,9 @@ void StringExplode(string delimiter, string inputString, T &output[])
       output[element] = empty_val;
      }
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double toDigits(double pips, string symbol)
   {
    if(symbol == "")
@@ -2806,6 +3129,9 @@ double toDigits(double pips, string symbol)
 
    return NormalizeDouble(pips * PipValue(symbol) * point, digits);
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string StringTrim(string str)
   {
    str = StringTrimRight(str);
@@ -2894,6 +3220,9 @@ string FormatValueForPrinting(
   {
    return value;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int WindowFindVisible(long chart_id, string term)
   {
 //-- the search term can be chart name, such as Force(13), or subwindow index
@@ -2916,35 +3245,61 @@ int WindowFindVisible(long chart_id, string term)
 
    return subwindow;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double SymbolAsk(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_ASK);
-  }double SymbolBid(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+double SymbolBid(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_BID);
-  }bool IsOrderTypeBuy()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeBuy()
   {
    int type = OrderType();
 
    return (type == OP_BUY || type == OP_BUYSTOP || type == OP_BUYLIMIT);
-  }bool IsOrderTypeStop()
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+bool IsOrderTypeStop()
   {
    int type = OrderType();
 
    return (type == OP_BUYSTOP || type == OP_SELLSTOP);
-  }string getSymbol(string symbol)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+string getSymbol(string symbol)
   {
    return (symbol==NULL || symbol=="") && overriding_symbol != "" ? overriding_symbol : symbol;
-  }int getTimeframe(int timeframe)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int getTimeframe(int timeframe)
   {
    return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool is_symbol_accepted(int symbol_mode, string &symbols[])
   {
    if(symbol_mode == SYMBOL_MODE_ANY)
@@ -2956,7 +3311,7 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
         {
          bool case_1 = OrderSymbol() == getSymbol("");
          bool case_2 = OrderSymbol() == Symbol() && getSymbol("")=="";
-         return case_1 || case_2;   
+         return case_1 || case_2;
         }
       else
         {
@@ -2971,7 +3326,11 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
            }
         }
    return false;
-  }int SecondsFromComponents(double days, double hours, double minutes, int seconds)
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int SecondsFromComponents(double days, double hours, double minutes, int seconds)
   {
    int retval =
       86400 * (int)MathFloor(days)
@@ -2981,6 +3340,9 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
 
    return retval;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 bool load_object(int index, long chart_id,int sub_window, int obj_type)
   {
    string name = ObjectName(chart_id,index,sub_window, obj_type);
@@ -2997,9 +3359,21 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 
    return true;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
@@ -3039,13 +3413,17 @@ bool in_array(T &array[], T value)
 
    return false;
   }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 double ObjectGetValueByShift(long chart_id, string name, int shift)
-{
-	MqlRates rates[];
-	CopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);
+  {
+   MqlRates rates[];
+   CopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);
 
-	return ObjectGetValueByTime(chart_id, name, rates[0].time, 0);
-}template<typename T>
+   return ObjectGetValueByTime(chart_id, name, rates[0].time, 0);
+  }
+template<typename T>
 bool ArrayStripKey(T &array[], int key)
   {
    int x    = 0;
@@ -3070,6 +3448,9 @@ bool ArrayStripKey(T &array[], int key)
    return false; // not stripped
   }
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 long attrTicketParent(long ticket)
   {
    int pos = 0;
@@ -3202,34 +3583,68 @@ int e_attrTicket() {return (int)onTradeEventDetector.EventValueTicket();}
 
 int e_attrType() {return onTradeEventDetector.EventValueType();}
 
-int init(){
-addBlocksTick();addBlocksChart();addBlocksTrade();addBlocksTimer();addBlocksInit();resetBlocksInit(RESET_LEVEL_DEFAULT);addBlocksDeinit();
-}
-void OnTimer(){
-resetBlocksTimer(RESET_LEVEL_DEFAULT);
-}
-void OnTick(){
-resetBlocksTick(RESET_LEVEL_TICK);runBlockTick(-1, -1, 0);
-}
-void OnTrade(){
-resetBlocksTrade(RESET_LEVEL_DEFAULT);   while(onTradeEventDetector.Start())
-{
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int init()
+  {
+   addBlocksTick();
+   addBlocksChart();
+   addBlocksTrade();
+   addBlocksTimer();
+   addBlocksInit();
+   resetBlocksInit(RESET_LEVEL_DEFAULT);
+   addBlocksDeinit();
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTimer()
+  {
+   resetBlocksTimer(RESET_LEVEL_DEFAULT);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTick()
+  {
+   resetBlocksTick(RESET_LEVEL_TICK);
+   runBlockTick(-1, -1, 0);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTrade()
+  {
+   resetBlocksTrade(RESET_LEVEL_DEFAULT);
+   while(onTradeEventDetector.Start())
+     {
      }
 
-    onTradeEventDetector.End();
-}
+   onTradeEventDetector.End();
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void OnChartEvent(const int id,         // Event identifier
-const long& lparam,   // Event parameter of long type
-const double& dparam, // Event parameter of double type
-const string& sparam  // Event parameter of string type
-){
+                  const long& lparam,   // Event parameter of long type
+                  const double& dparam, // Event parameter of double type
+                  const string& sparam  // Event parameter of string type
+                 )
+  {
 
 //hold event params then process blocks
    onchartEventHolder.id     = id;
    onchartEventHolder.lparam = lparam;
    onchartEventHolder.dparam = dparam;
-   onchartEventHolder.sparam = sparam;resetBlocksChart(RESET_LEVEL_DEFAULT);
-}
-void deinit(const int reason){
-resetBlocksDeinit(RESET_LEVEL_DEFAULT);
-}
+   onchartEventHolder.sparam = sparam;
+   resetBlocksChart(RESET_LEVEL_DEFAULT);
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void deinit(const int reason)
+  {
+   resetBlocksDeinit(RESET_LEVEL_DEFAULT);
+  }
+//+------------------------------------------------------------------+

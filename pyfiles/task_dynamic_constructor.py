@@ -432,8 +432,8 @@ def modify_stops_of_trades_run_data(node, function_data_static):
 
 def buy_sell_function_data(node, function_data_static):
     open_at_price_data = node.get("params").get("open_at_price")
-    if open_at_price_data.get("value") == "OPEN_AT_CUSTOM_PRICE":
-        value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
+    if open_at_price_data == "OPEN_AT_CUSTOM_PRICE":
+        value_fetch = node.get("params").get("open_at_price_value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "oacp"

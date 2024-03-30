@@ -15090,7 +15090,7 @@ input_data_19 = {
             },
             "width": 103,
             "height": 32,
-            "items": [
+            "params": [
                 {
                     "variable_name": "aaaaaaa",
                     "value_fetch": {
