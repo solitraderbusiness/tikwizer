@@ -23,7 +23,7 @@ constants = [
 
     "#define ORDER_GROUP_MODE_ALL -1",  # STest, better name is ORDER_GROUP_MODE_ALL
     "#define ORDER_GROUP_MODE_NUMBER 1",
-    "#define ORDER_GROUP_MODE_AUTOMATED 2",
+    "#define ORDER_GROUP_MODE_MANUAL 2",
     "#define SYMBOL_MODE_SPECIFIED 1",
     "#define SYMBOL_MODE_ANY 2",
 
@@ -86,8 +86,10 @@ constants = [
     "#define RANGE_POSITION_LOSING_SIDE 3",
 
     ###################### profit unrealized ########################
-    "#define PROFIT_MODE_PIPS 1",
-    "#define PROFIT_MODE_MONEY 2",
+    "#define PROFIT_MODE_MONEY \"money\"",
+    "#define PROFIT_MODE_PIPS \"pips\"",
+    "#define PROFIT_MODE_PIPS_SUM \"pips-sum\"",
+    "#define PROFIT_MODE_NO_MATTER \"no-matter\"",
 
     ###################### for each trade ##########################
     "#define LOOP_DIRECTION_NEWEST_TO_OLDEST 1",

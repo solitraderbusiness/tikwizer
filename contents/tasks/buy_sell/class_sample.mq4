@@ -661,7 +661,7 @@ bool              filterGeneral(string symbol, int type[], int group_mode, int g
    bool con1 = (symbol==NULL && OrderSymbol()==Symbol()) || symbol==OrderSymbol();
    bool con2 = sameOrderType(type, OrderType());
    bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-   bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+   bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
    return con1 && con2 && con3 && con4;
   }
 

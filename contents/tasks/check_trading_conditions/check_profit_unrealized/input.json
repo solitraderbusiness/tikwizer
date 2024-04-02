@@ -4,9 +4,10 @@
   "group_mode": "ORDER_GROUP_MODE_ALL",
   "group_number": 15,
   "type": [0,1],
-  "profit_mode": "PROFIT_MODE_MONEY",
-  "profit_benchmark_filter": 0,
-  "profit_benchmark_comparison": 100,
-  "profit_filter_operator": "==",
-  "profit_comparison_operator": "<="
+  "each_profit_mode" : "PROFIT_MODE_NO_MATTER",
+  "each_profit_amount" : 0.0,
+  "profit_mode" : "PROFIT_MODE_MONEY",
+  "profit_amount" : 0.0,
+  "each_compare": ">=",
+  "compare": "<"
 }

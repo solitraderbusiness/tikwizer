@@ -1018,8 +1018,10 @@ class ExpertBuilder:
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def modify_variables(self, node):
-        for item in node.get("params"):
-            value_fetch = item.get("value_fetch")
+        for key, val in node.get("params").items():
+            if not val.get("variable_name"):
+                continue
+            value_fetch = val.get("value_fetch")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")

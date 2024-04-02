@@ -1,164 +1,180 @@
-#define ORDER_GROUP_MODE_ALL 0
-#define ORDER_GROUP_MODE_NUMBER 1
-#define ORDER_GROUP_MODE_AUTOMATED 2
 
-#define PRICE_AUTO 1 //auto means ask for buy and bid for sell
-#define PRICE_ASK 2
-#define PRICE_BID 3
-#define PRICE_MID 4
+#define PROFIT_MODE_MONEY "money"
+#define PROFIT_MODE_PIPS "pips"
+#define PROFIT_MODE_PIPS_SUM "pips-sum"
+#define PROFIT_MODE_NO_MATTER "no-matter"
 
-#define RANGE_MODE_PIPS 1
-#define RANGE_MODE_PRICE_FRACTION 2
 
-#define RANGE_POSITION_AROUND 1
-#define RANGE_POSITION_WINNING_SIDE 2
-#define RANGE_POSITION_LOSING_SIDE 3
 
-#define PROFIT_MODE_PIPS 1
-#define PROFIT_MODE_MONEY 2
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task33 : public Task
+class Task5 : public Task
   {
-
-public:
-   //defined by user
+   //specified by user
    int               symbol_mode;
    string            symbols_str;
    string            symbols[];
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
-   int               profit_mode;
-   double            profit_benchmark_filter;
-   double            profit_benchmark_comparison;
 
+   string            each_profit_mode;
+   string            each_compare;
+   double            each_profit_amount;
+   string            profit_mode;
+   string            compare;
+   double            profit_amount;
 
 public:
-   void              Task33(string name): Task(name)
+                     Task5(string name):Task(name)
      {
       //specified by user
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = "";
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 15;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+      group_number = 25;
+      int mtype[] = {1,2}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      each_profit_mode = PROFIT_MODE_NO_MATTER;
+      each_profit_amount = 0.0;
       profit_mode = PROFIT_MODE_MONEY;
-      profit_benchmark_filter = 0;
-      profit_benchmark_comparison = 100;
+      profit_amount = 0.0;
      }
-
-
-   virtual void      run(int block_id, BlockParent &block)
+   virtual void               run(int block_id, BlockParent &block)
      {
-      double profitTotal=0;
-      for(int i = 0 ; i < OrdersTotal() ; i++)
+      Task::run(block_id, block);
+
+      double avgPrice    = 0;
+      double avgLoad     = 0;
+      double avgLots     = 0;
+      double profitMoney = 0;
+      double profitPips  = 0;
+      double pipsSum     = 0;
+      int tradesCount    = 0;
+
+      for(int index = OrdersTotal()-1; index >= 0; index--)
         {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+         if(filterGeneral())
            {
-            if(!filterGeneral())
-               continue;
+            double OrderOpenPrice = OrderOpenPrice();//STest, this should be replaced with another value which is more exact
+            double tradeProfit    = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2);
 
-            double profit = getProfit();
+            // Filter out individual trades
+            if(each_profit_mode == PROFIT_MODE_MONEY)
+              {
+               if(tradeProfit > each_profit_amount)
+                 {
+                 }
+               else
+                 {
+                  continue;
+                 }
+              }
+            else
+               if(each_profit_mode == PROFIT_MODE_PIPS)
+                 {
+                  double individual_profit = toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
 
-            if(!filterSpecific(profit))
-               continue;
+                  if(OrderType() == 1)
+                    {
+                     individual_profit = -1 * individual_profit;
+                    }
 
-            profitTotal += profit;
+                  if(individual_profit <= each_profit_amount)
+                    {
+
+                    }
+                  else
+                    {
+                     continue;
+                    }
+                 }
+
+            profitMoney += tradeProfit;
+
+            if(profit_mode == PROFIT_MODE_PIPS || profit_mode == PROFIT_MODE_PIPS_SUM)
+              {
+               if(IsOrderTypeBuy())
+                 {
+                  pipsSum += toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
+                  avgLoad += OrderOpenPrice * OrderLots();
+                  avgLots += OrderLots();
+                 }
+               else
+                 {
+                  pipsSum += toPips(OrderOpenPrice - OrderClosePrice(), OrderSymbol());
+                  avgLoad -= OrderOpenPrice * OrderLots();
+                  avgLots -= OrderLots();
+                 }
+              }
+
+            tradesCount += 1;
            }
         }
 
-      bool result = profitTotal >= profit_benchmark_comparison;
-      if(result)
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(profit_mode == PROFIT_MODE_PIPS)
         {
+         avgPrice = 0;
+
+         if(avgLots != 0)
+           {
+            avgPrice = (avgLoad / avgLots);
+           }
+
+         if(avgPrice != 0)
+           {
+            if(avgLots > 0)
+              {
+               profitPips = SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_BID) - avgPrice;
+              }
+            else
+              {
+               profitPips = avgPrice - SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_ASK);
+              }
+
+            profitPips = toPips(profitPips, getSymbol(OrderSymbol()));
+           }
+        }
+
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(
+         (profit_mode == PROFIT_MODE_MONEY    && (profitMoney >= profit_amount))
+         || (profit_mode == PROFIT_MODE_PIPS     && (profitPips <= profit_amount))
+         || (profit_mode == PROFIT_MODE_PIPS_SUM && (pipsSum == profit_amount))
+      )
+        {
+         printf("task" + block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
+         printf("task" + block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   virtual void      reset(int level)
+     {
 
+     }
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
    bool              filterGeneral()
      {
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
       return con1 && con2 && con3 && con4;
      }
-
-   bool              filterSpecific(double profit)
-     {
-      return profit != profit_benchmark_filter;
-     }
-
-   double              getProfit()
-     {
-      double tradeProfit;
-      if(profit_mode == PROFIT_MODE_MONEY)
-        {
-         tradeProfit = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2); //STest, sure about + ?
-        }
-      else
-         if(profit_mode == PROFIT_MODE_PIPS)
-           {
-            double profitVal = OrderType()==OP_BUY ? OrderClosePrice() - OrderOpenPrice() : OrderOpenPrice() - OrderClosePrice(); //STest, commission and swap
-            tradeProfit = toPips(profitVal);
-           }
-      return tradeProfit;
-     }
-
-   double            toPips(double price)
-     {
-      return price/SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT)/10;
-     }
   };
-
-
-
-
-
-//Considering each magic number is a 7 digit number like 2088100,
-//I choose to take first two digits as group number.
-int getGroupNumber(int magic)
-  {
-   return (int)(magic/100000);
-  }
-
-//This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
-  {
-   for(int i=0; i<ArraySize(type); i++)
-      if(orderType==type[i])
-         return true;
-   return false;
-  }
-
-//72 is the number in magic 3rd and 4th
-//digits that show it is opened by the expert
-bool isAutomated(int magic)
-  {
-   return MathMod((int)(magic/1000), 100) == 72;
-  }
-
-
-
-
-
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTick()
-  {
-
-  }
-//+------------------------------------------------------------------+

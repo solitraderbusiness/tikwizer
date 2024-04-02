@@ -75,7 +75,7 @@ public:
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
       return con1 && con2 && con3 && con4;
      }
 

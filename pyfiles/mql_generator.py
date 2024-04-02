@@ -14,7 +14,7 @@ def generate_mql(data_raw):
 
 
 def test():
-    data = test_input_8.input_data_13
+    data = test_input_8.input_data_3
     result = generate_mql(data)
     if isinstance(result, Exception):
         print("Error occurred")

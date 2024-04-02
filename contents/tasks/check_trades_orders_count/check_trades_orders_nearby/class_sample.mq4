@@ -1,83 +1,4 @@
-//+------------------------------------------------------------------+
-//|                                                      ProjectName |
-//|                                      Copyright 2018, CompanyName |
-//|                                       http://www.companyname.net |
-//+------------------------------------------------------------------+
-
-#define ROUTE_1_PASSED 1
-#define ROUTE_2_PASSED 0
-
-string overriding_symbol = "";
-string overriding_timeframe = -1;
-
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class BlockParent
-  {
-public:
-   int               current_source_id;
-   int               nexts_true[];//static, filled by generator
-   int               nexts_false[];//static, filled by generator
-   int               prevs_true[];//static, filled by generator
-   int               prevs_false[];//static, filled by generator
-
-public:
-   virtual void      onResult(int result) = NULL;
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task
-  {
-public:
-   string            name;
-public:
-                     Task(string name)
-     {
-      this.name = name;
-     }
-
-   virtual void               run(int block_id, BlockParent &block)
-     {
-
-     }
-
-   virtual void      reset(int level) = NULL;
-
-  };
-
-#define ORDER_GROUP_MODE_ALL 0
-#define ORDER_GROUP_MODE_NUMBER 1
-#define ORDER_GROUP_MODE_AUTOMATED 2
-
-#define PRICE_AUTO 1 //auto means ask for buy and bid for sell
-#define PRICE_ASK 2
-#define PRICE_BID 3
-#define PRICE_MID 4
-
-#define RANGE_MODE_PIPS 1
-#define RANGE_MODE_PRICE_FRACTION 2
-
-#define RANGE_POSITION_AROUND 1
-#define RANGE_POSITION_WINNING_SIDE 2
-#define RANGE_POSITION_LOSING_SIDE 3
-
-
-
-/*
-all items in check trade/orders count section can be covered by this
-function, except for items containing nearby in their title. for example
-count_limit=0 and operator = "==" means no trade of type ... .
-count_limit=10 and operator = ">" and type=[1,2,3,4,5] means all types
-of trades be more than 10.
-count_limit=10 and operator = ">=" and type=[3,4,5,6] means all pending
-orders be at least 10.
-*/
-class Task17 : public Task
+class Task0 : public Task
   {
    //specified by user
    int               symbol_mode;
@@ -86,178 +7,171 @@ class Task17 : public Task
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
-   int               price_mode;
-   int               range_mode;
+
+   string            mode_base_price;
+   string            mode_range;
+   double            range_pips;
+   double            range_fraction;
    int               range_position;
-   double            range_value;
-
-
-
 
 public:
-                     Task17(string name):Task(name)
+                     Task0(string name):Task(name)
      {
       //specified by user
       symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = "";
+      symbols_str = ",EURUSD,GBPUSD";
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 25;
+      group_number = 15;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      count_limit = 0;
-      price_mode = PRICE_AUTO;
-      range_mode = RANGE_MODE_PIPS;
-      range_position = RANGE_POSITION_AROUND;
-      range_value = 10;
+
+      mode_base_price = "current";
+      mode_range = "pips";
+      range_pips = 10.0;
+      range_fraction = 0.0010;
+      range_position = 0;
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
+
+
+      int next               = true;
+      double price           = 0;
+      bool use_current_price = (mode_base_price == "current");
+
+      // prepare the time filters
+      Value3_right1 valt1;
+      datetime t1 = valt1.calc();
+      Value3_right1 valt2;
+      datetime t2 = valt2.calc();
+
+      if(t1 >= TimeCurrent())
+         t1 = 0;
+
+      if(!use_current_price)
         {
+         Value3_right1 valp;
+         price = valp.calc();
+        }
+
+      for(int i = OrdersTotal()-1; i >= 0; i--)
+        {
+
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {
-
             if(filterGeneral())
               {
-               int orderType = OrderType();
-               double price;
-               double ask = SymbolInfoDouble(OrderSymbol(), SYMBOL_ASK);
-               double bid = SymbolInfoDouble(OrderSymbol(), SYMBOL_BID);
-               double point = SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT);
-               if(price_mode==PRICE_AUTO)
+               // filter by time
+               if((t1 < t2 && OrderOpenTime() < t1) || OrderOpenTime() > t2)
                  {
-                  if(MathMod(orderType,2)==0)
-                     price = ask;
-                  else
-                     price = bid;
+                  continue;
                  }
-               else
-                  if(price_mode==PRICE_MID)
-                     price = (ask+bid)/2;
-                  else
-                     if(price_mode==PRICE_ASK)
-                        price = ask;
-                     else
-                        if(price_mode==PRICE_BID)
-                           price = bid;
 
-               double rangeFraction;
-               if(range_mode==RANGE_MODE_PIPS)
-                  rangeFraction = range_value*point*10;
-               else
-                  if(range_mode==RANGE_MODE_PRICE_FRACTION)
-                     rangeFraction = range_value;
+               // what is the distance?
+               double distance = range_fraction;
 
-               //Now we have range value and price, start comparison process.
-               double openPrice = OrderOpenPrice();
-               if(range_position==RANGE_POSITION_AROUND)  //Order type doesn't matter
+               if(mode_range == "pips")
                  {
-                  if((price>=openPrice && price<openPrice+rangeFraction) || (price<=openPrice && price>openPrice-rangeFraction))
-                     count++;
+                  distance = toDigits(range_pips, OrderSymbol());
                  }
-               else
-                  if(range_position==RANGE_POSITION_LOSING_SIDE)
+
+               // checking the position
+               if(OrderType() == 0)  // buy?
+                 {
+                  if(use_current_price)
                     {
-                     if(MathMod(orderType, 2)==0)   //buy
-                       {
-                        if(openPrice-rangeFraction<=price)
-                           count++;
-                       }
-                     else    //sell
-                       {
-                        if(openPrice+rangeFraction>=price)
-                           count++;
-                       }
-
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_ASK);
                     }
-                  else
-                     if(range_position==RANGE_POSITION_WINNING_SIDE)
-                       {
-                        if(MathMod(orderType, 2)==0)   //buy
-                          {
-                           if(openPrice+rangeFraction<=price)
-                              count++;
-                          }
-                        else    //sell
-                          {
-                           if(openPrice-rangeFraction>=price)
-                              count++;
-                          }
 
-                       }
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+               else
+                 {
+                  if(use_current_price)
+                    {
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_BID);
+                    }
+
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+
+               if(next == false)
+                 {
+                  break;
+                 }
               }
-
            }
         }
 
-      bool result = count>count_limit;
-      if(result)
+
+
+      if(next)
         {
+         printf("task" + block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
+         printf("task" + block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
+     }
+   virtual void      reset(int level)
+     {
 
      }
-   virtual void      reset(int level) {}
    bool              filterGeneral()
      {
       bool con1 = is_symbol_accepted(symbol_mode, symbols);
       bool con2 = sameOrderType(type, OrderType());
       bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_AUTOMATED || isAutomated(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
       return con1 && con2 && con3 && con4;
      }
+
   };
-
-
-
-
-
-
-//Considering each magic number is a 7 digit number like 2088100,
-//I choose to take first two digits as group number.
-int getGroupNumber(int magic)
-  {
-   return (int)(magic/100000);
-  }
-
-//This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
-  {
-   for(int i=0; i<ArraySize(type); i++)
-      if(orderType==type[i])
-         return true;
-   return false;
-  }
-
-//72 is the number in magic 3rd and 4th
-//digits that show it is opened by the expert
-bool isAutomated(int magic)
-  {
-   return MathMod((int)(magic/1000), 100) == 72;
-  }
-
-
-
-
-
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTick()
-  {
-
-  }
-//+------------------------------------------------------------------+

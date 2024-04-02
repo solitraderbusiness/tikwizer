@@ -505,17 +505,18 @@ input_data_3 = {
                         "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 15,
                         "type": [0, 1],
+                        "each_profit_mode": "PROFIT_MODE_NO_MATTER",
+                        "each_profit_amount": 0.0,
                         "profit_mode": "PROFIT_MODE_MONEY",
-                        "profit_benchmark_filter": 0,
-                        "profit_benchmark_comparison": 100,
-                        "profit_filter_operator": "==",
-                        "profit_comparison_operator": "<="
+                        "profit_amount": 0.0,
+                        "each_compare": ">=",
+                        "compare": "<"
                     }
                 },
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
                     "id_by_user": 1,
-                    "blockName": "check_trades_orders_count",
+                    "blockName": "If trade",
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": ",EURUSD,GBPUSD",
@@ -3977,4 +3978,179 @@ input_data_14 = {
             "description": "double"
         }
     ]
+}
+
+# test modify variable by front
+input_data_15 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "variable1": {
+                            "variable_name": "variable_test_1",
+                            "value_fetch": {
+                                "row1": "Value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1"
+                                }
+                            }
+                        },
+                        "variable2": {
+                            "variable_name": "variable_test_2",
+                            "value_fetch": {
+                                "row1": "Candle",
+                                "row2": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_CLOSE",
+                                    "find_method": "FIND_BY_DATE",
+                                    "symbol": "NULL",
+                                    "timeframe": "PERIOD_M5",
+                                    "time_str": "00:00"
+                                }
+                            }
+                        },
+                        "variable3": {
+                            "variable_name": "variable_test_3",
+                            "value_fetch": {
+                                "row1": "Indicator",
+                                "row2": "rsi",
+                                "params": {
+                                    "applied_price": "PRICE_LOW",
+                                    "shift": "0",
+                                    "symbol": "NULL",
+                                    "timeframe": "PERIOD_M2",
+                                    "period": "88"
+                                }
+                            }
+                        },
+                        "variable4": {
+                            "variable_name": "variable_test_4",
+                            "value_fetch": {
+                                "row1": "Market Properties",
+                                "row2": "HIGHEST_PRICE_TIME_PERIOD",
+                                "params": {
+                                    "what_to_get": "GET_TIME",
+                                    "timestr_start": "1:00",
+                                    "timestr_end": "8:00",
+                                    "day_offset": "0",
+                                    "time_mode": "TIME_GMT"
+                                }
+                            }
+                        },
+                        "variable5": {
+                            "variable_name": "variable_test_5",
+                            "value_fetch": {
+                                "row1": "Market Properties",
+                                "row2": "HIGHEST_PRICE_TIME_PERIOD",
+                                "params": {
+                                    "what_to_get": "GET_PRICE",
+                                    "timestr_start": "1:00",
+                                    "timestr_end": "8:00",
+                                    "day_offset": "0",
+                                    "time_mode": "TIME_LOCAL"
+                                }
+                            }
+                        }
+                    },
+                    "id": "ad2c552c-7800-462d-8545-c4c680477470",
+                    "id_by_user": 1,
+                    "blockName": "Modify Variables"
+                },
+                {
+                    "params": {
+                        "variable1": {
+                            "variable_name": "variable_test_1",
+                            "value_fetch": {
+                                "row1": "Value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "99"
+                                }
+                            }
+                        },
+                        "variable2": {
+                            "variable_name": ""
+                        },
+                        "variable3": {
+                            "variable_name": ""
+                        },
+                        "variable4": {
+                            "variable_name": ""
+                        },
+                        "variable5": {
+                            "variable_name": ""
+                        }
+                    },
+                    "id": "d37a3e4a-26b4-4fa7-b393-4a6371d148a5",
+                    "id_by_user": 2,
+                    "blockName": "Modify Variables"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "ad2c552c-7800-462d-8545-c4c680477470",
+                    "sourceHandle": "blue",
+                    "target": "d37a3e4a-26b4-4fa7-b393-4a6371d148a5",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-ad2c552c-7800-462d-8545-c4c680477470blue-d37a3e4a-26b4-4fa7-b393-4a6371d148a5c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "variable_test_1",
+            "value": "12",
+            "description": "test variable"
+        },
+        {
+            "type": "double",
+            "name": "variable_test_2",
+            "value": "44",
+            "description": "test2"
+        },
+        {
+            "type": "double",
+            "name": "variable_test_3",
+            "value": "33",
+            "description": "3"
+        },
+        {
+            "type": "double",
+            "name": "variable_test_4",
+            "value": "66",
+            "description": "6"
+        },
+        {
+            "type": "double",
+            "name": "variable_test_5",
+            "value": "99",
+            "description": "9"
+        }
+    ],
+    "constants": []
 }

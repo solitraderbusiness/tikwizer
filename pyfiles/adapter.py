@@ -253,6 +253,8 @@ def overwrite_task_names(nodes):
         elif block_name == "Sell pending order":
             node["blockName"] = "buy_sell"
             node.get("params")["order_type"] = "ORDER_SELL_PENDING"
+        elif block_name == "Modify Variables":
+            node["blockName"] = "modify_variables"
 
 
 def get_nexts_true(node, edges):
@@ -362,7 +364,7 @@ def add_category(nodes):
                 node["category"] = "more"
             case "pass":
                 node["category"] = "more"
-            case "modify_variables":
+            case "Modify Variables":
                 node["category"] = "variables"
             case "break_even":
                 node["category"] = "trailing_stop_break_even"
