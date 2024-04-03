@@ -755,6 +755,8 @@ class ExpertBuilder:
                 self.draw_editfield(node)
             elif task_name == "check_trendline_price_level":
                 self.check_trendline_price_level(node)
+            elif task_name == "no_trade_nearby":
+                self.no_trade_nearby_run_data(node)
 
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
@@ -1016,6 +1018,30 @@ class ExpertBuilder:
             params = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "tsm_cl"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def no_trade_nearby_run_data(self, node):
+        params = node.get("params")
+        if params.get("mode_base_price") == "current":
+            value_fetch_price = params.get("price")
+            row1_price = value_fetch_price.get("row1")
+            row2_price = value_fetch_price.get("row2")
+            params_price = value_fetch_price.get("params")
+            id_val_price = str(node.get("id_by_user")) + "_price"
+            self.task_elements.append(self.value_fetch_class(row1_price, row2_price, params_price, id_val_price))
+
+        value_fetch_t1 = params.get("time_1")
+        row1_t1 = value_fetch_t1.get("row1")
+        row2_t1 = value_fetch_t1.get("row2")
+        params_t1 = value_fetch_t1.get("params")
+        id_val_t1 = str(node.get("id_by_user")) + "_t1"
+        self.task_elements.append(self.value_fetch_class(row1_t1, row2_t1, params_t1, id_val_t1))
+
+        value_fetch_t2 = params.get("time_2")
+        row1_t2 = value_fetch_t2.get("row1")
+        row2_t2 = value_fetch_t2.get("row2")
+        params_t2 = value_fetch_t2.get("params")
+        id_val_t2 = str(node.get("id_by_user")) + "_t2"
+        self.task_elements.append(self.value_fetch_class(row1_t2, row2_t2, params_t2, id_val_t2))
 
     def modify_variables(self, node):
         for key, val in node.get("params").items():

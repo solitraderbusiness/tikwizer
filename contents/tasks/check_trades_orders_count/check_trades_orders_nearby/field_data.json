@@ -1,3 +1,0 @@
-{
-	"field_data" : "//specified by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n   int               count_limit;\n   int               price_mode;\n   int               range_mode;\n   int               range_position;\n   double            range_value;\n"
-}

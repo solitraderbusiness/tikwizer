@@ -139,6 +139,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_editfield_run_data(node, run_data_static)
     elif task_name == "check_trendline_price_level":
         run_data = check_trendline_price_level_run_data(node, run_data_static)
+    elif task_name == "no_trade_nearby":
+        run_data = no_trade_nearby_run_data(node, run_data_static)
     return run_data
 
 
@@ -666,6 +668,45 @@ def trailing_stop_each_trade_run_data(node, run_data):
     else:
         run_data = run_data.replace("initializer_trailing_stop_mode", "")
         run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
+    return run_data
+
+
+def no_trade_nearby_run_data(node, run_data):
+    params = node.get("params")
+    if params.get("mode_base_price") == "current":
+        value_fetch_price = params.get("price")
+        row1_price = value_fetch_price.get("row1")
+        row2_price = value_fetch_price.get("row2")
+        id_val_price = str(node.get("id_by_user")) + "_price"
+
+        init_price = get_value_fetch_init(row1_price, row2_price, id_val_price)
+        val_price = get_value_fetch_val(row1_price, row2_price, id_val_price)
+        run_data = run_data.replace("initializer_price", init_price)
+        run_data = run_data.replace("variable_name_price", val_price)
+    else:
+        run_data = run_data.replace("initializer_price", "")
+        run_data = run_data.replace("variable_name_price", "\"\"")
+
+    value_fetch_t1 = params.get("time_1")
+    row1_t1 = value_fetch_t1.get("row1")
+    row2_t1 = value_fetch_t1.get("row2")
+    id_val_t1 = str(node.get("id_by_user")) + "_t1"
+
+    init_t1 = get_value_fetch_init(row1_t1, row2_t1, id_val_t1)
+    val_t1 = get_value_fetch_val(row1_t1, row2_t1, id_val_t1)
+    run_data = run_data.replace("initializer_t1", init_t1)
+    run_data = run_data.replace("variable_name_t1", val_t1)
+
+    value_fetch_t2 = params.get("time_2")
+    row1_t2 = value_fetch_t2.get("row1")
+    row2_t2 = value_fetch_t2.get("row2")
+    id_val_t2 = str(node.get("id_by_user")) + "_t2"
+
+    init_t2 = get_value_fetch_init(row1_t2, row2_t2, id_val_t2)
+    val_t2 = get_value_fetch_val(row1_t2, row2_t2, id_val_t2)
+    run_data = run_data.replace("initializer_t2", init_t2)
+    run_data = run_data.replace("variable_name_t2", val_t2)
+
     return run_data
 
 

@@ -18,21 +18,21 @@ public:
                      Task_id(string name):Task(name)
      {
       //specified by user
-      symbol_mode = symbol_mode;
-      symbols_str = symbols_str;
+      symbol_mode = symbol_mode_val;
+      symbols_str = symbols_str_val;
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 15;
+      group_mode = group_mode_val;
+      group_number = group_number_val;
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
-      mode_base_price = "current";
-      mode_range = "pips";
-      range_pips = 10.0;
-      range_fraction = 0.0010;
-      range_position = 0;
+      mode_base_price = mode_base_price_val;
+      mode_range = mode_range_val;
+      range_pips = range_pips_val;
+      range_fraction = range_fraction_val;
+      range_position = range_position_val;
 
      }
    virtual void               run(int block_id, BlockParent &block)
@@ -45,18 +45,18 @@ public:
       bool use_current_price = (mode_base_price == "current");
 
       // prepare the time filters
-      Value3_right1 valt1;
-      datetime t1 = valt1.calc();
-      Value3_right1 valt2;
-      datetime t2 = valt2.calc();
+      initializer_t1
+      datetime t1 = variable_name_t1;
+      initializer_t2
+      datetime t2 = variable_name_t2;
 
       if(t1 >= TimeCurrent())
          t1 = 0;
 
       if(!use_current_price)
         {
-         Value3_right1 valp;
-         price = valp.calc();
+         initializer_price
+         price = variable_name_price;
         }
 
       for(int i = OrdersTotal()-1; i >= 0; i--)
@@ -147,8 +147,6 @@ public:
               }
            }
         }
-
-
 
       if(next)
         {

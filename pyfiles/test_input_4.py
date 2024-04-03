@@ -18919,7 +18919,7 @@ input_data_20 = {
             "id": "361e37db-e957-40fd-b072-3122dfc3e04c",
             "data": {
                 "blockId": 20,
-                "blockName": "check_trades_orders_nearby"
+                "blockName": "no_trade_nearby"
             },
             "type": "testMojtaba",
             "position": {

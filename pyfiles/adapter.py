@@ -17,9 +17,10 @@ def refactor(data):
         # Block input_dic
         set_blocks_input_dic(event["nodes"], event["edges"])
         # Set input items that are not present in user input form front end
-        add_not_present_input(event)
+        params_fill(event.get("nodes"))
         # Correct double quotation issue with string values
-        correct_double_quotation_strings(event, data.get("constants"), data.get("variables"))
+        for node in event:
+            add_extra_double_quotation_if_any(node, data.get("constants"), data.get("variables"))
         handle_order_type_issue(event)
     add_extra_double_quotation_vars_consts(data.get("constants"), data.get("variables"))
     return data
@@ -64,17 +65,48 @@ def get_value_type(row2):
         case "Time":
             return "VALUE_TYPE_TIME"
 
+def add_extra_double_quotation_vars_consts(constants, variables):
+    for const in constants:
+        if const.get("type").lower().strip() == "string":
+            const["value"] = '\"' + const.get("value") + '\"'
+    for variable in variables:
+        if variable.get("type").lower().strip() == "string":
+            variable["value"] = '\"' + variable.get("value") + '\"'
+
 
 # Correct string values that are expected with extra double quotations: "\"\""
-def correct_double_quotation_strings(event, constants, variables):
-    nodes = event.get("nodes")
-    for node in nodes:
-        if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
-                "blockName") == "formula":
-            add_extra_double_quotation_if_any(node.get("params").get("left").get("params"), constants, variables)
-            add_extra_double_quotation_if_any(node.get("params").get("right").get("params"), constants, variables)
-        else:
-            add_extra_double_quotation_if_any(node.get("params"), constants, variables)
+def add_extra_double_quotation_if_any(dic, constants, variables):
+    # Keys that need a double quote
+    keys = ["timestr_start", "timestr_end", "time_stamp", "time_market",
+            "timestr", "comment", "obj_name", "name_filter_mode", "symbols_str",
+            "close_mode", "mode_range", "mode_base_price"]
+    for key, value in dic.items():
+        if isinstance(value, dict):
+            add_extra_double_quotation_if_any(value, constants, variables)
+        elif key in keys:
+            if is_const_var(value, constants, variables):
+                continue
+            dic[key] = '\"' + value + '\"'
+        elif key == "value":  # STest, in future this may make trouble. This supports Value class, text types
+            if isinstance(value, str):
+                if is_const_var(value, constants, variables):
+                    continue
+                dic[key] = '\"' + value + '\"'
+        elif key == "symbol":
+            if value != "NULL":
+                if is_const_var(value, constants, variables):
+                    continue
+                dic[key] = '\"' + value + '\"'
+
+
+def is_const_var(value, constants, variables):
+    for constant in constants:
+        if constant.get("name") is value:
+            return True
+    for variable in variables:
+        if variable.get("name") is value:
+            return True
+    return False
 
 
 # This function handles the situation where there are both type
@@ -101,67 +133,40 @@ def handle_order_type_issue(event):
             params["type"] = result
 
 
-def add_extra_double_quotation_if_any(params, constants, variables):
-    for key, value in params.items():
-        match key:
-            case "timestr_start" | "timestr_end" | "time_stamp" | "time_market" \
-                 | "timestr" | "comment" | "obj_name" | "name_filter_mode" | "symbols_str" | "close_mode":
-                for constant in constants:
-                    if constant.get("name") is value:
-                        continue
-                for variable in variables:
-                    if variable.get("name") is value:
-                        continue
-                params[key] = '\"' + value + '\"'
-            case "value":  # STest, in future this may make trouble. This supports Value class, text types
-                if isinstance(value, str):
-                    for constant in constants:
-                        if constant.get("name") is value:
-                            continue
-                    for variable in variables:
-                        if variable.get("name") is value:
-                            continue
-                    params[key] = '\"' + value + '\"'
-            case "symbol":
-                if value != "NULL":
-                    params[key] = '\"' + value + '\"'
-
-
-def add_extra_double_quotation_vars_consts(constants, variables):
-    for const in constants:
-        if const.get("type").lower().strip() == "string":
-            const["value"] = '\"' + const.get("value") + '\"'
-    for variable in variables:
-        if variable.get("type").lower().strip() == "string":
-            variable["value"] = '\"' + variable.get("value") + '\"'
-
-
 # Adds the input that are not passed by front end
-def add_not_present_input(event):
-    nodes = event.get("nodes")
+def params_fill(nodes):
     for node in nodes:
-        if node.get("blockName") == "condition_1_normal" or node.get("blockName") == "condition_1_cross" or node.get(
-                "blockName") == "formula":
-            params_main = node.get("params")
-            left = params_main.get("left")
-            right = params_main.get("right")
-            check_condition_params(left)
-            check_condition_params(right)
-        else:
-            path = path_root.get()
-            path_sub = "/contents/"
-            category = node.get("category")
-            task_name = node.get("blockName")
-            params = node.get("params")
-            path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
-            with open(path_task_id + "input.json") as input_file:
-                if input_file:
-                    input_text = input_file.read()
-                    input_saved = json.loads(input_text)
-                    replace_params(input_saved, params)
+        # First fill value fetch if any (supports condition and formula)
+        value_fetch_fill(node.get("params"))
+        # Now skip condition and formula
+        if node.get("blockName") in ["condition_1_normal", "condition_1_cross", "formula"]:
+            continue
+        path = path_root.get()
+        path_sub = "/contents/"
+        category = node.get("category")
+        task_name = node.get("blockName")
+        params = node.get("params")
+        path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
+        with open(path_task_id + "input.json") as input_file:
+            if input_file:
+                input_text = input_file.read()
+                input_saved = json.loads(input_text)
+                replace_params(input_saved, params)
 
 
-def check_condition_params(side):  # Side means left or right
+# This function fills value fetch items in case there is a lack of input.
+# For example in Value, if type is Numeric, all the other input are skipped
+# by front. As I need them in my MQL4, I have to add them using my default input.
+def value_fetch_fill(params):
+    for key, value in params.items():
+        if isinstance(value, dict):
+            if "row1" in value and "row2" in value and "params" in value:
+                check_value_fetch_params(value)
+            else:
+                value_fetch_fill(value)
+
+
+def check_value_fetch_params(side):  # Side means left or right
     path = path_root.get()
     path_sub = "/contents/"
     path_module = ""
@@ -237,8 +242,8 @@ def overwrite_task_names(nodes):
             node["blockName"] = "check_trades_orders_count"
         elif block_name == "No pending order":
             node["blockName"] = "check_trades_orders_count"
-        elif block_name == "No trade nearby" or block_name == "No pending order nearby":
-            node["blockName"] = "check_trades_orders_nearby"
+        elif block_name == "No trade nearby":
+            node["blockName"] = "no_trade_nearby"
         elif block_name == "turn_on_blocks" or block_name == "turn_off_blocks" or block_name == "toggle_blocks":
             node["blockName"] = "blocks_on_off"
         elif block_name == "Buy now":
@@ -350,7 +355,7 @@ def add_category(nodes):
                 node["category"] = ""
             case "If trade":
                 node["category"] = "check_trades_orders_count"
-            case "check_trades_orders_nearby":
+            case "No trade nearby":
                 node["category"] = "check_trades_orders_count"
             case "close_trades":
                 node["category"] = "trading_actions"
