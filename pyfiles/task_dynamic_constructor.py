@@ -433,9 +433,9 @@ def modify_stops_of_trades_run_data(node, function_data_static):
 
 
 def buy_sell_function_data(node, function_data_static):
-    open_at_price_data = node.get("params").get("open_at_price")
-    if open_at_price_data == "OPEN_AT_CUSTOM_PRICE":
-        value_fetch = node.get("params").get("open_at_price_value_fetch")
+    params = node.get("params")
+    if params.get("open_at_price") == "OPEN_AT_CUSTOM_PRICE":
+        value_fetch = params.get("price_to_open_dynamic_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "oacp"
@@ -712,12 +712,14 @@ def no_trade_nearby_run_data(node, run_data):
 
 def modify_variable_run_data(node, run_data):
     modify_variables = ""
+    i = 0
     for key, val in node.get("params").items():
+        i += 1
         if not val.get("variable_name"):
             continue
         row1 = val.get("value_fetch").get("row1")
         row2 = val.get("value_fetch").get("row2")
-        id_val = str(node.get("id_by_user"))
+        id_val = str(node.get("id_by_user")) + "_var_" + str(i)
 
         init = get_value_fetch_init(row1, row2, id_val)
         mval = get_value_fetch_val(row1, row2, id_val)

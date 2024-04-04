@@ -925,10 +925,9 @@ class ExpertBuilder:
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def buy_sell(self, node):
-        open_at_price_data = node.get("params").get("open_at_price")
-        open_at_price = open_at_price_data.get("value")
-        if open_at_price == "OPEN_AT_CUSTOM_PRICE":
-            value_fetch = open_at_price_data.get("price_to_open_dynamic_level")
+        params = node.get("params")
+        if params.get("open_at_price") == "OPEN_AT_CUSTOM_PRICE":
+            value_fetch = params.get("price_to_open_dynamic_level")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
@@ -1044,14 +1043,16 @@ class ExpertBuilder:
         self.task_elements.append(self.value_fetch_class(row1_t2, row2_t2, params_t2, id_val_t2))
 
     def modify_variables(self, node):
+        i = 0
         for key, val in node.get("params").items():
+            i += 1
             if not val.get("variable_name"):
                 continue
             value_fetch = val.get("value_fetch")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
-            id_val = str(node.get("id_by_user"))
+            id_val = str(node.get("id_by_user")) + "_var_" + str(i)
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def condition_1_normal_elements(self, node):

@@ -168,11 +168,6 @@
 #define NEW_STOPS_FIXED 1
 #define NEW_STOPS_PERCENT_OF_CURRENT_TPSL 2
 #define NEW_STOPS_CUSTOM_PRICE_LEVEL 3
-double variable_test_1 = 12; // test variable
-double variable_test_2 = 44; // test2
-double variable_test_3 = 33; // 3
-double variable_test_4 = 66; // 6
-double variable_test_5 = 99; // 9
 struct MarketPropertiesResult
   {
    double            price;
@@ -966,7 +961,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value1
+class Value1oacp
   {
 public:
 
@@ -1012,7 +1007,7 @@ public:
 
      {
       type = VALUE_TYPE_TEXT_CODE_INPUT;
-      value = 1;
+      value = "55";
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -1020,9 +1015,9 @@ public:
       //defined by user
       mode_time = 0;
       time_source = 0;
-      time_stamp = 00:00;
+      time_stamp = "00:00";
       time_candle_id = 1;
-      time_market = ;
+      time_market = "";
       time_candle_timeframe = 0;
       time_component_year = 0;
       time_component_month = 0;
@@ -1211,431 +1206,11 @@ public:
       return result + 560;
      }
   };
-class Candle1
-
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = PERIOD_M5;
-      find_method = FIND_BY_DATE;
-      price_mode = CANDLE_CLOSE;
-      timestr = 2023.4.26 13:40:30;
-      shift = 10;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(msymbol, mtimeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
-  };
-
-
-class RSI1
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               period;
-   int               applied_price;
-   int               shift;
-
-   int               buy_threshold;
-   int               sell_threshold;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = NULL;
-
-      timeframe = PERIOD_M2;
-
-      period = 88;
-
-      applied_price = PRICE_LOW;
-
-      shift = 0;
-      buy_threshold = 70;
-      sell_threshold = 30;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iRSI(symbol,timeframe,period, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MarketProperties1
-
-  {
-
-public:
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   int               time_mode;
-   //what to return
-   int               what_to_get;
-   //used for time period
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-   //used for candle period
-   int               range_start;
-   int               range_end;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = CANDLE_PERIOD;
-      price_mode = LOWEST_PRICE;
-      what_to_get = GET_TIME;
-      timestr_start = 1:00;
-      timestr_end   = 8:00;
-      day_offset = 0;
-      range_start = 50;
-      range_end   = 100;
-     }
-
-
-
-   int               calc(MarketPropertiesResult &result)
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      //In time mode, first calc range start and range end, then calc the result just like range mode
-      //STest, what is the effect of time mode? For now, it is ignored.
-      //STest, in iBarsShift, exact = false?
-      if(find_method == TIME_PERIOD)
-        {
-         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
-         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
-        }
-      getHiLo(result);
-
-     }
-
-
-   void              getHiLo(MarketPropertiesResult &result)
-     {
-      if(price_mode == HIGHEST_PRICE)
-         getHighest(result);
-      else
-         if(price_mode == LOWEST_PRICE)
-            getLowest(result);
-     }
-
-
-
-   void              getHighest(MarketPropertiesResult &result)
-     {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
-      result.price = iHigh(msymbol, mtimeframe, hi);
-      result.index = hi;
-      result.time = iTime(msymbol, mtimeframe, hi);
-     }
-
-
-   void              getLowest(MarketPropertiesResult &result)
-     {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
-      result.price = iLow(msymbol, mtimeframe, li);
-      result.index = li;
-      result.time = iTime(msymbol, mtimeframe, li);
-     }
-
-  };
-
-
-class MarketProperties1
-
-  {
-
-public:
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   int               time_mode;
-   //what to return
-   int               what_to_get;
-   //used for time period
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-   //used for candle period
-   int               range_start;
-   int               range_end;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = CANDLE_PERIOD;
-      price_mode = LOWEST_PRICE;
-      what_to_get = GET_PRICE;
-      timestr_start = 1:00;
-      timestr_end   = 8:00;
-      day_offset = 0;
-      range_start = 50;
-      range_end   = 100;
-     }
-
-
-
-   int               calc(MarketPropertiesResult &result)
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      //In time mode, first calc range start and range end, then calc the result just like range mode
-      //STest, what is the effect of time mode? For now, it is ignored.
-      //STest, in iBarsShift, exact = false?
-      if(find_method == TIME_PERIOD)
-        {
-         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
-         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
-        }
-      getHiLo(result);
-
-     }
-
-
-   void              getHiLo(MarketPropertiesResult &result)
-     {
-      if(price_mode == HIGHEST_PRICE)
-         getHighest(result);
-      else
-         if(price_mode == LOWEST_PRICE)
-            getLowest(result);
-     }
-
-
-
-   void              getHighest(MarketPropertiesResult &result)
-     {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
-      result.price = iHigh(msymbol, mtimeframe, hi);
-      result.index = hi;
-      result.time = iTime(msymbol, mtimeframe, hi);
-     }
-
-
-   void              getLowest(MarketPropertiesResult &result)
-     {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
-      result.price = iLow(msymbol, mtimeframe, li);
-      result.index = li;
-      result.time = iTime(msymbol, mtimeframe, li);
-     }
-
-  };
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value2
+class Value2oacp
   {
 public:
 
@@ -1681,17 +1256,17 @@ public:
 
      {
       type = VALUE_TYPE_TEXT_CODE_INPUT;
-      value = 99;
+      value = "44";
       //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
+      pips_mode = VALUE_PIPS_AS_PRICE_FRACTION;
       symbol = NULL;
       //for time (phase 2)
       //defined by user
       mode_time = 0;
       time_source = 0;
-      time_stamp = 00:00;
+      time_stamp = "00:00";
       time_candle_id = 1;
-      time_market = ;
+      time_market = "";
       time_candle_timeframe = 0;
       time_component_year = 0;
       time_component_month = 0;
@@ -1885,82 +1460,782 @@ public:
 //+------------------------------------------------------------------+
 class Task1 : public Task
   {
-
+   //values set by user
+   string            symbol;
+   int               group;
+   int               order_type;
+   int               money_management;
+   double            how_much_volume;
+   double            volume_upper_limit;
+   int               open_at_price;
+   double            price_offset;
+   bool              price_offset_as_pip;
+   int               slippage;
+   int               stop_loss_mode;
+   int               take_profit_mode;
+   double            stoploss;
+   double            takeprofit;
+   string            comment;
+   int               magic;
+   datetime          expiration;
+   color             arrow_color;
+   //values set by system
+   int               cmd;
+   double            price;
+   double            volume;
+   int               ticket;
+   double            slPrice;
+   double            tpPrice;
+   double            mstoploss;
+   double            mtakeprofit;
+   bool              initialized;
+   string            msymbol;
+   //martingale inputs
+   int               look_up_on;
+   double            martingale_init_vol;
+   double            martingale_multiply_on_loss;
+   double            martingale_multiply_on_profit;
+   double            martingale_addlots_on_loss;
+   double            martingale_addlots_on_profit;
+   double            martingale_reset_on_n_losses;
+   double            martingale_reset_on_n_profits;
+   int               type[];
 public:
                      Task1(string name):Task(name)
      {
+      symbol = "NZD";
+      group = 123;
+      order_type = ORDER_BUY_PENDING;
+      money_management = MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI;
+      how_much_volume = 35;
+      volume_upper_limit = 10;
+      open_at_price = OPEN_AT_CUSTOM_PRICE;
+      price_offset = 33;
+      price_offset_as_pip = True;
 
+      slippage = 4;
+      stoploss = 13;
+      takeprofit = 31;
+      take_profit_mode = TPSL_MODE_FIXED_PIPS;
+      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
+      comment = "Short trade";
+      expiration = 0;
+      arrow_color = clrBlue;
+
+      //martingale
+      look_up_on = LOOK_UP_RUNNING_ONLY;
+      int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
+      ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
+      martingale_init_vol = 0.1;
+      martingale_multiply_on_loss = 77;
+      martingale_multiply_on_profit = 66;
+      martingale_addlots_on_loss = 88;
+      martingale_addlots_on_profit = 99;
+      martingale_reset_on_n_losses = 22;
+      martingale_reset_on_n_profits = 33;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      Value1 value1;
-      value1.init();
-      double valueValue1 = value1.calc();
-      variable_test_1 = valueValue1;
+      msymbol = getSymbol(symbol);
 
-      Candle1 candle1;
-      candle1.init();
-      double valueCandle1 = candle1.calc();
-      variable_test_2 = valueCandle1;
+      calc();
+      if(!initialized)
+        {
+         printf("Not initialized");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
 
-      RSI1 rsi1;
-      rsi1.init();
-      double valueRSI1 = rsi1.calc();
-      variable_test_3 = valueRSI1;
+      int retryCount = 0;
 
-      MarketProperties1 marketproperties1;
-      marketproperties1.init();
-      MarketPropertiesResult mp_result1;
-      marketproperties1.calc(mp_result1);
-      variable_test_4 = marketproperties1.what_to_get == GET_PRICE ? mp_result1.price : marketproperties1.what_to_get == GET_CANDLE_ID ? mp_result1.index : mp_result1.time;
+      while(!IsStopped())
+        {
 
-      MarketProperties1 marketproperties1;
-      marketproperties1.init();
-      MarketPropertiesResult mp_result1;
-      marketproperties1.calc(mp_result1);
-      variable_test_5 = marketproperties1.what_to_get == GET_PRICE ? mp_result1.price : marketproperties1.what_to_get == GET_CANDLE_ID ? mp_result1.index : mp_result1.time;
+         if(retryCount>30)
+            break;
 
+         WaitTradeContextIfBusy();
 
+         //-- send ---------------------------------------------------------
+         ResetLastError();
 
-      block.onResult(ROUTE_1_PASSED);
+         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
+         if(ticket>0)  //Must be here
+            break;
+         //-- error check --------------------------------------------------
+         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
+
+         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
+
+         switch(erraction)
+           {
+            case 0:
+               break;    // no error
+            case 1:
+               retryCount ++;
+               continue; // overcomable error
+            case 2:
+               break;    // fatal error
+           }
+        }
+
+      if(ticket > 0)
+        {
+         //onTrade()
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
 
      }
+private:
+   //does needed calculations
+   void              calc()
+     {
+      fitGroup();
+      buildMagic();
+      if(order_type==ORDER_BUY)
+        {
+         cmd = OP_BUY;
+        }
+      else
+         if(order_type==ORDER_SELL)
+           {
+            cmd = OP_SELL;
+           }
+         else
+            if(order_type==ORDER_BUY_PENDING)
+              {
+               if(price_offset>=0)
+                  cmd = OP_BUYSTOP;
+               else
+                  cmd = OP_BUYLIMIT;
+              }
+            else
+               if(order_type==ORDER_SELL_PENDING)
+                 {
+                  if(price_offset>=0)
+                     cmd = OP_SELLSTOP;
+                  else
+                     cmd = OP_SELLLIMIT;
+                 }
 
+      calcVolume();
+      calc_entry_price();
+      if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
+        {
+         calc_tp_buy();
+         calc_sl_buy();
+        }
+      else
+         if(cmd==OP_SELL || cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+           {
+            calc_tp_sell();
+            calc_sl_sell();
+           }
+
+      if(MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
+        {
+         printf("Takeprofit and Stoploss too close");
+         initialized = false;
+         return;
+        }
+      initialized = true;
+     }
+
+   void              calc_entry_price()
+     {
+      if(cmd==OP_BUY)
+        {
+         price = Ask;
+        }
+      else
+         if(cmd==OP_SELL)
+           {
+            price = Bid;
+           }
+         else
+           {
+            switch(open_at_price)
+              {
+               case OPEN_AT_ASK:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
+                  break;
+               case OPEN_AT_BID:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_BID);
+                  break;
+               case OPEN_AT_MID:
+                  price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
+                  break;
+               case OPEN_AT_CUSTOM_PRICE:
+                  Value1oacp value1oacp;
+                  value1oacp.init();
+                  double valueValue1oacp = value1oacp.calc();
+                  price = valueValue1oacp;
+                  break;
+              }
+           }
+
+
+      double offset = price_offset;
+      if(price_offset_as_pip)
+         offset = price_offset * Point() * 10;
+
+      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+         price -= offset;
+      else
+         if(cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
+            price += offset;
+     }
+
+   ////////////////////////////////////////////////////////////
+
+   void              calc_tp_buy()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price + mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_buy()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price - mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_tp_sell()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price - mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_sell()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price + mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calcVolume()
+     {
+      if(money_management == MONEY_MANAGEMENT_FIXED_VOLUME)
+        {
+         volume = DynamicLots(msymbol, money_management, how_much_volume);
+        }
+      else
+         if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
+           {
+            volume = DynamicLots(msymbol, money_management, how_much_volume);
+           }
+         else
+            if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
+              {
+               //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+              }
+            else
+               if(money_management == MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN)
+                 {
+                  //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+                 }
+               else
+                  if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY)
+                    {
+                     //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                    }
+                  else
+                     if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE)
+                       {
+                        //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                       }
+                     else
+                        if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN)
+                          {
+                           //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                          }
+                        else
+                           if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY)
+                             {
+                              //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                             }
+                           else
+                              if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE)
+                                {
+                                 //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                }
+                              else
+                                 if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN)
+                                   {
+                                    //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                   }
+                                 else
+                                    if(money_management == MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY)
+                                      {
+                                       //lots = DynamicLots(Symbol, money_management, VolumeSizeRisk, pre_sl_pips);
+                                      }
+                                    else
+                                       if(money_management == MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES)
+                                         {
+                                          //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
+                                         }
+                                       else
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
+                                            {
+                                             volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
+                                            }
+                                          else
+                                             if(money_management == MONEY_MANAGEMENT_CUSTOM_VALUE)
+                                               {
+                                                //lots = _dVolumeSize_();
+                                               }
+
+
+      if(volume_upper_limit>0 && volume>volume_upper_limit)
+         volume = volume_upper_limit;
+     }
+
+   void              fitGroup()
+     {
+      //STest, take care of group number rules later
+      if(group<11)
+         group = 11;
+      if(group>99)
+         group = 99;
+     }
+
+   void              buildMagic()
+     {
+      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 class Task2 : public Task
   {
-
+   //values set by user
+   string            symbol;
+   int               group;
+   int               order_type;
+   int               money_management;
+   double            how_much_volume;
+   double            volume_upper_limit;
+   int               open_at_price;
+   double            price_offset;
+   bool              price_offset_as_pip;
+   int               slippage;
+   int               stop_loss_mode;
+   int               take_profit_mode;
+   double            stoploss;
+   double            takeprofit;
+   string            comment;
+   int               magic;
+   datetime          expiration;
+   color             arrow_color;
+   //values set by system
+   int               cmd;
+   double            price;
+   double            volume;
+   int               ticket;
+   double            slPrice;
+   double            tpPrice;
+   double            mstoploss;
+   double            mtakeprofit;
+   bool              initialized;
+   string            msymbol;
+   //martingale inputs
+   int               look_up_on;
+   double            martingale_init_vol;
+   double            martingale_multiply_on_loss;
+   double            martingale_multiply_on_profit;
+   double            martingale_addlots_on_loss;
+   double            martingale_addlots_on_profit;
+   double            martingale_reset_on_n_losses;
+   double            martingale_reset_on_n_profits;
+   int               type[];
 public:
                      Task2(string name):Task(name)
      {
+      symbol = NULL;
+      group = 11;
+      order_type = ORDER_SELL_PENDING;
+      money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
+      how_much_volume = 100;
+      volume_upper_limit = 10;
+      open_at_price = OPEN_AT_CUSTOM_PRICE;
+      price_offset = 20;
+      price_offset_as_pip = True;
 
+      slippage = 4;
+      stoploss = 20;
+      takeprofit = 20;
+      take_profit_mode = TPSL_MODE_NO_TP;
+      stop_loss_mode = TPSL_MODE_NO_SL;
+      comment = "Short trade";
+      expiration = 0;
+      arrow_color = clrRed;
+
+      //martingale
+      look_up_on = LOOK_UP_RUNNING_ONLY;
+      int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
+      ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
+      martingale_init_vol = 0.1;
+      martingale_multiply_on_loss = 2;
+      martingale_multiply_on_profit = 1;
+      martingale_addlots_on_loss = 0;
+      martingale_addlots_on_profit = 0;
+      martingale_reset_on_n_losses = 1;
+      martingale_reset_on_n_profits = 1;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      Value2 value2;
-      value2.init();
-      double valueValue2 = value2.calc();
-      variable_test_1 = valueValue2;
+      msymbol = getSymbol(symbol);
 
+      calc();
+      if(!initialized)
+        {
+         printf("Not initialized");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
 
+      int retryCount = 0;
 
-      block.onResult(ROUTE_1_PASSED);
+      while(!IsStopped())
+        {
+
+         if(retryCount>30)
+            break;
+
+         WaitTradeContextIfBusy();
+
+         //-- send ---------------------------------------------------------
+         ResetLastError();
+
+         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
+         if(ticket>0)  //Must be here
+            break;
+         //-- error check --------------------------------------------------
+         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
+
+         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
+
+         switch(erraction)
+           {
+            case 0:
+               break;    // no error
+            case 1:
+               retryCount ++;
+               continue; // overcomable error
+            case 2:
+               break;    // fatal error
+           }
+        }
+
+      if(ticket > 0)
+        {
+         //onTrade()
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
 
      }
+private:
+   //does needed calculations
+   void              calc()
+     {
+      fitGroup();
+      buildMagic();
+      if(order_type==ORDER_BUY)
+        {
+         cmd = OP_BUY;
+        }
+      else
+         if(order_type==ORDER_SELL)
+           {
+            cmd = OP_SELL;
+           }
+         else
+            if(order_type==ORDER_BUY_PENDING)
+              {
+               if(price_offset>=0)
+                  cmd = OP_BUYSTOP;
+               else
+                  cmd = OP_BUYLIMIT;
+              }
+            else
+               if(order_type==ORDER_SELL_PENDING)
+                 {
+                  if(price_offset>=0)
+                     cmd = OP_SELLSTOP;
+                  else
+                     cmd = OP_SELLLIMIT;
+                 }
 
+      calcVolume();
+      calc_entry_price();
+      if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
+        {
+         calc_tp_buy();
+         calc_sl_buy();
+        }
+      else
+         if(cmd==OP_SELL || cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+           {
+            calc_tp_sell();
+            calc_sl_sell();
+           }
+
+      if(MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
+        {
+         printf("Takeprofit and Stoploss too close");
+         initialized = false;
+         return;
+        }
+      initialized = true;
+     }
+
+   void              calc_entry_price()
+     {
+      if(cmd==OP_BUY)
+        {
+         price = Ask;
+        }
+      else
+         if(cmd==OP_SELL)
+           {
+            price = Bid;
+           }
+         else
+           {
+            switch(open_at_price)
+              {
+               case OPEN_AT_ASK:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
+                  break;
+               case OPEN_AT_BID:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_BID);
+                  break;
+               case OPEN_AT_MID:
+                  price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
+                  break;
+               case OPEN_AT_CUSTOM_PRICE:
+                  Value2oacp value2oacp;
+                  value2oacp.init();
+                  double valueValue2oacp = value2oacp.calc();
+                  price = valueValue2oacp;
+                  break;
+              }
+           }
+
+
+      double offset = price_offset;
+      if(price_offset_as_pip)
+         offset = price_offset * Point() * 10;
+
+      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+         price -= offset;
+      else
+         if(cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
+            price += offset;
+     }
+
+   ////////////////////////////////////////////////////////////
+
+   void              calc_tp_buy()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price + mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_buy()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price - mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_tp_sell()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price - mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_sell()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price + mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calcVolume()
+     {
+      if(money_management == MONEY_MANAGEMENT_FIXED_VOLUME)
+        {
+         volume = DynamicLots(msymbol, money_management, how_much_volume);
+        }
+      else
+         if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
+           {
+            volume = DynamicLots(msymbol, money_management, how_much_volume);
+           }
+         else
+            if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
+              {
+               //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+              }
+            else
+               if(money_management == MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN)
+                 {
+                  //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+                 }
+               else
+                  if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY)
+                    {
+                     //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                    }
+                  else
+                     if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE)
+                       {
+                        //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                       }
+                     else
+                        if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN)
+                          {
+                           //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                          }
+                        else
+                           if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY)
+                             {
+                              //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                             }
+                           else
+                              if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE)
+                                {
+                                 //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                }
+                              else
+                                 if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN)
+                                   {
+                                    //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                   }
+                                 else
+                                    if(money_management == MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY)
+                                      {
+                                       //lots = DynamicLots(Symbol, money_management, VolumeSizeRisk, pre_sl_pips);
+                                      }
+                                    else
+                                       if(money_management == MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES)
+                                         {
+                                          //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
+                                         }
+                                       else
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
+                                            {
+                                             volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
+                                            }
+                                          else
+                                             if(money_management == MONEY_MANAGEMENT_CUSTOM_VALUE)
+                                               {
+                                                //lots = _dVolumeSize_();
+                                               }
+
+
+      if(volume_upper_limit>0 && volume>volume_upper_limit)
+         volume = volume_upper_limit;
+     }
+
+   void              fitGroup()
+     {
+      //STest, take care of group number rules later
+      if(group<11)
+         group = 11;
+      if(group>99)
+         group = 99;
+     }
+
+   void              buildMagic()
+     {
+      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -2078,7 +2353,7 @@ public:
      {
       id = 0;
       id_by_user = 1;
-      name = "modify_variables";
+      name = "buy_sell";
       enabled = True;
 
       int mnexts_true[] = {1};
@@ -2103,7 +2378,7 @@ public:
      {
       id = 1;
       id_by_user = 2;
-      name = "modify_variables";
+      name = "buy_sell";
       enabled = True;
 
       int mnexts_true[] = {};
@@ -4304,3 +4579,4 @@ void deinit(const int reason)
   {
    resetBlocksDeinit(RESET_LEVEL_DEFAULT);
   }
+//+------------------------------------------------------------------+

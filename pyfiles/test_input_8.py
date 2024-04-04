@@ -4187,9 +4187,9 @@ input_data_16 = {
 
                                 "mode_time": 0,
                                 "time_source": 0,
-                                "time_stamp": "\"00:00\"",
+                                "time_stamp": "00:00",
                                 "time_candle_id": 1,
-                                "time_market": "\"\"",
+                                "time_market": "",
                                 "time_candle_timeframe": 0,
                                 "time_component_year": 0,
                                 "time_component_month": 0,
@@ -4221,9 +4221,9 @@ input_data_16 = {
 
                                 "mode_time": 0,
                                 "time_source": 0,
-                                "time_stamp": "\"00:00\"",
+                                "time_stamp": "00:00",
                                 "time_candle_id": 1,
-                                "time_market": "\"\"",
+                                "time_market": "",
                                 "time_candle_timeframe": 0,
                                 "time_component_year": 0,
                                 "time_component_month": 0,
@@ -4255,9 +4255,9 @@ input_data_16 = {
 
                                 "mode_time": 0,
                                 "time_source": 0,
-                                "time_stamp": "\"00:00\"",
+                                "time_stamp": "00:00",
                                 "time_candle_id": 1,
-                                "time_market": "\"\"",
+                                "time_market": "",
                                 "time_candle_timeframe": 0,
                                 "time_component_year": 0,
                                 "time_component_month": 0,
@@ -4728,4 +4728,124 @@ input_data_16 = {
             "description": ""
         }
     ]
+}
+
+# test pending orders (open at price custom) by front
+input_data_17 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "group": "123",
+                        "symbol": "NZD",
+                        "price_offset": "33",
+                        "open_at_price": "OPEN_AT_CUSTOM_PRICE",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "ExpMode": "specified",
+                        "oco": "oco1",
+                        "slippage": "4",
+                        "arrow_color": "clrBlue",
+                        "comment": "Short trade",
+                        "martingale_multiply_on_profit": "66",
+                        "martingale_multiply_on_loss": "77",
+                        "martingale_addlots_on_loss": "88",
+                        "martingale_addlots_on_profit": "99",
+                        "martingale_reset_on_n_losses": "22",
+                        "martingale_reset_on_n_profits": "33",
+                        "stoploss": "13",
+                        "takeprofit": "31",
+                        "ExpDays": "6",
+                        "ExpHours": "6",
+                        "ExpMinutes": "6",
+                        "price_to_open_dynamic_level": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "55"
+                            }
+                        }
+                    },
+                    "id": "a462688f-11f4-414d-9736-20bdf16dff99",
+                    "id_by_user": 1,
+                    "blockName": "Buy pending order"
+                },
+                {
+                    "params": {
+                        "group": "11",
+                        "symbol": "NULL",
+                        "price_offset": "20",
+                        "open_at_price": "OPEN_AT_CUSTOM_PRICE",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                        "stop_loss_mode": "TPSL_MODE_NO_SL",
+                        "take_profit_mode": "TPSL_MODE_NO_TP",
+                        "ExpMode": "None",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "how_much_volume": "100",
+                        "martingale_multiply_on_profit": "1",
+                        "martingale_multiply_on_loss": "2",
+                        "martingale_addlots_on_loss": "0",
+                        "martingale_addlots_on_profit": "0",
+                        "martingale_reset_on_n_losses": "1",
+                        "martingale_reset_on_n_profits": "1",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0",
+                        "price_to_open_dynamic_level": {
+                            "row1": "Value",
+                            "row2": "Pips",
+                            "params": {
+                                "value": "44",
+                                "pips_mode": "VALUE_PIPS_AS_PRICE_FRACTION"
+                            }
+                        }
+                    },
+                    "id": "3f28e570-b777-4c33-acbf-63a9b21c60a4",
+                    "id_by_user": 2,
+                    "blockName": "Sell pending order"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a462688f-11f4-414d-9736-20bdf16dff99",
+                    "sourceHandle": "blue",
+                    "target": "3f28e570-b777-4c33-acbf-63a9b21c60a4",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a462688f-11f4-414d-9736-20bdf16dff99blue-3f28e570-b777-4c33-acbf-63a9b21c60a4c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
 }

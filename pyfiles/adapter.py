@@ -19,8 +19,7 @@ def refactor(data):
         # Set input items that are not present in user input form front end
         params_fill(event.get("nodes"))
         # Correct double quotation issue with string values
-        for node in event:
-            add_extra_double_quotation_if_any(node, data.get("constants"), data.get("variables"))
+        manage_extra_double_quotation(event.get("nodes"), data.get("constants"), data.get("variables"))
         handle_order_type_issue(event)
     add_extra_double_quotation_vars_consts(data.get("constants"), data.get("variables"))
     return data
@@ -65,6 +64,7 @@ def get_value_type(row2):
         case "Time":
             return "VALUE_TYPE_TIME"
 
+
 def add_extra_double_quotation_vars_consts(constants, variables):
     for const in constants:
         if const.get("type").lower().strip() == "string":
@@ -75,6 +75,11 @@ def add_extra_double_quotation_vars_consts(constants, variables):
 
 
 # Correct string values that are expected with extra double quotations: "\"\""
+def manage_extra_double_quotation(nodes, constants, variables):
+    for node in nodes:
+        add_extra_double_quotation_if_any(node.get("params"), constants, variables)
+
+
 def add_extra_double_quotation_if_any(dic, constants, variables):
     # Keys that need a double quote
     keys = ["timestr_start", "timestr_end", "time_stamp", "time_market",
@@ -83,30 +88,22 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
-        elif key in keys:
-            if is_const_var(value, constants, variables):
-                continue
-            dic[key] = '\"' + value + '\"'
-        elif key == "value":  # STest, in future this may make trouble. This supports Value class, text types
-            if isinstance(value, str):
-                if is_const_var(value, constants, variables):
-                    continue
-                dic[key] = '\"' + value + '\"'
-        elif key == "symbol":
-            if value != "NULL":
-                if is_const_var(value, constants, variables):
-                    continue
+        else:
+            con1 = key in keys and is_not_const_var(value, constants, variables)
+            con2 = key == "value" and isinstance(value, str) and is_not_const_var(value, constants, variables)
+            con3 = key == "symbol" and value != "NULL" and is_not_const_var(value, constants, variables)
+            if con1 or con2 or con3:
                 dic[key] = '\"' + value + '\"'
 
 
-def is_const_var(value, constants, variables):
+def is_not_const_var(value, constants, variables):
     for constant in constants:
         if constant.get("name") is value:
-            return True
+            return False
     for variable in variables:
         if variable.get("name") is value:
-            return True
-    return False
+            return False
+    return True
 
 
 # This function handles the situation where there are both type
