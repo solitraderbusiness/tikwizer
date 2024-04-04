@@ -4179,7 +4179,6 @@ input_data_16 = {
                             "row1": "Value",
                             "row2": "Numeric",
                             "params": {
-                                "type": "VALUE_TYPE_NUMERIC",
                                 "value": 25.1,
                                 "adjust": "",
                                 "pips_mode": "VALUE_PIPS_AS_IS",
@@ -4213,7 +4212,6 @@ input_data_16 = {
                             "row1": "Value",
                             "row2": "Time",
                             "params": {
-                                "type": "VALUE_TYPE_TIME",
                                 "value": 25.1,
                                 "adjust": "",
                                 "pips_mode": "VALUE_PIPS_AS_IS",
@@ -4247,7 +4245,6 @@ input_data_16 = {
                             "row1": "Value",
                             "row2": "Time",
                             "params": {
-                                "type": "VALUE_TYPE_TIME",
                                 "value": 25.1,
                                 "adjust": "",
                                 "pips_mode": "VALUE_PIPS_AS_IS",
@@ -4288,7 +4285,7 @@ input_data_16 = {
                         "symbols_str": ",EURUSD,GBPUSD",
                         "group_mode": "ORDER_GROUP_MODE_ALL",
                         "group_number": 25,
-                        "type": [1, 2],
+                        "type": "[1, 2]",
                         "count_limit": 0,
                         "operator": ">"
                     }
@@ -4338,7 +4335,6 @@ input_data_16 = {
                             "row1": "Value",
                             "row2": "Numeric",
                             "params": {
-                                "type": "VALUE_TYPE_TIME",
                                 "value": 25.1,
                                 "adjust": "",
                                 "pips_mode": "VALUE_PIPS_AS_IS",
@@ -4502,7 +4498,7 @@ input_data_16 = {
                         "expiration": 0,
                         "arrow_color": "clrYellow",
                         "look_up_on": "LOOK_UP_RUNNING_ONLY",
-                        "type": [0, 1],
+                        "type": "[0, 1]",
                         "martingale_init_vol": 0.1,
                         "martingale_multiply_on_loss": 0,
                         "martingale_multiply_on_profit": 0,

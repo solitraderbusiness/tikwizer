@@ -6,7 +6,7 @@ path = path_root.get()
 path_sub = "/contents/value/"
 
 
-def get_class(input_dic, class_id):
+def get_class(value_type, input_dic, class_id):
     mpath = path + path_sub
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
@@ -32,21 +32,20 @@ def get_class(input_dic, class_id):
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
-        .replace("init_body", init_body_dic.get("init_body"))
+        .replace("init_body", init_body_dic.get("init_body"))\
+        .replace("value_type_val", '\"' + value_type + '\"')
 
     if "adjust" in input_dic:
-        type = input_dic.get("type")
         var_name = "result"
-        match type:
-            case "VALUE_TYPE_NUMERIC" | "VALUE_TYPE_BOOLEAN" | "VALUE_TYPE_COLOR" | "VALUE_TYPE_PIPS":
-                var_name = "(double)" + var_name
+        if value_type in ["Numeric", "Boolean", "Color", "Pips"]:
+            var_name = "(double)" + var_name
 
         adjustment = adjust.get(var_name, input_dic.get("adjust"), "msymbol")
         mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
     return mql4_body
 
 
-def get_initializer(var_id, var_type):
+def get_initializer(value_type, var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
@@ -54,7 +53,7 @@ def get_initializer(var_id, var_type):
             initializer_dic = json.loads(initializer_str)
 
             mtype = ""
-            match var_type:
+            match value_type:
                 case "Numeric":
                     mtype = "double"
                 case "Boolean":

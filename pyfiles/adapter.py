@@ -30,39 +30,14 @@ def create_specific_input(nodes):
     for node in nodes:
         block_name = node.get("blockName")
         params = node.get("params")
-        if block_name == "condition":
-            left = params.get("left")
-            right = params.get("right")
-            if left.get("row1") == "Value":
-                left.get("params")["type"] = get_value_type(left.get("row2"))
-            if right.get("row1") == "Value":
-                right.get("params")["type"] = get_value_type(right.get("row2"))
-        elif block_name == "Buy now":
-            node.get("params")["order_type"] = "ORDER_BUY"
+        if block_name == "Buy now":
+            params["order_type"] = "ORDER_BUY"
         elif block_name == "Sell now":
-            node.get("params")["order_type"] = "ORDER_SELL"
+            params["order_type"] = "ORDER_SELL"
         elif block_name == "Buy pending order":
-            node.get("params")["order_type"] = "ORDER_BUY_PENDING"
+            params["order_type"] = "ORDER_BUY_PENDING"
         elif block_name == "Sell pending order":
-            node.get("params")["order_type"] = "ORDER_SELL_PENDING"
-
-
-def get_value_type(row2):
-    match row2:
-        case "Numeric":
-            return "VALUE_TYPE_NUMERIC"
-        case "Boolean":
-            return "VALUE_TYPE_BOOLEAN"
-        case "Color":
-            return "VALUE_TYPE_COLOR"
-        case "Pips":
-            return "VALUE_TYPE_PIPS"
-        case "Text":
-            return "VALUE_TYPE_TEXT"
-        case "Text(code input)":
-            return "VALUE_TYPE_TEXT_CODE_INPUT"
-        case "Time":
-            return "VALUE_TYPE_TIME"
+            params["order_type"] = "ORDER_SELL_PENDING"
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):

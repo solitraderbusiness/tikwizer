@@ -98,13 +98,6 @@ constants = [
     "#define LOOP_DIRECTION_PROFITABLE_LAST 4",
 
     ###################### value ##########################
-    "#define VALUE_TYPE_NUMERIC 1",
-    "#define VALUE_TYPE_BOOLEAN 2",
-    "#define VALUE_TYPE_COLOR 3",
-    "#define VALUE_TYPE_PIPS 4",
-    "#define VALUE_TYPE_TEXT 5",
-    "#define VALUE_TYPE_TEXT_CODE_INPUT 6",
-    "#define VALUE_TYPE_TIME 7",
 
     "#define VALUE_PIPS_AS_IS 1",
     "#define VALUE_PIPS_AS_PRICE_FRACTION 2",

@@ -849,7 +849,7 @@ def get_value_fetch_init(row1, row2, suffix):
     elif row1 == "Market Properties":
         init = market_properties_class_constructor.get_initializer(suffix)
     elif row1 == "Value":
-        init = value_class_constructor.get_initializer(suffix, row2)
+        init = value_class_constructor.get_initializer(row2, suffix)
     return init
 
 
