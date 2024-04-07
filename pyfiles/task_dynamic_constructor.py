@@ -476,9 +476,9 @@ def spread_filter_run_data(node, run_data):
 
 
 def comment_run_data(node, run_data):
-    mrow1 = node.get("params").get("row1")
-    if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
-        value_fetch = mrow1.get("value_fetch")
+    params = node.get("params")
+    if params.get("label_1") != "" and "value_fetch_1" in params:
+        value_fetch = params.get("value_fetch_1")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r1"
@@ -491,9 +491,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_1", "")
         run_data = run_data.replace("variable_name_1", "\"\"")
 
-    mrow2 = node.get("params").get("row2")
-    if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
-        value_fetch = mrow2.get("value_fetch")
+    if params.get("label_2") != "" and "value_fetch_2" in params:
+        value_fetch = params.get("value_fetch_2")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r2"
@@ -506,9 +505,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_2", "")
         run_data = run_data.replace("variable_name_2", "\"\"")
 
-    mrow3 = node.get("params").get("row3")
-    if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
-        value_fetch = mrow3.get("value_fetch")
+    if params.get("label_3") != "" and "value_fetch_3" in params:
+        value_fetch = params.get("value_fetch_3")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r3"
@@ -521,9 +519,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_3", "")
         run_data = run_data.replace("variable_name_3", "\"\"")
 
-    mrow4 = node.get("params").get("row4")
-    if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
-        value_fetch = mrow4.get("value_fetch")
+    if params.get("label_4") != "" and "value_fetch_4" in params:
+        value_fetch = params.get("value_fetch_4")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r4"
@@ -536,9 +533,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_4", "")
         run_data = run_data.replace("variable_name_4", "\"\"")
 
-    mrow5 = node.get("params").get("row5")
-    if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
-        value_fetch = mrow5.get("value_fetch")
+    if params.get("label_5") != "" and "value_fetch_5" in params:
+        value_fetch = params.get("value_fetch_5")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r5"
@@ -551,9 +547,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_5", "")
         run_data = run_data.replace("variable_name_5", "\"\"")
 
-    mrow6 = node.get("params").get("row6")
-    if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
-        value_fetch = mrow6.get("value_fetch")
+    if params.get("label_6") != "" and "value_fetch_6" in params:
+        value_fetch = params.get("value_fetch_6")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r6"
@@ -566,9 +561,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_6", "")
         run_data = run_data.replace("variable_name_6", "\"\"")
 
-    mrow7 = node.get("params").get("row7")
-    if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
-        value_fetch = mrow7.get("value_fetch")
+    if params.get("label_7") != "" and "value_fetch_7" in params:
+        value_fetch = params.get("value_fetch_7")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r7"
@@ -581,9 +575,8 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_7", "")
         run_data = run_data.replace("variable_name_7", "\"\"")
 
-    mrow8 = node.get("params").get("row8")
-    if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
-        value_fetch = mrow8.get("value_fetch")
+    if params.get("label_8") != "" and "value_fetch_8" in params:
+        value_fetch = params.get("value_fetch_8")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r8"
@@ -886,8 +879,8 @@ def get_var_name():
             return var_name
 
 
-def get_var_data(task_name):
-    path_task_id = path + path_sub + "tasks" + "/" + task_name + "/"
+def get_var_data(category, task_name):
+    path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"
     with open(path_task_id + "var_data.json") as var_file:
         if var_file:
             var_str = var_file.read()

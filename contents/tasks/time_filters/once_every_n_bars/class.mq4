@@ -30,16 +30,18 @@ public:
          lastSavedTime = iTime(msymbol, mtimeframe, 0);
          if(mod == 0) //do once every n bar
            {
-            printf(Bars + " " + mtimeframe);
+            printf("task"+block_id + " passed route 1");
             block.onResult(ROUTE_1_PASSED);
            }
          else //otherwise
            {
+            printf("task"+block_id + " passed route 2");
             block.onResult(ROUTE_2_PASSED);
            }
         }
       else //otherwise
         {
+         printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
      }

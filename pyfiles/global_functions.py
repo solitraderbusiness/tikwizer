@@ -1,5 +1,5 @@
 TEMPLATE_ADD_BLOCKS = "Block_id *block_id = new Block_id();\n"
-TEMPLATE_ADD_BLOCKS_FUNCTION = "blocks_tick[_id] = block_id;\n"
+TEMPLATE_ADD_BLOCKS_FUNCTION = "blocks_tick[_index] = block_id;\n"
 
 
 def get_fun__add_blocks_tick(nodes):
@@ -8,8 +8,8 @@ def get_fun__add_blocks_tick(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -49,8 +49,8 @@ def get_fun__add_blocks_chart(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -91,8 +91,8 @@ def get_fun__add_blocks_trade(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -133,8 +133,8 @@ def get_fun__add_blocks_timer(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -175,8 +175,8 @@ def get_fun__add_blocks_init(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -217,8 +217,8 @@ def get_fun__add_blocks_deinit(nodes):
     for node in nodes:
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
-    for node in nodes:
-        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_id", str(node.get("id_by_user")))
+    for index, node in enumerate(nodes):
+        result += TEMPLATE_ADD_BLOCKS_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
     result += "  }\n"
     return result
 

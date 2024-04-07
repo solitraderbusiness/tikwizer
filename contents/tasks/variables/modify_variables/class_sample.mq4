@@ -22,6 +22,7 @@ public:
       double valueValue2 = value2.calc();
       yyyy = valueValue2;
 
+      printf("task" + block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
 
      }

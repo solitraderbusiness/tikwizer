@@ -227,7 +227,7 @@ private:
             calc_sl_sell();
            }
 
-      if(MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
+      if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
         {
          printf("Takeprofit and Stoploss too close");
          initialized = false;

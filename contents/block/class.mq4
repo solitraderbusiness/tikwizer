@@ -42,7 +42,7 @@ public:
          return;
       addToHistory(source_id, source_result);
       current_source_id = source_id;
-      task.run(id, this);
+      task.run(id_by_user, this);
 
      };
 

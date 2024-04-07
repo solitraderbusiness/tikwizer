@@ -495,48 +495,8 @@ input_data_3 = {
     "events": {
         "on_tick": {
             "nodes": [
-                {
-                    "id": "361e37db-e957-40fd-b072-3122dfc3e04t",
-                    "id_by_user": 0,
-                    "blockName": "check_profit_unrealized",
-                    "params": {
-                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-                        "symbols_str": ",EURUSD,GBPUSD",
-                        "group_mode": "ORDER_GROUP_MODE_ALL",
-                        "group_number": 15,
-                        "type": [0, 1],
-                        "each_profit_mode": "PROFIT_MODE_NO_MATTER",
-                        "each_profit_amount": 0.0,
-                        "profit_mode": "PROFIT_MODE_MONEY",
-                        "profit_amount": 0.0,
-                        "each_compare": ">=",
-                        "compare": "<"
-                    }
-                },
-                {
-                    "id": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
-                    "id_by_user": 1,
-                    "blockName": "If trade",
-                    "params": {
-                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-                        "symbols_str": ",EURUSD,GBPUSD",
-                        "group_mode": "ORDER_GROUP_MODE_ALL",
-                        "group_number": 25,
-                        "type": [1, 2],
-                        "count_limit": 0,
-                        "operator": ">"
-                    }
-                }
             ],
             "edges": [
-                {
-                    "type": "deleteEdgeBTN",
-                    "source": "361e37db-e957-40fd-b072-3122dfc3e04t",
-                    "sourceHandle": "blue",
-                    "target": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
-                    "targetHandle": "a",
-                    "id": "reactflow__edge-5196a96e-8e8d-4405-a5f2-ced6d7a748d0blue-31a6b06c-eb77-474e-8ab0-e49b1be123baa"
-                }
             ]
         },
         "on_chart": {
@@ -4845,3 +4805,448 @@ input_data_17 = {
     "variables": [],
     "constants": []
 }
+
+# test close trades by front
+input_data_18 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "type": "{0,1}",
+                        "older_than": "46",
+                        "slippage": "4",
+                        "arrow_color": "clrBlue",
+                        "group_number": "4",
+                        "symbols_str": "XAU"
+                    },
+                    "id": "92346b87-7855-4b9c-bf74-f78f6b375350",
+                    "id_by_user": 4,
+                    "blockName": "Close trades"
+                },
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{0}",
+                        "older_than": "0",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "group_number": "11",
+                        "symbols_str": ""
+                    },
+                    "id": "9a385cc5-e0f6-4a78-a7d0-c79288360b3c",
+                    "id_by_user": 5,
+                    "blockName": "Close trades"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "92346b87-7855-4b9c-bf74-f78f6b375350",
+                    "sourceHandle": "blue",
+                    "target": "9a385cc5-e0f6-4a78-a7d0-c79288360b3c",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-92346b87-7855-4b9c-bf74-f78f6b375350blue-9a385cc5-e0f6-4a78-a7d0-c79288360b3cc"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# test loop (pass n times) by front
+input_data_19 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "n": "8"
+                    },
+                    "id": "17674928-62c7-4276-ade5-65af0355f883",
+                    "id_by_user": 1,
+                    "blockName": "Loop (pass\"n\" times)"
+                },
+                {
+                    "params": {
+                        "n": "10"
+                    },
+                    "id": "17674928-62c7-4276-ade5-65af0355f884",
+                    "id_by_user": 2,
+                    "blockName": "Loop (pass\"n\" times)"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "17674928-62c7-4276-ade5-65af0355f883",
+                    "sourceHandle": "blue",
+                    "target": "17674928-62c7-4276-ade5-65af0355f884",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a462688f-11f4-414d-9736-20bdf16dff99blue-3f28e570-b777-4c33-acbf-63a9b21c60a4c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# Test delay by front
+input_data_20 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "sleep_seconds": "33",
+                        "sleep_tester_normal": "true",
+                        "sleep_tester_visual": "false"
+                    },
+                    "id": "1667a9c5-1b48-4c05-b1a7-d4cff0eb76d1",
+                    "id_by_user": 6,
+                    "blockName": "Delay"
+                }
+            ],
+            "edges": []
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# Test check profit unrealized, and, or
+input_data_21 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "type": "{0,1}",
+                        "group_number": "3",
+                        "symbols_str": "USD",
+                        "compare": "!=",
+                        "profit_mode_each": "money",
+                        "profit_amount_each": "13",
+                        "compare_each": "==",
+                        "profit_mode": "pips",
+                        "profit_amount": "6",
+                    },
+                    "id": "2b46af15-775e-49e8-a684-a4f99724e17b",
+                    "id_by_user": 1,
+                    "blockName": "Check profit (unrealized)"
+                },
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{1}",
+                        "profit_mode_each": "no_matter",
+                        "profit_mode": "money",
+                        "compare": "<=",
+                        "symbols_str": "",
+                        "profit_amount": "8"
+                    },
+                    "id": "244d05fb-7c45-414f-aa11-55c43500122b",
+                    "id_by_user": 2,
+                    "blockName": "Check profit (unrealized)"
+                },
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_MANUAL",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{0}",
+                        "profit_mode_each": "pips",
+                        "profit_mode": "pips",
+                        "compare": ">=",
+                        "symbols_str": "",
+                        "profit_amount": "7",
+                        "profit_amount_each": "10",
+                        "compare_each": "<"
+                    },
+                    "id": "1004d20a-28e0-43c2-a921-f19419020d47",
+                    "id_by_user": 3,
+                    "blockName": "Check profit (unrealized)"
+                },
+                {
+                    "id": "476741bc-82e1-4a1d-bbb6-d87a17db9c3d",
+                    "id_by_user": 4,
+                    "blockName": "AND",
+                    "params": {}
+                },
+                {
+                    "id": "807ebe19-e9f5-42a3-96e2-9ed657e9791c",
+                    "id_by_user": 5,
+                    "blockName": "OR",
+                    "params": {}
+                }
+            ],
+            "edges": [
+                {
+                    "source": "2b46af15-775e-49e8-a684-a4f99724e17b",
+                    "sourceHandle": "blue",
+                    "target": "244d05fb-7c45-414f-aa11-55c43500122b",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-2b46af15-775e-49e8-a684-a4f99724e17bblue-244d05fb-7c45-414f-aa11-55c43500122bc"
+                },
+                {
+                    "source": "244d05fb-7c45-414f-aa11-55c43500122b",
+                    "sourceHandle": "red",
+                    "target": "1004d20a-28e0-43c2-a921-f19419020d47",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-244d05fb-7c45-414f-aa11-55c43500122bred-1004d20a-28e0-43c2-a921-f19419020d47c"
+                },
+                {
+                    "source": "1004d20a-28e0-43c2-a921-f19419020d47",
+                    "sourceHandle": "blue",
+                    "target": "476741bc-82e1-4a1d-bbb6-d87a17db9c3d",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-1004d20a-28e0-43c2-a921-f19419020d47blue-476741bc-82e1-4a1d-bbb6-d87a17db9c3dc"
+                },
+                {
+                    "source": "476741bc-82e1-4a1d-bbb6-d87a17db9c3d",
+                    "sourceHandle": "blue",
+                    "target": "807ebe19-e9f5-42a3-96e2-9ed657e9791c",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-476741bc-82e1-4a1d-bbb6-d87a17db9c3dblue-807ebe19-e9f5-42a3-96e2-9ed657e9791cc"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# Test 2 check profit unrealized, and, or
+input_data_22 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                        "symbol_mode": "SYMBOL_MODE_ANY",
+                        "type": "{0}",
+                        "profit_mode_each": "money",
+                        "profit_mode": "pips-sum",
+                        "compare": "==",
+                        "group_number": "11",
+                        "symbols_str": "",
+                        "profit_amount_each": "12",
+                        "compare_each": "==",
+                        "profit_amount": "0"
+                    },
+                    "id": "29b9166b-c054-4f66-b7fc-bbad9fb98d9e",
+                    "id_by_user": 17,
+                    "blockName": "Check profit (unrealized)"
+                }
+            ],
+            "edges": []
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+
+# Test comment
+input_data_23 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "title": "comment testy",
+                        "obj_chart_subwindow": "asd",
+                        "obj_corner": "CORNER_RIGHT_UPPER",
+                        "obj_x": "3",
+                        "obj_y": "2",
+                        "obj_title_font": "gg",
+                        "obj_title_font_color": "clrBlue",
+                        "obj_title_font_size": "55",
+                        "obj_label_font": "ss",
+                        "obj_label_font_color": "clrBlue",
+                        "obj_label_font_size": "88",
+                        "obj_font": "tt",
+                        "obj_font_color": "clrRed",
+                        "obj_font_size": "hh",
+                        "label_1": "label 1 ",
+                        "format_number_1": "2",
+                        "format_time_1": "EMPTY_VALUE",
+                        "label_2": "asd2",
+                        "format_number_2": "EMPTY_VALUE",
+                        "format_time_2": "TIME_DATE|TIME_SECONDS",
+                        "label_3": "",
+                        "format_number_3": "EMPTY_VALUE",
+                        "format_time_3": "EMPTY_VALUE",
+                        "label_4": "",
+                        "format_number_4": "EMPTY_VALUE",
+                        "format_time_4": "EMPTY_VALUE",
+                        "label_5": "",
+                        "format_number_5": "EMPTY_VALUE",
+                        "format_time_5": "EMPTY_VALUE",
+                        "label_6": "",
+                        "format_number_6": "EMPTY_VALUE",
+                        "format_time_6": "EMPTY_VALUE",
+                        "label_7": "",
+                        "format_number_7": "EMPTY_VALUE",
+                        "format_time_7": "EMPTY_VALUE",
+                        "label_8": "",
+                        "format_number_8": "EMPTY_VALUE",
+                        "format_time_8": "EMPTY_VALUE",
+                        "value_fetch_1": {
+                            "row1": "Value",
+                            "row2": "Text",
+                            "params": {
+                                "value": "test 1 "
+                            }
+                        },
+                        "value_fetch_2": {
+                            "row1": "Value",
+                            "row2": "Text",
+                            "params": {
+                                "value": "asdasdasd"
+                            }
+                        }
+                    },
+                    "id": "30d49ab7-adcc-4adf-b354-d99bb7be79d8",
+                    "id_by_user": 4,
+                    "blockName": "Comment"
+                }
+            ],
+            "edges": []
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [],
+    "constants": []
+}
+

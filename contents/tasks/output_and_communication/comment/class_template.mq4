@@ -1,96 +1,103 @@
 
 
-class Task_id : public Task
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Task0 : public Task
   {
 public:
-   //specified by user
-   string            Title;
-   string            ObjChartSubWindow;
-   int               ObjCorner;
-   int               ObjX;
-   int               ObjY;
-   string            ObjTitleFont;
-   color             ObjTitleFontColor;
-   int               ObjTitleFontSize;
-   string            ObjLabelsFont;
-   color             ObjLabelsFontColor;
-   int               ObjLabelsFontSize;
-   string            ObjFont;
-   int               ObjFontColor;
-   int               ObjFontSize;
-   string            Label1;
-   int               FormatNumber1;
-   int               FormatTime1;
-   string            Label2;
-   int               FormatNumber2;
-   int               FormatTime2;
-   string            Label3;
-   int               FormatNumber3;
-   int               FormatTime3;
-   string            Label4;
-   int               FormatNumber4;
-   int               FormatTime4;
-   string            Label5;
-   int               FormatNumber5;
-   int               FormatTime5;
-   string            Label6;
-   int               FormatNumber6;
-   int               FormatTime6;
-   string            Label7;
-   int               FormatNumber7;
-   int               FormatTime7;
-   string            Label8;
-   int               FormatNumber8;
-   int               FormatTime8;
-   //specified by system
+   //value set by user
+   string            title;
+   string            obj_chart_subwindow;
+   int               obj_corner;
+   int               obj_x;
+   int               obj_y;
+   string            obj_title_font;
+   color             obj_title_font_color;
+   int               obj_title_font_size;
+   string            obj_label_font;
+   color             obj_label_font_color;
+   int               obj_label_font_size;
+   string            obj_font;
+   int               obj_font_color;
+   int               obj_font_size;
+   string            label_1;
+   int               format_number_1;
+   int               format_time_1;
+   string            label_2;
+   int               format_number_2;
+   int               format_time_2;
+   string            label_3;
+   int               format_number_3;
+   int               format_time_3;
+   string            label_4;
+   int               format_number_4;
+   int               format_time_4;
+   string            label_5;
+   int               format_number_5;
+   int               format_time_5;
+   string            label_6;
+   int               format_number_6;
+   int               format_time_6;
+   string            label_7;
+   int               format_number_7;
+   int               format_time_7;
+   string            label_8;
+   int               format_number_8;
+   int               format_time_8;
+   //value set by system
    bool              initialized;
 public:
-                     Task_id(string name):Task(name)
+                     Task0(string name):Task(name)
      {
-      Title = "Comment Message";
-      ObjChartSubWindow = "";
-      ObjCorner = CORNER_LEFT_UPPER;
-      ObjX = 800;
-      ObjY = 200;
-      ObjTitleFont = "Georgia";
-      ObjTitleFontColor = clrBlue;
-      ObjTitleFontSize = 13;
-      ObjLabelsFont = "Verdana";
-      ObjLabelsFontColor = clrDarkGray;
-      ObjLabelsFontSize = 10;
-      ObjFont = "Verdana";
-      ObjFontColor = clrWhite;
-      ObjFontSize = 10;
-      Label1 = "Hello1";
-      FormatNumber1 = 50;
-      FormatTime1 = EMPTY_VALUE;
-      Label2 = "Hello2";
-      FormatNumber2 = EMPTY_VALUE;
-      FormatTime2 = EMPTY_VALUE;
-      Label3 = "Hello3";
-      FormatNumber3 = EMPTY_VALUE;
-      FormatTime3 = EMPTY_VALUE;
-      Label4 = "Hello4";
-      FormatNumber4 = EMPTY_VALUE;
-      FormatTime4 = EMPTY_VALUE;
-      Label5 = "Hello5";
-      FormatNumber5 = EMPTY_VALUE;
-      FormatTime5 = EMPTY_VALUE;
-      Label6 = "Hello6";
-      FormatNumber6 = EMPTY_VALUE;
-      FormatTime6 = EMPTY_VALUE;
-      Label7 = "Hello7";
-      FormatNumber7 = EMPTY_VALUE;
-      FormatTime7 = EMPTY_VALUE;
-      Label8 = "Hello8";
-      FormatNumber8 = EMPTY_VALUE;
-      FormatTime8 = EMPTY_VALUE;
+      title = title_val;
+      obj_chart_subwindow = obj_chart_subwindow_val;
+      obj_corner = obj_corner_val;
+      obj_x = obj_x_val;
+      obj_y = obj_y_val;
+      obj_title_font = obj_title_font_val;
+      obj_title_font_color = obj_title_font_color_val;
+      obj_title_font_size = obj_title_font_size_val;
+      obj_label_font = obj_label_font_val;
+      obj_label_font_color = obj_label_font_color_val;
+      obj_label_font_size = obj_label_font_size_val;
+      obj_font = obj_font_val;
+      obj_font_color = obj_font_color_val;
+      obj_font_size = obj_font_size_val;
+      label_1 = label_1_val;
+      format_number_1 = format_number_1_val;
+      format_time_1 = format_time_1_val;
+      label_2 = label_2_val;
+      format_number_2 = format_number_2_val;
+      format_time_2 = format_time_2_val;
+      label_3 = label_3_val;
+      format_number_3 = format_number_3_val;
+      format_time_3 = format_time_3_val;
+      label_4 = label_4_val;
+      format_number_4 = format_number_4_val;
+      format_time_4 = format_time_4_val;
+      label_5 = label_5_val;
+      format_number_5 = format_number_5_val;
+      format_time_5 = format_time_5_val;
+      label_6 = label_6_val;
+      format_number_6 = format_number_6_val;
+      format_time_6 = format_time_6_val;
+      label_7 = label_7_val;
+      format_number_7 = format_number_7_val;
+      format_time_7 = format_time_7_val;
+      label_8 = label_8_val;
+      format_number_8 = format_number_8_val;
+      format_time_8 = format_time_8_val;
       /* Static Parameters (initial value) */
       initialized =  false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+
+      double valueX = 0;
+
 
       if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
         {
@@ -99,19 +106,19 @@ public:
          long ObjChartID = 0;
          int ObjAnchor   = ANCHOR_LEFT;
 
-         if(ObjCorner == CORNER_RIGHT_UPPER || ObjCorner == CORNER_RIGHT_LOWER)
+         if(obj_corner == CORNER_RIGHT_UPPER || obj_corner == CORNER_RIGHT_LOWER)
            {
             ObjAnchor = ANCHOR_RIGHT;
            }
 
          string namebase = "fxd_cmnt_" + block_id;
 
-         int subwindow = WindowFindVisible(ObjChartID, ObjChartSubWindow);
+         int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
 
          if(subwindow >= 0)
            {
             //-- draw comment title
-            if((string)Title != "")
+            if((string)title != "")
               {
                string nametitle = namebase;
 
@@ -123,30 +130,30 @@ public:
                     }
                   else
                     {
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(ObjTitleFontSize));
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, ObjTitleFontColor);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(obj_title_font_size));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, obj_title_font_color);
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, obj_corner);
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
 
-                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, ObjTitleFont);
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
 
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, ObjX);
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, ObjY);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
                     }
                  }
                else
                  {
-                  ObjX = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
-                  ObjY = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                  obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
                  }
 
-               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)Title);
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
 
-               ObjY = (int)(ObjY + ObjTitleFontSize / 3);
+               obj_y = (int)(obj_y + obj_title_font_size / 3);
               }
 
             //-- draw comment rows
@@ -159,88 +166,88 @@ public:
                  {
                   case 1:
                     {
-                     if(Label1 != "")
+                     if(label_1 != "")
                        {
-                        textlbl = Label1;
+                        textlbl = label_1;
                         initializer_1
-                        text    = FormatValueForPrinting(variable_name_1, FormatNumber1, FormatTime1);
+                        text    = FormatValueForPrinting(variable_name_1, format_number_1, format_time_1);
                        }
 
                      break;
                     }
                   case 2:
                     {
-                     if(Label2 != "")
+                     if(label_2 != "")
                        {
-                        textlbl = Label2;
+                        textlbl = label_2;
                         initializer_2
-                        text    = FormatValueForPrinting(variable_name_2, FormatNumber2, FormatTime2);
+                        text    = FormatValueForPrinting(variable_name_2, format_number_2, format_time_2);
                        }
 
                      break;
                     }
                   case 3:
                     {
-                     if(Label3 != "")
+                     if(label_3 != "")
                        {
-                        textlbl = Label3;
+                        textlbl = label_3;
                         initializer_3
-                        text    = FormatValueForPrinting(variable_name_3, FormatNumber3, FormatTime3);
+                        text    = FormatValueForPrinting(variable_name_3, format_number_3, format_time_3);
                        }
 
                      break;
                     }
                   case 4:
                     {
-                     if(Label4 != "")
+                     if(label_4 != "")
                        {
-                        textlbl = Label4;
+                        textlbl = label_4;
                         initializer_4
-                        text    = FormatValueForPrinting(variable_name_4, FormatNumber4, FormatTime4);
+                        text    = FormatValueForPrinting(variable_name_4, format_number_4, format_time_4);
                        }
 
                      break;
                     }
                   case 5:
                     {
-                     if(Label5 != "")
+                     if(label_5 != "")
                        {
-                        textlbl = Label5;
+                        textlbl = label_5;
                         initializer_5
-                        text    = FormatValueForPrinting(variable_name_5, FormatNumber5, FormatTime5);
+                        text    = FormatValueForPrinting(variable_name_5, format_number_5, format_time_5);
                        }
 
                      break;
                     }
                   case 6:
                     {
-                     if(Label6 != "")
+                     if(label_6 != "")
                        {
-                        textlbl = Label6;
+                        textlbl = label_6;
                         initializer_6
-                        text    = FormatValueForPrinting(variable_name_6, FormatNumber6, FormatTime6);
+                        text    = FormatValueForPrinting(variable_name_6, format_number_6, format_time_6);
                        }
 
                      break;
                     }
                   case 7:
                     {
-                     if(Label7 != "")
+                     if(label_7 != "")
                        {
-                        textlbl = Label7;
+                        textlbl = label_7;
                         initializer_7
-                        text    = FormatValueForPrinting(variable_name_7, FormatNumber7, FormatTime7);
+                        text    = FormatValueForPrinting(variable_name_7, format_number_7, format_time_7);
                        }
 
                      break;
                     }
                   case 8:
                     {
-                     if(Label8 != "")
+                     if(label_8 != "")
                        {
-                        textlbl = Label8;
+                        textlbl = label_8;
                         initializer_8
-                        text    = FormatValueForPrinting(variable_name_8, FormatNumber8, FormatTime8);
+                        text    = FormatValueForPrinting(variable_name_8, format_number_8, format_time_8);
                        }
 
                      break;
@@ -272,15 +279,15 @@ public:
 
                   if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
                     {
-                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, obj_corner);
                      ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
                      ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
                      ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
                      ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
                      ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
-                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, ObjLabelsFontSize);
-                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, ObjLabelsFontColor);
-                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, ObjLabelsFont);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, obj_label_font_size);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, obj_label_font_color);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, obj_label_font);
                     }
                   else
                     {
@@ -289,15 +296,15 @@ public:
 
                   if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
                     {
-                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, ObjCorner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, obj_corner);
                      ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
                      ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
                      ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
                      ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
                      ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
-                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, ObjFontSize);
-                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, ObjFontColor);
-                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, ObjFont);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, obj_font_size);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, obj_font_color);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, obj_font);
                     }
                   else
                     {
@@ -314,11 +321,11 @@ public:
                     }
                  }
 
-               ObjY  = (int)(ObjY + ObjFontSize + ObjFontSize/2);
+               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
 
                //-- update label objects
-               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, ObjX);
-               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, ObjY);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
                ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
 
                //-- update value objects
@@ -328,13 +335,13 @@ public:
                if(xsizelbl == 0)
                  {
                   //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
-                  xsizelbl = (int)(StringLen((string)textlbl) * ObjFontSize / 1.5 + ObjFontSize / 2);
+                  xsizelbl = (int)(StringLen((string)textlbl) * obj_font_size / 1.5 + obj_font_size / 2);
                  }
 
-               x = ObjX + (xsizelbl + ObjFontSize/2);
+               x = obj_x + (xsizelbl + obj_font_size/2);
 
                ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
-               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, ObjY);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
                ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
               }
 
@@ -353,3 +360,4 @@ public:
      }
 
   };
+

@@ -38,6 +38,8 @@ def create_specific_input(nodes):
             params["order_type"] = "ORDER_BUY_PENDING"
         elif block_name == "Sell pending order":
             params["order_type"] = "ORDER_SELL_PENDING"
+        elif block_name == "Once per bar":
+            params["n"] = 1
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):
@@ -59,7 +61,9 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
     # Keys that need a double quote
     keys = ["timestr_start", "timestr_end", "time_stamp", "time_market",
             "timestr", "comment", "obj_name", "name_filter_mode", "symbols_str",
-            "close_mode", "mode_range", "mode_base_price"]
+            "close_mode", "mode_range", "mode_base_price", "profit_mode_each", "profit_mode",
+            "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
+            "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -82,7 +86,7 @@ def is_not_const_var(value, constants, variables):
 
 
 # This function handles the situation where there are both type
-# and pending type. I decided to handle this in Python cuz in MQL
+# and pending type in trade/order filters section. I decided to handle this in Python cuz in MQL
 # I had to change the code in multiple places
 def handle_order_type_issue(event):
     nodes = event.get("nodes")
@@ -232,6 +236,20 @@ def overwrite_task_names(nodes):
             node.get("params")["order_type"] = "ORDER_SELL_PENDING"
         elif block_name == "Modify Variables":
             node["blockName"] = "modify_variables"
+        elif block_name == "Close trades":
+            node["blockName"] = "close_trades"
+        elif block_name == "Loop(pass \"n\" times)":
+            node["blockName"] = "pass_n_times"
+        elif block_name == "Delay":
+            node["blockName"] = "delay"
+        elif block_name == "AND":
+            node["blockName"] = "and"
+        elif block_name == "OR":
+            node["blockName"] = "or"
+        elif block_name == "Check profit (unrealized)":
+            node["blockName"] = "check_profit_unrealized"
+        elif block_name == "Comment":
+            node["blockName"] = "comment"
 
 
 def get_nexts_true(node, edges):
@@ -295,9 +313,9 @@ def add_category(nodes):
                 node["category"] = "time_filters"
             case "spread_filter":
                 node["category"] = "time_filters"
-            case "and":
+            case "AND":
                 node["category"] = "controlling_blocks"
-            case "or":
+            case "OR":
                 node["category"] = "controlling_blocks"
             case "turn_on_blocks":
                 node["category"] = "controlling_blocks"
@@ -309,7 +327,7 @@ def add_category(nodes):
                 node["category"] = "controlling_blocks"
             case "set_current_timeframe_for_next_blocks":
                 node["category"] = "controlling_blocks"
-            case "pass_n_times":
+            case "Loop(pass \"n\" times)":
                 node["category"] = "counters"
             case "for_each_trade":
                 node["category"] = "loop_for_trades_orders"
@@ -329,15 +347,15 @@ def add_category(nodes):
                 node["category"] = "check_trades_orders_count"
             case "No trade nearby":
                 node["category"] = "check_trades_orders_count"
-            case "close_trades":
+            case "Close trades":
                 node["category"] = "trading_actions"
             case "delete_pending_orders":
                 node["category"] = "trading_actions"
             case "modify_stops_of_trades":
                 node["category"] = "trading_actions"
-            case "check_profit_unrealized":
+            case "Check profit (unrealized)":
                 node["category"] = "check_trading_conditions"
-            case "delay":
+            case "Delay":
                 node["category"] = "more"
             case "pass":
                 node["category"] = "more"
@@ -349,7 +367,7 @@ def add_category(nodes):
                 node["category"] = "trailing_stop_break_even"
             case "trailing_pending_orders":
                 node["category"] = "trailing_stop_break_even"
-            case "comment":
+            case "Comment":
                 node["category"] = "output_and_communication"
             case "terminate":
                 node["category"] = "more"

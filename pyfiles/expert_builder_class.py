@@ -705,7 +705,7 @@ class ExpertBuilder:
                 case "pass_n_times":
                     if self.pass_n_times_done:
                         continue
-                    var_data = self.task_dynamic_constructor.get_var_data(task_name)
+                    var_data = self.task_dynamic_constructor.get_var_data(node.get("category"), task_name)
                     self.vars_system.append(var_data)
                     self.pass_n_times_done = True
                 case "spread_filter":
@@ -935,75 +935,68 @@ class ExpertBuilder:
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def comment(self, node):
-        mrow1 = node.get("params").get("row1")
-        if mrow1.get("Label").get("value") != "" and "value_fetch" in mrow1:
-            value_fetch = mrow1.get("value_fetch")
+        params = node.get("params")
+        if params.get("label_1") != "" and "value_fetch_1" in params:
+            value_fetch = params.get("value_fetch_1")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r1"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow2 = node.get("params").get("row2")
-        if mrow2.get("Label").get("value") != "" and "value_fetch" in mrow2:
-            value_fetch = mrow2.get("value_fetch")
+        if params.get("label_2") != "" and "value_fetch_2" in params:
+            value_fetch = params.get("value_fetch_2")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r2"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow3 = node.get("params").get("row3")
-        if mrow3.get("Label").get("value") != "" and "value_fetch" in mrow3:
-            value_fetch = mrow3.get("value_fetch")
+        if params.get("label_3") != "" and "value_fetch_3" in params:
+            value_fetch = params.get("value_fetch_3")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r3"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow4 = node.get("params").get("row4")
-        if mrow4.get("Label").get("value") != "" and "value_fetch" in mrow4:
-            value_fetch = mrow4.get("value_fetch")
+        if params.get("label_4") != "" and "value_fetch_4" in params:
+            value_fetch = params.get("value_fetch_4")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r4"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, v, id_val))
 
-        mrow5 = node.get("params").get("row5")
-        if mrow5.get("Label").get("value") != "" and "value_fetch" in mrow5:
-            value_fetch = mrow5.get("value_fetch")
+        if params.get("label_5") != "" and "value_fetch_5" in params:
+            value_fetch = params.get("value_fetch_5")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r5"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow6 = node.get("params").get("row6")
-        if mrow6.get("Label").get("value") != "" and "value_fetch" in mrow6:
-            value_fetch = mrow6.get("value_fetch")
+        if params.get("label_6") != "" and "value_fetch_6" in params:
+            value_fetch = params.get("value_fetch_6")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r6"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow7 = node.get("params").get("row7")
-        if mrow7.get("Label").get("value") != "" and "value_fetch" in mrow7:
-            value_fetch = mrow7.get("value_fetch")
+        if params.get("label_7") != "" and "value_fetch_7" in params:
+            value_fetch = params.get("value_fetch_7")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r7"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        mrow8 = node.get("params").get("row8")
-        if mrow8.get("Label").get("value") != "" and "value_fetch" in mrow8:
-            value_fetch = mrow8.get("value_fetch")
+        if params.get("label_8") != "" and "value_fetch_8" in params:
+            value_fetch = params.get("value_fetch_8")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r8"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 

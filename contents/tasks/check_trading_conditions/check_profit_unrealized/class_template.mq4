@@ -9,8 +9,8 @@ class Task_id : public Task
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
 
-   string            each_profit_mode;
-   double            each_profit_amount;
+   string            profit_mode_each;
+   double            profit_amount_each;
    string            profit_mode;
    double            profit_amount;
 
@@ -28,8 +28,8 @@ public:
       int mtype[] = {1,2}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
-      each_profit_mode = each_profit_mode_val;
-      each_profit_amount = each_profit_amount_val;
+      profit_mode_each = profit_mode_each_val;
+      profit_amount_each = profit_amount_each_val;
       profit_mode = profit_mode_val;
       profit_amount = profit_amount_val;
      }
@@ -47,15 +47,17 @@ public:
 
       for(int index = OrdersTotal()-1; index >= 0; index--)
         {
+        if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))
+           {
          if(filterGeneral())
            {
             double OrderOpenPrice = OrderOpenPrice();//STest, this should be replaced with another value which is more exact
             double tradeProfit    = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2);
 
             // Filter out individual trades
-            if(each_profit_mode == PROFIT_MODE_MONEY)
+            if(profit_mode_each == PROFIT_MODE_MONEY)
               {
-               if(tradeProfit each_compare_val each_profit_amount)
+               if(tradeProfit compare_each_val profit_amount_each)
                  {
                  }
                else
@@ -64,7 +66,7 @@ public:
                  }
               }
             else
-               if(each_profit_mode == PROFIT_MODE_PIPS)
+               if(profit_mode_each == PROFIT_MODE_PIPS)
                  {
                   double individual_profit = toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
 
@@ -73,7 +75,7 @@ public:
                      individual_profit = -1 * individual_profit;
                     }
 
-                  if(individual_profit each_compare_val each_profit_amount)
+                  if(individual_profit compare_each_val profit_amount_each)
                     {
 
                     }
@@ -102,6 +104,7 @@ public:
               }
 
             tradesCount += 1;
+           }
            }
         }
 

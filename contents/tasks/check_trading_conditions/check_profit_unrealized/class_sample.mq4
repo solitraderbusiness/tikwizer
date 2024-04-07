@@ -16,11 +16,9 @@ class Task5 : public Task
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
 
-   string            each_profit_mode;
-   string            each_compare;
-   double            each_profit_amount;
+   string            profit_mode_each;
+   double            profit_amount_each;
    string            profit_mode;
-   string            compare;
    double            profit_amount;
 
 public:
@@ -56,6 +54,8 @@ public:
 
       for(int index = OrdersTotal()-1; index >= 0; index--)
         {
+        if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))
+           {
          if(filterGeneral())
            {
             double OrderOpenPrice = OrderOpenPrice();//STest, this should be replaced with another value which is more exact
@@ -111,6 +111,7 @@ public:
               }
 
             tradesCount += 1;
+           }
            }
         }
 
