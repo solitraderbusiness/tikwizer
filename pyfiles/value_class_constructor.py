@@ -37,8 +37,8 @@ def get_class(value_type, input_dic, class_id):
 
     if "adjust" in input_dic:
         var_name = "result"
-        if value_type in ["Numeric", "Boolean", "Color", "Pips"]:
-            var_name = "(double)" + var_name
+        # if value_type in ["Numeric", "Color", "Pips"]:
+        #     var_name = "(double)" + var_name
 
         adjustment = adjust.get(var_name, input_dic.get("adjust"), "msymbol")
         mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")

@@ -77,10 +77,10 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
 
 def is_not_const_var(value, constants, variables):
     for constant in constants:
-        if constant.get("name") is value:
+        if constant.get("name") == value:
             return False
     for variable in variables:
-        if variable.get("name") is value:
+        if variable.get("name") == value:
             return False
     return True
 

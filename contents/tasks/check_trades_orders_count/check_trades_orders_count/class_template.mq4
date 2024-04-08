@@ -21,7 +21,7 @@ public:
 
       group_mode = group_mode_val;
       group_number = group_number_val;
-      int mtype[] = {1,2}; //0 for buy and 1 for sell
+      int mtype[] = type_val; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
       count_limit = count_limit_val;
      }

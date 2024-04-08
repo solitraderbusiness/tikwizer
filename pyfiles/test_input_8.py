@@ -4265,15 +4265,6 @@ input_data_16 = {
         "on_chart": {
             "nodes": [
                 {
-                    "id": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
-                    "id_by_user": 2,
-                    "blockName": "mouse_clicked_on_object",
-                    "params": {
-                        "name_filter_mode": "names",
-                        "obj_name": "test_name_obj_xx, test_name_obj_xxx"
-                    }
-                },
-                {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 3,
                     "blockName": "condition",
@@ -4286,7 +4277,7 @@ input_data_16 = {
                                 "timeframe": 0,
                                 "period": "10",
                                 "applied_price": "PRICE_CLOSE",
-                                "shift": "10",
+                                "shift": "1",
                                 "buy_threshold": 70,
                                 "sell_threshold": 30
                             }
@@ -4295,7 +4286,7 @@ input_data_16 = {
                             "row1": "Value",
                             "row2": "Numeric",
                             "params": {
-                                "value": 25.1,
+                                "value": 70,
                                 "adjust": "",
                                 "pips_mode": "VALUE_PIPS_AS_IS",
                                 "symbol": "NULL",
@@ -4327,7 +4318,7 @@ input_data_16 = {
                         "operator": {
                             "value": 1,
                             "label": "×>",
-                            "cross_width": 10
+                            "cross_width": 1
                         }
                     }
                 },
@@ -4606,22 +4597,6 @@ input_data_16 = {
                     "target": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "targetHandle": "black",
                     "id": "reactflow__edge-361e37db-e957-40fd-b072-3122dfc3e04cblue-3c61eca7-54f1-40c3-9af2-2888f042d5d2black"
-                },
-                {
-                    "type": "deleteEdgeBTN",
-                    "source": "361e37db-e957-40fd-b072-3122dfc3e04c",
-                    "sourceHandle": "blue",
-                    "target": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
-                    "targetHandle": "black",
-                    "id": "reactflow__edge-361e37db-e957-40fd-b072-3122dfc3e04cblue-3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1black"
-                },
-                {
-                    "type": "deleteEdgeBTN",
-                    "source": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
-                    "sourceHandle": "blue",
-                    "target": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
-                    "targetHandle": "black",
-                    "id": "reactflow__edge-3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1blue-12a55fe9-a550-446c-bb39-e7f9f8bb0001black"
                 },
                 {
                     "type": "deleteEdgeBTN",

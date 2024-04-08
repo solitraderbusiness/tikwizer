@@ -16,7 +16,7 @@ public:
 
       group_mode = group_mode;
       group_number = group_number;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
+      int mtype[] = type_val; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
      }
    virtual void               run(int block_id, BlockParent &block)
