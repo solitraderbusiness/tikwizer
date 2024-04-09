@@ -1,4 +1,7 @@
 # node is entry if is not target and has target
+from pyfiles import path_root
+
+
 def is_entry(id_node, edges):
     is_target = False
     for edge in edges:
@@ -23,6 +26,13 @@ def get_entries_sorted(nodes, edges):
             entries.append(id_node)
     entries.sort()
     return entries
+
+
+def get_version():
+    path = path_root.get()
+    with open(path + "/.project-version") as version_file:
+        if version_file:
+            return "\n\n\n//g-v: " + version_file.read()
 
 
 class ExpertBuilder:
@@ -646,6 +656,7 @@ class ExpertBuilder:
         expert += self.get_on_chart_items()
         expert += self.get_on_deinit_items()
 
+        expert += get_version()
         return expert
 
     def get_on_init_items(self):
@@ -1073,7 +1084,8 @@ class ExpertBuilder:
         params_left_1 = params.get("left").get("params")
         params_left_2 = params_left_1.copy()
         if "shift" in params_left_2:
-            params_left_2["shift"] = str(params_left_2["shift"]) + " + " + str((params.get("operator").get("cross_width")))
+            params_left_2["shift"] = str(params_left_2["shift"]) + " + " + str(
+                (params.get("operator").get("cross_width")))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
         # right data
@@ -1084,7 +1096,8 @@ class ExpertBuilder:
         params_right_1 = params.get("right").get("params")
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:
-            params_right_2["shift"] = str(params_right_2["shift"]) + "+" + str(params.get("operator").get("cross_width"))
+            params_right_2["shift"] = str(params_right_2["shift"]) + "+" + str(
+                params.get("operator").get("cross_width"))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
 

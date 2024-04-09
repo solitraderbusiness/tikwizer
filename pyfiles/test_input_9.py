@@ -2559,7 +2559,6 @@ input_data_15 = {
     ]
 }
 
-
 input_data_16 = {
     "events": {
         "on_tick": {
@@ -3059,4 +3058,602 @@ input_data_16 = {
             "description": ""
         }
     ]
+}
+
+input_data_17 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "left": {
+                            "row1": "Market Properties",
+                            "row2": "HIGHEST_PRICE_CANDLE_PERIOD",
+                            "params": {
+                                "range_start": "0",
+                                "range_end": "150",
+                                "what_to_get": "GET_PRICE"
+                            }
+                        },
+                        "right": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "0"
+                            }
+                        },
+                        "operator": {
+                            "label": "+"
+                        },
+                        "ajdust": "",
+                        "variable": "xxx"
+                    },
+                    "id": "4a04d07e-ca3c-45b7-826c-afcd474e0fed",
+                    "id_by_user": 2,
+                    "blockName": "formula"
+                },
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "7bb7f0e8-4b02-42dc-b4f6-1826993f4c1f",
+                    "id_by_user": 3,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "title": "Comment Message",
+                        "obj_chart_subwindow": "",
+                        "obj_corner": "CORNER_LEFT_UPPER",
+                        "obj_x": "5",
+                        "obj_y": "5",
+                        "obj_title_font": "Georgia",
+                        "obj_title_font_color": "clrRed",
+                        "obj_title_font_size": "13",
+                        "obj_label_font": "Verdana",
+                        "obj_label_font_color": "clrRed",
+                        "obj_label_font_size": "10",
+                        "obj_font": "Verdana",
+                        "obj_font_color": "clrRed",
+                        "obj_font_size": "10",
+                        "label_1": "Candle High [20] is:",
+                        "format_number_1": "EMPTY_VALUE",
+                        "format_time_1": "EMPTY_VALUE",
+                        "label_2": "",
+                        "format_number_2": "EMPTY_VALUE",
+                        "format_time_2": "EMPTY_VALUE",
+                        "label_3": "",
+                        "format_number_3": "EMPTY_VALUE",
+                        "format_time_3": "EMPTY_VALUE",
+                        "label_4": "",
+                        "format_number_4": "EMPTY_VALUE",
+                        "format_time_4": "EMPTY_VALUE",
+                        "label_5": "",
+                        "format_number_5": "EMPTY_VALUE",
+                        "format_time_5": "EMPTY_VALUE",
+                        "label_6": "",
+                        "format_number_6": "EMPTY_VALUE",
+                        "format_time_6": "EMPTY_VALUE",
+                        "label_7": "",
+                        "format_number_7": "EMPTY_VALUE",
+                        "format_time_7": "EMPTY_VALUE",
+                        "label_8": "",
+                        "format_number_8": "EMPTY_VALUE",
+                        "format_time_8": "EMPTY_VALUE",
+                        "value_fetch_1": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "xxx"
+                            }
+                        }
+                    },
+                    "id": "e5cf2aeb-7627-4182-926a-3e12194135f7",
+                    "id_by_user": 4,
+                    "blockName": "Comment"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "7bb7f0e8-4b02-42dc-b4f6-1826993f4c1f",
+                    "sourceHandle": "blue",
+                    "target": "4a04d07e-ca3c-45b7-826c-afcd474e0fed",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-7bb7f0e8-4b02-42dc-b4f6-1826993f4c1fblue-4a04d07e-ca3c-45b7-826c-afcd474e0fedc"
+                },
+                {
+                    "source": "4a04d07e-ca3c-45b7-826c-afcd474e0fed",
+                    "sourceHandle": "blue",
+                    "target": "e5cf2aeb-7627-4182-926a-3e12194135f7",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-4a04d07e-ca3c-45b7-826c-afcd474e0fedblue-e5cf2aeb-7627-4182-926a-3e12194135f7c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [
+
+            ],
+            "edges": [
+
+            ]
+        },
+        "on_chart": {
+            "nodes": [
+
+            ],
+            "edges": [
+
+            ]
+        },
+        "on_timer": {
+            "nodes": [
+
+            ],
+            "edges": [
+
+            ]
+        },
+        "on_init": {
+            "nodes": [
+
+            ],
+            "edges": [
+
+            ]
+        },
+        "on_deinit": {
+            "nodes": [
+
+            ],
+            "edges": [
+
+            ]
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "xxx",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+
+    ]
+}
+
+input_data_18 = {
+   "events":{
+      "on_tick":{
+         "nodes":[
+            {
+               "params":{
+                  "symbol":"",
+                  "max_time":"1",
+                  "timeframe":"PERIOD_CURRENT"
+               },
+               "id":"071d4995-44af-4f75-a5c3-7a127dc9e8d7",
+               "id_by_user":2,
+               "blockName":"Once per bar"
+            },
+            {
+               "params":{
+                  "title":"Comment Message",
+                  "obj_chart_subwindow":"",
+                  "obj_corner":"CORNER_LEFT_UPPER",
+                  "obj_x":"5",
+                  "obj_y":"5",
+                  "label_1":"low price:",
+                  "format_number_1":"EMPTY_VALUE",
+                  "format_time_1":"EMPTY_VALUE",
+                  "label_2":"",
+                  "format_number_2":"EMPTY_VALUE",
+                  "format_time_2":"EMPTY_VALUE",
+                  "label_3":"",
+                  "format_number_3":"EMPTY_VALUE",
+                  "format_time_3":"EMPTY_VALUE",
+                  "label_4":"",
+                  "format_number_4":"EMPTY_VALUE",
+                  "format_time_4":"EMPTY_VALUE",
+                  "label_5":"",
+                  "format_number_5":"EMPTY_VALUE",
+                  "format_time_5":"EMPTY_VALUE",
+                  "label_6":"",
+                  "format_number_6":"EMPTY_VALUE",
+                  "format_time_6":"EMPTY_VALUE",
+                  "label_7":"",
+                  "format_number_7":"EMPTY_VALUE",
+                  "format_time_7":"EMPTY_VALUE",
+                  "label_8":"",
+                  "format_number_8":"EMPTY_VALUE",
+                  "format_time_8":"EMPTY_VALUE",
+                  "obj_title_font":"Georgia",
+                  "obj_title_font_color":"clrRed",
+                  "obj_title_font_size":"13",
+                  "obj_label_font":"Verdana",
+                  "obj_label_font_color":"clrRed",
+                  "obj_label_font_size":"10",
+                  "obj_font":"Verdana",
+                  "obj_font_color":"clrRed",
+                  "obj_font_size":"10",
+                  "value_fetch_1":{
+                     "row1":"Value",
+                     "row2":"Numeric",
+                     "params":{
+                        "value":"min_price"
+                     }
+                  },
+                  "value_fetch_2":{
+                     "row1":"Value",
+                     "row2":"Numeric",
+                     "params":{
+                        "value":"max_price"
+                     }
+                  },
+                  "value_fetch_3":{
+                     "row1":"Value",
+                     "row2":"Text",
+                     "params":{
+                        "value":"sample text"
+                     }
+                  }
+               },
+               "id":"3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
+               "id_by_user":3,
+               "blockName":"Comment"
+            },
+            {
+               "params":{
+                  "variable1":{
+                     "variable_name":"max_price",
+                     "value_fetch":{
+                        "row1":"Value",
+                        "row2":"Numeric",
+                        "params":{
+                           "value":"0"
+                        }
+                     }
+                  },
+                  "variable2":{
+                     "variable_name":"min_price",
+                     "value_fetch":{
+                        "row1":"Value",
+                        "row2":"Numeric",
+                        "params":{
+                           "value":"9999999"
+                        }
+                     }
+                  },
+                  "variable3":{
+                     "variable_name":"loop_counter",
+                     "value_fetch":{
+                        "row1":"Value",
+                        "row2":"Numeric",
+                        "params":{
+                           "value":"0"
+                        }
+                     }
+                  },
+                  "variable4":{
+                     "variable_name":""
+                  },
+                  "variable5":{
+                     "variable_name":""
+                  }
+               },
+               "id":"10aa7065-7481-4016-965f-b5b7f0ad497d",
+               "id_by_user":4,
+               "blockName":"Modify Variables"
+            },
+            {
+               "params":{
+                  "n":"loop_count"
+               },
+               "id":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+               "id_by_user":5,
+               "blockName":"Loop(pass \"n\" times)"
+            },
+            {
+               "params":{
+                  "operator":{
+                     "label":">",
+                     "cross_width":1
+                  },
+                  "left":{
+                     "params":{
+                        "price_mode":"CANDLE_HIGH",
+                        "find_method":"FIND_BY_ID",
+                        "symbol":"NULL",
+                        "timeframe":"PERIOD_CURRENT",
+                        "shift":"loop_counter"
+                     },
+                     "row1":"Candle",
+                     "row2":"Candle"
+                  },
+                  "right":{
+                     "row1":"Value",
+                     "row2":"Numeric",
+                     "params":{
+                        "value":"max_price"
+                     }
+                  }
+               },
+               "id":"20fe764c-2251-4907-aacf-9b121d3fceda",
+               "id_by_user":6,
+               "blockName":"condition"
+            },
+            {
+               "params":{
+                  "operator":{
+                     "label":"<",
+                     "cross_width":1
+                  },
+                  "left":{
+                     "row2":"Candle",
+                     "row1":"Candle",
+                     "params":{
+                        "price_mode":"CANDLE_LOW",
+                        "find_method":"FIND_BY_ID",
+                        "symbol":"NULL",
+                        "timeframe":"PERIOD_CURRENT",
+                        "shift":"loop_counter"
+                     }
+                  },
+                  "right":{
+                     "row2":"Numeric",
+                     "row1":"Value",
+                     "params":{
+                        "value":"min_price"
+                     }
+                  }
+               },
+               "id":"9999b102-dfaf-405a-b321-40571ebbcd36",
+               "id_by_user":7,
+               "blockName":"condition"
+            },
+            {
+               "params":{
+                  "variable1":{
+                     "variable_name":"max_price",
+                     "value_fetch":{
+                        "row1":"Candle",
+                        "row2":"Candle",
+                        "params":{
+                           "price_mode":"CANDLE_HIGH",
+                           "find_method":"FIND_BY_ID",
+                           "symbol":"NULL",
+                           "timeframe":"PERIOD_CURRENT",
+                           "shift":"loop_counter"
+                        }
+                     }
+                  },
+                  "variable2":{
+                     "variable_name":""
+                  },
+                  "variable3":{
+                     "variable_name":""
+                  },
+                  "variable4":{
+                     "variable_name":""
+                  },
+                  "variable5":{
+                     "variable_name":""
+                  }
+               },
+               "id":"cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
+               "id_by_user":8,
+               "blockName":"Modify Variables"
+            },
+            {
+               "params":{
+                  "variable1":{
+                     "variable_name":"min_price",
+                     "value_fetch":{
+                        "row2":"Candle",
+                        "row1":"Candle",
+                        "params":{
+                           "price_mode":"CANDLE_LOW",
+                           "find_method":"FIND_BY_ID",
+                           "symbol":"NULL",
+                           "timeframe":"PERIOD_CURRENT",
+                           "shift":"loop_counter"
+                        }
+                     }
+                  },
+                  "variable2":{
+                     "variable_name":""
+                  },
+                  "variable3":{
+                     "variable_name":""
+                  },
+                  "variable4":{
+                     "variable_name":""
+                  },
+                  "variable5":{
+                     "variable_name":""
+                  }
+               },
+               "id":"1c0bab59-f267-4d4a-b573-4a46ec4b826c",
+               "id_by_user":9,
+               "blockName":"Modify Variables"
+            },
+            {
+               "params":{
+                  "left":{
+                     "row1":"Value",
+                     "row2":"Numeric",
+                     "params":{
+                        "value":"loop_counter"
+                     }
+                  },
+                  "right":{
+                     "row2":"Numeric",
+                     "row1":"Value",
+                     "params":{
+                        "value":"1"
+                     }
+                  },
+                  "operator":{
+                     "label":"+"
+                  },
+                  "ajdust":"loop_counter",
+                  "variable":""
+               },
+               "id":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+               "id_by_user":10,
+               "blockName":"formula"
+            },
+            {
+               "params":{
+                  "symbol":"",
+                  "max_time":"1",
+                  "timeframe":"PERIOD_CURRENT"
+               },
+               "id":"a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+               "id_by_user":12,
+               "blockName":"Once per bar"
+            }
+         ],
+         "edges":[
+            {
+               "source":"071d4995-44af-4f75-a5c3-7a127dc9e8d7",
+               "sourceHandle":"blue",
+               "target":"3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-071d4995-44af-4f75-a5c3-7a127dc9e8d7blue-3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1c"
+            },
+            {
+               "source":"10aa7065-7481-4016-965f-b5b7f0ad497d",
+               "sourceHandle":"blue",
+               "target":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-10aa7065-7481-4016-965f-b5b7f0ad497dblue-f002ebcc-e73a-4e00-b1a4-3c6dee511cafc"
+            },
+            {
+               "source":"a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+               "sourceHandle":"blue",
+               "target":"10aa7065-7481-4016-965f-b5b7f0ad497d",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-10aa7065-7481-4016-965f-b5b7f0ad497dc"
+            },
+            {
+               "source":"9999b102-dfaf-405a-b321-40571ebbcd36",
+               "sourceHandle":"blue",
+               "target":"1c0bab59-f267-4d4a-b573-4a46ec4b826c",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-9999b102-dfaf-405a-b321-40571ebbcd36blue-1c0bab59-f267-4d4a-b573-4a46ec4b826cc"
+            },
+            {
+               "source":"20fe764c-2251-4907-aacf-9b121d3fceda",
+               "sourceHandle":"blue",
+               "target":"cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-20fe764c-2251-4907-aacf-9b121d3fcedablue-cc3e090a-3916-4a9e-a5c8-3c613b24c8fbc"
+            },
+            {
+               "source":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+               "sourceHandle":"blue",
+               "target":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-f002ebcc-e73a-4e00-b1a4-3c6dee511cafblue-b97d7fc0-0cbd-45ce-9374-2beb4092a024c"
+            },
+            {
+               "source":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+               "sourceHandle":"blue",
+               "target":"9999b102-dfaf-405a-b321-40571ebbcd36",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-9999b102-dfaf-405a-b321-40571ebbcd36c"
+            },
+            {
+               "source":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+               "sourceHandle":"blue",
+               "target":"20fe764c-2251-4907-aacf-9b121d3fceda",
+               "targetHandle":"c",
+               "type":"customEdge",
+               "id":"reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-20fe764c-2251-4907-aacf-9b121d3fcedac"
+            }
+         ]
+      },
+      "on_trade":{
+         "nodes":[
+
+         ],
+         "edges":[
+
+         ]
+      },
+      "on_chart":{
+         "nodes":[
+
+         ],
+         "edges":[
+
+         ]
+      },
+      "on_timer":{
+         "nodes":[
+
+         ],
+         "edges":[
+
+         ]
+      },
+      "on_init":{
+         "nodes":[
+
+         ],
+         "edges":[
+
+         ]
+      },
+      "on_deinit":{
+         "nodes":[
+
+         ],
+         "edges":[
+
+         ]
+      }
+   },
+   "variables":[
+      {
+         "type":"double",
+         "name":"max_price",
+         "value":"0",
+         "description":""
+      },
+      {
+         "type":"double",
+         "name":"min_price",
+         "value":"999999999",
+         "description":""
+      },
+      {
+         "type":"double",
+         "name":"loop_counter",
+         "value":"0",
+         "description":""
+      }
+   ],
+   "constants":[
+      {
+         "type":"double",
+         "name":"loop_count",
+         "value":"5",
+         "description":""
+      }
+   ]
 }
