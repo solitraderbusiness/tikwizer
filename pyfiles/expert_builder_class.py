@@ -966,7 +966,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r4"
-            self.task_elements.append(self.value_fetch_class(row1, row2, v, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
         if params.get("label_5") != "" and "value_fetch_5" in params:
             value_fetch = params.get("value_fetch_5")
@@ -1073,7 +1073,7 @@ class ExpertBuilder:
         params_left_1 = params.get("left").get("params")
         params_left_2 = params_left_1.copy()
         if "shift" in params_left_2:
-            params_left_2["shift"] = int(params_left_2["shift"]) + int(params.get("operator").get("cross_width"))
+            params_left_2["shift"] = str(params_left_2["shift"]) + " + " + str((params.get("operator").get("cross_width")))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
         # right data
@@ -1084,7 +1084,7 @@ class ExpertBuilder:
         params_right_1 = params.get("right").get("params")
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:
-            params_right_2["shift"] = int(params_right_2["shift"]) + int(params.get("operator").get("cross_width"))
+            params_right_2["shift"] = str(params_right_2["shift"]) + "+" + str(params.get("operator").get("cross_width"))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
 
