@@ -59,13 +59,10 @@ constants = [
 
     ###################### Market Properties ########################
 
-    # price modes
-    "#define  HIGHEST_PRICE  1",
-    "#define  LOWEST_PRICE  2",
-
-    # find methods
-    "#define  TIME_PERIOD  1",
-    "#define  CANDLE_PERIOD  2",
+    "#define HIGHEST_PRICE_CANDLE_PERIOD 1",
+    "#define HIGHEST_PRICE_TIME_PERIOD 2",
+    "#define LOWEST_PRICE_CANDLE_PERIOD 3",
+    "#define LOWEST_PRICE_TIME_PERIOD 4",
 
     # what to get
     "#define  GET_CANDLE_ID  1",

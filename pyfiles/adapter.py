@@ -59,7 +59,7 @@ def manage_extra_double_quotation(nodes, constants, variables):
 
 def add_extra_double_quotation_if_any(dic, constants, variables):
     # Keys that need a double quote
-    keys = ["timestr_start", "timestr_end", "time_stamp", "time_market",
+    keys = ["timestr_start", "timestr_end", "time_stamp",
             "timestr", "comment", "obj_name", "name_filter_mode", "symbols_str",
             "close_mode", "mode_range", "mode_base_price", "profit_mode_each", "profit_mode",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
@@ -70,7 +70,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
         else:
             con1 = key in keys and is_not_const_var(value, constants, variables)
             con2 = key == "value" and isinstance(value, str) and is_not_const_var(value, constants, variables)
-            con3 = key == "symbol" and value != "NULL" and is_not_const_var(value, constants, variables)
+            con3 = (key == "symbol" or key == "time_market") and value != "NULL" and is_not_const_var(value, constants, variables)
             if con1 or con2 or con3:
                 dic[key] = '\"' + value + '\"'
 

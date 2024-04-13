@@ -6,7 +6,7 @@ path = path_root.get()
 path_sub = "/contents/market_properties/"
 
 
-def get_class(input_dic, class_id):
+def get_class(which, input_dic, class_id):
     mpath = path + path_sub
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
@@ -28,6 +28,7 @@ def get_class(input_dic, class_id):
 
     for key in input_dic:
         init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", str(input_dic.get(key)))
+    init_body_dic["init_body"] = init_body_dic.get("init_body").replace("which" + "_val", str(which))
 
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \

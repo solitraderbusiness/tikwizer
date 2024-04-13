@@ -1,5 +1,5 @@
 import json
-from . import path_root
+from . import path_root, adjust
 
 path = path_root.get()
 path_sub = "/contents/indicators/custom/"

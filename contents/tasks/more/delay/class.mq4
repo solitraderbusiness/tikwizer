@@ -12,7 +12,7 @@ bool SleepEx(int ms, bool bAlertable);
 class Task0 : public Task
   {
 public:
-   int               sleep_seconds;
+   double               sleep_seconds;
    bool              sleep_tester_normal;
    bool              sleep_tester_visual;
 

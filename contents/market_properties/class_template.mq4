@@ -1,5 +1,4 @@
 
-
 class MarketProperties_id
 
   {
@@ -20,12 +19,12 @@ public:
    int               calc(MarketPropertiesResult &result)
      {
       msymbol = getSymbol(symbol);
-      mtimeframe = overriding_timeframe==-1 ? timeframe : overriding_timeframe;
+      mtimeframe = getTimeframe(timeframe);
 
       //In time mode, first calc range start and range end, then calc the result just like range mode
       //STest, what is the effect of time mode? For now, it is ignored.
       //STest, in iBarsShift, exact = false?
-      if(find_method == TIME_PERIOD)
+      if(which == HIGHEST_PRICE_TIME_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
         {
          datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
          datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
@@ -33,15 +32,16 @@ public:
          range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
         }
       getHiLo(result);
+
      }
 
 
    void              getHiLo(MarketPropertiesResult &result)
      {
-      if(price_mode == HIGHEST_PRICE)
+      if(which == HIGHEST_PRICE_CANDLE_PERIOD || which == HIGHEST_PRICE_TIME_PERIOD)
          getHighest(result);
       else
-         if(price_mode == LOWEST_PRICE)
+         if(which == LOWEST_PRICE_CANDLE_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
             getLowest(result);
      }
 
@@ -63,5 +63,4 @@ public:
       result.index = li;
       result.time = iTime(msymbol, mtimeframe, li);
      }
-
   };

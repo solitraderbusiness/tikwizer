@@ -1107,6 +1107,6 @@ class ExpertBuilder:
         elif row1 == "Candle":
             return self.candle_class_constructor.get_class(params, id_val)
         elif row1 == "Market Properties":
-            return self.market_properties_class_constructor.get_class(params, id_val)
+            return self.market_properties_class_constructor.get_class(row2, params, id_val)
         elif row1 == "Value":
             return self.value_class_constructor.get_class(row2, params, id_val)

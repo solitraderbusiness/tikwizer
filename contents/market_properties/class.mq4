@@ -1,21 +1,26 @@
+//+------------------------------------------------------------------+
+//|                                                      ProjectName |
+//|                                      Copyright 2018, CompanyName |
+//|                                       http://www.companyname.net |
+//+------------------------------------------------------------------+
 
-   //price modes
-#define  HIGHEST_PRICE  1
-#define  LOWEST_PRICE  2
 
-   //find methods
-#define  TIME_PERIOD  1
-#define  CANDLE_PERIOD  2
 
-   //what to get
+//what to get
 #define  GET_CANDLE_ID  1
 #define  GET_PRICE  2
 #define  GET_TIME  3
 
-   //Time mode
+//Time mode
 #define  TIME_SERVER  1
 #define  TIME_LOCAL  2
 #define  TIME_GMT  3
+
+#define HIGHEST_PRICE_CANDLE_PERIOD 1
+#define HIGHEST_PRICE_TIME_PERIOD 2
+#define LOWEST_PRICE_CANDLE_PERIOD 3
+#define LOWEST_PRICE_TIME_PERIOD 4
+
 
 
 struct MarketPropertiesResult
@@ -34,9 +39,8 @@ class MarketProperties3_right
 public:
    string            symbol;
    int               timeframe;
-   int               find_method;
-   int               price_mode;
    int               time_mode;
+   int            which;
    //what to return
    int               what_to_get;
    //used for time period
@@ -47,8 +51,8 @@ public:
    int               range_start;
    int               range_end;
 
-   string msymbol;
-   int mtimeframe;
+   string            msymbol;
+   int               mtimeframe;
 
 public:
 
@@ -57,11 +61,10 @@ public:
      {
       symbol = NULL;
       timeframe = 0;
-      find_method = CANDLE_PERIOD;
-      price_mode = LOWEST_PRICE;
+      which = HIGHEST_PRICE_CANDLE_PERIOD;
       what_to_get = GET_PRICE;
       timestr_start = "2023.11.23 7:30:30";
-      timestr_end   = timestr_end;
+      timestr_end   = "2023.11.20 8:00:00";
       day_offset = 0;
       range_start = 50;
       range_end   = 100;
@@ -77,7 +80,7 @@ public:
       //In time mode, first calc range start and range end, then calc the result just like range mode
       //STest, what is the effect of time mode? For now, it is ignored.
       //STest, in iBarsShift, exact = false?
-      if(find_method == TIME_PERIOD)
+      if(which == HIGHEST_PRICE_TIME_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
         {
          datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
          datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
@@ -91,10 +94,10 @@ public:
 
    void              getHiLo(MarketPropertiesResult &result)
      {
-      if(price_mode == HIGHEST_PRICE)
+      if(which == HIGHEST_PRICE_CANDLE_PERIOD || which == HIGHEST_PRICE_TIME_PERIOD)
          getHighest(result);
       else
-         if(price_mode == LOWEST_PRICE)
+         if(which == LOWEST_PRICE_CANDLE_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
             getLowest(result);
      }
 
@@ -116,8 +119,11 @@ public:
       result.index = li;
       result.time = iTime(msymbol, mtimeframe, li);
      }
+  };
 
-
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void OnTick()
   {
    MarketProperties3_right mp;

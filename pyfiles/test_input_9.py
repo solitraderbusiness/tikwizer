@@ -3229,431 +3229,757 @@ input_data_17 = {
 }
 
 input_data_18 = {
-   "events":{
-      "on_tick":{
-         "nodes":[
-            {
-               "params":{
-                  "symbol":"",
-                  "max_time":"1",
-                  "timeframe":"PERIOD_CURRENT"
-               },
-               "id":"071d4995-44af-4f75-a5c3-7a127dc9e8d7",
-               "id_by_user":2,
-               "blockName":"Once per bar"
-            },
-            {
-               "params":{
-                  "title":"Comment Message",
-                  "obj_chart_subwindow":"",
-                  "obj_corner":"CORNER_LEFT_UPPER",
-                  "obj_x":"5",
-                  "obj_y":"5",
-                  "label_1":"low price:",
-                  "format_number_1":"EMPTY_VALUE",
-                  "format_time_1":"EMPTY_VALUE",
-                  "label_2":"",
-                  "format_number_2":"EMPTY_VALUE",
-                  "format_time_2":"EMPTY_VALUE",
-                  "label_3":"",
-                  "format_number_3":"EMPTY_VALUE",
-                  "format_time_3":"EMPTY_VALUE",
-                  "label_4":"",
-                  "format_number_4":"EMPTY_VALUE",
-                  "format_time_4":"EMPTY_VALUE",
-                  "label_5":"",
-                  "format_number_5":"EMPTY_VALUE",
-                  "format_time_5":"EMPTY_VALUE",
-                  "label_6":"",
-                  "format_number_6":"EMPTY_VALUE",
-                  "format_time_6":"EMPTY_VALUE",
-                  "label_7":"",
-                  "format_number_7":"EMPTY_VALUE",
-                  "format_time_7":"EMPTY_VALUE",
-                  "label_8":"",
-                  "format_number_8":"EMPTY_VALUE",
-                  "format_time_8":"EMPTY_VALUE",
-                  "obj_title_font":"Georgia",
-                  "obj_title_font_color":"clrRed",
-                  "obj_title_font_size":"13",
-                  "obj_label_font":"Verdana",
-                  "obj_label_font_color":"clrRed",
-                  "obj_label_font_size":"10",
-                  "obj_font":"Verdana",
-                  "obj_font_color":"clrRed",
-                  "obj_font_size":"10",
-                  "value_fetch_1":{
-                     "row1":"Value",
-                     "row2":"Numeric",
-                     "params":{
-                        "value":"min_price"
-                     }
-                  },
-                  "value_fetch_2":{
-                     "row1":"Value",
-                     "row2":"Numeric",
-                     "params":{
-                        "value":"max_price"
-                     }
-                  },
-                  "value_fetch_3":{
-                     "row1":"Value",
-                     "row2":"Text",
-                     "params":{
-                        "value":"sample text"
-                     }
-                  }
-               },
-               "id":"3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
-               "id_by_user":3,
-               "blockName":"Comment"
-            },
-            {
-               "params":{
-                  "variable1":{
-                     "variable_name":"max_price",
-                     "value_fetch":{
-                        "row1":"Value",
-                        "row2":"Numeric",
-                        "params":{
-                           "value":"0"
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "071d4995-44af-4f75-a5c3-7a127dc9e8d7",
+                    "id_by_user": 2,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "title": "Comment Message",
+                        "obj_chart_subwindow": "",
+                        "obj_corner": "CORNER_LEFT_UPPER",
+                        "obj_x": "5",
+                        "obj_y": "5",
+                        "label_1": "low price:",
+                        "format_number_1": "EMPTY_VALUE",
+                        "format_time_1": "EMPTY_VALUE",
+                        "label_2": "",
+                        "format_number_2": "EMPTY_VALUE",
+                        "format_time_2": "EMPTY_VALUE",
+                        "label_3": "",
+                        "format_number_3": "EMPTY_VALUE",
+                        "format_time_3": "EMPTY_VALUE",
+                        "label_4": "",
+                        "format_number_4": "EMPTY_VALUE",
+                        "format_time_4": "EMPTY_VALUE",
+                        "label_5": "",
+                        "format_number_5": "EMPTY_VALUE",
+                        "format_time_5": "EMPTY_VALUE",
+                        "label_6": "",
+                        "format_number_6": "EMPTY_VALUE",
+                        "format_time_6": "EMPTY_VALUE",
+                        "label_7": "",
+                        "format_number_7": "EMPTY_VALUE",
+                        "format_time_7": "EMPTY_VALUE",
+                        "label_8": "",
+                        "format_number_8": "EMPTY_VALUE",
+                        "format_time_8": "EMPTY_VALUE",
+                        "obj_title_font": "Georgia",
+                        "obj_title_font_color": "clrRed",
+                        "obj_title_font_size": "13",
+                        "obj_label_font": "Verdana",
+                        "obj_label_font_color": "clrRed",
+                        "obj_label_font_size": "10",
+                        "obj_font": "Verdana",
+                        "obj_font_color": "clrRed",
+                        "obj_font_size": "10",
+                        "value_fetch_1": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "min_price"
+                            }
+                        },
+                        "value_fetch_2": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "max_price"
+                            }
+                        },
+                        "value_fetch_3": {
+                            "row1": "Value",
+                            "row2": "Text",
+                            "params": {
+                                "value": "sample text"
+                            }
                         }
-                     }
-                  },
-                  "variable2":{
-                     "variable_name":"min_price",
-                     "value_fetch":{
-                        "row1":"Value",
-                        "row2":"Numeric",
-                        "params":{
-                           "value":"9999999"
+                    },
+                    "id": "3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
+                    "id_by_user": 3,
+                    "blockName": "Comment"
+                },
+                {
+                    "params": {
+                        "variable1": {
+                            "variable_name": "max_price",
+                            "value_fetch": {
+                                "row1": "Value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "0"
+                                }
+                            }
+                        },
+                        "variable2": {
+                            "variable_name": "min_price",
+                            "value_fetch": {
+                                "row1": "Value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "9999999"
+                                }
+                            }
+                        },
+                        "variable3": {
+                            "variable_name": "loop_counter",
+                            "value_fetch": {
+                                "row1": "Value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "0"
+                                }
+                            }
+                        },
+                        "variable4": {
+                            "variable_name": ""
+                        },
+                        "variable5": {
+                            "variable_name": ""
                         }
-                     }
-                  },
-                  "variable3":{
-                     "variable_name":"loop_counter",
-                     "value_fetch":{
-                        "row1":"Value",
-                        "row2":"Numeric",
-                        "params":{
-                           "value":"0"
+                    },
+                    "id": "10aa7065-7481-4016-965f-b5b7f0ad497d",
+                    "id_by_user": 4,
+                    "blockName": "Modify Variables"
+                },
+                {
+                    "params": {
+                        "n": "loop_count"
+                    },
+                    "id": "f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+                    "id_by_user": 5,
+                    "blockName": "Loop(pass \"n\" times)"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": ">",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "params": {
+                                "price_mode": "CANDLE_HIGH",
+                                "find_method": "FIND_BY_ID",
+                                "symbol": "NULL",
+                                "timeframe": "PERIOD_CURRENT",
+                                "shift": "loop_counter"
+                            },
+                            "row1": "Candle",
+                            "row2": "Candle"
+                        },
+                        "right": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "max_price"
+                            }
                         }
-                     }
-                  },
-                  "variable4":{
-                     "variable_name":""
-                  },
-                  "variable5":{
-                     "variable_name":""
-                  }
-               },
-               "id":"10aa7065-7481-4016-965f-b5b7f0ad497d",
-               "id_by_user":4,
-               "blockName":"Modify Variables"
-            },
-            {
-               "params":{
-                  "n":"loop_count"
-               },
-               "id":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
-               "id_by_user":5,
-               "blockName":"Loop(pass \"n\" times)"
-            },
-            {
-               "params":{
-                  "operator":{
-                     "label":">",
-                     "cross_width":1
-                  },
-                  "left":{
-                     "params":{
-                        "price_mode":"CANDLE_HIGH",
-                        "find_method":"FIND_BY_ID",
-                        "symbol":"NULL",
-                        "timeframe":"PERIOD_CURRENT",
-                        "shift":"loop_counter"
-                     },
-                     "row1":"Candle",
-                     "row2":"Candle"
-                  },
-                  "right":{
-                     "row1":"Value",
-                     "row2":"Numeric",
-                     "params":{
-                        "value":"max_price"
-                     }
-                  }
-               },
-               "id":"20fe764c-2251-4907-aacf-9b121d3fceda",
-               "id_by_user":6,
-               "blockName":"condition"
-            },
-            {
-               "params":{
-                  "operator":{
-                     "label":"<",
-                     "cross_width":1
-                  },
-                  "left":{
-                     "row2":"Candle",
-                     "row1":"Candle",
-                     "params":{
-                        "price_mode":"CANDLE_LOW",
-                        "find_method":"FIND_BY_ID",
-                        "symbol":"NULL",
-                        "timeframe":"PERIOD_CURRENT",
-                        "shift":"loop_counter"
-                     }
-                  },
-                  "right":{
-                     "row2":"Numeric",
-                     "row1":"Value",
-                     "params":{
-                        "value":"min_price"
-                     }
-                  }
-               },
-               "id":"9999b102-dfaf-405a-b321-40571ebbcd36",
-               "id_by_user":7,
-               "blockName":"condition"
-            },
-            {
-               "params":{
-                  "variable1":{
-                     "variable_name":"max_price",
-                     "value_fetch":{
-                        "row1":"Candle",
-                        "row2":"Candle",
-                        "params":{
-                           "price_mode":"CANDLE_HIGH",
-                           "find_method":"FIND_BY_ID",
-                           "symbol":"NULL",
-                           "timeframe":"PERIOD_CURRENT",
-                           "shift":"loop_counter"
+                    },
+                    "id": "20fe764c-2251-4907-aacf-9b121d3fceda",
+                    "id_by_user": 6,
+                    "blockName": "condition"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": "<",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "row2": "Candle",
+                            "row1": "Candle",
+                            "params": {
+                                "price_mode": "CANDLE_LOW",
+                                "find_method": "FIND_BY_ID",
+                                "symbol": "NULL",
+                                "timeframe": "PERIOD_CURRENT",
+                                "shift": "loop_counter"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "min_price"
+                            }
                         }
-                     }
-                  },
-                  "variable2":{
-                     "variable_name":""
-                  },
-                  "variable3":{
-                     "variable_name":""
-                  },
-                  "variable4":{
-                     "variable_name":""
-                  },
-                  "variable5":{
-                     "variable_name":""
-                  }
-               },
-               "id":"cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
-               "id_by_user":8,
-               "blockName":"Modify Variables"
-            },
-            {
-               "params":{
-                  "variable1":{
-                     "variable_name":"min_price",
-                     "value_fetch":{
-                        "row2":"Candle",
-                        "row1":"Candle",
-                        "params":{
-                           "price_mode":"CANDLE_LOW",
-                           "find_method":"FIND_BY_ID",
-                           "symbol":"NULL",
-                           "timeframe":"PERIOD_CURRENT",
-                           "shift":"loop_counter"
+                    },
+                    "id": "9999b102-dfaf-405a-b321-40571ebbcd36",
+                    "id_by_user": 7,
+                    "blockName": "condition"
+                },
+                {
+                    "params": {
+                        "variable1": {
+                            "variable_name": "max_price",
+                            "value_fetch": {
+                                "row1": "Candle",
+                                "row2": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_HIGH",
+                                    "find_method": "FIND_BY_ID",
+                                    "symbol": "NULL",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "loop_counter"
+                                }
+                            }
+                        },
+                        "variable2": {
+                            "variable_name": ""
+                        },
+                        "variable3": {
+                            "variable_name": ""
+                        },
+                        "variable4": {
+                            "variable_name": ""
+                        },
+                        "variable5": {
+                            "variable_name": ""
                         }
-                     }
-                  },
-                  "variable2":{
-                     "variable_name":""
-                  },
-                  "variable3":{
-                     "variable_name":""
-                  },
-                  "variable4":{
-                     "variable_name":""
-                  },
-                  "variable5":{
-                     "variable_name":""
-                  }
-               },
-               "id":"1c0bab59-f267-4d4a-b573-4a46ec4b826c",
-               "id_by_user":9,
-               "blockName":"Modify Variables"
-            },
-            {
-               "params":{
-                  "left":{
-                     "row1":"Value",
-                     "row2":"Numeric",
-                     "params":{
-                        "value":"loop_counter"
-                     }
-                  },
-                  "right":{
-                     "row2":"Numeric",
-                     "row1":"Value",
-                     "params":{
-                        "value":"1"
-                     }
-                  },
-                  "operator":{
-                     "label":"+"
-                  },
-                  "ajdust":"loop_counter",
-                  "variable":""
-               },
-               "id":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
-               "id_by_user":10,
-               "blockName":"formula"
-            },
-            {
-               "params":{
-                  "symbol":"",
-                  "max_time":"1",
-                  "timeframe":"PERIOD_CURRENT"
-               },
-               "id":"a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
-               "id_by_user":12,
-               "blockName":"Once per bar"
-            }
-         ],
-         "edges":[
-            {
-               "source":"071d4995-44af-4f75-a5c3-7a127dc9e8d7",
-               "sourceHandle":"blue",
-               "target":"3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-071d4995-44af-4f75-a5c3-7a127dc9e8d7blue-3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1c"
-            },
-            {
-               "source":"10aa7065-7481-4016-965f-b5b7f0ad497d",
-               "sourceHandle":"blue",
-               "target":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-10aa7065-7481-4016-965f-b5b7f0ad497dblue-f002ebcc-e73a-4e00-b1a4-3c6dee511cafc"
-            },
-            {
-               "source":"a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
-               "sourceHandle":"blue",
-               "target":"10aa7065-7481-4016-965f-b5b7f0ad497d",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-10aa7065-7481-4016-965f-b5b7f0ad497dc"
-            },
-            {
-               "source":"9999b102-dfaf-405a-b321-40571ebbcd36",
-               "sourceHandle":"blue",
-               "target":"1c0bab59-f267-4d4a-b573-4a46ec4b826c",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-9999b102-dfaf-405a-b321-40571ebbcd36blue-1c0bab59-f267-4d4a-b573-4a46ec4b826cc"
-            },
-            {
-               "source":"20fe764c-2251-4907-aacf-9b121d3fceda",
-               "sourceHandle":"blue",
-               "target":"cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-20fe764c-2251-4907-aacf-9b121d3fcedablue-cc3e090a-3916-4a9e-a5c8-3c613b24c8fbc"
-            },
-            {
-               "source":"f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
-               "sourceHandle":"blue",
-               "target":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-f002ebcc-e73a-4e00-b1a4-3c6dee511cafblue-b97d7fc0-0cbd-45ce-9374-2beb4092a024c"
-            },
-            {
-               "source":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
-               "sourceHandle":"blue",
-               "target":"9999b102-dfaf-405a-b321-40571ebbcd36",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-9999b102-dfaf-405a-b321-40571ebbcd36c"
-            },
-            {
-               "source":"b97d7fc0-0cbd-45ce-9374-2beb4092a024",
-               "sourceHandle":"blue",
-               "target":"20fe764c-2251-4907-aacf-9b121d3fceda",
-               "targetHandle":"c",
-               "type":"customEdge",
-               "id":"reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-20fe764c-2251-4907-aacf-9b121d3fcedac"
-            }
-         ]
-      },
-      "on_trade":{
-         "nodes":[
+                    },
+                    "id": "cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
+                    "id_by_user": 8,
+                    "blockName": "Modify Variables"
+                },
+                {
+                    "params": {
+                        "variable1": {
+                            "variable_name": "min_price",
+                            "value_fetch": {
+                                "row2": "Candle",
+                                "row1": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_LOW",
+                                    "find_method": "FIND_BY_ID",
+                                    "symbol": "NULL",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "loop_counter"
+                                }
+                            }
+                        },
+                        "variable2": {
+                            "variable_name": ""
+                        },
+                        "variable3": {
+                            "variable_name": ""
+                        },
+                        "variable4": {
+                            "variable_name": ""
+                        },
+                        "variable5": {
+                            "variable_name": ""
+                        }
+                    },
+                    "id": "1c0bab59-f267-4d4a-b573-4a46ec4b826c",
+                    "id_by_user": 9,
+                    "blockName": "Modify Variables"
+                },
+                {
+                    "params": {
+                        "left": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "loop_counter"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "1"
+                            }
+                        },
+                        "operator": {
+                            "label": "+"
+                        },
+                        "ajdust": "loop_counter",
+                        "variable": ""
+                    },
+                    "id": "b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+                    "id_by_user": 10,
+                    "blockName": "formula"
+                },
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "071d4995-44af-4f75-a5c3-7a127dc9e8d7",
+                    "sourceHandle": "blue",
+                    "target": "3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-071d4995-44af-4f75-a5c3-7a127dc9e8d7blue-3cdd6a1d-4f69-447e-a7fa-ef9afb97bae1c"
+                },
+                {
+                    "source": "10aa7065-7481-4016-965f-b5b7f0ad497d",
+                    "sourceHandle": "blue",
+                    "target": "f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-10aa7065-7481-4016-965f-b5b7f0ad497dblue-f002ebcc-e73a-4e00-b1a4-3c6dee511cafc"
+                },
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "10aa7065-7481-4016-965f-b5b7f0ad497d",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-10aa7065-7481-4016-965f-b5b7f0ad497dc"
+                },
+                {
+                    "source": "9999b102-dfaf-405a-b321-40571ebbcd36",
+                    "sourceHandle": "blue",
+                    "target": "1c0bab59-f267-4d4a-b573-4a46ec4b826c",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-9999b102-dfaf-405a-b321-40571ebbcd36blue-1c0bab59-f267-4d4a-b573-4a46ec4b826cc"
+                },
+                {
+                    "source": "20fe764c-2251-4907-aacf-9b121d3fceda",
+                    "sourceHandle": "blue",
+                    "target": "cc3e090a-3916-4a9e-a5c8-3c613b24c8fb",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-20fe764c-2251-4907-aacf-9b121d3fcedablue-cc3e090a-3916-4a9e-a5c8-3c613b24c8fbc"
+                },
+                {
+                    "source": "f002ebcc-e73a-4e00-b1a4-3c6dee511caf",
+                    "sourceHandle": "blue",
+                    "target": "b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-f002ebcc-e73a-4e00-b1a4-3c6dee511cafblue-b97d7fc0-0cbd-45ce-9374-2beb4092a024c"
+                },
+                {
+                    "source": "b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+                    "sourceHandle": "blue",
+                    "target": "9999b102-dfaf-405a-b321-40571ebbcd36",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-9999b102-dfaf-405a-b321-40571ebbcd36c"
+                },
+                {
+                    "source": "b97d7fc0-0cbd-45ce-9374-2beb4092a024",
+                    "sourceHandle": "blue",
+                    "target": "20fe764c-2251-4907-aacf-9b121d3fceda",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-b97d7fc0-0cbd-45ce-9374-2beb4092a024blue-20fe764c-2251-4907-aacf-9b121d3fcedac"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [
 
-         ],
-         "edges":[
+            ],
+            "edges": [
 
-         ]
-      },
-      "on_chart":{
-         "nodes":[
+            ]
+        },
+        "on_chart": {
+            "nodes": [
 
-         ],
-         "edges":[
+            ],
+            "edges": [
 
-         ]
-      },
-      "on_timer":{
-         "nodes":[
+            ]
+        },
+        "on_timer": {
+            "nodes": [
 
-         ],
-         "edges":[
+            ],
+            "edges": [
 
-         ]
-      },
-      "on_init":{
-         "nodes":[
+            ]
+        },
+        "on_init": {
+            "nodes": [
 
-         ],
-         "edges":[
+            ],
+            "edges": [
 
-         ]
-      },
-      "on_deinit":{
-         "nodes":[
+            ]
+        },
+        "on_deinit": {
+            "nodes": [
 
-         ],
-         "edges":[
+            ],
+            "edges": [
 
-         ]
-      }
-   },
-   "variables":[
-      {
-         "type":"double",
-         "name":"max_price",
-         "value":"0",
-         "description":""
-      },
-      {
-         "type":"double",
-         "name":"min_price",
-         "value":"999999999",
-         "description":""
-      },
-      {
-         "type":"double",
-         "name":"loop_counter",
-         "value":"0",
-         "description":""
-      }
-   ],
-   "constants":[
-      {
-         "type":"double",
-         "name":"loop_count",
-         "value":"5",
-         "description":""
-      }
-   ]
+            ]
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+input_data_19 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "sleep_seconds": "0.05",
+                        "sleep_tester_normal": "true",
+                        "sleep_tester_visual": "true"
+                    },
+                    "id": "6dd9f98b-6fd3-4914-9921-57f9df0ce7b7",
+                    "id_by_user": 13,
+                    "blockName": "Delay"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "6dd9f98b-6fd3-4914-9921-57f9df0ce7b7",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-6dd9f98b-6fd3-4914-9921-57f9df0ce7b7c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# test market properties after change
+input_data_20 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "sleep_seconds": "0.05",
+                        "sleep_tester_normal": "true",
+                        "sleep_tester_visual": "true"
+                    },
+                    "id": "6dd9f98b-6fd3-4914-9921-57f9df0ce7b7",
+                    "id_by_user": 13,
+                    "blockName": "Delay"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": ">",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "row1": "Market Properties",
+                            "row2": "HIGHEST_PRICE_CANDLE_PERIOD",
+                            "params": {
+                                "range_start": "0",
+                                "range_end": "10",
+                                "what_to_get": "GET_CANDLE_ID"
+                            }
+                        },
+                        "right": {
+                            "row1": "Indicator",
+                            "row2": "macd",
+                            "params": {
+                                "fast_ema_period": 29,
+                                "slow_ema_period": 26,
+                                "signal_period": 9,
+                                "applied_price": "PRICE_LOW",
+                                "mode": "MODE_MAIN",
+                                "shift": "0",
+                                "symbol": "NULL",
+                                "timeframe": "PERIOD_M2"
+                            }
+                        }
+                    },
+                    "id": "d3172b9b-4e60-4280-83c4-af9ef1c39e0b",
+                    "id_by_user": 14,
+                    "blockName": "condition"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "6dd9f98b-6fd3-4914-9921-57f9df0ce7b7",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-6dd9f98b-6fd3-4914-9921-57f9df0ce7b7c"
+                },
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "d3172b9b-4e60-4280-83c4-af9ef1c39e0b",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-d3172b9b-4e60-4280-83c4-af9ef1c39e0bc"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# test value > time
+input_data_21 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": ">",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "row2": "Time",
+                            "row1": "Value",
+                            "params": {
+                                "mode_time": "MODE_TIME_NOW",
+                                "mode_time_shift": "0",
+                                "time_source": "TIME_SERVER",
+                                "time_shift_years": "0",
+                                "time_shift_months": "0",
+                                "time_shift_weeks": "0",
+                                "time_shift_days": "5"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "0"
+                            }
+                        }
+                    },
+                    "id": "76062001-1361-4923-b1cc-ace9f274cf46",
+                    "id_by_user": 13,
+                    "blockName": "condition"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "76062001-1361-4923-b1cc-ace9f274cf46",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-76062001-1361-4923-b1cc-ace9f274cf46c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
 }
