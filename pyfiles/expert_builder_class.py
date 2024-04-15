@@ -738,10 +738,12 @@ class ExpertBuilder:
     def add_task_elements_specific(self, nodes):
         for node in nodes:
             task_name = node.get("blockName")
-            if task_name == "condition_1_normal" or task_name == "formula":  # formula also use the same function as condition 1 normal
+            if task_name == "condition_1_normal":
                 self.condition_1_normal_elements(node)
             elif task_name == "condition_1_cross":
                 self.condition_1_cross_elements(node)
+            elif task_name == "formula":
+                self.formula_elements(node)
             elif task_name == "modify_variables":
                 self.modify_variables(node)
             elif task_name == "trailing_stop_each_trade":
@@ -786,32 +788,32 @@ class ExpertBuilder:
         self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def draw_line(self, node):
-        object_type = node.get("params").get("object_type")
-        if "time_1" in object_type:
-            value_fetch_time_1 = object_type.get("time_1")
+        params = node.get("params")
+        if "time_1" in params:
+            value_fetch_time_1 = params.get("time_1")
             row1_time_1 = value_fetch_time_1.get("row1")
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
             id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
             self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
-        if "time_2" in object_type:
-            value_fetch_time_2 = object_type.get("time_2")
+        if "time_2" in params:
+            value_fetch_time_2 = params.get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             params_time_2 = value_fetch_time_2.get("params")
             id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
             self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
 
-        if "price_1" in object_type:
-            value_fetch_price_1 = object_type.get("price_1")
+        if "price_1" in params:
+            value_fetch_price_1 = params.get("price_1")
             row1_price_1 = value_fetch_price_1.get("row1")
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
             self.task_elements.append(
                 self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
-        if "price_2" in object_type:
-            value_fetch_price_2 = object_type.get("price_2")
+        if "price_2" in params:
+            value_fetch_price_2 = params.get("price_2")
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             params_price_2 = value_fetch_price_2.get("params")
@@ -891,24 +893,23 @@ class ExpertBuilder:
         self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
 
     def modify_stops_of_trades(self, node):
-        relative_to_data = node.get("params").get("relative_to")
-        if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
-            value_fetch = relative_to_data.get("value_fetch")
+        params = node.get("params")
+        if params.get("relative_to") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+            value_fetch = params.get("value_fetch_relative_to")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_rt"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
-        new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
-        if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-            value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
+        if params.get("new_tpsl_mode") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+            value_fetch_tp = params.get("new_take_profit_level")
             row1_tp = value_fetch_tp.get("row1")
             row2_tp = value_fetch_tp.get("row2")
             params_tp = value_fetch_tp.get("params_tp")
             id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
 
-            value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
+            value_fetch_sl = params.get("new_stop_loss_level")
             row1_sl = value_fetch_sl.get("row1")
             row2_sl = value_fetch_sl.get("row2")
             params_sl = value_fetch_sl.get("params_sl")
@@ -918,8 +919,8 @@ class ExpertBuilder:
             self.task_elements.append(self.value_fetch_class(row1_sl, row2_sl, params_sl, id_val_sl))
 
     def trailing_pending_orders(self, node):
-        trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
-        trailing_distance_mode = trailing_distance_mode_data.get("value")
+        params = node.get("params")
+        trailing_distance_mode = params.get("trailing_distance_mode")
         if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
             key = ""
             if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
@@ -928,7 +929,7 @@ class ExpertBuilder:
                 key = "dynamic_size_pips_input"
             elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
                 key = "dynamic_size_digits_only"
-            value_fetch = trailing_distance_mode_data.get(key)
+            value_fetch = params.get(key)
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
@@ -1012,10 +1013,9 @@ class ExpertBuilder:
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
     def trailing_stop_each_trade(self, node):
-        trailing_stop_mode_data = node.get("params").get("TrailingStopMode")
-        trailing_stop_mode = trailing_stop_mode_data.get("value")
-        if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-            value_fetch = trailing_stop_mode_data.get("value_fetch")
+        params = node.get("params")
+        if params.get("trailing_stop_mode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+            value_fetch = params.get("value_fetch_trailing_stop_mode")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
@@ -1024,7 +1024,7 @@ class ExpertBuilder:
 
     def no_trade_nearby_run_data(self, node):
         params = node.get("params")
-        if params.get("mode_base_price") == "current":
+        if params.get("mode_base_price") != "\"current\"":
             value_fetch_price = params.get("price")
             row1_price = value_fetch_price.get("row1")
             row2_price = value_fetch_price.get("row2")
@@ -1058,6 +1058,21 @@ class ExpertBuilder:
             params = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_var_" + str(i)
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+
+    def formula_elements(self, node):
+        params = node.get("params")
+        # left data
+        row1_left = params.get("left").get("row1")
+        row2_left = params.get("left").get("row2")
+        id_val_left = str(node.get("id_by_user")) + "_" + "left"
+        params_left = params.get("left").get("params")
+        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
+        # right data
+        row1_right = params.get("right").get("row1")
+        row2_right = params.get("right").get("row2")
+        id_val_right = str(node.get("id_by_user")) + "_" + "right"
+        params_right = params.get("right").get("params")
+        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
 
     def condition_1_normal_elements(self, node):
         params = node.get("params")

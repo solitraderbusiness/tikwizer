@@ -21,7 +21,6 @@
       "arrow_color" : "clrYellow",
 
       "look_up_on" : "LOOK_UP_RUNNING_ONLY",
-      "type" : [0,1],
       "martingale_init_vol" : 0.1,
       "martingale_multiply_on_loss" : 0,
       "martingale_multiply_on_profit" : 0,

@@ -1,5 +1,5 @@
 import json
-from . import path_root
+from . import path_root, adjust
 import collections.abc
 from . import indicator_class_constructor
 from . import candle_class_constructor
@@ -175,6 +175,25 @@ def function_data_dynamic_fun(node, function_data_static):
     return function_data
 
 
+def replace_input_values(data, params):
+    for key, value in params.items():
+        if isinstance(value, collections.abc.Sequence) and not isinstance(value, str):
+            items = str(set(value)) if set(value) else "{}"
+            data = data.replace(key + "_val", items)
+        elif isinstance(value, dict):
+            data = data.replace(key + "_val", get_proper_value(value.get("value")))
+        else:  # So it's a string (or number)
+            data = data.replace(key + "_val", get_proper_value(value))
+    return data
+
+
+def get_proper_value(value):
+    if isinstance(value, str):
+        return value
+    else:
+        return str(value)
+
+
 def check_trendline_price_level_run_data(node, function_data_static):
     value_fetch = node.get("params").get("price_level")
     row1 = value_fetch.get("row1")
@@ -204,9 +223,9 @@ def draw_editfield_run_data(node, function_data_static):
 
 
 def draw_line_run_data(node, function_data_static):
-    object_type = node.get("params").get("object_type")
-    if "time_1" in object_type:
-        value_fetch_time_1 = object_type.get("time_1")
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
         row1_time_1 = value_fetch_time_1.get("row1")
         row2_time_1 = value_fetch_time_1.get("row2")
         id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
@@ -218,8 +237,8 @@ def draw_line_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_time_1", "")
         function_data_static = function_data_static.replace("variable_name_time_1", "\"\"")
-    if "time_2" in object_type:
-        value_fetch_time_2 = object_type.get("time_2")
+    if "time_2" in params:
+        value_fetch_time_2 = params.get("time_2")
         row1_time_2 = value_fetch_time_2.get("row1")
         row2_time_2 = value_fetch_time_2.get("row2")
         id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
@@ -232,8 +251,8 @@ def draw_line_run_data(node, function_data_static):
         function_data_static = function_data_static.replace("initializer_time_2", "")
         function_data_static = function_data_static.replace("variable_name_time_2", "\"\"")
 
-    if "price_1" in object_type:
-        value_fetch_price_1 = object_type.get("price_1")
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
@@ -245,8 +264,9 @@ def draw_line_run_data(node, function_data_static):
     else:
         function_data_static = function_data_static.replace("initializer_price_1", "")
         function_data_static = function_data_static.replace("variable_name_price_1", "\"\"")
-    if "price_2" in object_type:
-        value_fetch_price_2 = object_type.get("price_2")
+
+    if "price_2" in params:
+        value_fetch_price_2 = params.get("price_2")
         row1_price_2 = value_fetch_price_2.get("row1")
         row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
@@ -384,9 +404,9 @@ def draw_arrow_run_data(node, function_data_static):
 
 
 def modify_stops_of_trades_run_data(node, function_data_static):
-    relative_to_data = node.get("params").get("relative_to")
-    if relative_to_data.get("value") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
-        value_fetch = relative_to_data.get("value_fetch")
+    params = node.get("params")
+    if params.get("relative_to") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+        value_fetch = params.get("value_fetch")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_rt"
@@ -399,9 +419,8 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         function_data_static = function_data_static.replace("initializer_rt", "")
         function_data_static = function_data_static.replace("variable_name_rt", "\"\"")
 
-    new_tpsl_mode_data = node.get("params").get("new_tpsl_mode")
-    if new_tpsl_mode_data.get("value") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
-        value_fetch_tp = new_tpsl_mode_data.get("new_take_profit_level")
+    if params.get("new_tpsl_mode") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+        value_fetch_tp = params.get("new_take_profit_level")
         row1_tp = value_fetch_tp.get("row1")
         row2_tp = value_fetch_tp.get("row2")
         id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
@@ -409,7 +428,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         init_tp = get_value_fetch_init(row1_tp, row2_tp, id_val_tp)
         val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
 
-        value_fetch_sl = new_tpsl_mode_data.get("new_stop_loss_level")
+        value_fetch_sl = params.get("new_stop_loss_level")
         row1_sl = value_fetch_sl.get("row1")
         row2_sl = value_fetch_sl.get("row2")
         id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
@@ -449,25 +468,6 @@ def buy_sell_function_data(node, function_data_static):
         function_data_static = function_data_static.replace("variable_name_oacp", "\"\"")
 
     return function_data_static
-
-
-def replace_input_values(data, params):
-    for key, value in params.items():
-        if isinstance(value, collections.abc.Sequence) and not isinstance(value, str):
-            items = str(set(value)) if set(value) else "{}"
-            data = data.replace(key + "_val", items)
-        elif isinstance(value, dict):
-            data = data.replace(key + "_val", get_proper_value(value.get("value")))
-        else:  # So it's a string (or number)
-            data = data.replace(key + "_val", get_proper_value(value))
-    return data
-
-
-def get_proper_value(value):
-    if isinstance(value, str):
-        return value
-    else:
-        return str(value)
 
 
 def spread_filter_run_data(node, run_data):
@@ -593,8 +593,8 @@ def comment_run_data(node, run_data):
 
 
 def trailing_pending_orders_run_data(node, run_data):
-    trailing_distance_mode_data = node.get("params").get("trailing_distance_mode")
-    trailing_distance_mode = trailing_distance_mode_data.get("value")
+    params = node.get("params")
+    trailing_distance_mode = params.get("trailing_distance_mode")
     if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
         key = ""
         if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
@@ -603,7 +603,7 @@ def trailing_pending_orders_run_data(node, run_data):
             key = "dynamic_size_pips_input"
         elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
             key = "dynamic_size_digits_only"
-        value_fetch = trailing_distance_mode_data.get(key)
+        value_fetch = params.get(key)
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_tdmd"
@@ -646,10 +646,9 @@ def trailing_pending_orders_run_data(node, run_data):
 
 
 def trailing_stop_each_trade_run_data(node, run_data):
-    trailing_stop_mode_data = node.get("params").get("TrailingStopMode")
-    trailing_stop_mode = trailing_stop_mode_data.get("value")
-    if trailing_stop_mode == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-        value_fetch = trailing_stop_mode_data.get("value_fetch")
+    params = node.get("params")
+    if params.get("trailing_stop_mode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        value_fetch = params.get("value_fetch_trailing_stop_mode")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "tsm_cl"
@@ -666,7 +665,7 @@ def trailing_stop_each_trade_run_data(node, run_data):
 
 def no_trade_nearby_run_data(node, run_data):
     params = node.get("params")
-    if params.get("mode_base_price") == "current":
+    if params.get("mode_base_price") != "\"current\"":
         value_fetch_price = params.get("price")
         row1_price = value_fetch_price.get("row1")
         row2_price = value_fetch_price.get("row2")
@@ -744,6 +743,9 @@ def formula(node, run_data):
     operator = params.get("operator").get("label")
 
     variable_name = params.get("variable")
+
+    adjustment = adjust.get("(var_name_1 operator var_name_2)", params.get("adjust"), "getSymbol(Symbol())")
+    run_data = run_data.replace("(var_name_1 operator var_name_2)", adjustment)
 
     run_data = run_data.replace("initializer_1", init_1) \
         .replace("initializer_2", init_2) \

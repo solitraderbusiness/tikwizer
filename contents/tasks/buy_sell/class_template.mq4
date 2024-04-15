@@ -64,7 +64,7 @@ public:
 
       //martingale
       look_up_on = look_up_on_val;
-      int mtype[] = type_val;//This doesn't seem to be an input. So this remains static forever.
+      int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
       ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
       martingale_init_vol = martingale_init_vol_val;
       martingale_multiply_on_loss = martingale_multiply_on_loss_val;
@@ -357,7 +357,8 @@ private:
                                        else
                                           if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
-                                             volume = BetMartingale(msymbol, look_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
+                                             int mlook_up_on =  order_type == ORDER_BUY || ORDER_SELL ? look_up_on : 0;
+                                             volume = BetMartingale(msymbol, mlook_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }
                                           else
                                              if(money_management == MONEY_MANAGEMENT_CUSTOM_VALUE)

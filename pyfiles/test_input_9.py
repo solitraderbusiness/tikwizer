@@ -558,6 +558,15 @@ input_data_4 = {
                                 "mode_time_shift": "-1",
                                 "time_source": "TIME_SERVER"
                             }
+                        },
+                        "price": {
+                            "row1": "Value",
+                            "row2": "Time",
+                            "params": {
+                                "mode_time": "MODE_TIME_NOW",
+                                "mode_time_shift": "-1",
+                                "time_source": "TIME_SERVER"
+                            }
                         }
                     },
                     "id": "6559c286-1291-4ba0-a584-f45acf8a38d9",
@@ -1741,7 +1750,7 @@ input_data_13 = {
                     "params": {
                         "group_mode": "ORDER_GROUP_MODE_ALL",
                         "symbol_mode": "SYMBOL_MODE_ANY",
-                        "type": "{0,1}",
+                        "type": "{1}",
                         "profit_mode_each": "no_matter",
                         "profit_mode": "pips",
                         "compare": "<",
@@ -3930,6 +3939,368 @@ input_data_21 = {
                     "targetHandle": "c",
                     "type": "customEdge",
                     "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-76062001-1361-4923-b1cc-ace9f274cf46c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# test formula > adjust
+input_data_22 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": ">",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "row2": "Time",
+                            "row1": "Value",
+                            "params": {
+                                "mode_time": "MODE_TIME_CANDLE_TIME",
+                                "mode_time_shift": "loop_counter",
+                                "time_candle_id": "min_price",
+                                "time_market": "NULL",
+                                "time_candle_timeframe": "PERIOD_M5"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "loop_count"
+                            }
+                        }
+                    },
+                    "id": "76062001-1361-4923-b1cc-ace9f274cf46",
+                    "id_by_user": 13,
+                    "blockName": "condition"
+                },
+                {
+                    "params": {
+                        "left": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "1"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "1"
+                            }
+                        },
+                        "operator": {
+                            "label": "+"
+                        },
+                        "adjust": "+10%",
+                        "variable": "loop_count"
+                    },
+                    "id": "5c747bf0-20ea-4334-a23c-8dea2d75a018",
+                    "id_by_user": 14,
+                    "blockName": "formula"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "76062001-1361-4923-b1cc-ace9f274cf46",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-76062001-1361-4923-b1cc-ace9f274cf46c"
+                },
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "5c747bf0-20ea-4334-a23c-8dea2d75a018",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-5c747bf0-20ea-4334-a23c-8dea2d75a018c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# test buy sell pending martingale, look upon
+input_data_23 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 12,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "group": "11",
+                        "symbol": "NULL",
+                        "price_offset": "10",
+                        "open_at_price": "OPEN_AT_BID",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "ExpMode": "None",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0",
+                        "how_much_volume": "0.1"
+                    },
+                    "id": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "id_by_user": 15,
+                    "blockName": "Buy pending order"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-2b8a3c74-ac06-48b9-9c22-50c6722e2b02c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# trailing pending order, new data structure, testing pending order type input
+input_data_24 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 20,
+                    "blockName": "trailing_pending_orders",
+                    "params": {
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "symbols_str": ",EURUSD,GBPUSD",
+                        "group_mode": "ORDER_GROUP_MODE_ALL",
+                        "group_number": 15,
+                        "type": "{2, 3, 4, 5}",
+                        "type_pending": "{2, 3}",
+                        "trailing_distance_mode": "TRAILING_DISTANCE_MODE_FIXED",
+                        "t_distance_pips": 10.0,
+                        "t_step_pips": 1.0,
+                        "dynamic_size_pips_input": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "30"
+                            }
+                        }
+                    }
+                },
+                {
+                    "params": {
+                        "group": "11",
+                        "symbol": "NULL",
+                        "price_offset": "10",
+                        "open_at_price": "OPEN_AT_BID",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "ExpMode": "None",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0",
+                        "how_much_volume": "0.1"
+                    },
+                    "id": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "id_by_user": 15,
+                    "blockName": "Buy pending order"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-2b8a3c74-ac06-48b9-9c22-50c6722e2b02c"
                 }
             ]
         },

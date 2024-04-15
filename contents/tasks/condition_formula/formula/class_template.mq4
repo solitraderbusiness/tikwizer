@@ -16,7 +16,7 @@ public:
 
       initializer_1
       initializer_2
-      variable_name = var_name_1 operator var_name_2;
+      variable_name = (var_name_1 operator var_name_2);
 
       printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
