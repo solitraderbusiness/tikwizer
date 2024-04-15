@@ -1,13 +1,13 @@
 class Block : BlockParent
   {
 
-
 public:
    int               id;
    int               id_by_user;
    string            name;
    bool              enabled;
-
+private:
+   RunBlock          runBlock;
 
    int               next_true_history[];//dynamic, filled at runtime
    int               next_false_history[];//dynamic, filled at runtime
@@ -98,6 +98,9 @@ public:
       for(int i=0; i<ArraySize(items); i++)
          AddToArray(prevs_false, items[i]);
      }
-
+   void              setFunc(RunBlock _runBlock)
+     {
+      runBlock = _runBlock;
+     }
   };
 
