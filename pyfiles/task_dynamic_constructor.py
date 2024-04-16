@@ -21,7 +21,7 @@ def get_task():
     return class_template
 
 
-def get_task_child(node):
+def get_task_child(node, constants, variables):
     category = node.get("category")
     task_name = node.get("blockName")
     params = node.get("params")
@@ -35,10 +35,10 @@ def get_task_child(node):
     field_data_static = field_data_static_fun(path_task_id)
     field_data = field_data_dynamic_fun(field_data_static)
 
-    constructor_data_static = constructor_data_static_fun(path_task_id, params)
+    constructor_data_static = constructor_data_static_fun(path_task_id, params, constants, variables)
     constructor_data = constructor_data_dynamic_fun(constructor_data_static)
 
-    run_data_static = run_data_static_fun(path_task_id, params)
+    run_data_static = run_data_static_fun(path_task_id, params, constants, variables)
     run_data = run_data_dynamic_fun(node, run_data_static)
 
     reset_data_static = reset_data_static_fun(path_task_id)
@@ -82,12 +82,12 @@ def field_data_dynamic_fun(field_data_static):
     return field_data_static
 
 
-def constructor_data_static_fun(path_task_id, params):
+def constructor_data_static_fun(path_task_id, params, constants, variables):
     with open(path_task_id + "constructor_data.json") as constructor_file:
         if constructor_file:
             constructor_text = constructor_file.read()
             constructor_data = json.loads(constructor_text).get("constructor_data")
-            constructor_data = replace_input_values(constructor_data, params)
+            constructor_data = replace_input_values(constructor_data, params, constants, variables)
             return constructor_data
     return ""
 
@@ -96,12 +96,12 @@ def constructor_data_dynamic_fun(constructor_data_static):
     return constructor_data_static
 
 
-def run_data_static_fun(path_task_id, input_dic):
+def run_data_static_fun(path_task_id, input_dic, constants, variables):
     with open(path_task_id + "run_data.json") as run_file:
         if run_file:
             run_txt = run_file.read()
             run_data = json.loads(run_txt).get("run_data")
-            run_data = replace_input_values(run_data, input_dic)
+            run_data = replace_input_values(run_data, input_dic, constants, variables)
             return run_data
     return ""
 
@@ -175,23 +175,33 @@ def function_data_dynamic_fun(node, function_data_static):
     return function_data
 
 
-def replace_input_values(data, params):
+def replace_input_values(data, params, constants, variables):
     for key, value in params.items():
-        if isinstance(value, collections.abc.Sequence) and not isinstance(value, str):
-            items = str(set(value)) if set(value) else "{}"
-            data = data.replace(key + "_val", items)
-        elif isinstance(value, dict):
-            data = data.replace(key + "_val", get_proper_value(value.get("value")))
-        else:  # So it's a string (or number)
-            data = data.replace(key + "_val", get_proper_value(value))
+        if isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
+            pass
+        else:  # So it's a string (or number or bool)
+            data = data.replace(key + "_val", get_proper_value(value, constants, variables))
     return data
 
 
-def get_proper_value(value):
+def get_proper_value(value, constants, variables):
     if isinstance(value, str):
-        return value
+        if is_not_const_var(value, constants, variables):
+            return value
+        else:  # The value is the name of a constant/variable, so use the global scope
+            return "::" + value
     else:
         return str(value)
+
+
+def is_not_const_var(value, constants, variables):
+    for constant in constants:
+        if constant.get("name") == value:
+            return False
+    for variable in variables:
+        if variable.get("name") == value:
+            return False
+    return True
 
 
 def check_trendline_price_level_run_data(node, function_data_static):

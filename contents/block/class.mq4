@@ -1,3 +1,10 @@
+#define EVENT_ON_INIT   1
+#define EVENT_ON_TIMER  2
+#define EVENT_ON_TICK   3
+#define EVENT_ON_TRADE  4
+#define EVENT_ON_CHART  5
+#define EVENT_ON_DEINIT 6
+
 class Block : BlockParent
   {
 
@@ -6,8 +13,7 @@ public:
    int               id_by_user;
    string            name;
    bool              enabled;
-private:
-   RunBlock          runBlock;
+   int               event;
 
    int               next_true_history[];//dynamic, filled at runtime
    int               next_false_history[];//dynamic, filled at runtime
@@ -27,13 +33,28 @@ public:
    virtual void      next_true()
      {
       for(int i=0; i<ArraySize(nexts_true); i++)
-         runBlockTick(id, ROUTE_1_PASSED, nexts_true[i]);//-1 : block id to block index
+         //-1 : block id to block index
+         switch (event){
+            case EVENT_ON_INIT  : runBlockInit  (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TIMER : runBlockTimer (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TICK  : runBlockTick  (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TRADE : runBlockTrade (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_CHART : runBlockChart (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_DEINIT: runBlockDeinit(id, ROUTE_1_PASSED, nexts_true[i]); break;
+        }
      }
 
    virtual void      next_false()
      {
       for(int i=0; i<ArraySize(nexts_false); i++)
-         runBlockTick(id, ROUTE_2_PASSED, nexts_false[i]);
+        switch (event){
+            case EVENT_ON_INIT  : runBlockInit  (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TIMER : runBlockTimer (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TICK  : runBlockTick  (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TRADE : runBlockTrade (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_CHART : runBlockChart (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_DEINIT: runBlockDeinit(id, ROUTE_2_PASSED, nexts_false[i]); break;
+        }
      }
 
    virtual void              run(int source_id, int source_result)
@@ -97,10 +118,6 @@ public:
      {
       for(int i=0; i<ArraySize(items); i++)
          AddToArray(prevs_false, items[i]);
-     }
-   void              setFunc(RunBlock _runBlock)
-     {
-      runBlock = _runBlock;
      }
   };
 

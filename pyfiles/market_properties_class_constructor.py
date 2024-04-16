@@ -6,7 +6,7 @@ path = path_root.get()
 path_sub = "/contents/market_properties/"
 
 
-def get_class(which, input_dic, class_id):
+def get_class(which, input_dic, class_id, constants, variables):
     mpath = path + path_sub
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
@@ -27,7 +27,7 @@ def get_class(which, input_dic, class_id):
             init_body_dic = json.loads(init_txt)
 
     for key in input_dic:
-        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", str(input_dic.get(key)))
+        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", get_proper_value(input_dic.get(key), constants, variables))
     init_body_dic["init_body"] = init_body_dic.get("init_body").replace("which" + "_val", str(which))
 
     mql4_body = class_template_dic.get("class_template") \
@@ -50,6 +50,26 @@ def get_class(which, input_dic, class_id):
     return mql4_body
 
 
+def get_proper_value(value, constants, variables):
+    if isinstance(value, str):
+        if is_not_const_var(value, constants, variables):
+            return value
+        else:  # The value is the name of a constant/variable, so use the global scope
+            return "::" + value
+    else:
+        return str(value)
+
+
+def is_not_const_var(value, constants, variables):
+    for constant in constants:
+        if constant.get("name") == value:
+            return False
+    for variable in variables:
+        if variable.get("name") == value:
+            return False
+    return True
+
+
 def get_initializer(var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
@@ -58,6 +78,7 @@ def get_initializer(var_id):
             initializer_dic = json.loads(initializer_str)
             initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
             return initializer_body
+
 
 def get_initializer_split(var_id):
     mpath = path + path_sub
@@ -69,6 +90,8 @@ def get_initializer_split(var_id):
             for i in range(len(initializer_list)):
                 initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
             return initializer_list
+
+
 def get_var_name(var_id):
     mpath = path + path_sub
     with open(mpath + "initializer.json") as initializer_file:
@@ -78,6 +101,7 @@ def get_var_name(var_id):
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
 
+
 def get_structs():
     mpath = path + path_sub
     with open(mpath + "structs.json") as structs_file:
@@ -86,7 +110,6 @@ def get_structs():
             structs_dic = json.loads(structs_str)
             structs = structs_dic.get("structs")
             return structs
-
 
 # Test
 # input = {

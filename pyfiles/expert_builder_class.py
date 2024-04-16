@@ -702,7 +702,7 @@ class ExpertBuilder:
         return result
 
     def get_task_child(self, node):
-        return self.task_dynamic_constructor.get_task_child(node)
+        return self.task_dynamic_constructor.get_task_child(node, self.data.get("constants"), self.data.get("variables"))
 
     def get_block_child(self, input_dic, id_block):
         return self.block_constructor.get_block_child(input_dic, id_block)
@@ -1010,7 +1010,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r8"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
     def trailing_stop_each_trade(self, node):
         params = node.get("params")
@@ -1118,10 +1118,10 @@ class ExpertBuilder:
 
     def value_fetch_class(self, row1, row2, params, id_val):
         if row1 == "Indicator":
-            return self.indicator_class_constructor.get_class(row2, params, id_val)
+            return self.indicator_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))
         elif row1 == "Candle":
-            return self.candle_class_constructor.get_class(params, id_val)
+            return self.candle_class_constructor.get_class(params, id_val, self.data.get("constants"), self.data.get("variables"))
         elif row1 == "Market Properties":
-            return self.market_properties_class_constructor.get_class(row2, params, id_val)
+            return self.market_properties_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))
         elif row1 == "Value":
-            return self.value_class_constructor.get_class(row2, params, id_val)
+            return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))

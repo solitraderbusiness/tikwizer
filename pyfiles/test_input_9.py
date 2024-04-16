@@ -3791,7 +3791,7 @@ input_data_20 = {
                             "params": {
                                 "range_start": "0",
                                 "range_end": "10",
-                                "what_to_get": "GET_CANDLE_ID"
+                                "what_to_get": "what_to_get"
                             }
                         },
                         "right": {
@@ -3803,7 +3803,7 @@ input_data_20 = {
                                 "signal_period": 9,
                                 "applied_price": "PRICE_LOW",
                                 "mode": "MODE_MAIN",
-                                "shift": "0",
+                                "shift": "shift",
                                 "symbol": "NULL",
                                 "timeframe": "PERIOD_M2"
                             }
@@ -3857,6 +3857,12 @@ input_data_20 = {
     "variables": [
         {
             "type": "double",
+            "name": "shift",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
             "name": "max_price",
             "value": "0",
             "description": ""
@@ -3875,6 +3881,12 @@ input_data_20 = {
         }
     ],
     "constants": [
+        {
+            "type": "string",
+            "name": "what_to_get",
+            "value": "5",
+            "description": ""
+        },
         {
             "type": "double",
             "name": "loop_count",
@@ -3915,7 +3927,7 @@ input_data_21 = {
                                 "time_shift_years": "0",
                                 "time_shift_months": "0",
                                 "time_shift_weeks": "0",
-                                "time_shift_days": "5"
+                                "time_shift_days": "period"
                             }
                         },
                         "right": {
@@ -3964,6 +3976,12 @@ input_data_21 = {
         }
     },
     "variables": [
+        {
+            "type": "double",
+            "name": "period",
+            "value": "0",
+            "description": ""
+        },
         {
             "type": "double",
             "name": "max_price",
@@ -4092,8 +4110,91 @@ input_data_22 = {
             "edges": []
         },
         "on_timer": {
-            "nodes": [],
-            "edges": []
+            "nodes": [
+                {
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_CURRENT"
+                    },
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f1",
+                    "id_by_user": 1,
+                    "blockName": "Once per bar"
+                },
+                {
+                    "params": {
+                        "operator": {
+                            "label": ">",
+                            "cross_width": 1
+                        },
+                        "left": {
+                            "row2": "Candle",
+                            "row1": "Candle",
+                            "params": {
+                                "price_mode": "price_mode",
+                                "find_method": "FIND_BY_ID",
+                                "symbol": "my_symbol",
+                                "timeframe": "PERIOD_CURRENT",
+                                "shift": "loop_count"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "loop_count"
+                            }
+                        }
+                    },
+                    "id": "76062001-1361-4923-b1cc-ace9f274cf461",
+                    "id_by_user": 2,
+                    "blockName": "condition"
+                },
+                {
+                    "params": {
+                        "left": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "1"
+                            }
+                        },
+                        "right": {
+                            "row2": "Numeric",
+                            "row1": "Value",
+                            "params": {
+                                "value": "1"
+                            }
+                        },
+                        "operator": {
+                            "label": "+"
+                        },
+                        "adjust": "+10%",
+                        "variable": "loop_count"
+                    },
+                    "id": "5c747bf0-20ea-4334-a23c-8dea2d75a0181",
+                    "id_by_user": 3,
+                    "blockName": "formula"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f1",
+                    "sourceHandle": "blue",
+                    "target": "76062001-1361-4923-b1cc-ace9f274cf461",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-76062001-1361-4923-b1cc-ace9f274cf46c"
+                },
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f1",
+                    "sourceHandle": "blue",
+                    "target": "5c747bf0-20ea-4334-a23c-8dea2d75a0181",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-5c747bf0-20ea-4334-a23c-8dea2d75a018c"
+                }
+            ]
         },
         "on_init": {
             "nodes": [],
@@ -4105,6 +4206,18 @@ input_data_22 = {
         }
     },
     "variables": [
+        {
+            "type": "string",
+            "name": "price_mode",
+            "value": "my_personal_price_mode",
+            "description": ""
+        },
+        {
+            "type": "string",
+            "name": "my_symbol",
+            "value": "EURUSD, NZDUSD",
+            "description": ""
+        },
         {
             "type": "double",
             "name": "max_price",
@@ -4346,6 +4459,135 @@ input_data_24 = {
         }
     ],
     "constants": [
+        {
+            "type": "double",
+            "name": "loop_count",
+            "value": "5",
+            "description": ""
+        }
+    ]
+}
+
+# test variables constants same name as class members to see if the solution works properly
+input_data_25 = {
+    "events": {
+        "on_tick": {
+            "nodes": [
+                {
+                    "id": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "id_by_user": 20,
+                    "blockName": "trailing_pending_orders",
+                    "params": {
+                        "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                        "symbols_str": ",EURUSD,GBPUSD",
+                        "group_mode": "group_mode",
+                        "group_number": 15,
+                        "type": "{2, 3, 4, 5}",
+                        "type_pending": "{2, 3}",
+                        "trailing_distance_mode": "TRAILING_DISTANCE_MODE_FIXED",
+                        "t_distance_pips": 10.0,
+                        "t_step_pips": 1.0,
+                        "dynamic_size_pips_input": {
+                            "row1": "Value",
+                            "row2": "Numeric",
+                            "params": {
+                                "value": "30"
+                            }
+                        }
+                    }
+                },
+                {
+                    "params": {
+                        "group": "11",
+                        "symbol": "NULL",
+                        "price_offset": "10",
+                        "open_at_price": "OPEN_AT_BID",
+                        "volume_upper_limit": "10",
+                        "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+                        "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                        "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                        "ExpMode": "None",
+                        "oco": "oco2",
+                        "slippage": "4",
+                        "arrow_color": "clrRed",
+                        "comment": "Short trade",
+                        "stoploss": "20",
+                        "takeprofit": "20",
+                        "ExpDays": "0",
+                        "ExpHours": "1",
+                        "ExpMinutes": "0",
+                        "how_much_volume": "0.1"
+                    },
+                    "id": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "id_by_user": 15,
+                    "blockName": "Buy pending order"
+                }
+            ],
+            "edges": [
+                {
+                    "source": "a9e6ec2f-9e93-47fb-9126-ba1d37b78b7f",
+                    "sourceHandle": "blue",
+                    "target": "2b8a3c74-ac06-48b9-9c22-50c6722e2b02",
+                    "targetHandle": "c",
+                    "type": "customEdge",
+                    "id": "reactflow__edge-a9e6ec2f-9e93-47fb-9126-ba1d37b78b7fblue-2b8a3c74-ac06-48b9-9c22-50c6722e2b02c"
+                }
+            ]
+        },
+        "on_trade": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_chart": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_timer": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_init": {
+            "nodes": [],
+            "edges": []
+        },
+        "on_deinit": {
+            "nodes": [],
+            "edges": []
+        }
+    },
+    "variables": [
+        {
+            "type": "double",
+            "name": "period",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "max_price",
+            "value": "0",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "min_price",
+            "value": "999999999",
+            "description": ""
+        },
+        {
+            "type": "double",
+            "name": "loop_counter",
+            "value": "0",
+            "description": ""
+        }
+    ],
+    "constants": [
+        {
+            "type": "double",
+            "name": "group_mode",
+            "value": "5",
+            "description": ""
+        },
         {
             "type": "double",
             "name": "loop_count",

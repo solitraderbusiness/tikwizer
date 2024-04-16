@@ -1,5 +1,14 @@
 constants = [
 
+    ########################## Events ##########################
+
+    "#define EVENT_ON_INIT   1",
+    "#define EVENT_ON_TIMER  2",
+    "#define EVENT_ON_TICK   3",
+    "#define EVENT_ON_TRADE  4",
+    "#define EVENT_ON_CHART  5",
+    "#define EVENT_ON_DEINIT 6",
+
     ########################## Blocks ##########################
 
     "#define ROUTE_1_PASSED 1",

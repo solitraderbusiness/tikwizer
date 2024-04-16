@@ -6,7 +6,7 @@ path = path_root.get()
 path_sub = "/contents/value/"
 
 
-def get_class(value_type, input_dic, class_id):
+def get_class(value_type, input_dic, class_id, constants, variables):
     mpath = path + path_sub
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
@@ -27,12 +27,12 @@ def get_class(value_type, input_dic, class_id):
             init_body_dic = json.loads(init_txt)
 
     for key in input_dic:
-        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", str(input_dic.get(key)), 1)
+        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", get_proper_value(input_dic.get(key), constants, variables), 1)
 
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
-        .replace("init_body", init_body_dic.get("init_body"))\
+        .replace("init_body", init_body_dic.get("init_body")) \
         .replace("value_type_val", '\"' + value_type + '\"')
 
     if "adjust" in input_dic:
@@ -43,6 +43,26 @@ def get_class(value_type, input_dic, class_id):
         adjustment = adjust.get(var_name, input_dic.get("adjust"), "msymbol")
         mql4_body = mql4_body.replace("return result;", "return " + adjustment + ";")
     return mql4_body
+
+
+def get_proper_value(value, constants, variables):
+    if isinstance(value, str):
+        if is_not_const_var(value, constants, variables):
+            return value
+        else:  # The value is the name of a constant/variable, so use the global scope
+            return "::" + value
+    else:
+        return str(value)
+
+
+def is_not_const_var(value, constants, variables):
+    for constant in constants:
+        if constant.get("name") == value:
+            return False
+    for variable in variables:
+        if variable.get("name") == value:
+            return False
+    return True
 
 
 def get_initializer(value_type, var_id):

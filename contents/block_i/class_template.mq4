@@ -7,6 +7,7 @@ public:
       id_by_user = id_by_user_val;
       name = name_val;
       enabled = enabled_val;
+      event = event_val;
 
       int mnexts_true[] = nexts_true_val;
       int mnexts_false[] = nexts_false_val;

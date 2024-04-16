@@ -15,7 +15,7 @@ def refactor(data):
         create_specific_input(event["nodes"])
         overwrite_task_names(event["nodes"])
         # Block input_dic
-        set_blocks_input_dic(event["nodes"], event["edges"])
+        set_blocks_input_dic(key, event["nodes"], event["edges"])
         # Set input items that are not present in user input form front end
         params_fill(event.get("nodes"))
         # Correct double quotation issue with string values
@@ -70,7 +70,8 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
         else:
             con1 = key in keys and is_not_const_var(value, constants, variables)
             con2 = key == "value" and isinstance(value, str) and is_not_const_var(value, constants, variables)
-            con3 = (key == "symbol" or key == "time_market") and value != "NULL" and is_not_const_var(value, constants, variables)
+            con3 = (key == "symbol" or key == "time_market") and value != "NULL" and is_not_const_var(value, constants,
+                                                                                                      variables)
             if con1 or con2 or con3:
                 dic[key] = '\"' + value + '\"'
 
@@ -189,18 +190,31 @@ def overwrite_ids(nodes, edges):
         node["id"] = i
 
 
-def set_blocks_input_dic(nodes, edges):
+def set_blocks_input_dic(key, nodes, edges):
     for node in nodes:
         input_dic = {}
         input_dic["id"] = node.get("id")
         input_dic["id_by_user"] = node.get("id_by_user")
         input_dic["name"] = "\"" + node.get("blockName") + "\""
         input_dic["enabled"] = node.get("enabled")
+        input_dic["event"] = get_proper_event_name(key)
         input_dic["nexts_true"] = get_nexts_true(node, edges)
         input_dic["nexts_false"] = get_nexts_false(node, edges)
         input_dic["prevs_true"] = get_prevs_true(node, edges)
         input_dic["prevs_false"] = get_prevs_false(node, edges)
         node["input_dic_block"] = input_dic
+
+
+def get_proper_event_name(key):
+    events = {
+        "on_init": "EVENT_ON_INIT",
+        "on_timer": "EVENT_ON_TIMER",
+        "on_tick": "EVENT_ON_TICK",
+        "on_trade": "EVENT_ON_TRADE",
+        "on_chart": "EVENT_ON_CHART",
+        "on_deinit": "EVENT_ON_DEINIT",
+    }
+    return events.get(key)
 
 
 def overwrite_task_names(nodes):

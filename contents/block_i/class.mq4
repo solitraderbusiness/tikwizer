@@ -7,6 +7,7 @@ public:
       id_by_user = 25;
       name = "Block_0";
       enabled = true;
+      event = EVENT_ON_TICK;
 
       int mnexts_true[] = {1,2};
       int mnexts_false[] = {};
