@@ -167,12 +167,6 @@
 #define NEW_STOPS_FIXED 1
 #define NEW_STOPS_PERCENT_OF_CURRENT_TPSL 2
 #define NEW_STOPS_CUSTOM_PRICE_LEVEL 3
-extern double loop_count = 5; //
-string price_mode = "my_personal_price_mode"; //
-string my_symbol = "EURUSD, NZDUSD"; //
-double max_price = 0; //
-double min_price = 999999999; //
-double loop_counter = 0; //
 struct MarketPropertiesResult
   {
    double            price;
@@ -966,7 +960,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value13_left
+class Value10_t1
   {
 public:
 
@@ -1016,12 +1010,12 @@ public:
       symbol = NULL;
       //for time (phase 2)
       //defined by user
-      mode_time = MODE_TIME_CANDLE_TIME;
-      time_source = 0;
+      mode_time = MODE_TIME_NOW;
+      time_source = TIME_SERVER;
       time_stamp = "00:00";
-      time_candle_id = ::min_price;
+      time_candle_id = 1;
       time_market = NULL;
-      time_candle_timeframe = PERIOD_M5;
+      time_candle_timeframe = 0;
       time_component_year = 0;
       time_component_month = 0;
       time_component_day = 0.0;
@@ -1029,7 +1023,7 @@ public:
       time_component_minute = 0.0;
       time_component_second = 0;
       time_value = 0;
-      mode_time_shift = ::loop_counter;
+      mode_time_shift = -1;
       time_shift_years = 0;
       time_shift_months = 0;
       time_shift_weeks = 0;
@@ -1212,7 +1206,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value13_right
+class Value10_t2
   {
 public:
 
@@ -1256,14 +1250,14 @@ public:
    void              init()
 
      {
-      value = ::loop_count;
+      value = "0";
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
       //for time (phase 2)
       //defined by user
-      mode_time = 0;
-      time_source = 0;
+      mode_time = MODE_TIME_NOW;
+      time_source = TIME_SERVER;
       time_stamp = "00:00";
       time_candle_id = 1;
       time_market = NULL;
@@ -1275,7 +1269,7 @@ public:
       time_component_minute = 0.0;
       time_component_second = 0;
       time_value = 0;
-      mode_time_shift = 0;
+      mode_time_shift = -1;
       time_shift_years = 0;
       time_shift_months = 0;
       time_shift_weeks = 0;
@@ -1294,1418 +1288,7 @@ public:
      {
       msymbol = getSymbol(symbol);
       string result = "";
-      string value_type = "Numeric";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value14_left
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = "1";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   string              calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Numeric";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value14_right
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = "1";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   string              calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Numeric";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-class Candle2_left
-
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = ::my_symbol;
-      timeframe = PERIOD_CURRENT;
-      find_method = FIND_BY_ID;
-      price_mode = ::price_mode;
-      timestr = "2023.4.26 13:40:30";
-      shift = ::loop_count;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(msymbol, mtimeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value2_right
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = ::loop_count;
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   string              calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Numeric";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value3_left
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = "1";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   string              calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Numeric";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value3_right
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = "1";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   string              calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Numeric";
+      string value_type = "Time";
       if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
         {
          result = value;
@@ -2868,120 +1451,353 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Task12 : public Task
+class Task8 : public Task
   {
-   string            symbol;
-   int               timeframe;
-   int               n;
-
-   datetime          lastSavedTime;
-   int               count;
+   //value set by user
+   string            title;
+   string            obj_chart_subwindow;
+   int               obj_corner;
+   int               obj_x;
+   int               obj_y;
+   string            obj_title_font;
+   color             obj_title_font_color;
+   int               obj_title_font_size;
+   string            obj_label_font;
+   color             obj_label_font_color;
+   int               obj_label_font_size;
+   string            obj_font;
+   int               obj_font_color;
+   int               obj_font_size;
+   string            label_1;
+   int               format_number_1;
+   int               format_time_1;
+   string            label_2;
+   int               format_number_2;
+   int               format_time_2;
+   string            label_3;
+   int               format_number_3;
+   int               format_time_3;
+   string            label_4;
+   int               format_number_4;
+   int               format_time_4;
+   string            label_5;
+   int               format_number_5;
+   int               format_time_5;
+   string            label_6;
+   int               format_number_6;
+   int               format_time_6;
+   string            label_7;
+   int               format_number_7;
+   int               format_time_7;
+   string            label_8;
+   int               format_number_8;
+   int               format_time_8;
+   //value set by system
+   bool              initialized;
 public:
-                     Task12(string name):Task(name)
+                     Task8(string name):Task(name)
      {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      n = 1;
-      count = 0;
-      lastSavedTime = -1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      string msymbol = getSymbol(symbol);
-      int mtimeframe = getTimeframe(timeframe);
-
-      if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
-        {
-         //do once per bar
-         double mod = MathMod(count, n);
-         count++;
-         lastSavedTime = iTime(msymbol, mtimeframe, 0);
-         if(mod == 0) //do once every n bar
-           {
-            printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
-           }
-         else //otherwise
-           {
-            printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
-           }
-        }
-      else //otherwise
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task13 : public Task
-  {
-
-public:
-                     Task13(string name):Task(name)
-     {
-
+      title = "hello";
+      obj_chart_subwindow = "";
+      obj_corner = CORNER_LEFT_UPPER;
+      obj_x = 5;
+      obj_y = 5;
+      obj_title_font = "Georgia";
+      obj_title_font_color = clrRed;
+      obj_title_font_size = 13;
+      obj_label_font = "Verdana";
+      obj_label_font_color = clrRed;
+      obj_label_font_size = 10;
+      obj_font = "Verdana";
+      obj_font_color = clrRed;
+      obj_font_size = 10;
+      label_1 = "";
+      format_number_1 = EMPTY_VALUE;
+      format_time_1 = EMPTY_VALUE;
+      label_2 = "";
+      format_number_2 = EMPTY_VALUE;
+      format_time_2 = EMPTY_VALUE;
+      label_3 = "";
+      format_number_3 = EMPTY_VALUE;
+      format_time_3 = EMPTY_VALUE;
+      label_4 = "";
+      format_number_4 = EMPTY_VALUE;
+      format_time_4 = EMPTY_VALUE;
+      label_5 = "";
+      format_number_5 = EMPTY_VALUE;
+      format_time_5 = EMPTY_VALUE;
+      label_6 = "";
+      format_number_6 = EMPTY_VALUE;
+      format_time_6 = EMPTY_VALUE;
+      label_7 = "";
+      format_number_7 = EMPTY_VALUE;
+      format_time_7 = EMPTY_VALUE;
+      label_8 = "";
+      format_number_8 = EMPTY_VALUE;
+      format_time_8 = EMPTY_VALUE;
+      /* Static Parameters (initial value) */
+      initialized =  false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      Value13_left value13_left;
-      value13_left.init();
-      datetime valueValue13_left = value13_left.calc();
-      Value13_right value13_right;
-      value13_right.init();
-      double valueValue13_right = value13_right.calc();
 
-      if(valueValue13_left > valueValue13_right)
+      double valueX = 0;
+
+
+      if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
         {
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
+
+
+         long ObjChartID = 0;
+         int ObjAnchor   = ANCHOR_LEFT;
+
+         if(obj_corner == CORNER_RIGHT_UPPER || obj_corner == CORNER_RIGHT_LOWER)
+           {
+            ObjAnchor = ANCHOR_RIGHT;
+           }
+
+         string namebase = "fxd_cmnt_" + block_id;
+
+         int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
+
+         if(subwindow >= 0)
+           {
+            //-- draw comment title
+            if((string)title != "")
+              {
+               string nametitle = namebase;
+
+               if(ObjectFind(ObjChartID, nametitle) < 0)
+                 {
+                  if(!ObjectCreate(ObjChartID, nametitle, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                  else
+                    {
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(obj_title_font_size));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, obj_title_font_color);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
+
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
+
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
+                    }
+                 }
+               else
+                 {
+                  obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                 }
+
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
+
+               obj_y = (int)(obj_y + obj_title_font_size / 3);
+              }
+
+            //-- draw comment rows
+            for(int i = 1; i <= 8; i++)
+              {
+               string text    = "";
+               string textlbl = "";
+
+               switch(i)
+                 {
+                  case 1:
+                    {
+                     if(label_1 != "")
+                       {
+                        textlbl = label_1;
+
+                        text    = FormatValueForPrinting("", format_number_1, format_time_1);
+                       }
+
+                     break;
+                    }
+                  case 2:
+                    {
+                     if(label_2 != "")
+                       {
+                        textlbl = label_2;
+
+                        text    = FormatValueForPrinting("", format_number_2, format_time_2);
+                       }
+
+                     break;
+                    }
+                  case 3:
+                    {
+                     if(label_3 != "")
+                       {
+                        textlbl = label_3;
+
+                        text    = FormatValueForPrinting("", format_number_3, format_time_3);
+                       }
+
+                     break;
+                    }
+                  case 4:
+                    {
+                     if(label_4 != "")
+                       {
+                        textlbl = label_4;
+
+                        text    = FormatValueForPrinting("", format_number_4, format_time_4);
+                       }
+
+                     break;
+                    }
+                  case 5:
+                    {
+                     if(label_5 != "")
+                       {
+                        textlbl = label_5;
+
+                        text    = FormatValueForPrinting("", format_number_5, format_time_5);
+                       }
+
+                     break;
+                    }
+                  case 6:
+                    {
+                     if(label_6 != "")
+                       {
+                        textlbl = label_6;
+
+                        text    = FormatValueForPrinting("", format_number_6, format_time_6);
+                       }
+
+                     break;
+                    }
+                  case 7:
+                    {
+                     if(label_7 != "")
+                       {
+                        textlbl = label_7;
+
+                        text    = FormatValueForPrinting("", format_number_7, format_time_7);
+                       }
+
+                     break;
+                    }
+                  case 8:
+                    {
+                     if(label_8 != "")
+                       {
+                        textlbl = label_8;
+
+                        text    = FormatValueForPrinting("", format_number_8, format_time_8);
+                       }
+
+                     break;
+                    }
+                 }
+
+               string name    = namebase + "_" + (string)i;
+               string namelbl = name + "_l";
+
+               if(textlbl == "")
+                 {
+                  if(!initialized)
+                    {
+                     //-- pre-delete
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                    }
+
+                  continue;
+                 }
+
+               //-- draw initial objects
+               if(ObjectFind(ObjChartID, name) < 0)
+                 {
+                  if(textlbl == "")
+                    {
+                     continue;
+                    }
+
+                  if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, obj_label_font_size);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, obj_label_font_color);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, obj_label_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+
+                  if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, obj_font_size);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, obj_font_color);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, obj_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                 }
+               else
+                 {
+                  if(textlbl == "")
+                    {
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                     continue;
+                    }
+                 }
+
+               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
+
+               //-- update label objects
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
+
+               //-- update value objects
+               int x        = 0;
+               int xsizelbl = (int)ObjectGetInteger(ObjChartID, namelbl, OBJPROP_XSIZE);
+
+               if(xsizelbl == 0)
+                 {
+                  //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
+                  xsizelbl = (int)(StringLen((string)textlbl) * obj_font_size / 1.5 + obj_font_size / 2);
+                 }
+
+               x = obj_x + (xsizelbl + obj_font_size/2);
+
+               ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
+              }
+
+            ChartRedraw();
+           }
+
+         initialized = true;
         }
-      else
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
 
-     }
-
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task14 : public Task
-  {
-
-public:
-                     Task14(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      Value14_left value14_left;
-      value14_left.init();
-      double valueValue14_left = value14_left.calc();
-      Value14_right value14_right;
-      value14_right.init();
-      double valueValue14_right = value14_right.calc();
-      loop_count = (valueValue14_left + valueValue14_right) + (valueValue14_left + valueValue14_right)*10/NormalizeDouble(100,0);
-
-      printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
@@ -2993,120 +1809,353 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Task1 : public Task
+class Task9 : public Task
   {
-   string            symbol;
-   int               timeframe;
-   int               n;
-
-   datetime          lastSavedTime;
-   int               count;
+   //value set by user
+   string            title;
+   string            obj_chart_subwindow;
+   int               obj_corner;
+   int               obj_x;
+   int               obj_y;
+   string            obj_title_font;
+   color             obj_title_font_color;
+   int               obj_title_font_size;
+   string            obj_label_font;
+   color             obj_label_font_color;
+   int               obj_label_font_size;
+   string            obj_font;
+   int               obj_font_color;
+   int               obj_font_size;
+   string            label_1;
+   int               format_number_1;
+   int               format_time_1;
+   string            label_2;
+   int               format_number_2;
+   int               format_time_2;
+   string            label_3;
+   int               format_number_3;
+   int               format_time_3;
+   string            label_4;
+   int               format_number_4;
+   int               format_time_4;
+   string            label_5;
+   int               format_number_5;
+   int               format_time_5;
+   string            label_6;
+   int               format_number_6;
+   int               format_time_6;
+   string            label_7;
+   int               format_number_7;
+   int               format_time_7;
+   string            label_8;
+   int               format_number_8;
+   int               format_time_8;
+   //value set by system
+   bool              initialized;
 public:
-                     Task1(string name):Task(name)
+                     Task9(string name):Task(name)
      {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      n = 1;
-      count = 0;
-      lastSavedTime = -1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      string msymbol = getSymbol(symbol);
-      int mtimeframe = getTimeframe(timeframe);
-
-      if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
-        {
-         //do once per bar
-         double mod = MathMod(count, n);
-         count++;
-         lastSavedTime = iTime(msymbol, mtimeframe, 0);
-         if(mod == 0) //do once every n bar
-           {
-            printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
-           }
-         else //otherwise
-           {
-            printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
-           }
-        }
-      else //otherwise
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task2 : public Task
-  {
-
-public:
-                     Task2(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      Candle2_left candle2_left;
-      candle2_left.init();
-      double valueCandle2_left = candle2_left.calc();
-      Value2_right value2_right;
-      value2_right.init();
-      double valueValue2_right = value2_right.calc();
-
-      if(valueCandle2_left > valueValue2_right)
-        {
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task3 : public Task
-  {
-
-public:
-                     Task3(string name):Task(name)
-     {
-
+      title = "good bye";
+      obj_chart_subwindow = "";
+      obj_corner = CORNER_LEFT_UPPER;
+      obj_x = 5;
+      obj_y = 5;
+      obj_title_font = "Georgia";
+      obj_title_font_color = clrRed;
+      obj_title_font_size = 13;
+      obj_label_font = "Verdana";
+      obj_label_font_color = clrRed;
+      obj_label_font_size = 10;
+      obj_font = "Verdana";
+      obj_font_color = clrRed;
+      obj_font_size = 10;
+      label_1 = "";
+      format_number_1 = EMPTY_VALUE;
+      format_time_1 = EMPTY_VALUE;
+      label_2 = "";
+      format_number_2 = EMPTY_VALUE;
+      format_time_2 = EMPTY_VALUE;
+      label_3 = "";
+      format_number_3 = EMPTY_VALUE;
+      format_time_3 = EMPTY_VALUE;
+      label_4 = "";
+      format_number_4 = EMPTY_VALUE;
+      format_time_4 = EMPTY_VALUE;
+      label_5 = "";
+      format_number_5 = EMPTY_VALUE;
+      format_time_5 = EMPTY_VALUE;
+      label_6 = "";
+      format_number_6 = EMPTY_VALUE;
+      format_time_6 = EMPTY_VALUE;
+      label_7 = "";
+      format_number_7 = EMPTY_VALUE;
+      format_time_7 = EMPTY_VALUE;
+      label_8 = "";
+      format_number_8 = EMPTY_VALUE;
+      format_time_8 = EMPTY_VALUE;
+      /* Static Parameters (initial value) */
+      initialized =  false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      Value3_left value3_left;
-      value3_left.init();
-      double valueValue3_left = value3_left.calc();
-      Value3_right value3_right;
-      value3_right.init();
-      double valueValue3_right = value3_right.calc();
-      loop_count = (valueValue3_left + valueValue3_right) + (valueValue3_left + valueValue3_right)*10/NormalizeDouble(100,0);
 
-      printf("task"+block_id + " passed route 1");
+      double valueX = 0;
+
+
+      if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
+        {
+
+
+         long ObjChartID = 0;
+         int ObjAnchor   = ANCHOR_LEFT;
+
+         if(obj_corner == CORNER_RIGHT_UPPER || obj_corner == CORNER_RIGHT_LOWER)
+           {
+            ObjAnchor = ANCHOR_RIGHT;
+           }
+
+         string namebase = "fxd_cmnt_" + block_id;
+
+         int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
+
+         if(subwindow >= 0)
+           {
+            //-- draw comment title
+            if((string)title != "")
+              {
+               string nametitle = namebase;
+
+               if(ObjectFind(ObjChartID, nametitle) < 0)
+                 {
+                  if(!ObjectCreate(ObjChartID, nametitle, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                  else
+                    {
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(obj_title_font_size));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, obj_title_font_color);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
+
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
+
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
+                    }
+                 }
+               else
+                 {
+                  obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                 }
+
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
+
+               obj_y = (int)(obj_y + obj_title_font_size / 3);
+              }
+
+            //-- draw comment rows
+            for(int i = 1; i <= 8; i++)
+              {
+               string text    = "";
+               string textlbl = "";
+
+               switch(i)
+                 {
+                  case 1:
+                    {
+                     if(label_1 != "")
+                       {
+                        textlbl = label_1;
+
+                        text    = FormatValueForPrinting("", format_number_1, format_time_1);
+                       }
+
+                     break;
+                    }
+                  case 2:
+                    {
+                     if(label_2 != "")
+                       {
+                        textlbl = label_2;
+
+                        text    = FormatValueForPrinting("", format_number_2, format_time_2);
+                       }
+
+                     break;
+                    }
+                  case 3:
+                    {
+                     if(label_3 != "")
+                       {
+                        textlbl = label_3;
+
+                        text    = FormatValueForPrinting("", format_number_3, format_time_3);
+                       }
+
+                     break;
+                    }
+                  case 4:
+                    {
+                     if(label_4 != "")
+                       {
+                        textlbl = label_4;
+
+                        text    = FormatValueForPrinting("", format_number_4, format_time_4);
+                       }
+
+                     break;
+                    }
+                  case 5:
+                    {
+                     if(label_5 != "")
+                       {
+                        textlbl = label_5;
+
+                        text    = FormatValueForPrinting("", format_number_5, format_time_5);
+                       }
+
+                     break;
+                    }
+                  case 6:
+                    {
+                     if(label_6 != "")
+                       {
+                        textlbl = label_6;
+
+                        text    = FormatValueForPrinting("", format_number_6, format_time_6);
+                       }
+
+                     break;
+                    }
+                  case 7:
+                    {
+                     if(label_7 != "")
+                       {
+                        textlbl = label_7;
+
+                        text    = FormatValueForPrinting("", format_number_7, format_time_7);
+                       }
+
+                     break;
+                    }
+                  case 8:
+                    {
+                     if(label_8 != "")
+                       {
+                        textlbl = label_8;
+
+                        text    = FormatValueForPrinting("", format_number_8, format_time_8);
+                       }
+
+                     break;
+                    }
+                 }
+
+               string name    = namebase + "_" + (string)i;
+               string namelbl = name + "_l";
+
+               if(textlbl == "")
+                 {
+                  if(!initialized)
+                    {
+                     //-- pre-delete
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                    }
+
+                  continue;
+                 }
+
+               //-- draw initial objects
+               if(ObjectFind(ObjChartID, name) < 0)
+                 {
+                  if(textlbl == "")
+                    {
+                     continue;
+                    }
+
+                  if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, obj_label_font_size);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, obj_label_font_color);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, obj_label_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+
+                  if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, obj_font_size);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, obj_font_color);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, obj_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                 }
+               else
+                 {
+                  if(textlbl == "")
+                    {
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                     continue;
+                    }
+                 }
+
+               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
+
+               //-- update label objects
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
+
+               //-- update value objects
+               int x        = 0;
+               int xsizelbl = (int)ObjectGetInteger(ObjChartID, namelbl, OBJPROP_XSIZE);
+
+               if(xsizelbl == 0)
+                 {
+                  //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
+                  xsizelbl = (int)(StringLen((string)textlbl) * obj_font_size / 1.5 + obj_font_size / 2);
+                 }
+
+               x = obj_x + (xsizelbl + obj_font_size/2);
+
+               ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
+              }
+
+            ChartRedraw();
+           }
+
+         initialized = true;
+        }
+
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
@@ -3115,18 +2164,193 @@ public:
      }
 
   };
-#define EVENT_ON_INIT   1
-#define EVENT_ON_TIMER  2
-#define EVENT_ON_TICK   3
-#define EVENT_ON_TRADE  4
-#define EVENT_ON_CHART  5
-#define EVENT_ON_DEINIT 6
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Task10 : public Task
+  {
+   //specified by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
 
+   string            mode_base_price;
+   string            mode_range;
+   double            range_pips;
+   double            range_fraction;
+   int               range_position;
+
+public:
+                     Task10(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_ANY;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      mode_base_price = "current";
+      mode_range = "pips";
+      range_pips = 10;
+      range_fraction = 0.0010;
+      range_position = 0;
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+
+      int next               = true;
+      double price           = 0;
+      bool use_current_price = (mode_base_price == "current");
+
+      // prepare the time filters
+      Value10_t1 value10_t1;
+      value10_t1.init();
+      datetime valueValue10_t1 = value10_t1.calc();
+      datetime t1 = valueValue10_t1;
+      Value10_t2 value10_t2;
+      value10_t2.init();
+      datetime valueValue10_t2 = value10_t2.calc();
+      datetime t2 = valueValue10_t2;
+
+      if(t1 >= TimeCurrent())
+         t1 = 0;
+
+      if(!use_current_price)
+        {
+
+         price = "";
+        }
+
+      for(int i = OrdersTotal()-1; i >= 0; i--)
+        {
+
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(filterGeneral())
+              {
+               // filter by time
+               if((t1 < t2 && OrderOpenTime() < t1) || OrderOpenTime() > t2)
+                 {
+                  continue;
+                 }
+
+               // what is the distance?
+               double distance = range_fraction;
+
+               if(mode_range == "pips")
+                 {
+                  distance = toDigits(range_pips, OrderSymbol());
+                 }
+
+               // checking the position
+               if(OrderType() == 0)  // buy?
+                 {
+                  if(use_current_price)
+                    {
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_ASK);
+                    }
+
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+               else
+                 {
+                  if(use_current_price)
+                    {
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_BID);
+                    }
+
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+
+               if(next == false)
+                 {
+                  break;
+                 }
+              }
+           }
+        }
+
+      if(next)
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 class Block : BlockParent
   {
+
 
 public:
    int               id;
@@ -3134,6 +2358,7 @@ public:
    string            name;
    bool              enabled;
    int               event;
+
 
    int               next_true_history[];//dynamic, filled at runtime
    int               next_false_history[];//dynamic, filled at runtime
@@ -3265,23 +2490,76 @@ public:
       for(int i=0; i<ArraySize(items); i++)
          AddToArray(prevs_false, items[i]);
      }
+
   };
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block12 : public Block
+class Block8 : public Block
   {
 public:
-                     Block12()
+                     Block8()
      {
       id = 0;
-      id_by_user = 12;
-      name = "once_every_n_bars";
+      id_by_user = 8;
+      name = "comment";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1, 2};
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {2};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task8(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block9 : public Block
+  {
+public:
+                     Block9()
+     {
+      id = 1;
+      id_by_user = 9;
+      name = "comment";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {2};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task9(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block10 : public Block
+  {
+public:
+                     Block10()
+     {
+      id = 2;
+      id_by_user = 10;
+      name = "no_trade_nearby";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {0, 1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -3290,137 +2568,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task12(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block13 : public Block
-  {
-public:
-                     Block13()
-     {
-      id = 1;
-      id_by_user = 13;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task13(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block14 : public Block
-  {
-public:
-                     Block14()
-     {
-      id = 2;
-      id_by_user = 14;
-      name = "formula";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task14(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block1 : public Block
-  {
-public:
-                     Block1()
-     {
-      id = 0;
-      id_by_user = 1;
-      name = "once_every_n_bars";
-      enabled = True;
-      event = EVENT_ON_TIMER;
-
-      int mnexts_true[] = {1, 2};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task1(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block2 : public Block
-  {
-public:
-                     Block2()
-     {
-      id = 1;
-      id_by_user = 2;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TIMER;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 2;
-      id_by_user = 3;
-      name = "formula";
-      enabled = True;
-      event = EVENT_ON_TIMER;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
+      task = new Task10(name);
      }
   };
 Block *blocks_init[];
@@ -3489,13 +2637,13 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 3);
-   Block12 *block12 = new Block12();
-   Block13 *block13 = new Block13();
-   Block14 *block14 = new Block14();
+   Block8 *block8 = new Block8();
+   Block9 *block9 = new Block9();
+   Block10 *block10 = new Block10();
 
-   blocks_tick[0] = block12;
-   blocks_tick[1] = block13;
-   blocks_tick[2] = block14;
+   blocks_tick[0] = block8;
+   blocks_tick[1] = block9;
+   blocks_tick[2] = block10;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3569,14 +2717,8 @@ void runBlockTimer(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTimer()
   {
-   ArrayResize(blocks_timer, 3);
-   Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
+   ArrayResize(blocks_timer, 0);
 
-   blocks_timer[0] = block1;
-   blocks_timer[1] = block2;
-   blocks_timer[2] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -5572,7 +4714,6 @@ int init()
 void OnTimer()
   {
    resetBlocksTimer(RESET_LEVEL_DEFAULT);
-   runBlockTimer(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -5580,7 +4721,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 2);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

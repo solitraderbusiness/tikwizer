@@ -2212,8 +2212,12 @@ input_data_15 = {
                 {
                     "id": "6fdfd6fb-e4dd-4b41-8f20-0828f8fdb869",
                     "id_by_user": 2,
-                    "blockName": "formula",
-                    "params": {}
+                    "blockName": "Once per bar",
+                    "params": {
+                        "symbol": "",
+                        "max_time": "1",
+                        "timeframe": "PERIOD_M1"
+                    }
                 },
                 {
                     "params": {
