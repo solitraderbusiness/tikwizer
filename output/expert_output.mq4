@@ -959,7 +959,7 @@ public:
 
   };
 
-//Order TP modified
+//Order SL modified
 class Task0 : public Task
   {
    int               symbol_mode;
@@ -969,7 +969,7 @@ class Task0 : public Task
    int               group_number;
    int               type[];
 
-   string            tp_only;
+   string            sl_only;
 public:
                      Task0(string name):Task(name)
      {
@@ -980,17 +980,17 @@ public:
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {5}; //0 for buy and 1 for sell
+      int mtype[] = {4}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
 
-      tp_only = "no";
+      sl_only = "no";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
       if(
-         (e_Reason()=="modify" && ((tp_only=="no" && e_ReasonDetail()=="sltp") || e_ReasonDetail()=="tp"))
+         (e_Reason()=="modify" && ((sl_only=="no" && e_ReasonDetail()=="sltp") || e_ReasonDetail()=="sl"))
          && e_attrType() >= 2
          && filterGeneral())
         {
@@ -1230,7 +1230,7 @@ public:
   };
 
 
-//Order TP modified
+//Order SL modified
 class Block0 : public Block
   {
 public:
@@ -1238,7 +1238,7 @@ public:
      {
       id = 0;
       id_by_user = 0;
-      name = "order_tp_modified";
+      name = "order_sl_modified";
       enabled = True;
       event = EVENT_ON_TRADE;
 

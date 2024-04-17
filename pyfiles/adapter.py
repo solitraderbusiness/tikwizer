@@ -257,6 +257,8 @@ def add_task_names_mql(nodes):
             node["block_name_mql"] = "comment"
         elif block_name == "Order TP modified":
             node["block_name_mql"] = "order_tp_modified"
+        elif block_name == "Order SL modified":
+            node["block_name_mql"] = "order_sl_modified"
 
 
 def get_nexts_true(node, edges):
