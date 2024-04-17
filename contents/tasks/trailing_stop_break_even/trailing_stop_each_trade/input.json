@@ -3,7 +3,7 @@
   "symbols_str": "EURUSD,GBPUSD",
   "group_mode": "ORDER_GROUP_MODE_ALL",
   "group_number": 15,
-  "type": [0,1],
+  "type": "{0, 1}",
 
   "TrailWhat" : 1,
   "TrailingReferencePrice" : 0,

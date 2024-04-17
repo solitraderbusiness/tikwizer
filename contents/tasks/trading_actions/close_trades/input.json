@@ -4,7 +4,7 @@
   "symbols_str": "EURUSD,GBPUSD",
   "group_mode": "ORDER_GROUP_MODE_ALL",
   "group_number": 15,
-  "type": [0,1],
+  "type": "{0, 1}" "{0, 1}",
   "older_than": 0.3,
   "slippage": 3,
   "arrow_color": "Red"

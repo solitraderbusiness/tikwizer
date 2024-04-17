@@ -9,13 +9,13 @@ class Task_id : public Task
 public:
                      Task_id(string name):Task(name)
      {
-      symbol_mode = symbol_mode;
-      symbols_str = symbols_str;
+      symbol_mode = symbol_mode_val;
+      symbols_str = symbols_str_val;
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
-      group_mode = group_mode;
-      group_number = group_number;
+      group_mode = group_mode_val;
+      group_number = group_number_val;
       int mtype[] = type_val; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
      }

@@ -63,7 +63,8 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "timestr", "comment", "obj_name", "name_filter_mode", "symbols_str",
             "close_mode", "mode_range", "mode_base_price", "profit_mode_each", "profit_mode",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
-            "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8"]
+            "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8",
+            "stops_mode", "sl_only", "tp_only"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -426,6 +427,20 @@ def add_category(nodes):
             case "order_created":
                 node["category"] = "on_trade_filter_specific_event"
             case "trade_created":
+                node["category"] = "on_trade_filter_specific_event"
+            case "order_moved":
+                node["category"] = "on_trade_filter_specific_event"
+            case "trade_stops_modified":
+                node["category"] = "on_trade_filter_specific_event"
+            case "trade_sl_modified":
+                node["category"] = "on_trade_filter_specific_event"
+            case "trade_tp_modified":
+                node["category"] = "on_trade_filter_specific_event"
+            case "order_stops_modified":
+                node["category"] = "on_trade_filter_specific_event"
+            case "order_sl_modified":
+                node["category"] = "on_trade_filter_specific_event"
+            case "order_tp_modified":
                 node["category"] = "on_trade_filter_specific_event"
             case _:
                 node["category"] = "not_specified"

@@ -1,0 +1,9 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": ",EURUSD,GBPUSD",
+  "type": "{0, 1}",
+  "group_number": 15,
+  "group_mode": "ORDER_GROUP_MODE_NUMBER",
+
+  "sl_only": "no"
+}

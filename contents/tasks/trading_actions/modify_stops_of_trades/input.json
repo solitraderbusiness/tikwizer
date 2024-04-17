@@ -3,10 +3,7 @@
   "symbols_str": "EURUSD,GBPUSD",
   "group_mode": "ORDER_GROUP_MODE_ALL",
   "group_number": 15,
-  "type": [
-    0,
-    1
-  ],
+  "type": "{0, 1}",
   "order_age_mins": 0,
   "relative_to": "PRICE_RELATIVE_TO_CURRENT_PRICE",
   "new_tpsl_mode": "NEW_STOPS_FIXED",

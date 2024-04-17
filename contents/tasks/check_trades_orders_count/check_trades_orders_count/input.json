@@ -3,7 +3,8 @@
 	"symbols_str" : ",EURUSD,GBPUSD",
 	"group_mode" : "ORDER_GROUP_MODE_ALL",
 	"group_number" : 25,
-	"type" : [1,2],
+	"type" : "{0,1}",
+	"type_pending" : "{2,4}",
 	"count_limit" : 0,
 	"operator": ">"
 }
