@@ -23,7 +23,7 @@ def get_task():
 
 def get_task_child(node, constants, variables):
     category = node.get("category")
-    task_name = node.get("blockName")
+    task_name = node.get("block_name_mql")
     params = node.get("params")
     class_id = node.get("id_by_user")
 
@@ -107,7 +107,7 @@ def run_data_static_fun(path_task_id, input_dic, constants, variables):
 
 
 def run_data_dynamic_fun(node, run_data_static):
-    task_name = node.get("blockName")
+    task_name = node.get("block_name_mql")
     run_data = run_data_static
     if task_name == "condition_1_normal":
         run_data = condition_1_run_data_normal(node, run_data_static)
@@ -167,7 +167,7 @@ def function_data_static_fun(path_task_id):
 
 
 def function_data_dynamic_fun(node, function_data_static):
-    task_name = node.get("blockName")
+    task_name = node.get("block_name_mql")
     function_data = function_data_static
     if task_name == "buy_sell":
         function_data = buy_sell_function_data(node, function_data_static)

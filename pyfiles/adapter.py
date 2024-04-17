@@ -11,9 +11,9 @@ def refactor(data):
         # Add indexes (overwrite ids) for later access
         event = events[key]
         overwrite_ids(event["nodes"], event["edges"])
+        add_task_names_mql(event["nodes"])
         add_category(event["nodes"])
         create_specific_input(event["nodes"])
-        overwrite_task_names(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(key, event["nodes"], event["edges"])
         # Set input items that are not present in user input form front end
@@ -117,12 +117,12 @@ def params_fill(nodes):
         # First fill value fetch if any (supports condition and formula)
         value_fetch_fill(node.get("params"))
         # Now skip condition and formula
-        if node.get("blockName") in ["condition_1_normal", "condition_1_cross", "formula"]:
+        if node.get("block_name_mql") in ["condition_1_normal", "condition_1_cross", "formula"]:
             continue
         path = path_root.get()
         path_sub = "/contents/"
         category = node.get("category")
-        task_name = node.get("blockName")
+        task_name = node.get("block_name_mql")
         params = node.get("params")
         path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
         with open(path_task_id + "input.json") as input_file:
@@ -196,7 +196,7 @@ def set_blocks_input_dic(key, nodes, edges):
         input_dic = {}
         input_dic["id"] = node.get("id")
         input_dic["id_by_user"] = node.get("id_by_user")
-        input_dic["name"] = "\"" + node.get("blockName") + "\""
+        input_dic["name"] = "\"" + node.get("block_name_mql") + "\""
         input_dic["enabled"] = node.get("enabled")
         input_dic["event"] = get_proper_event_name(key)
         input_dic["nexts_true"] = get_nexts_true(node, edges)
@@ -218,53 +218,45 @@ def get_proper_event_name(key):
     return events.get(key)
 
 
-def overwrite_task_names(nodes):
+def add_task_names_mql(nodes):
     for node in nodes:
         block_name = node.get("blockName")
         if block_name == "condition":
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
-                node["blockName"] = "condition_1_cross"
+                node["block_name_mql"] = "condition_1_cross"
             else:
-                node["blockName"] = "condition_1_normal"
+                node["block_name_mql"] = "condition_1_normal"
         elif block_name == "Once per bar":
-            node["blockName"] = "once_every_n_bars"
+            node["block_name_mql"] = "once_every_n_bars"
         elif block_name == "If trade":
-            node["blockName"] = "check_trades_orders_count"
+            node["block_name_mql"] = "check_trades_orders_count"
         elif block_name == "No pending order":
-            node["blockName"] = "check_trades_orders_count"
+            node["block_name_mql"] = "check_trades_orders_count"
         elif block_name == "No trade nearby":
-            node["blockName"] = "no_trade_nearby"
-        elif block_name == "turn_on_blocks" or block_name == "turn_off_blocks" or block_name == "toggle_blocks":
-            node["blockName"] = "blocks_on_off"
-        elif block_name == "Buy now":
-            node["blockName"] = "buy_sell"
-            node.get("params")["order_type"] = "ORDER_BUY"
-        elif block_name == "Sell now":
-            node["blockName"] = "buy_sell"
-            node.get("params")["order_type"] = "ORDER_SELL"
-        elif block_name == "Buy pending order":
-            node["blockName"] = "buy_sell"
-            node.get("params")["order_type"] = "ORDER_BUY_PENDING"
-        elif block_name == "Sell pending order":
-            node["blockName"] = "buy_sell"
-            node.get("params")["order_type"] = "ORDER_SELL_PENDING"
+            node["block_name_mql"] = "no_trade_nearby"
+        elif block_name in ["turn_on_blocks", "turn_off_blocks", "toggle_blocks"]:
+            node["block_name_mql"] = "blocks_on_off"
+        elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
+            node["block_name_mql"] = "buy_sell"
         elif block_name == "Modify Variables":
-            node["blockName"] = "modify_variables"
+            node["block_name_mql"] = "modify_variables"
         elif block_name == "Close trades":
-            node["blockName"] = "close_trades"
+            node["block_name_mql"] = "close_trades"
         elif block_name == "Loop(pass \"n\" times)":
-            node["blockName"] = "pass_n_times"
+            node["block_name_mql"] = "pass_n_times"
         elif block_name == "Delay":
-            node["blockName"] = "delay"
+            node["block_name_mql"] = "delay"
         elif block_name == "AND":
-            node["blockName"] = "and"
+            node["block_name_mql"] = "and"
         elif block_name == "OR":
-            node["blockName"] = "or"
+            node["block_name_mql"] = "or"
         elif block_name == "Check profit (unrealized)":
-            node["blockName"] = "check_profit_unrealized"
+            node["block_name_mql"] = "check_profit_unrealized"
         elif block_name == "Comment":
-            node["blockName"] = "comment"
+            node["block_name_mql"] = "comment"
+        elif block_name == "Order TP modified":
+            node["block_name_mql"] = "order_tp_modified"
 
 
 def get_nexts_true(node, edges):
@@ -305,14 +297,14 @@ def get_prevs_false(node, edges):
 
 def add_category(nodes):
     for node in nodes:
-        match node.get("blockName"):
-            case "condition":
+        match node.get("block_name_mql"):
+            case "condition_1_normal":
+                node["category"] = "condition_formula"
+            case "condition_1_cross":
                 node["category"] = "condition_formula"
             case "formula":
                 node["category"] = "condition_formula"
             case "time_filter":
-                node["category"] = "time_filters"
-            case "Once per bar":
                 node["category"] = "time_filters"
             case "once_every_n_bars":
                 node["category"] = "time_filters"
@@ -328,9 +320,9 @@ def add_category(nodes):
                 node["category"] = "time_filters"
             case "spread_filter":
                 node["category"] = "time_filters"
-            case "AND":
+            case "and":
                 node["category"] = "controlling_blocks"
-            case "OR":
+            case "or":
                 node["category"] = "controlling_blocks"
             case "turn_on_blocks":
                 node["category"] = "controlling_blocks"
@@ -342,7 +334,7 @@ def add_category(nodes):
                 node["category"] = "controlling_blocks"
             case "set_current_timeframe_for_next_blocks":
                 node["category"] = "controlling_blocks"
-            case "Loop(pass \"n\" times)":
+            case "pass_n_times":
                 node["category"] = "counters"
             case "for_each_trade":
                 node["category"] = "loop_for_trades_orders"
@@ -356,25 +348,25 @@ def add_category(nodes):
                 node["category"] = "loop_for_trades_orders"
             case "check_loss":
                 node["category"] = "loop_for_trades_orders"
-            case "Buy now" | "Sell now" | "Buy pending order" | "Sell pending order":
+            case "buy_sell":
                 node["category"] = ""
-            case "If trade":
+            case "check_trades_orders_count":
                 node["category"] = "check_trades_orders_count"
-            case "No trade nearby":
+            case "no_trade_nearby":
                 node["category"] = "check_trades_orders_count"
-            case "Close trades":
+            case "close_trades":
                 node["category"] = "trading_actions"
             case "delete_pending_orders":
                 node["category"] = "trading_actions"
             case "modify_stops_of_trades":
                 node["category"] = "trading_actions"
-            case "Check profit (unrealized)":
+            case "check_profit_unrealized":
                 node["category"] = "check_trading_conditions"
-            case "Delay":
+            case "delay":
                 node["category"] = "more"
             case "pass":
                 node["category"] = "more"
-            case "Modify Variables":
+            case "modify_variables":
                 node["category"] = "variables"
             case "break_even":
                 node["category"] = "trailing_stop_break_even"
@@ -382,7 +374,7 @@ def add_category(nodes):
                 node["category"] = "trailing_stop_break_even"
             case "trailing_pending_orders":
                 node["category"] = "trailing_stop_break_even"
-            case "Comment":
+            case "comment":
                 node["category"] = "output_and_communication"
             case "terminate":
                 node["category"] = "more"

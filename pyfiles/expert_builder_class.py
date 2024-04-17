@@ -118,12 +118,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -154,12 +154,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -193,12 +193,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -229,12 +229,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -265,12 +265,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -303,12 +303,12 @@ class ExpertBuilder:
 
         # Add tasks
         for node in nodes:
-            task = self.get_task_child(node)
+            task = self.get_task_child(node.get("blockName"), node)
             self.tasks.append(task)
 
         # Add blocks and tasks
         for node in nodes:
-            block = self.get_block_child(node.get("input_dic_block"), node.get("id_by_user"))
+            block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
         # addBlocks call
@@ -701,17 +701,21 @@ class ExpertBuilder:
         result += "\n}\n"
         return result
 
-    def get_task_child(self, node):
-        return self.task_dynamic_constructor.get_task_child(node, self.data.get("constants"), self.data.get("variables"))
+    def get_task_child(self, block_name, node):
+        task_comment = "\n//" + block_name + "\n"
+        task = self.task_dynamic_constructor.get_task_child(node, self.data.get("constants"), self.data.get("variables"))
+        return task_comment + task
 
-    def get_block_child(self, input_dic, id_block):
-        return self.block_constructor.get_block_child(input_dic, id_block)
+    def get_block_child(self, block_name, input_dic, id_block):
+        block_comment = "\n//" + block_name + "\n"
+        block = self.block_constructor.get_block_child(input_dic, id_block)
+        return block_comment + block
 
     # Elements that are assigned to multiple
     # tasks of same type or to multiple task types
     def add_task_elements_common(self, nodes):
         for node in nodes:
-            task_name = node.get("blockName")
+            task_name = node.get("block_name_mql")
             match task_name:
                 case "pass_n_times":
                     if self.pass_n_times_done:
@@ -737,7 +741,7 @@ class ExpertBuilder:
     # Elements that are assigned to a specific instance of a specific task type
     def add_task_elements_specific(self, nodes):
         for node in nodes:
-            task_name = node.get("blockName")
+            task_name = node.get("block_name_mql")
             if task_name == "condition_1_normal":
                 self.condition_1_normal_elements(node)
             elif task_name == "condition_1_cross":

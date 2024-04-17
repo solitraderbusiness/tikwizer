@@ -7963,7 +7963,7 @@ input_data_33 = {
                 {
                     "id": "361e37db-e957-40fd-b072-3122dfc3e04t",
                     "id_by_user": 0,
-                    "blockName": "order_tp_modified",
+                    "blockName": "Order TP modified",
                     "params": {
                         "symbol_mode": "SYMBOL_MODE_SPECIFIED",
                         "symbols_str": ",EURUSD,GBPUSD",
