@@ -2599,6 +2599,9 @@ double DynamicLots(string symbol, int mode, double value=0, double sl=0, string 
    double ticksize=MarketInfo(symbol,MODE_TICKSIZE);
    double margin_required=MarketInfo(symbol,MODE_MARGINREQUIRED);
 
+
+
+
    if(mode==MONEY_MANAGEMENT_FIXED_VOLUME)
      {
       size=value;
