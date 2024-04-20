@@ -1,36 +1,44 @@
-class Task4: public Task
+class Task10: public Task
   {
 public:
    string            symbol;
    int               timeframe;
+   int               n;
+   int               max_times_to_pass;
 
-   int               limit;
    datetime          lastSavedTime;
-   int               count;
+   int               count_n;
+   int               count_max_times;
 
-                     Task4(string name):Task(name)
+                     Task10(string name):Task(name)
      {
       symbol = NULL;
-      timeframe = PERIOD_M5;
-      limit = 2;
-      count = 0;
+      timeframe = 0;
+      n = 10;
+      max_times_to_pass = 20;
+
+
+      count_n = 0;
+      count_max_times = 1;
       lastSavedTime = -1;
      }
 
    virtual void      run(int block_id, BlockParent &block)
      {
-      string msymbol = msymbol = getSymbol(symbol);;
+      string msymbol = getSymbol(symbol);
       int mtimeframe = getTimeframe(timeframe);
 
       if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
         {
-         //do once per bar
-         double mod = MathMod(count, limit);
-         count++;
+         double mod = MathMod(count_n, n);
+         count_n++;
          lastSavedTime = iTime(msymbol, mtimeframe, 0);
+
          if(mod == 0) //do once every n bar
            {
-            printf("task"+block_id + " passed route 1");
+            count_max_times = 1;
+            count_n = 1;
+            printf("task"+block_id + " passed route 1 " + Bars);
             block.onResult(ROUTE_1_PASSED);
            }
          else //otherwise
@@ -39,10 +47,20 @@ public:
             block.onResult(ROUTE_2_PASSED);
            }
         }
-      else //otherwise
+      else //otherwise, it's the same candle
         {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
+         double mod2 = MathMod(count_n, n);
+         if(count_max_times < max_times_to_pass && mod2==1)
+           {
+            count_max_times++;
+            printf("task"+block_id + " passed route 1");
+            block.onResult(ROUTE_1_PASSED);
+           }
+         else
+           {
+            printf("task"+block_id + " passed route 2");
+            block.onResult(ROUTE_2_PASSED);
+           }
         }
      }
 

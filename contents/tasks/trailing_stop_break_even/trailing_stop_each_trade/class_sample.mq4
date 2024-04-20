@@ -124,7 +124,7 @@ public:
             //////////////////////////////////////////////////
             //////////////////////////////////////////////////
             //////////////////////////////////////////////////
-            string symbol     = OrderSymbol();//STest, conflict with symbol in filed (?)
+            string symbol     = OrderSymbol();//STest, conflict with symbol in field (?)
             double ask        = SymbolInfoDouble(symbol, SYMBOL_ASK);
             double bid        = SymbolInfoDouble(symbol, SYMBOL_BID);
             double stopslevel = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL);

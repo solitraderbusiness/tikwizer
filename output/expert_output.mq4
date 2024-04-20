@@ -959,7 +959,7 @@ public:
 
   };
 
-//Order SL modified
+//Order TP modified
 class Task0 : public Task
   {
    int               symbol_mode;
@@ -969,7 +969,7 @@ class Task0 : public Task
    int               group_number;
    int               type[];
 
-   string            sl_only;
+   string            tp_only;
 public:
                      Task0(string name):Task(name)
      {
@@ -980,17 +980,17 @@ public:
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {4}; //0 for buy and 1 for sell
+      int mtype[] = {5}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
 
-      sl_only = "no";
+      tp_only = "no";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
       if(
-         (e_Reason()=="modify" && ((sl_only=="no" && e_ReasonDetail()=="sltp") || e_ReasonDetail()=="sl"))
+         (e_Reason()=="modify" && ((tp_only=="no" && e_ReasonDetail()=="sltp") || e_ReasonDetail()=="tp"))
          && e_attrType() >= 2
          && filterGeneral())
         {
@@ -1016,70 +1016,77 @@ public:
 
   };
 
-//If trade
+//Every "n" bars
 class Task1 : public Task
   {
-   //specified by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
+   string            symbol;
+   int               timeframe;
+   int               n;
+   int               max_times_to_pass;
+
+   datetime          lastSavedTime;
+   int               count_n;
+   int               count_max_times;
 public:
                      Task1(string name):Task(name)
      {
-      //specified by user
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = ",EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
+      symbol = NULL;
+      timeframe = 0;
+      n = 2;
+      max_times_to_pass = 3;
 
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 25;
-      int mtype[] = {}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      count_limit = 0;
+
+      count_n = 0;
+      count_max_times = 1;
+      lastSavedTime = -1;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
+
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
+
+      if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
         {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+         double mod = MathMod(count_n, n);
+         count_n++;
+         lastSavedTime = iTime(msymbol, mtimeframe, 0);
+
+         if(mod == 0) //do once every n bar
            {
-            if(filterGeneral())
-               count++;
+            count_max_times = 1;
+            count_n = 1;
+            printf("task"+block_id + " passed route 1");
+            block.onResult(ROUTE_1_PASSED);
+           }
+         else //otherwise
+           {
+            printf("task"+block_id + " passed route 2");
+            block.onResult(ROUTE_2_PASSED);
            }
         }
-
-      bool result = count>count_limit;
-      if(result)
+      else //otherwise, it's the same candle
         {
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
+         double mod2 = MathMod(count_n, n);
+         if(count_max_times < max_times_to_pass && mod2==1)
+           {
+            count_max_times++;
+            printf("task"+block_id + " passed route 1");
+            block.onResult(ROUTE_1_PASSED);
+           }
+         else
+           {
+            printf("task"+block_id + " passed route 2");
+            block.onResult(ROUTE_2_PASSED);
+           }
         }
      }
    virtual void      reset(int level)
      {
 
      }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
+
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1230,7 +1237,7 @@ public:
   };
 
 
-//Order SL modified
+//Order TP modified
 class Block0 : public Block
   {
 public:
@@ -1238,13 +1245,13 @@ public:
      {
       id = 0;
       id_by_user = 0;
-      name = "order_sl_modified";
+      name = "order_tp_modified";
       enabled = True;
-      event = EVENT_ON_TRADE;
+      event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1255,7 +1262,7 @@ public:
      }
   };
 
-//If trade
+//Every "n" bars
 class Block1 : public Block
   {
 public:
@@ -1263,13 +1270,13 @@ public:
      {
       id = 1;
       id_by_user = 1;
-      name = "check_trades_orders_count";
+      name = "once_every_n_bars";
       enabled = True;
-      event = EVENT_ON_TRADE;
+      event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1344,8 +1351,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 0);
+   ArrayResize(blocks_tick, 2);
+   Block0 *block0 = new Block0();
+   Block1 *block1 = new Block1();
 
+   blocks_tick[0] = block0;
+   blocks_tick[1] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1394,12 +1405,8 @@ void runBlockTrade(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTrade()
   {
-   ArrayResize(blocks_trade, 2);
-   Block0 *block0 = new Block0();
-   Block1 *block1 = new Block1();
+   ArrayResize(blocks_trade, 0);
 
-   blocks_trade[0] = block0;
-   blocks_trade[1] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -2599,9 +2606,6 @@ double DynamicLots(string symbol, int mode, double value=0, double sl=0, string 
    double ticksize=MarketInfo(symbol,MODE_TICKSIZE);
    double margin_required=MarketInfo(symbol,MODE_MARGINREQUIRED);
 
-
-
-
    if(mode==MONEY_MANAGEMENT_FIXED_VOLUME)
      {
       size=value;
@@ -3430,6 +3434,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
+   runBlockTick(-1, -1, 1);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3439,7 +3444,6 @@ void OnTrade()
    resetBlocksTrade(RESET_LEVEL_DEFAULT);
    while(onTradeEventDetector.Start())
      {
-      runBlockTrade(-1, -1, 0);
      }
 
    onTradeEventDetector.End();

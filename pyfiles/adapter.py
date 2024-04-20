@@ -259,6 +259,8 @@ def add_task_names_mql(nodes):
             node["block_name_mql"] = "order_tp_modified"
         elif block_name == "Order SL modified":
             node["block_name_mql"] = "order_sl_modified"
+        elif block_name == "Every \"n\" bars":
+            node["block_name_mql"] = "once_every_n_bars"
 
 
 def get_nexts_true(node, edges):
