@@ -64,7 +64,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "close_mode", "mode_range", "mode_base_price", "profit_mode_each", "profit_mode",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
             "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8",
-            "stops_mode", "sl_only", "tp_only"]
+            "stops_mode", "sl_only", "tp_only", "Id"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -261,6 +261,8 @@ def add_task_names_mql(nodes):
             node["block_name_mql"] = "order_sl_modified"
         elif block_name == "Every \"n\" bars":
             node["block_name_mql"] = "once_every_n_bars"
+        elif block_name == "Volume profile":
+            node["block_name_mql"] = "volume_profile"
 
 
 def get_nexts_true(node, edges):
@@ -438,5 +440,7 @@ def add_category(nodes):
                 node["category"] = "on_trade_filter_specific_event"
             case "order_tp_modified":
                 node["category"] = "on_trade_filter_specific_event"
+            case "volume_profile":
+                node["category"] = "volume_profile"
             case _:
                 node["category"] = "not_specified"

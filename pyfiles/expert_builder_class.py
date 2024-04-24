@@ -48,6 +48,7 @@ class ExpertBuilder:
     from . import spread_filter_struct_constructor
     from . import on_trade_event_detector_class_constructor
     from . import close_partially_items
+    from . import volume_profile_items
 
     def __init__(self, data):
         self.data = data
@@ -76,6 +77,7 @@ class ExpertBuilder:
         self.and_done = False
         self.spread_filter_done = False
         self.close_partially_done = False
+        self.volume_profile_done = False
 
     # Main function
     def process_input(self):
@@ -703,7 +705,8 @@ class ExpertBuilder:
 
     def get_task_child(self, block_name, node):
         task_comment = "\n//" + block_name + "\n"
-        task = self.task_dynamic_constructor.get_task_child(node, self.data.get("constants"), self.data.get("variables"))
+        task = self.task_dynamic_constructor.get_task_child(node, self.data.get("constants"),
+                                                            self.data.get("variables"))
         return task_comment + task
 
     def get_block_child(self, block_name, input_dic, id_block):
@@ -737,6 +740,14 @@ class ExpertBuilder:
                     vars_data = self.close_partially_items.get_vars()
                     self.vars_system.append(vars_data)
                     self.close_partially_done = True
+                case "volume_profile":
+                    if self.volume_profile_done:
+                        continue
+                    classes_data = self.volume_profile_items.get_classes()
+                    self.classes_structs.append(classes_data)
+                    vars_data = self.volume_profile_items.get_vars()
+                    self.vars_system.append(vars_data)
+                    self.volume_profile_done = True
 
     # Elements that are assigned to a specific instance of a specific task type
     def add_task_elements_specific(self, nodes):
@@ -774,6 +785,7 @@ class ExpertBuilder:
                 self.check_trendline_price_level(node)
             elif task_name == "no_trade_nearby":
                 self.no_trade_nearby_run_data(node)
+
 
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
@@ -1122,10 +1134,14 @@ class ExpertBuilder:
 
     def value_fetch_class(self, row1, row2, params, id_val):
         if row1 == "Indicator":
-            return self.indicator_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))
+            return self.indicator_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+                                                              self.data.get("variables"))
         elif row1 == "Candle":
-            return self.candle_class_constructor.get_class(params, id_val, self.data.get("constants"), self.data.get("variables"))
+            return self.candle_class_constructor.get_class(params, id_val, self.data.get("constants"),
+                                                           self.data.get("variables"))
         elif row1 == "Market Properties":
-            return self.market_properties_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))
+            return self.market_properties_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+                                                                      self.data.get("variables"))
         elif row1 == "Value":
-            return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"), self.data.get("variables"))
+            return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+                                                          self.data.get("variables"))

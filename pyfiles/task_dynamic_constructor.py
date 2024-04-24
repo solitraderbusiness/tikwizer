@@ -187,13 +187,10 @@ def replace_input_values(data, params, constants, variables):
 def get_proper_value(value, constants, variables):
     if isinstance(value, str):
         if is_not_const_var(value, constants, variables):
-            print("1111 "+value)
             return value
         else:  # The value is the name of a constant/variable, so use the global scope
-            print("2222 "+value)
             return "::" + value
     else:
-        print("3333 "+str(value))
         return str(value)
 
 

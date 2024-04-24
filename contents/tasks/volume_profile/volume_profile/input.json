@@ -1,0 +1,26 @@
+{
+      "RangeMode" : "VP_RANGE_MODE_BETWEEN_LINES",
+      "RangeMinutes" : 1440,                      
+      "ModeStep" :    100,                        
+      "HgPointScale" : "POINT_SCALE_100",           
+      "VolumeType" : "VOLUME_TICK",                 
+      "DataSource" : "VP_SOURCE_M1",                
+  
+      "HgBarStyle" : "VP_BAR_STYLE_LINE",           
+      "HgPosition" : "VP_HG_POSITION_LEFT_INSIDE",  
+      "HgColor" :   "C'128,160,128'",               
+      "HgColor2" :  "C'128,160,128'",               
+      "HgLineWidth" : 1,                          
+  
+      "ModeColor" : "clrBlue",                      
+      "MaxColor" :  "clrNONE",                      
+      "MedianColor" : "clrNONE",                    
+      "VwapColor" : "clrNONE",                      
+      "ModeLineWidth" : 1,                        
+      "StatLineStyle" : "STYLE_DOT",                
+  
+      "ModeLevelColor" : "clrNONE",                 
+      "ModeLevelStyle" : "STYLE_SOLID",             
+  
+      "Id" :       "+vpr"
+}

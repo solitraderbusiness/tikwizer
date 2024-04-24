@@ -1,0 +1,3 @@
+{
+	"run_data" : "\n      Task::run(block_id, block);\n\n\n      if(UpdateAutoColors() || checkVLineDragged())\n         Update();\n\n      printf(\"task\"+block_id + \" passed route 1\");\n      block.onResult(ROUTE_1_PASSED);\n\n"
+}
