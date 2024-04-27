@@ -8,7 +8,7 @@ from . import test_input_10
 
 
 def test():
-    data = test_input_10.input_data_1
+    data = test_input_10.input_data_5
     result = mql_generator.generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"

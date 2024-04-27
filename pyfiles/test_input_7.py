@@ -16,7 +16,7 @@ input_data_1 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
                     "id_by_user": 30,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -89,7 +89,7 @@ input_data_1 = {
                 {
                     "id": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
                     "id_by_user": 2,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Market Properties",
@@ -131,7 +131,7 @@ input_data_1 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 1,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -199,7 +199,7 @@ input_data_1 = {
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 51,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -239,7 +239,7 @@ input_data_1 = {
                 {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 61,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -596,7 +596,7 @@ input_data_2 = {
                 {
                     "id": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
                     "id_by_user": 2,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Market Properties",
@@ -638,7 +638,7 @@ input_data_2 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 3,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -706,7 +706,7 @@ input_data_2 = {
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 5,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -746,7 +746,7 @@ input_data_2 = {
                 {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 6,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1111,7 +1111,7 @@ input_data_3 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 3,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1179,7 +1179,7 @@ input_data_3 = {
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 5,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1219,7 +1219,7 @@ input_data_3 = {
                 {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 6,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1584,7 +1584,7 @@ input_data_4 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 3,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1652,7 +1652,7 @@ input_data_4 = {
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 5,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -1692,7 +1692,7 @@ input_data_4 = {
                 {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 6,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -2052,7 +2052,7 @@ input_data_5 = {
                 {
                     "id": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
                     "id_by_user": 3,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -2119,7 +2119,7 @@ input_data_5 = {
                 {
                     "id": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
                     "id_by_user": 5,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -2154,7 +2154,7 @@ input_data_5 = {
                 {
                     "id": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
                     "id_by_user": 6,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "left": {
                             "row1": "Indicator",
@@ -2454,7 +2454,7 @@ input_data_6 = {
                 {
                     "id": "5c26a5a2-6cbb-41fb-883f-1395e42eeaad",
                     "id_by_user": 1,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "operator": {
                             "label": "×>",
@@ -2514,7 +2514,7 @@ input_data_6 = {
                     },
                     "id": "db3f351a-4e4f-4523-b83e-dc4fcc22e0b7",
                     "id_by_user": 2,
-                    "blockName": "condition"
+                    "blockName": "Condition"
                 },
                 {
                     "params": {
@@ -2546,12 +2546,12 @@ input_data_6 = {
                     },
                     "id": "1b982a17-5966-46a1-9151-66a8290ad9b9",
                     "id_by_user": 3,
-                    "blockName": "condition"
+                    "blockName": "Condition"
                 },
                 {
                     "id": "96227086-b92e-426e-8beb-1b9278cff405",
                     "id_by_user": 4,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "operator": {
                             "label": ">"
@@ -2581,7 +2581,7 @@ input_data_6 = {
                 {
                     "id": "7a7e4caa-a998-417c-a303-249fe016508a",
                     "id_by_user": 5,
-                    "blockName": "condition",
+                    "blockName": "Condition",
                     "params": {
                         "operator": {
                             "label": "=="

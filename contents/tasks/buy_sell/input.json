@@ -5,9 +5,7 @@
       "money_management" : "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
       "how_much_volume" : 35,
       "volume_upper_limit" : 0,
-      "open_at_price" : {
-            "value" : "OPEN_AT_ASK"
-      },
+      "open_at_price" : "OPEN_AT_ASK",
       "price_offset" : 25,
       "price_offset_as_pip" : true,
 

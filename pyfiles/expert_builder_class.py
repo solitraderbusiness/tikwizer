@@ -58,7 +58,7 @@ class ExpertBuilder:
         self.consts_user = []
         self.vars_system = []
         self.vars_user = []
-        self.classes_structs = []
+        self.classes_structs_enums = []
         self.block_parent_blueprint = ""
         self.task_blueprint = ""
         self.task_elements = []
@@ -617,13 +617,13 @@ class ExpertBuilder:
 
     def add_global_classes_structs(self):
         structs_data_mp = self.market_properties_class_constructor.get_structs()
-        self.classes_structs.append(structs_data_mp)
+        self.classes_structs_enums.append(structs_data_mp)
 
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
-        self.classes_structs.append(structs_data_chart_event)
+        self.classes_structs_enums.append(structs_data_chart_event)
 
         on_trade_event_detector_class = self.on_trade_event_detector_class_constructor.get_class()
-        self.classes_structs.append(on_trade_event_detector_class)
+        self.classes_structs_enums.append(on_trade_event_detector_class)
 
     def build(self):
         expert = ""
@@ -636,7 +636,7 @@ class ExpertBuilder:
             expert += const
         for var in self.vars_user:
             expert += var
-        for struct in self.classes_structs:
+        for struct in self.classes_structs_enums:
             expert += struct
         expert += self.block_parent_blueprint
         expert += self.task_blueprint
@@ -730,13 +730,13 @@ class ExpertBuilder:
                     if self.spread_filter_done:
                         continue
                     structs_data = self.spread_filter_struct_constructor.get_structs()
-                    self.classes_structs.append(structs_data)
+                    self.classes_structs_enums.append(structs_data)
                     self.spread_filter_done = True
                 case "close_partially":
                     if self.close_partially_done:
                         continue
                     structs_data = self.close_partially_items.get_structs()
-                    self.classes_structs.append(structs_data)
+                    self.classes_structs_enums.append(structs_data)
                     vars_data = self.close_partially_items.get_vars()
                     self.vars_system.append(vars_data)
                     self.close_partially_done = True
@@ -744,7 +744,9 @@ class ExpertBuilder:
                     if self.volume_profile_done:
                         continue
                     classes_data = self.volume_profile_items.get_classes()
-                    self.classes_structs.append(classes_data)
+                    self.classes_structs_enums.append(classes_data)
+                    enums_data = self.volume_profile_items.get_enums()
+                    self.classes_structs_enums.append(enums_data)
                     vars_data = self.volume_profile_items.get_vars()
                     self.vars_system.append(vars_data)
                     self.volume_profile_done = True

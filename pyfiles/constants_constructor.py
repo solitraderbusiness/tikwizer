@@ -1,6 +1,6 @@
 constants = [
 
-    ########################## Events ##########################
+    # ######################### Events ##########################
 
     "#define EVENT_ON_INIT   1",
     "#define EVENT_ON_TIMER  2",
@@ -9,7 +9,7 @@ constants = [
     "#define EVENT_ON_CHART  5",
     "#define EVENT_ON_DEINIT 6",
 
-    ########################## Blocks ##########################
+    # ######################### Blocks ##########################
 
     "#define ROUTE_1_PASSED 1",
     "#define ROUTE_2_PASSED 0",
@@ -19,7 +19,7 @@ constants = [
     "#define RESET_LEVEL_BAR 2",
     "#define RESET_LEVEL_CUSTOM 3",
 
-    ########################## Time filter ############################
+    # ######################### Time filter ############################
     "#define TIME_MODE_TEXT 1",
     "#define TIME_MODE_COMPONENT 2",
     "#define TIME_MODE_RELATIVE 3",
@@ -28,7 +28,7 @@ constants = [
     "#define TIME_LOCAL 2",
     "#define TIME_GMT 3",
 
-    ###################### Trade/Order filter ########################
+    # ##################### Trade/Order filter ########################
 
     "#define ORDER_GROUP_MODE_ALL -1",
     "#define ORDER_GROUP_MODE_NUMBER 1",
@@ -36,7 +36,7 @@ constants = [
     "#define SYMBOL_MODE_SPECIFIED 1",
     "#define SYMBOL_MODE_ANY 2",
 
-    ##################### Candle ##########################
+    # #################### Candle ##########################
     # price modes
     "#define  CANDLE_OPEN  1",
     "#define  CANDLE_HIGH  2",
@@ -66,7 +66,7 @@ constants = [
     "#define  FIND_BY_ID  1",
     "#define  FIND_BY_DATE  2",
 
-    ###################### Market Properties ########################
+    # ##################### Market Properties ########################
 
     "#define HIGHEST_PRICE_CANDLE_PERIOD 1",
     "#define HIGHEST_PRICE_TIME_PERIOD 2",
@@ -77,9 +77,9 @@ constants = [
     "#define  GET_CANDLE_ID  1",
     "#define  GET_PRICE  2",
     "#define  GET_TIME  3",
-    ###################### check trades orders nearby ########################
+    # ##################### check trades orders nearby ########################
 
-    "#define PRICE_AUTO 1",  # auto means ask for buy and bid for sell
+    "#define PRICE_AUTO 1",  # auto means ask for buy and bid for "sell"
     "#define PRICE_ASK 2",
     "#define PRICE_BID 3",
     "#define PRICE_MID 4",
@@ -91,19 +91,19 @@ constants = [
     "#define RANGE_POSITION_WINNING_SIDE 2",
     "#define RANGE_POSITION_LOSING_SIDE 3",
 
-    ###################### profit unrealized ########################
+    # ##################### profit unrealized ########################
     "#define PROFIT_MODE_MONEY \"money\"",
     "#define PROFIT_MODE_PIPS \"pips\"",
     "#define PROFIT_MODE_PIPS_SUM \"pips-sum\"",
     "#define PROFIT_MODE_NO_MATTER \"no-matter\"",
 
-    ###################### for each trade ##########################
+    # ##################### for each trade ##########################
     "#define LOOP_DIRECTION_NEWEST_TO_OLDEST 1",
     "#define LOOP_DIRECTION_OLDEST_TO_NEWEST 2",
     "#define LOOP_DIRECTION_PROFITABLE_FIRST 3",
     "#define LOOP_DIRECTION_PROFITABLE_LAST 4",
 
-    ###################### value ##########################
+    # ##################### value ##########################
 
     "#define VALUE_PIPS_AS_IS 1",
     "#define VALUE_PIPS_AS_PRICE_FRACTION 2",
@@ -114,16 +114,16 @@ constants = [
     "#define MODE_TIME_CANDLE_TIME 4",
     "#define MODE_TIME_TIME_VALUE 5",
 
-    ###################### Blocks On/Off/Toggle ##########################
+    # ##################### Blocks On/Off/Toggle ##########################
     "#define BLOCK_STATE_ENABLE 1",
     "#define BLOCK_STATE_DISABLE 2",
     "#define BLOCK_STATE_TOGGLE 3",
 
-    ###################### Spread filter ##########################   
+    # ##################### Spread filter ##########################
     "#define SPREAD_BENCHMARK_AVERAGE 1",
     "#define SPREAD_BENCHMARK_FIX 2",
 
-    ###################### Buy Sell ##########################  
+    # ##################### Buy Sell ##########################
     "#define ORDER_BUY 1",
     "#define ORDER_SELL 2",
     "#define ORDER_BUY_PENDING 3",
@@ -166,7 +166,7 @@ constants = [
 
     "#define POINT_FORMAT_RULES \"0.001=0.01,0.00001=0.0001,0.000001=0.0001\"",
 
-    ###################### break even ##########################
+    # ##################### break even ##########################
 
     "#define ON_PROFIT_MODE_FIXED_VALUE 1",
     "#define ON_PROFIT_MODE_PERCENT_OF_CURRENT_SL 2",
@@ -175,7 +175,7 @@ constants = [
     "#define BEP_OFFSET_MODE_NONE 1",
     "#define BEP_OFFSET_MODE_PIPS_OFFSET 2",
 
-    ###################### Trailing stop (each trade) ##########################
+    # ##################### Trailing stop (each trade) ##########################
 
     "#define TRAILING_STOP_MODE_PIP \"fixed\"",
     "#define TRAILING_STOP_MODE_MULTIPLE_LEVELS \"multiple\"",
@@ -204,11 +204,11 @@ constants = [
     "#define TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP \"percentTS\"",
     "#define TRAILING_OPPOSITE_STOP_MODE_CUSTOM \"function\"",
 
-    ###################### Close partially ##########################
+    # ##################### Close partially ##########################
     "#define CLOSE_PARTIALLY_FIXED_VOLUME 1",
     "#define CLOSE_PARTIALLY_PERCENT_OF_CURRENT_VOLUME 2",
     "#define CLOSE_PARTIALLY_PERCENT_OF_INITIAL_VOLUME 3",
-    ###################### check profit/loss ##########################
+    # ##################### check profit/loss ##########################
     "#define CHECK_PROFIT_LOSS_MODE_DEPOSIT_CURRENCY 1",
     "#define CHECK_PROFIT_LOSS_MODE_ACCOUNT_PROFIT 2",
     "#define CHECK_PROFIT_LOSS_MODE_EQUITY 3",
@@ -218,14 +218,14 @@ constants = [
     "#define CHECK_PROFIT 1",
     "#define CHECK_LOSS 2",
 
-    ###################### trailing pending orders ##########################
+    # ##################### trailing pending orders ##########################
 
     "#define TRAILING_DISTANCE_MODE_FIXED 1",
     "#define TRAILING_DISTANCE_MODE_DYNAMIC 2",
     "#define TRAILING_DISTANCE_MODE_DYNAMIC_PIPS 3",
     "#define TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS 4",
 
-    ###################### modify stops of trades ##########################
+    # ##################### modify stops of trades ##########################
 
     "#define PRICE_RELATIVE_TO_OPEN_PRICE 1",
     "#define PRICE_RELATIVE_TO_CURRENT_PRICE 2",
@@ -235,7 +235,24 @@ constants = [
     "#define NEW_STOPS_PERCENT_OF_CURRENT_TPSL 2",
     "#define NEW_STOPS_CUSTOM_PRICE_LEVEL 3",
 
-    ######################  ##########################
+    # ##################### Volume profile macros ##########################
+
+    "#define PUT_IN_RANGE(A, L, H) ((H) < (L) ? (A) : ((A) < (L) ? (L) : ((A) > (H) ? (H) : (A))))",
+    "#define COLOR_IS_NONE(C) (((C) >> 24) != 0)",
+    "#define RGB_TO_COLOR(R, G, B) ((color)((((B) & 0x0000FF) << 16) + (((G) & 0x0000FF) << 8) + ((R) & 0x0000FF)))",
+    "#define ROUND_PRICE(A, P) ((int)((A) / P + 0.5))",
+    "#define NORM_PRICE(A, P) (((int)((A) / P + 0.5)) * P)",
+
+    # #####################  ##########################
+
+    # #####################  ##########################
+
+    # #####################  ##########################
+
+    # #####################  ##########################
+
+    # #####################  ##########################
+
 ]
 
 

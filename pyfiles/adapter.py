@@ -40,6 +40,8 @@ def create_specific_input(nodes):
             params["order_type"] = "ORDER_SELL_PENDING"
         elif block_name == "Once per bar":
             params["n"] = 1
+        elif block_name == "Volume profile":
+            params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):
@@ -221,7 +223,7 @@ def get_proper_event_name(key):
 def add_task_names_mql(nodes):
     for node in nodes:
         block_name = node.get("blockName")
-        if block_name == "condition":
+        if block_name == "Condition":
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
                 node["block_name_mql"] = "condition_1_cross"

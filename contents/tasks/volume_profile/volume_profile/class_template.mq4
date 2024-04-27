@@ -1,64 +1,6 @@
 
 class Task_id : public Task
   {
-
-
-#define PUT_IN_RANGE(A, L, H) ((H) < (L) ? (A) : ((A) < (L) ? (L) : ((A) > (H) ? (H) : (A))))
-#define COLOR_IS_NONE(C) (((C) >> 24) != 0)
-#define RGB_TO_COLOR(R, G, B) ((color)((((B) & 0x0000FF) << 16) + (((G) & 0x0000FF) << 8) + ((R) & 0x0000FF)))
-#define ROUND_PRICE(A, P) ((int)((A) / P + 0.5))
-#define NORM_PRICE(A, P) (((int)((A) / P + 0.5)) * P)
-
-   enum ENUM_APPLIED_VOLUME
-     {
-      VOLUME_TICK, // Tick volume
-      VOLUME_REAL  // Real volume
-     };
-
-   //Sajjad
-   enum ENUM_POINT_SCALE
-     {
-      POINT_SCALE_1   = 1,      // *1
-      POINT_SCALE_10  = 10,    // *10
-      POINT_SCALE_20  = 20,    // *20
-      POINT_SCALE_50  = 50,    // *50
-      POINT_SCALE_100 = 100,  // *100
-     };
-
-   enum ENUM_VP_BAR_STYLE
-     {
-      VP_BAR_STYLE_LINE,        // Line
-      VP_BAR_STYLE_BAR,         // Empty bar
-      VP_BAR_STYLE_FILLED,      // Filled bar
-      VP_BAR_STYLE_OUTLINE,     // Outline
-      VP_BAR_STYLE_COLOR        // Color
-     };
-
-   enum ENUM_VP_SOURCE
-     {
-      VP_SOURCE_M1 = 1,      // M1 bars
-      VP_SOURCE_M5 = 5,      // M5 bars
-      VP_SOURCE_M15 = 15,    // M15 bars
-      VP_SOURCE_M30 = 30,    // M30 bars
-     };
-
-   enum ENUM_VP_RANGE_MODE
-     {
-      VP_RANGE_MODE_BETWEEN_LINES = 0,   // Between lines
-      VP_RANGE_MODE_LAST_MINUTES = 1,    // Last minutes
-      VP_RANGE_MODE_MINUTES_TO_LINE = 2  // Minitues to line
-     };
-
-   enum ENUM_VP_HG_POSITION
-     {
-      VP_HG_POSITION_WINDOW_LEFT = 0,    // Window left
-      VP_HG_POSITION_WINDOW_RIGHT = 1,   // Window right
-      VP_HG_POSITION_LEFT_OUTSIDE = 2,   // Left outside
-      VP_HG_POSITION_RIGHT_OUTSIDE = 3,  // Right outside
-      VP_HG_POSITION_LEFT_INSIDE = 4,    // Left inside
-      VP_HG_POSITION_RIGHT_INSIDE = 5    // Right inside
-     };
-
    /* Calculation */
    ENUM_VP_RANGE_MODE RangeMode;    // Range mode
    int               RangeMinutes;                                       // Range minutes
@@ -99,8 +41,10 @@ class Task_id : public Task
    color             TimeToColor;                                  // Right border line color
    ENUM_LINE_STYLE   TimeToStyle;                 // Right border line style
    double            HgWidthPercent;                               // Histogram width, % of chart
-/////////////////////////////////////////////////////
-   int               n;//Sajjad, skip this for now.
+
+
+
+
 //////////////////////////////////////////////////////////
    string            _prefix;
    string            _tfn;
@@ -206,7 +150,6 @@ public:
       TimeToColor = Red;                      // Right border line color
       TimeToStyle = STYLE_DASH;               // Right border line style
       HgWidthPercent = 15;                    // Histogram width, % of chart
-      n =           1;                        //Sajjad, used to enable multiple volume profile drawings
 
 
       //////////////////////////////////////////
@@ -231,9 +174,9 @@ public:
 
       //Previously in OnInit
 
-      _prefix = Id + " m" + IntegerToString(RangeMode) + " "+n;
-      _tfn = Id + "-from"+n;
-      _ttn = Id + "-to"+n;
+      _prefix = Id + " m" + IntegerToString(RangeMode) + " ";
+      _tfn = Id + "-from";
+      _ttn = Id + "-to";
       _hgPoint = _Point * HgPointScale;
       _modeStep = ModeStep / HgPointScale;
 
