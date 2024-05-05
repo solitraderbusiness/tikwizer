@@ -224,6 +224,7 @@ def add_task_names_mql(nodes):
     for node in nodes:
         block_name = node.get("blockName")
         if block_name == "Condition":
+            print(node)
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
                 node["block_name_mql"] = "condition_1_cross"

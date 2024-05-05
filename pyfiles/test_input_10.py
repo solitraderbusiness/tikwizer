@@ -1098,3 +1098,89 @@ input_data_5 = {
         }
     ]
 }
+
+# test condition adjust and shift
+input_data_6 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "max_times_to_pass": "1",
+            "symbol": "",
+            "timeframe": "PERIOD_CURRENT"
+          },
+          "id": "55b2ddd9-459d-4e1f-b624-3ec85bed0074",
+          "id_by_user": 2,
+          "blockName": "Once per bar"
+        },
+        {
+          "params": {
+            "operator": {
+              "label": ">",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "Indicator",
+              "row2": "macd",
+              "params": {
+                "fast_ema_period": "12",
+                "slow_ema_period": "9",
+                "signal_period": "9",
+                "mode": "MODE_SIGNAL",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": ""
+              }
+            },
+            "right": {
+              "row1": "Indicator",
+              "row2": "macd",
+              "params": {
+                "fast_ema_period": "12",
+                "slow_ema_period": "9",
+                "signal_period": "9",
+                "mode": "MODE_SIGNAL",
+                "applied_price": "PRICE_CLOSE"
+              }
+            }
+          },
+          "id": "c138b498-77d6-4e06-933b-151d9c4ce471",
+          "id_by_user": 3,
+          "blockName": "Condition"
+        }
+      ],
+      "edges": [
+        {
+          "source": "55b2ddd9-459d-4e1f-b624-3ec85bed0074",
+          "sourceHandle": "blue",
+          "target": "c138b498-77d6-4e06-933b-151d9c4ce471",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-55b2ddd9-459d-4e1f-b624-3ec85bed0074blue-c138b498-77d6-4e06-933b-151d9c4ce471c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}

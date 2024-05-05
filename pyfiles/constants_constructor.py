@@ -77,19 +77,6 @@ constants = [
     "#define  GET_CANDLE_ID  1",
     "#define  GET_PRICE  2",
     "#define  GET_TIME  3",
-    # ##################### check trades orders nearby ########################
-
-    "#define PRICE_AUTO 1",  # auto means ask for buy and bid for "sell"
-    "#define PRICE_ASK 2",
-    "#define PRICE_BID 3",
-    "#define PRICE_MID 4",
-
-    "#define RANGE_MODE_PIPS 1",
-    "#define RANGE_MODE_PRICE_FRACTION 2",
-
-    "#define RANGE_POSITION_AROUND 1",
-    "#define RANGE_POSITION_WINNING_SIDE 2",
-    "#define RANGE_POSITION_LOSING_SIDE 3",
 
     # ##################### profit unrealized ########################
     "#define PROFIT_MODE_MONEY \"money\"",
