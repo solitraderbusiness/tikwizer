@@ -11,8 +11,7 @@ def refactor(data):
         # Add indexes (overwrite ids) for later access
         event = events[key]
         overwrite_ids(event["nodes"], event["edges"])
-        add_task_names_mql(event["nodes"])
-        add_category(event["nodes"])
+        correct_block_names_mql(event["nodes"])
         create_specific_input(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(key, event["nodes"], event["edges"])
@@ -66,7 +65,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "close_mode", "mode_range", "mode_base_price", "profit_mode_each", "profit_mode",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
             "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8",
-            "stops_mode", "sl_only", "tp_only", "Id"]
+            "stops_mode", "sl_only", "tp_only", "Id", "message"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -152,13 +151,13 @@ def check_value_fetch_params(side):  # Side means left or right
     path_module = ""
     params = side.get("params")
     match side.get("row1"):
-        case "Indicator":
+        case "indicator":
             path_module = "indicators" + "/" + side.get("row2").lower() + "/"
-        case "Market Properties":
+        case "market-properties":
             path_module = "market_properties" + "/"
-        case "Value":
+        case "value":
             path_module = "value" + "/"
-        case "Candle":
+        case "candle":
             path_module = "candle" + "/"
     with open(path + path_sub + path_module + "input.json") as input_file:
         if input_file:
@@ -220,11 +219,10 @@ def get_proper_event_name(key):
     return events.get(key)
 
 
-def add_task_names_mql(nodes):
+def correct_block_names_mql(nodes):
     for node in nodes:
         block_name = node.get("blockName")
         if block_name == "Condition":
-            print(node)
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
                 node["block_name_mql"] = "condition_1_cross"
@@ -232,40 +230,10 @@ def add_task_names_mql(nodes):
                 node["block_name_mql"] = "condition_1_normal"
         elif block_name == "Once per bar":
             node["block_name_mql"] = "once_every_n_bars"
-        elif block_name == "If trade":
-            node["block_name_mql"] = "check_trades_orders_count"
-        elif block_name == "No pending order":
-            node["block_name_mql"] = "check_trades_orders_count"
-        elif block_name == "No trade nearby":
-            node["block_name_mql"] = "no_trade_nearby"
-        elif block_name in ["turn_on_blocks", "turn_off_blocks", "toggle_blocks"]:
-            node["block_name_mql"] = "blocks_on_off"
         elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
             node["block_name_mql"] = "buy_sell"
-        elif block_name == "Modify Variables":
-            node["block_name_mql"] = "modify_variables"
-        elif block_name == "Close trades":
-            node["block_name_mql"] = "close_trades"
-        elif block_name == "Loop(pass \"n\" times)":
-            node["block_name_mql"] = "pass_n_times"
-        elif block_name == "Delay":
-            node["block_name_mql"] = "delay"
-        elif block_name == "AND":
-            node["block_name_mql"] = "and"
-        elif block_name == "OR":
-            node["block_name_mql"] = "or"
-        elif block_name == "Check profit (unrealized)":
-            node["block_name_mql"] = "check_profit_unrealized"
-        elif block_name == "Comment":
-            node["block_name_mql"] = "comment"
-        elif block_name == "Order TP modified":
-            node["block_name_mql"] = "order_tp_modified"
-        elif block_name == "Order SL modified":
-            node["block_name_mql"] = "order_sl_modified"
-        elif block_name == "Every \"n\" bars":
-            node["block_name_mql"] = "once_every_n_bars"
-        elif block_name == "Volume profile":
-            node["block_name_mql"] = "volume_profile"
+
+
 
 
 def get_nexts_true(node, edges):
@@ -304,146 +272,3 @@ def get_prevs_false(node, edges):
     return result
 
 
-def add_category(nodes):
-    for node in nodes:
-        match node.get("block_name_mql"):
-            case "condition_1_normal":
-                node["category"] = "condition_formula"
-            case "condition_1_cross":
-                node["category"] = "condition_formula"
-            case "formula":
-                node["category"] = "condition_formula"
-            case "time_filter":
-                node["category"] = "time_filters"
-            case "once_every_n_bars":
-                node["category"] = "time_filters"
-            case "once_per_seconds":
-                node["category"] = "time_filters"
-            case "every_n_ticks":
-                node["category"] = "time_filters"
-            case "in_hour_min_sec":
-                node["category"] = "time_filters"
-            case "months_filter":
-                node["category"] = "time_filters"
-            case "weekday_filter":
-                node["category"] = "time_filters"
-            case "spread_filter":
-                node["category"] = "time_filters"
-            case "and":
-                node["category"] = "controlling_blocks"
-            case "or":
-                node["category"] = "controlling_blocks"
-            case "turn_on_blocks":
-                node["category"] = "controlling_blocks"
-            case "turn_off_blocks":
-                node["category"] = "controlling_blocks"
-            case "toggle_blocks":
-                node["category"] = "controlling_blocks"
-            case "set_current_market_for_next_blocks":
-                node["category"] = "controlling_blocks"
-            case "set_current_timeframe_for_next_blocks":
-                node["category"] = "controlling_blocks"
-            case "pass_n_times":
-                node["category"] = "counters"
-            case "for_each_trade":
-                node["category"] = "loop_for_trades_orders"
-            case "close_partially":
-                node["category"] = "loop_for_trades_orders"
-            case "close":
-                node["category"] = "loop_for_trades_orders"
-            case "break":
-                node["category"] = "loop_for_trades_orders"
-            case "check_profit":
-                node["category"] = "loop_for_trades_orders"
-            case "check_loss":
-                node["category"] = "loop_for_trades_orders"
-            case "buy_sell":
-                node["category"] = ""
-            case "check_trades_orders_count":
-                node["category"] = "check_trades_orders_count"
-            case "no_trade_nearby":
-                node["category"] = "check_trades_orders_count"
-            case "close_trades":
-                node["category"] = "trading_actions"
-            case "delete_pending_orders":
-                node["category"] = "trading_actions"
-            case "modify_stops_of_trades":
-                node["category"] = "trading_actions"
-            case "check_profit_unrealized":
-                node["category"] = "check_trading_conditions"
-            case "delay":
-                node["category"] = "more"
-            case "pass":
-                node["category"] = "more"
-            case "modify_variables":
-                node["category"] = "variables"
-            case "break_even":
-                node["category"] = "trailing_stop_break_even"
-            case "trailing_stop_each_trade":
-                node["category"] = "trailing_stop_break_even"
-            case "trailing_pending_orders":
-                node["category"] = "trailing_stop_break_even"
-            case "comment":
-                node["category"] = "output_and_communication"
-            case "terminate":
-                node["category"] = "more"
-            case "draw_arrow":
-                node["category"] = "chart_and_objects"
-            case "draw_button":
-                node["category"] = "chart_and_objects"
-            case "draw_shape":
-                node["category"] = "chart_and_objects"
-            case "draw_line":
-                node["category"] = "chart_and_objects"
-            case "draw_editfield":
-                node["category"] = "chart_and_objects"
-            case "delete_objects":
-                node["category"] = "chart_and_objects"
-            case "delete_objects_by_type":
-                node["category"] = "chart_and_objects"
-            case "for_each_object":
-                node["category"] = "loop_for_chart_objects"
-            case "select_object_by_name":
-                node["category"] = "loop_for_chart_objects"
-            case "delete":
-                node["category"] = "loop_for_chart_objects"
-            case "once_per_object":
-                node["category"] = "loop_for_chart_objects"
-            case "check_color":
-                node["category"] = "loop_for_chart_objects"
-            case "check_trendline_price_level":
-                node["category"] = "loop_for_chart_objects"
-            case "editfield_modified":
-                node["category"] = "on_chart_filter_specific_event"
-            case "object_modified":
-                node["category"] = "on_chart_filter_specific_event"
-            case "mouse_clicked_on_object":
-                node["category"] = "on_chart_filter_specific_event"
-            case "object_dragged":
-                node["category"] = "on_chart_filter_specific_event"
-            case "order_deleted":
-                node["category"] = "on_trade_filter_specific_event"
-            case "trade_closed":
-                node["category"] = "on_trade_filter_specific_event"
-            case "order_created":
-                node["category"] = "on_trade_filter_specific_event"
-            case "trade_created":
-                node["category"] = "on_trade_filter_specific_event"
-            case "order_moved":
-                node["category"] = "on_trade_filter_specific_event"
-            case "trade_stops_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "trade_sl_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "trade_tp_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "order_stops_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "order_sl_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "order_tp_modified":
-                node["category"] = "on_trade_filter_specific_event"
-            case "volume_profile":
-                node["category"] = "volume_profile"
-            case _:
-                node["category"] = "not_specified"

@@ -1,5 +1,5 @@
 # node is entry if is not target and has target
-from pyfiles import path_root
+from . import path_root
 
 
 def is_entry(id_node, edges):
@@ -1135,15 +1135,15 @@ class ExpertBuilder:
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
 
     def value_fetch_class(self, row1, row2, params, id_val):
-        if row1 == "Indicator":
+        if row1 == "indicator":
             return self.indicator_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
                                                               self.data.get("variables"))
-        elif row1 == "Candle":
+        elif row1 == "candle":
             return self.candle_class_constructor.get_class(params, id_val, self.data.get("constants"),
                                                            self.data.get("variables"))
-        elif row1 == "Market Properties":
+        elif row1 == "market-properties":
             return self.market_properties_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
                                                                       self.data.get("variables"))
-        elif row1 == "Value":
+        elif row1 == "value":
             return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
                                                           self.data.get("variables"))

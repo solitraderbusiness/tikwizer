@@ -481,7 +481,7 @@ def buy_sell_function_data(node, function_data_static):
 
 
 def spread_filter_run_data(node, run_data):
-    run_data = run_data.replace("operator_val", node.get("input_dic_task").get("operator"))
+    run_data = run_data.replace("operator_val", node.get("params").get("operator"))
     return run_data
 
 
@@ -847,26 +847,26 @@ def condition_1_run_data_cross(node, run_data):
 
 
 def get_value_fetch_init(row1, row2, suffix):
-    if row1 == "Indicator":
+    if row1 == "indicator":
         init = indicator_class_constructor.get_initializer(row2, suffix)
-    elif row1 == "Candle":
+    elif row1 == "candle":
         init = candle_class_constructor.get_initializer(suffix)
-    elif row1 == "Market Properties":
+    elif row1 == "market-properties":
         init = market_properties_class_constructor.get_initializer(suffix)
-    elif row1 == "Value":
+    elif row1 == "value":
         init = value_class_constructor.get_initializer(row2, suffix)
     return init
 
 
 def get_value_fetch_val(row1, row2, suffix):
     val = ""
-    if row1 == "Indicator":
+    if row1 == "indicator":
         val = indicator_class_constructor.get_var_name(row2, suffix)
-    elif row1 == "Candle":
+    elif row1 == "candle":
         val = candle_class_constructor.get_var_name(suffix)
-    elif row1 == "Market Properties":
+    elif row1 == "market-properties":
         val = market_properties_class_constructor.get_var_name(suffix)
-    elif row1 == "Value":
+    elif row1 == "value":
         val = value_class_constructor.get_var_name(suffix)
     return val
 
