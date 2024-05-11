@@ -1864,3 +1864,160 @@ input_data_12 = {
   "variables": [],
   "constants": []
 }
+
+# test masoud blocks
+input_data_13 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "symbol": "NULL",
+            "timeframe": "PERIOD_M30",
+            "max_times_to_pass": "9"
+          },
+          "id": "0f4cfaf7-6b71-49d0-9f62-2f72507459db",
+          "id_by_user": 12,
+          "blockName": "Once per bar",
+          "category": "time_filters",
+          "block_name_mql": "once_per_bar"
+        },
+        {
+          "params": {
+            "operator": {
+              "label": "<=",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "candle",
+              "row2": "candle",
+              "params": {
+                "candle-time": "CANDLE_GAP_TO_PREV",
+                "find_method": "FIND_BY_ID",
+                "shift": "18",
+                "adjust": "*15"
+              }
+            },
+            "right": {
+              "row1": "market-propertis",
+              "row2": "lowest-price-time-period",
+              "params": {
+                "server_or_local_time": "TIME_LOCAL",
+                "timestr_start": "8:36",
+                "timestr_end": "11:00",
+                "day_offset": "11",
+                "what_to_get": "GET_TIME",
+                "adjust": "*14%"
+              }
+            }
+          },
+          "id": "249aeaca-278e-4ef0-8aa2-276daaa8b908",
+          "id_by_user": 13,
+          "blockName": "Condition",
+          "category": "condition_formula",
+          "block_name_mql": "condition"
+        },
+        {
+          "params": {
+            "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+            "open_at_price": "OPEN_AT_BID",
+            "stop_loss_mode": "TPSL_MODE_NO_SL",
+            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+            "takeprofit": "45",
+            "symbol": "XAUUSD",
+            "group": "18",
+            "slippage": "5",
+            "comment": "test comment",
+            "arrow_color": "clrMediumSeaGreen",
+            "how_much_volume": "5",
+            "price_offset": "12"
+          },
+          "id": "2b70b9ab-9557-46c4-8dd1-0b1b36e7a7e8",
+          "id_by_user": 14,
+          "blockName": "Buy pending order",
+          "category": "buy_sell",
+          "block_name_mql": "buy_pending_order"
+        },
+        {
+          "params": {
+            "operator": {
+              "label": ">",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "market-propertis",
+              "row2": "LOWEST_PRICE_TIME_PERIOD",
+              "params": {
+                "value": "1",
+                "range_start": "0",
+                "range_end": "10",
+                "what_to_get": "GET_PRICE",
+                "adjust": "*78"
+              }
+            },
+            "right": {
+              "row1": "value",
+              "row2": "numeric",
+              "params": {
+                "value": "1"
+              }
+            }
+          },
+          "id": "b9c98e37-90f2-4ee2-827b-d9803f4b7c95",
+          "id_by_user": 15,
+          "blockName": "Condition",
+          "category": "condition_formula",
+          "block_name_mql": "condition"
+        }
+      ],
+      "edges": [
+        {
+          "source": "0f4cfaf7-6b71-49d0-9f62-2f72507459db",
+          "sourceHandle": "blue",
+          "target": "249aeaca-278e-4ef0-8aa2-276daaa8b908",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-0f4cfaf7-6b71-49d0-9f62-2f72507459dbblue-249aeaca-278e-4ef0-8aa2-276daaa8b908c"
+        },
+        {
+          "source": "249aeaca-278e-4ef0-8aa2-276daaa8b908",
+          "sourceHandle": "blue",
+          "target": "2b70b9ab-9557-46c4-8dd1-0b1b36e7a7e8",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-249aeaca-278e-4ef0-8aa2-276daaa8b908blue-2b70b9ab-9557-46c4-8dd1-0b1b36e7a7e8c"
+        },
+        {
+          "source": "0f4cfaf7-6b71-49d0-9f62-2f72507459db",
+          "sourceHandle": "blue",
+          "target": "b9c98e37-90f2-4ee2-827b-d9803f4b7c95",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-0f4cfaf7-6b71-49d0-9f62-2f72507459dbblue-b9c98e37-90f2-4ee2-827b-d9803f4b7c95c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}
