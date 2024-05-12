@@ -788,7 +788,6 @@ class ExpertBuilder:
             elif task_name == "no_trade_nearby":
                 self.no_trade_nearby_run_data(node)
 
-
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
         row1 = value_fetch.get("row1")

@@ -232,6 +232,8 @@ def correct_block_names_mql(nodes):
             node["block_name_mql"] = "once_every_n_bars"
         elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
             node["block_name_mql"] = "buy_sell"
+        elif block_name == "If trade":
+            node["block_name_mql"] = "check_trades_orders_count"
 
 
 

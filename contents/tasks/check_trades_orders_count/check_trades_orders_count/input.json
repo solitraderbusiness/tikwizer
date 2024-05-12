@@ -4,7 +4,7 @@
 	"group_mode" : "ORDER_GROUP_MODE_ALL",
 	"group_number" : 25,
 	"type" : "{0,1}",
-	"type_pending" : "{2,4}",
+	"type_pending" : "{0,1,2,3,4,5}",
 	"count_limit" : 0,
 	"operator": ">"
 }

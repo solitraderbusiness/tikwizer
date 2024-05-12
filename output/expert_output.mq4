@@ -952,396 +952,9 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-class Candle13_left
 
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      find_method = FIND_BY_ID;
-      price_mode = CANDLE_HIGH;
-      timestr = "2023.4.26 13:40:30";
-      shift = 18;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      int index = get_index();
-      double value = get_value(index);
-      return value * 15;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(msymbol, mtimeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-
-
-         //STest, effect of bull here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
-  };
-
-class MarketProperties13_right
-
-  {
-
-public:
-   string            symbol;
-   int               timeframe;
-   int               time_mode;
-   int               which;
-   //what to return
-   int               what_to_get;
-   //used for time period
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-   //used for candle period
-   int               range_start;
-   int               range_end;
-
-   string            msymbol;
-   int               mtimeframe;
-
-
-public:
-
-   void              init()
-
-     {
-      symbol = NULL;
-      timeframe = 0;
-      which = LOWEST_PRICE_TIME_PERIOD;
-      what_to_get = GET_TIME;
-      timestr_start = "8:36";
-      timestr_end   = "11:00";
-      day_offset = 11;
-      range_start = 50;
-      range_end   = 100;
-     }
-
-
-
-   int               calc(MarketPropertiesResult &result)
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      //In time mode, first calc range start and range end, then calc the result just like range mode
-      //STest, what is the effect of time mode? For now, it is ignored.
-      //STest, in iBarsShift, exact = false?
-      if(which == HIGHEST_PRICE_TIME_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
-        {
-         datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-         datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
-         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
-        }
-      getHiLo(result);
-      result.price = result.price*14/NormalizeDouble(100,0);
-      result.index = result.index*14/NormalizeDouble(100,0);
-      result.time = result.time*14/NormalizeDouble(100,0);
-
-
-     }
-
-
-   void              getHiLo(MarketPropertiesResult &result)
-     {
-      if(which == HIGHEST_PRICE_CANDLE_PERIOD || which == HIGHEST_PRICE_TIME_PERIOD)
-         getHighest(result);
-      else
-         if(which == LOWEST_PRICE_CANDLE_PERIOD || which == LOWEST_PRICE_TIME_PERIOD)
-            getLowest(result);
-     }
-
-
-
-   void              getHighest(MarketPropertiesResult &result)
-     {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
-      result.price = iHigh(msymbol, mtimeframe, hi);
-      result.index = hi;
-      result.time = iTime(msymbol, mtimeframe, hi);
-     }
-
-
-   void              getLowest(MarketPropertiesResult &result)
-     {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
-      result.price = iLow(msymbol, mtimeframe, li);
-      result.index = li;
-      result.time = iTime(msymbol, mtimeframe, li);
-     }
-  };
-
-//Once per bar
-class Task12 : public Task
-  {
-   string            symbol;
-   int               timeframe;
-   int               n;
-   int               max_times_to_pass;
-
-   datetime          lastSavedTime;
-   int               count_n;
-   int               count_max_times;
-public:
-                     Task12(string name):Task(name)
-     {
-      symbol = NULL;
-      timeframe = PERIOD_M30;
-      n = 1;
-      max_times_to_pass = 9;
-
-
-      count_n = 0;
-      count_max_times = 1;
-      lastSavedTime = -1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      string msymbol = getSymbol(symbol);
-      int mtimeframe = getTimeframe(timeframe);
-
-      if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
-        {
-         double mod = MathMod(count_n, n);
-         count_n++;
-         lastSavedTime = iTime(msymbol, mtimeframe, 0);
-
-         if(mod == 0) //do once every n bar
-           {
-            count_max_times = 1;
-            count_n = 1;
-            printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
-           }
-         else //otherwise
-           {
-            printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
-           }
-        }
-      else //otherwise, it's the same candle
-        {
-         double mod2 = MathMod(count_n, n);
-         if(count_max_times < max_times_to_pass && mod2==1)
-           {
-            count_max_times++;
-            printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
-           }
-         else
-           {
-            printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
-           }
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Condition
-class Task13 : public Task
-  {
-
-public:
-                     Task13(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      Candle13_left candle13_left;
-      candle13_left.init();
-      double valueCandle13_left = candle13_left.calc();
-      MarketProperties13_right marketproperties13_right;
-      marketproperties13_right.init();
-      MarketPropertiesResult mp_result13_right;
-      marketproperties13_right.calc(mp_result13_right);
-
-      if(valueCandle13_left <= marketproperties13_right.what_to_get == GET_PRICE ? mp_result13_right.price : marketproperties13_right.what_to_get == GET_CANDLE_ID ? mp_result13_right.index : mp_result13_right.time)
-        {
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Buy pending order
-class Task14 : public Task
+//Buy now
+class Task2 : public Task
   {
    //values set by user
    string            symbol;
@@ -1384,38 +997,38 @@ class Task14 : public Task
    double            martingale_reset_on_n_profits;
    int               type[];
 public:
-                     Task14(string name):Task(name)
+                     Task2(string name):Task(name)
      {
-      symbol = "XAUUSD";
-      group = 18;
-      order_type = ORDER_BUY_PENDING;
-      money_management = MONEY_MANAGEMENT_PERCENT_OF_EQUITY;
-      how_much_volume = 5;
+      symbol = "";
+      group = 11;
+      order_type = ORDER_BUY;
+      money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
+      how_much_volume = 2.5;
       volume_upper_limit = 0;
-      open_at_price = OPEN_AT_BID;
-      price_offset = 12;
+      open_at_price = OPEN_AT_ASK;
+      price_offset = 25;
       price_offset_as_pip = True;
 
-      slippage = 5;
+      slippage = 4;
       stoploss = 20;
-      takeprofit = 45;
+      takeprofit = 20;
       take_profit_mode = TPSL_MODE_FIXED_PIPS;
-      stop_loss_mode = TPSL_MODE_NO_SL;
-      comment = "test comment";
+      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
+      comment = "";
       expiration = 0;
-      arrow_color = clrMediumSeaGreen;
+      arrow_color = clrMaroon;
 
       //martingale
-      look_up_on = LOOK_UP_RUNNING_ONLY;
+      look_up_on = LOOK_UP_RUNNING_THEN_HISTORY;
       int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
       ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
       martingale_init_vol = 0.1;
-      martingale_multiply_on_loss = 0;
-      martingale_multiply_on_profit = 0;
-      martingale_addlots_on_loss = 0.1;
-      martingale_addlots_on_profit = 0.1;
-      martingale_reset_on_n_losses = 5;
-      martingale_reset_on_n_profits = 5;
+      martingale_multiply_on_loss = 2;
+      martingale_multiply_on_profit = 1;
+      martingale_addlots_on_loss = 0;
+      martingale_addlots_on_profit = 0;
+      martingale_reset_on_n_losses = 0;
+      martingale_reset_on_n_profits = 1;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
@@ -1730,6 +1343,79 @@ private:
      }
 
   };
+
+//Once per bar
+class Task3 : public Task
+  {
+   string            symbol;
+   int               timeframe;
+   int               n;
+   int               max_times_to_pass;
+
+   datetime          lastSavedTime;
+   int               count_n;
+   int               count_max_times;
+public:
+                     Task3(string name):Task(name)
+     {
+      symbol = "XAUUSD";
+      timeframe = PERIOD_H8;
+      n = 1;
+      max_times_to_pass = 13;
+
+
+      count_n = 0;
+      count_max_times = 1;
+      lastSavedTime = -1;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
+
+      if(iTime(msymbol, mtimeframe, 0)!=lastSavedTime)
+        {
+         double mod = MathMod(count_n, n);
+         count_n++;
+         lastSavedTime = iTime(msymbol, mtimeframe, 0);
+
+         if(mod == 0) //do once every n bar
+           {
+            count_max_times = 1;
+            count_n = 1;
+            printf("task"+block_id + " passed route 1");
+            block.onResult(ROUTE_1_PASSED);
+           }
+         else //otherwise
+           {
+            printf("task"+block_id + " passed route 2");
+            block.onResult(ROUTE_2_PASSED);
+           }
+        }
+      else //otherwise, it's the same candle
+        {
+         double mod2 = MathMod(count_n, n);
+         if(count_max_times < max_times_to_pass && mod2==1)
+           {
+            count_max_times++;
+            printf("task"+block_id + " passed route 1");
+            block.onResult(ROUTE_1_PASSED);
+           }
+         else
+           {
+            printf("task"+block_id + " passed route 2");
+            block.onResult(ROUTE_2_PASSED);
+           }
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -1879,64 +1565,14 @@ public:
   };
 
 
-//Once per bar
-class Block12 : public Block
+//Buy now
+class Block2 : public Block
   {
 public:
-                     Block12()
+                     Block2()
      {
       id = 0;
-      id_by_user = 12;
-      name = "once_every_n_bars";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {1};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task12(name);
-     }
-  };
-
-//Condition
-class Block13 : public Block
-  {
-public:
-                     Block13()
-     {
-      id = 1;
-      id_by_user = 13;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {2};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task13(name);
-     }
-  };
-
-//Buy pending order
-class Block14 : public Block
-  {
-public:
-                     Block14()
-     {
-      id = 2;
-      id_by_user = 14;
+      id_by_user = 2;
       name = "buy_sell";
       enabled = True;
       event = EVENT_ON_TICK;
@@ -1950,7 +1586,32 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task14(name);
+      task = new Task2(name);
+     }
+  };
+
+//Once per bar
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 1;
+      id_by_user = 3;
+      name = "once_every_n_bars";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {0};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -2018,14 +1679,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 3);
-   Block12 *block12 = new Block12();
-   Block13 *block13 = new Block13();
-   Block14 *block14 = new Block14();
+   ArrayResize(blocks_tick, 2);
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
 
-   blocks_tick[0] = block12;
-   blocks_tick[1] = block13;
-   blocks_tick[2] = block14;
+   blocks_tick[0] = block2;
+   blocks_tick[1] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3852,17 +3511,11 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
@@ -4109,7 +3762,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
