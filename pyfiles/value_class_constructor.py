@@ -74,19 +74,19 @@ def get_initializer(value_type, var_id):
 
             mtype = ""
             match value_type:
-                case "numeric":
+                case "Numeric":
                     mtype = "double"
-                case "boolean":
+                case "Boolean":
                     mtype = "bool"
-                case "color":
+                case "Color":
                     mtype = "color"
-                case "pips":
+                case "Pips":
                     mtype = "double"
-                case "text":
+                case "Text":
                     mtype = "string"
-                case "text-code-input)":
+                case "Text_code_input":
                     mtype = "string"
-                case "time":
+                case "Time":
                     mtype = "datetime"
 
             initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id)).replace("type", mtype)

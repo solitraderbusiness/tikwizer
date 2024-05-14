@@ -6,7 +6,7 @@ input_data_1 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -124,7 +124,7 @@ input_data_1 = {
                 "id": "bb",
                 "data": {
                     "blockId": 2,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -284,7 +284,7 @@ input_data_2 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -562,7 +562,7 @@ input_data_3 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -966,7 +966,7 @@ input_data_4 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {
@@ -1370,7 +1370,7 @@ input_data_5 = {
                 "id": "aa",
                 "data": {
                     "blockId": 1,
-                    "blockName": "pass_n_times"
+                    "blockName": "loop_pass_n_times"
                 },
                 "type": "testMojtaba",
                 "position": {

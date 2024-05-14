@@ -720,7 +720,7 @@ class ExpertBuilder:
         for node in nodes:
             task_name = node.get("block_name_mql")
             match task_name:
-                case "pass_n_times":
+                case "loop_pass_n_times":
                     if self.pass_n_times_done:
                         continue
                     var_data = self.task_dynamic_constructor.get_var_data(node.get("category"), task_name)
