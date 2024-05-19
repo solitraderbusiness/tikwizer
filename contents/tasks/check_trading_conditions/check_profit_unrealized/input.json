@@ -9,5 +9,6 @@
   "profit_mode" : "PROFIT_MODE_MONEY",
   "profit_amount" : 0.0,
   "compare_each": ">=",
-  "compare": "<"
+  "compare": "<",
+
 }
