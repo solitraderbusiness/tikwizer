@@ -10,4 +10,6 @@
   "profit_amount" : 0.0,
   "compare_each": ">=",
   "compare": "<"
+
+
 }
