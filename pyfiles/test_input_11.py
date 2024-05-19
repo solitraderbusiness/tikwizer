@@ -2920,3 +2920,427 @@ input_data_31 = {
     }
   ]
 }
+
+# 20 blocks final: buy now, switch erraction removed, slippage value calc corrected
+input_data_32 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "symbol": "",
+            "timeframe": "PERIOD_CURRENT",
+            "max_times_to_pass": "1"
+          },
+          "id": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "id_by_user": 5,
+          "blockName": "Once per bar",
+          "category": "time_filters",
+          "block_name_mql": "once_per_bar"
+        },
+        {
+          "params": {
+            "operator": {
+              "label": ">",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "ma_period": "5",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": "0"
+              }
+            },
+            "right": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "ma_period": "20",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": "0"
+              }
+            }
+          },
+          "id": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "id_by_user": 6,
+          "blockName": "Condition",
+          "category": "condition_formula",
+          "block_name_mql": "condition"
+        },
+        {
+          "params": {
+            "symbol": "",
+            "group": "11",
+            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+            "volume_upper_limit": "0",
+            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+            "slippage": "4",
+            "comment": "",
+            "arrow_color": "clrMaroon",
+            "how_much_volume": "0.1",
+            "stoploss": "20",
+            "takeprofit": "20"
+          },
+          "id": "9d9bf64f-7764-4184-ab05-7466f66fdf27",
+          "id_by_user": 7,
+          "blockName": "Buy now",
+          "category": "buy_sell",
+          "block_name_mql": "buy_now"
+        }
+      ],
+      "edges": [
+        {
+          "source": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "sourceHandle": "blue",
+          "target": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-55b1db93-ea73-4505-8583-488e582db4c1blue-66b43634-ad92-4b79-a496-bdc1e9edefecc"
+        },
+        {
+          "source": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "sourceHandle": "blue",
+          "target": "9d9bf64f-7764-4184-ab05-7466f66fdf27",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-66b43634-ad92-4b79-a496-bdc1e9edefecblue-9d9bf64f-7764-4184-ab05-7466f66fdf27c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}
+
+# events added by behrouz
+input_data_33 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "operator": {
+              "label": ">",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "value": "1",
+                "ma_period": "5",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": ""
+              }
+            },
+            "right": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "value": "1",
+                "ma_period": "20",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": ""
+              }
+            }
+          },
+          "id": "74c4c2aa-2ad3-401d-87bd-5a570e444509",
+          "id_by_user": 1,
+          "category": "condition_formula",
+          "block_name_mql": "condition",
+          "blockName": "Condition"
+        },
+        {
+          "params": {
+            "time_start_mode": "TIME_MODE_TEXT",
+            "time_start": "00:00",
+            "time_end_mode": "TIME_MODE_TEXT",
+            "time_end": "00:01",
+            "time_mode": "TIME_SERVER"
+          },
+          "id": "4afbd2b8-43ee-4a77-8360-28f73ccce4c6",
+          "id_by_user": 2,
+          "category": "time_filters",
+          "block_name_mql": "time_filter",
+          "blockName": "Time filter"
+        }
+      ],
+      "edges": [
+        {
+          "source": "4afbd2b8-43ee-4a77-8360-28f73ccce4c6",
+          "sourceHandle": "blue",
+          "target": "74c4c2aa-2ad3-401d-87bd-5a570e444509",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-4afbd2b8-43ee-4a77-8360-28f73ccce4c6blue-74c4c2aa-2ad3-401d-87bd-5a570e444509c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}
+
+# 20 blocks final: buy now, lots calc for percent of equity corrected
+input_data_34 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "symbol": "",
+            "timeframe": "PERIOD_CURRENT",
+            "max_times_to_pass": "1"
+          },
+          "id": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "id_by_user": 5,
+          "blockName": "Once per bar",
+          "category": "time_filters",
+          "block_name_mql": "once_per_bar"
+        },
+        {
+          "params": {
+            "operator": {
+              "label": ">",
+              "cross_width": 1
+            },
+            "left": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "ma_period": "5",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": "0"
+              }
+            },
+            "right": {
+              "row1": "indicator",
+              "row2": "ma",
+              "params": {
+                "ma_period": "20",
+                "ma_shift": "0",
+                "ma_method": "MODE_SMMA",
+                "applied_price": "PRICE_CLOSE",
+                "adjust": "",
+                "symbol": "",
+                "timeframe": "PERIOD_CURRENT",
+                "shift": "0"
+              }
+            }
+          },
+          "id": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "id_by_user": 6,
+          "blockName": "Condition",
+          "category": "condition_formula",
+          "block_name_mql": "condition"
+        },
+        {
+          "params": {
+            "symbol": "",
+            "group": "11",
+            "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+            "volume_upper_limit": "0",
+            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+            "slippage": "4",
+            "comment": "",
+            "arrow_color": "clrMaroon",
+            "stoploss": "20",
+            "takeprofit": "20",
+            "how_much_volume": "2.5"
+          },
+          "id": "9d9bf64f-7764-4184-ab05-7466f66fdf27",
+          "id_by_user": 7,
+          "blockName": "Buy now",
+          "category": "buy_sell",
+          "block_name_mql": "buy_now"
+        }
+      ],
+      "edges": [
+        {
+          "source": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "sourceHandle": "blue",
+          "target": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-55b1db93-ea73-4505-8583-488e582db4c1blue-66b43634-ad92-4b79-a496-bdc1e9edefecc"
+        },
+        {
+          "source": "66b43634-ad92-4b79-a496-bdc1e9edefec",
+          "sourceHandle": "blue",
+          "target": "9d9bf64f-7764-4184-ab05-7466f66fdf27",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-66b43634-ad92-4b79-a496-bdc1e9edefecblue-9d9bf64f-7764-4184-ab05-7466f66fdf27c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}
+
+# 20 blocks final: buy pending issue solved?
+input_data_35 = {
+  "events": {
+    "on_tick": {
+      "nodes": [
+        {
+          "params": {
+            "symbol": "",
+            "timeframe": "PERIOD_CURRENT",
+            "max_times_to_pass": "1"
+          },
+          "id": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "id_by_user": 5,
+          "blockName": "Once per bar",
+          "category": "time_filters",
+          "block_name_mql": "once_per_bar"
+        },
+        {
+          "params": {
+            "symbol": "",
+            "group": "11",
+            "open_at_price": "OPEN_AT_ASK",
+            "money_management": "MONEY_MANAGEMENT_PERCENT_OF_EQUITY",
+            "volume_upper_limit": "0",
+            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+            "slippage": "4",
+            "comment": "",
+            "arrow_color": "clrDarkBlue",
+            "price_offset": "20",
+            "stoploss": "20",
+            "takeprofit": "20",
+            "how_much_volume": "2.5"
+          },
+          "id": "550d5451-e687-4548-b209-f76578320962",
+          "id_by_user": 6,
+          "blockName": "Buy pending order",
+          "category": "buy_sell",
+          "block_name_mql": "buy_pending_order"
+        }
+      ],
+      "edges": [
+        {
+          "source": "55b1db93-ea73-4505-8583-488e582db4c1",
+          "sourceHandle": "blue",
+          "target": "550d5451-e687-4548-b209-f76578320962",
+          "targetHandle": "c",
+          "type": "customEdge",
+          "id": "reactflow__edge-55b1db93-ea73-4505-8583-488e582db4c1blue-550d5451-e687-4548-b209-f76578320962c"
+        }
+      ]
+    },
+    "on_trade": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_chart": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_timer": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_init": {
+      "nodes": [],
+      "edges": []
+    },
+    "on_deinit": {
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "variables": [],
+  "constants": []
+}

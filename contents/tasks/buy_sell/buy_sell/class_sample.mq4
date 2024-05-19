@@ -153,16 +153,21 @@ public:
 
          int erraction = CheckForTradingError(GetLastError(), msg_prefix);
 
-         switch(erraction)
+         if(erraction==0)
            {
-            case 0:
-               break;    // no error
-            case 1:
+            break;    // no error
+           }
+         else
+            if(erraction==1)
+              {
                retryCount ++;
                continue; // overcomable error
-            case 2:
-               break;    // fatal error
-           }
+              }
+            else
+               if(erraction==2)
+                 {
+                  break;    // fatal error
+                 }
         }
 
       if(ticket > 0)
@@ -213,7 +218,6 @@ private:
                      cmd = OP_SELLLIMIT;
                  }
 
-      calcVolume();
       calc_entry_price();
       if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
         {
@@ -226,7 +230,7 @@ private:
             calc_tp_sell();
             calc_sl_sell();
            }
-
+      calcVolume();
       if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
         {
          printf("Takeprofit and Stoploss too close");
@@ -347,7 +351,7 @@ private:
       else
          if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
            {
-            volume = DynamicLots(msymbol, money_management, how_much_volume);
+            volume = lotsPercentOfEquity(msymbol, price, slPrice, how_much_volume);
            }
          else
             if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
@@ -415,6 +419,24 @@ private:
       if(volume_upper_limit>0 && volume>volume_upper_limit)
          volume = volume_upper_limit;
      }
+
+double lotsPercentOfEquity(string symbol, double entry, double stopLossLevel, double riskPercent)
+  {
+   double point = MarketInfo(symbol,MODE_POINT);
+   if(point==0)
+     {
+      printf("Failed to calc lot size: point value is zero");
+      return 0;
+     }
+   double stopLossPips = MathAbs(entry - stopLossLevel) / point;
+   double accountEquity = AccountEquity();
+   double riskAmount = (riskPercent / 100.0) * accountEquity;
+   double pipValue = MarketInfo(symbol, MODE_TICKVALUE);
+   double lotSize = riskAmount / (stopLossPips * pipValue);
+   return NormalizeDouble(lotSize, 2); // round to 2 decimal places
+  }
+
+
 
    void              fitGroup()
      {

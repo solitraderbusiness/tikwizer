@@ -109,16 +109,21 @@ public:
 
          int erraction = CheckForTradingError(GetLastError(), msg_prefix);
 
-         switch(erraction)
+         if(erraction==0)
            {
-            case 0:
-               break;    // no error
-            case 1:
+            break;    // no error
+           }
+         else
+            if(erraction==1)
+              {
                retryCount ++;
                continue; // overcomable error
-            case 2:
-               break;    // fatal error
-           }
+              }
+            else
+               if(erraction==2)
+                 {
+                  break;    // fatal error
+                 }
         }
 
       if(ticket > 0)
@@ -141,7 +146,6 @@ private:
    //does needed calculations
    void              calc()
      {
-      slippage = (int)(slippage * PipValue(msymbol));
       fitGroup();
       buildMagic();
       if(order_type==ORDER_BUY)
@@ -170,7 +174,6 @@ private:
                      cmd = OP_SELLLIMIT;
                  }
 
-      calcVolume();
       calc_entry_price();
       if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
         {
@@ -184,6 +187,7 @@ private:
             calc_sl_sell();
            }
 
+      calcVolume();
       if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
         {
          printf("Takeprofit and Stoploss too close");
@@ -302,7 +306,7 @@ private:
       else
          if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
            {
-            volume = DynamicLots(msymbol, money_management, how_much_volume);
+            volume = lotsPercentOfEquity(msymbol, price, slPrice, how_much_volume);
            }
          else
             if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
