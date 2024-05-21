@@ -2716,12 +2716,12 @@ public:
             count_max_times = 1;
             count_n = 1;
             printf("task"+block_id + " passed route 1 ");
-
+            block.onResult(ROUTE_1_PASSED);
            }
          else //otherwise
            {
             printf("task"+block_id + " passed route 2");
-
+            block.onResult(ROUTE_2_PASSED);
            }
         }
       else //otherwise, it's the same candle
@@ -2731,12 +2731,12 @@ public:
            {
             count_max_times++;
             printf("task"+block_id + " passed route 1");
-
+            block.onResult(ROUTE_1_PASSED);
            }
          else
            {
             printf("task"+block_id + " passed route 2");
-
+            block.onResult(ROUTE_2_PASSED);
            }
         }
      }
@@ -5137,7 +5137,9 @@ bool IsOrderTypeStop()
 //+------------------------------------------------------------------+
 string getSymbol(string symbol)
   {
-   return (symbol==NULL || symbol=="") && overriding_symbol != "" ? overriding_symbol : symbol;
+   if(symbol==NULL || symbol=="")
+      symbol = Symbol();
+   return (symbol==NULL || symbol=="") && overriding_symbol != "" ? overriding_symbol : (symbol==NULL || symbol=="") ? Symbol() : symbol;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

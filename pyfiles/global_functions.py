@@ -446,7 +446,7 @@ def get_fun__is_order_type_stop():
 
 
 def get_fun__get_symbol():
-    result = "string getSymbol(string symbol)\n  {\n   return (symbol==NULL || symbol==\"\") && overriding_symbol != \"\" ? overriding_symbol : symbol;\n  }"
+    result = "string getSymbol(string symbol)\n  {\n   if (symbol==NULL || symbol==\"\")\n      symbol = Symbol();\n   return (symbol==NULL || symbol==\"\") && overriding_symbol != \"\" ? overriding_symbol : (symbol==NULL || symbol==\"\") ? Symbol() : symbol;\n  }"
     return result
 
 
