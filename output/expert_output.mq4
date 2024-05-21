@@ -2702,8 +2702,6 @@ public:
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-      Task::run(block_id, block);
-
       string msymbol = getSymbol(symbol);
       int mtimeframe = getTimeframe(timeframe);
 
@@ -2717,28 +2715,28 @@ public:
            {
             count_max_times = 1;
             count_n = 1;
-            printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
+            printf("task"+block_id + " passed route 1 ");
+
            }
          else //otherwise
            {
             printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
+
            }
         }
       else //otherwise, it's the same candle
         {
          double mod2 = MathMod(count_n, n);
-         if(count_max_times < max_times_to_pass && mod2==1)
+         if(count_max_times < max_times_to_pass && (mod2==1 || (mod2==0 && n==1)))
            {
             count_max_times++;
             printf("task"+block_id + " passed route 1");
-            block.onResult(ROUTE_1_PASSED);
+
            }
          else
            {
             printf("task"+block_id + " passed route 2");
-            block.onResult(ROUTE_2_PASSED);
+
            }
         }
      }
