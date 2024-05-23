@@ -3719,7 +3719,7 @@ input_data_39 = {
                 "row2": "Numeric",
                 "params": {
                   "value": "1",
-                  "adjust": ""
+                  "adjust": "*20"
                 }
               },
               "adjust": "",
@@ -3730,6 +3730,174 @@ input_data_39 = {
             "blockName": "Formula",
             "category": "condition_formula",
             "block_name_mql": "formula"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+}
+
+input_data_40 = {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "sourceHandle": "blue",
+            "target": "37a14f9e-94ca-4f6a-b8ad-1b91bd52b6ef",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-c1e6f259-e56d-4973-84cb-aca42ed22594blue-37a14f9e-94ca-4f6a-b8ad-1b91bd52b6efc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "20",
+                  "adjust": "-15%"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "37a14f9e-94ca-4f6a-b8ad-1b91bd52b6ef",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+}
+
+input_data_41 = {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "sourceHandle": "blue",
+            "target": "37a14f9e-94ca-4f6a-b8ad-1b91bd52b6ef",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-c1e6f259-e56d-4973-84cb-aca42ed22594blue-37a14f9e-94ca-4f6a-b8ad-1b91bd52b6efc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Text",
+                "params": {
+                  "value": "hello",
+                  "adjust": "+ How r u?"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "37a14f9e-94ca-4f6a-b8ad-1b91bd52b6ef",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
           }
         ]
       },

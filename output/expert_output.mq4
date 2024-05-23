@@ -952,186 +952,11 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-class Candle3_left
-
-  {
-
-public:
-
-   string            symbol;
-   int               timeframe;
-   int               find_method;
-   int               price_mode;
-   string            timestr;
-   int               shift;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-
-   void              init()
-
-     {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      find_method = FIND_BY_ID;
-      price_mode = BEAR_CANDLE_TOTAL_SIZE;
-      timestr = "2023.4.26 13:40:30";
-      shift = 10;
-     }
-
-
-
-   double            calc()
-
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      int index = get_index();
-      double value = get_value(index);
-      return value;
-     }
-
-private:
-   int               get_index()
-     {
-      int index = -1;
-      if(find_method==FIND_BY_DATE)
-        {
-         datetime date = StrToTime(timestr);
-         index = iBarShift(msymbol, mtimeframe, date, false);
-        }
-      else
-         if(find_method==FIND_BY_ID)
-           {
-            index = shift;
-           }
-      return index;
-     }
-
-   double            get_value(int index)
-     {
-      double val, valPips;
-      double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-      switch(price_mode)
-        {
-         case CANDLE_OPEN:
-            return iOpen(msymbol, mtimeframe, index);
-         case CANDLE_HIGH:
-            return iHigh(msymbol, mtimeframe, index);
-         case CANDLE_LOW:
-            return iLow(msymbol, mtimeframe, index);;
-         case CANDLE_CLOSE:
-            return iClose(msymbol, mtimeframe, index);;
-         case CANDLE_MEDIAN:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
-         case CANDLE_HLC3:
-            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
-         case CANDLE_AVERAGE:
-            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
-         case CANDLE_GAP_TO_PREV:
-            //STest, is this calc right?
-            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
-            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
-            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
-            return gap;
-
-         case CANDLE_TOTAL_SIZE:
-            val = length(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BODY_SIZE:
-            val = body(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_TOP_WICK:
-            val = wickup(index);
-            valPips = val/point/10;
-            return valPips;
-         case CANDLE_BOTTOM_WICK:
-            val = wickdn(index);
-            valPips = val/point/10;
-            return valPips;
-
-         //STest, effect of bull here compared to code above
-         case BULL_CANDLE_TOTAL_SIZE:
-            val = isGreen(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BODY_SIZE:
-            val = isGreen(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_TOP_WICK:
-            val = isGreen(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BULL_CANDLE_BOTTOM_WICK:
-            val = isGreen(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-
-         //STest, effect of bear here compared to code above
-         case BEAR_CANDLE_TOTAL_SIZE:
-            val = isRed(index) ? length(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BODY_SIZE:
-            val = isRed(index) ? body(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_TOP_WICK:
-            val = isRed(index) ? wickup(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-         case BEAR_CANDLE_BOTTOM_WICK:
-            val = isRed(index) ? wickdn(index) : 0;
-            valPips = val/point/10;
-            return valPips;
-        }
-      return -1;
-     }
-
-
-
-
-   double            length(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
-     }
-   double            body(int i)
-     {
-      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickup(int i)
-     {
-      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
-     }
-   double            wickdn(int i)
-     {
-      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
-     }
-   bool              isGreen(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
-     }
-   bool              isRed(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
-     }
-   bool              isDoji(int i)
-     {
-      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
-     }
-
-  };
 
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value3_right
+class Value3_left
   {
 public:
 
@@ -1175,7 +1000,7 @@ public:
    void              init()
 
      {
-      value = "1";
+      value = "hello";
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = NULL;
@@ -1209,11 +1034,12 @@ public:
 
      }
 
-   string              calc()
+   template<typename T>
+   T                 calc()
      {
       msymbol = getSymbol(symbol);
       string result = "";
-      string value_type = "Numeric";
+      string value_type = "Text";
       if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
         {
          result = value;
@@ -1235,7 +1061,7 @@ public:
                   if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                     {
                      double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
+                     result = point*10*(double)value;  //STest, *10 works for all symbols?
                     }
               }
             else
@@ -1370,10 +1196,58 @@ public:
 
                   result = retval;
                  }
-      return result;
+      return result +  "How r u?";
      }
   };
 
+
+class MovingAverage3_right
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               ma_period;
+   int               ma_shift;
+   int               ma_method;
+   int               applied_price;
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      ma_period = 20;
+      ma_shift = 0;
+      ma_method = MODE_SMMA;
+      applied_price = PRICE_CLOSE;
+      shift = 0;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
 //Once per bar
 class Task2 : public Task
   {
@@ -1445,7 +1319,7 @@ public:
 
   };
 
-//Formula
+//Condition
 class Task3 : public Task
   {
 
@@ -1458,16 +1332,24 @@ public:
      {
       Task::run(block_id, block);
 
-      Candle3_left candle3_left;
-      candle3_left.init();
-      double valueCandle3_left = candle3_left.calc();
-      Value3_right value3_right;
-      value3_right.init();
-      double valueValue3_right = value3_right.calc();
-         int test = (valueCandle3_left + valueValue3_right);
+      Value3_left value3_left;
+      value3_left.init();
+      string valueValue3_left = value3_left.calc<string>();
+      printf(valueValue3_left);
+      MovingAverage3_right movingaverage3_right;
+      movingaverage3_right.init();
+      double valueMovingAverage3_right = movingaverage3_right.calc();
 
-      printf("task"+block_id + " passed route 1");
-      block.onResult(ROUTE_1_PASSED);
+      if(valueValue3_left > valueMovingAverage3_right)
+        {
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -1649,7 +1531,7 @@ public:
      }
   };
 
-//Formula
+//Condition
 class Block3 : public Block
   {
 public:
@@ -1657,7 +1539,7 @@ public:
      {
       id = 1;
       id_by_user = 3;
-      name = "formula";
+      name = "condition_1_normal";
       enabled = True;
       event = EVENT_ON_TICK;
 
@@ -3570,11 +3452,17 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)

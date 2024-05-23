@@ -27,13 +27,17 @@ def get_class(value_type, input_dic, class_id, constants, variables):
             init_body_dic = json.loads(init_txt)
 
     for key in input_dic:
-        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", get_proper_value(input_dic.get(key), constants, variables), 1)
+        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val",
+                                                                            get_proper_value(input_dic.get(key),
+                                                                                             constants, variables), 1)
 
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
         .replace("init_body", init_body_dic.get("init_body")) \
-        .replace("value_type_val", '\"' + value_type + '\"')
+        .replace("value_type_val", '\"' + value_type + '\"') \
+        .replace("type_return", get_return_type(value_type)) \
+        .replace("return_default", get_return_default(get_return_type(value_type)))
 
     if "adjust" in input_dic:
         var_name = "result"
@@ -72,25 +76,45 @@ def get_initializer(value_type, var_id):
             initializer_str = initializer_file.read()
             initializer_dic = json.loads(initializer_str)
 
-            mtype = ""
-            match value_type:
-                case "Numeric":
-                    mtype = "double"
-                case "Boolean":
-                    mtype = "bool"
-                case "Color":
-                    mtype = "color"
-                case "Pips":
-                    mtype = "double"
-                case "Text":
-                    mtype = "string"
-                case "Text_code_input":
-                    mtype = "string"
-                case "Time":
-                    mtype = "datetime"
+            mtype = get_return_type(value_type)
 
-            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id)).replace("type", mtype)
+            initializer_body = initializer_dic.get("initializer")\
+                .replace("_id", str(var_id))\
+                .replace("type", mtype, 1)\
+                .replace("type_return", mtype)
             return initializer_body
+
+
+def get_return_default(return_type):
+    match return_type:
+        case "double":
+            return "0"
+        case "bool":
+            return "false"
+        case "color":
+            return "clrNONE"
+        case "string":
+            return "\"\""
+        case "datetime":
+            return "0"
+
+
+def get_return_type(value_type):
+    match value_type:
+        case "Numeric":
+            return "double"
+        case "Boolean":
+            return "bool"
+        case "Color":
+            return "color"
+        case "Pips":
+            return "double"
+        case "Text":
+            return "string"
+        case "Text_code_input":
+            return "string"
+        case "Time":
+            return "datetime"
 
 
 def get_initializer_split(var_id):

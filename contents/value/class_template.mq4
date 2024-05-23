@@ -13,10 +13,11 @@ public:
         init_body
      }
 
-   string              calc()
+   template<typename T>
+   T              calc()
      {
       msymbol = getSymbol(symbol);
-      string result = "";
+      type_return result = return_default;
       string value_type = value_type_val;
       if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
         {
@@ -39,7 +40,7 @@ public:
                   if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                     {
                      double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
+                     result = point*10*(double)value;  //STest, *10 works for all symbols?
                     }
               }
             else

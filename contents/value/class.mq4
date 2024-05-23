@@ -102,10 +102,11 @@ public:
       retval0 =  0;
      }
 
-   string              calc()
+   template<typename T>
+   T              calc()
      {
       msymbol = getSymbol(symbol);
-      string result = "";
+      int result;
       string value_type = "Boolean";
       if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
         {
