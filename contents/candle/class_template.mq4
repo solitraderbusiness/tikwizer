@@ -46,6 +46,8 @@ private:
 
    double            get_value(int index)
      {
+      double val, valPips;
+      double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
       switch(price_mode)
         {
          case CANDLE_OPEN:
@@ -69,10 +71,6 @@ private:
             double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
             return gap;
 
-
-            double val, valPips;
-            double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
-
          case CANDLE_TOTAL_SIZE:
             val = length(index);
             valPips = val/point/10;
@@ -89,8 +87,6 @@ private:
             val = wickdn(index);
             valPips = val/point/10;
             return valPips;
-
-
 
          //STest, effect of bull here compared to code above
          case BULL_CANDLE_TOTAL_SIZE:
@@ -110,9 +106,7 @@ private:
             valPips = val/point/10;
             return valPips;
 
-
-
-         //STest, effect of bull here compared to code above
+         //STest, effect of bear here compared to code above
          case BEAR_CANDLE_TOTAL_SIZE:
             val = isRed(index) ? length(index) : 0;
             valPips = val/point/10;

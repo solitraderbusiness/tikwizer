@@ -3673,3 +3673,87 @@ input_data_38 = {
     }
   ]
 }
+
+# 20 blocks final: candle > total size pips > runtime error > divide by zero : Bug solved
+input_data_39 = {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "sourceHandle": "blue",
+            "target": "9b2ba02e-5d1a-4260-b6e4-9f5ea6fbb82c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-c1e6f259-e56d-4973-84cb-aca42ed22594blue-9b2ba02e-5d1a-4260-b6e4-9f5ea6fbb82cc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "c1e6f259-e56d-4973-84cb-aca42ed22594",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": "+"
+              },
+              "left": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "BEAR_CANDLE_TOTAL_SIZE",
+                  "find_method": "FIND_BY_ID",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "10"
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "adjust": "",
+              "variable": ""
+            },
+            "id": "9b2ba02e-5d1a-4260-b6e4-9f5ea6fbb82c",
+            "id_by_user": 3,
+            "blockName": "Formula",
+            "category": "condition_formula",
+            "block_name_mql": "formula"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+}
