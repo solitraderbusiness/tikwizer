@@ -233,9 +233,9 @@ private:
       if(price_offset_as_pip)
          offset = price_offset * Point() * 10;
 
-      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+      if((cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP) && open_at_price!=OPEN_AT_CUSTOM_PRICE)
          price -= offset;
-      else if (cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
+      else if ((cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP) && open_at_price!=OPEN_AT_CUSTOM_PRICE)
          price += offset;
      }
 

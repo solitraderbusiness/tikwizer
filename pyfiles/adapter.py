@@ -4,7 +4,8 @@ from . import path_root
 import json
 
 
-def refactor(data):
+def refactor(data_raw):
+    data = data_raw.get("data")
     correct_enabled(data)
     events = data["events"]
     for key in events:
