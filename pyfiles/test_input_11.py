@@ -4339,6 +4339,87 @@ input_data_43 = {
   "selected_name": "d790e4c0-3977-4975-a442-c477ad3eaa29"
 }
 
+input_data_44 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "da1e5c89-8787-43d9-a3e0-2d23ba0e4a42",
+            "sourceHandle": "blue",
+            "target": "c7c13326-a0ea-4768-af90-dd0d236de389",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-da1e5c89-8787-43d9-a3e0-2d23ba0e4a42blue-c7c13326-a0ea-4768-af90-dd0d236de389c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "c7c13326-a0ea-4768-af90-dd0d236de389",
+            "id_by_user": 1,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT",
+              "max_times_to_pass": "1"
+            },
+            "id": "da1e5c89-8787-43d9-a3e0-2d23ba0e4a42",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "17f204c7-74b5-4f9d-af54-5dbdb83ad576"
+}
 
 
 
