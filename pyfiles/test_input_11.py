@@ -4421,6 +4421,94 @@ input_data_44 = {
   "selected_name": "17f204c7-74b5-4f9d-af54-5dbdb83ad576"
 }
 
+input_data_45 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "957c8089-1f72-4362-aad8-65e6e65113a4",
+            "sourceHandle": "blue",
+            "target": "48680d23-0da5-4e01-8233-e640080b8ac9",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-957c8089-1f72-4362-aad8-65e6e65113a4blue-48680d23-0da5-4e01-8233-e640080b8ac9c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "957c8089-1f72-4362-aad8-65e6e65113a4",
+            "id_by_user": 3,
+            "blockName": "Pass",
+            "category": "more",
+            "block_name_mql": "pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "open_at_price": "OPEN_AT_CUSTOM_PRICE",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrDarkBlue",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20",
+              "price_offset": "20",
+              "price_to_open_dynamic_level": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "48680d23-0da5-4e01-8233-e640080b8ac9",
+            "id_by_user": 4,
+            "blockName": "Buy pending order",
+            "category": "buy_sell",
+            "block_name_mql": "buy_pending_order"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8129b83c-a940-4930-a7fe-a410b1df760f"
+}
+
 
 
 
