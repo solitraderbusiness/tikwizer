@@ -4509,8 +4509,84 @@ input_data_45 = {
   "selected_name": "8129b83c-a940-4930-a7fe-a410b1df760f"
 }
 
-
-
+input_data_46 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "aada2950-195c-4dea-9e84-1cb1ebb9d25d",
+            "sourceHandle": "red",
+            "target": "85bd4dbb-d6c0-45dd-a1e2-461b793da2ad",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-aada2950-195c-4dea-9e84-1cb1ebb9d25dred-85bd4dbb-d6c0-45dd-a1e2-461b793da2adc"
+          },
+          {
+            "source": "aada2950-195c-4dea-9e84-1cb1ebb9d25d",
+            "sourceHandle": "red",
+            "target": "7fe2ab00-2d60-41e2-b54e-cf1b767806a6",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-aada2950-195c-4dea-9e84-1cb1ebb9d25dred-7fe2ab00-2d60-41e2-b54e-cf1b767806a6c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "stoploss": "20",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "takeprofit": "20",
+              "symbol": "",
+              "group": "11",
+              "volume_upper_limit": "0",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "how_much_volume": "0.1"
+            },
+            "id": "7fe2ab00-2d60-41e2-b54e-cf1b767806a6",
+            "id_by_user": 1,
+            "category": "buy_sell",
+            "block_name_mql": "buy_now",
+            "blockName": "Buy now"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "c5b63e8e-238f-46c2-8ffa-af8af320b50a",
+  "name_by_user": "uuuuuuuuu"
+}
 
 
 

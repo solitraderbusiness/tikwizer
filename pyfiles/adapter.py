@@ -237,8 +237,6 @@ def correct_block_names_mql(nodes):
             node["block_name_mql"] = "check_trades_orders_count"
 
 
-
-
 def get_nexts_true(node, edges):
     result = []
     for edge in edges:
@@ -273,5 +271,3 @@ def get_prevs_false(node, edges):
             if edge.get("sourceHandle") == "red":
                 result.append(edge.get("source"))
     return result
-
-

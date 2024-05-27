@@ -9,7 +9,7 @@ from . import test_input_11
 
 
 def test():
-    data = test_input_11.input_data_45
+    data = test_input_11.input_data_46
     result = mql_generator.generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"
