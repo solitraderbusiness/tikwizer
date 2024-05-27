@@ -1315,3 +1315,80 @@ input_data_8 = {
   "name_by_user": "test",
   "highestIndex": "4"
 }
+
+# Check pending orders count
+input_data_9 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "2f6ac49f-7d00-47e0-b949-ea82d464e526",
+            "sourceHandle": "blue",
+            "target": "c6d32537-139b-4d34-b48a-fbc81a13f9e8",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2f6ac49f-7d00-47e0-b949-ea82d464e526blue-c6d32537-139b-4d34-b48a-fbc81a13f9e8c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "2f6ac49f-7d00-47e0-b949-ea82d464e526",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": ">=",
+              "orders-count": "8",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "type_pending": "{2,3}",
+              "group_number": "20",
+              "symbols_str": ""
+            },
+            "id": "c6d32537-139b-4d34-b48a-fbc81a13f9e8",
+            "id_by_user": 2,
+            "blockName": "Check pending orders count",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_pending_orders_count"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8962631d-4ec0-4d2c-ac3e-e713bc2bb5b4",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
