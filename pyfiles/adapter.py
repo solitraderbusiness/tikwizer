@@ -241,6 +241,8 @@ def correct_block_names_mql(nodes):
             node["block_name_mql"] = "buy_sell"
         elif block_name in ["Check trades count", "Check pending orders", "If trade", "If trade/order", "If pending order", "No trade", "No trade/order", "No pending order"]:
             node["block_name_mql"] = "check_trades_orders_count"
+        elif block_name in ["No trade nearby", "No pending order nearby"]:
+            node["block_name_mql"] = "no_trade_order_nearby"
 
 
 def get_nexts_true(node, edges):

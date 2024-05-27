@@ -139,8 +139,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_editfield_run_data(node, run_data_static)
     elif task_name == "check_trendline_price_level":
         run_data = check_trendline_price_level_run_data(node, run_data_static)
-    elif task_name == "no_trade_nearby":
-        run_data = no_trade_nearby_run_data(node, run_data_static)
+    elif task_name == "no_trade_order_nearby":
+        run_data = no_trade_order_nearby_run_data(node, run_data_static)
     return run_data
 
 
@@ -673,7 +673,7 @@ def trailing_stop_each_trade_run_data(node, run_data):
     return run_data
 
 
-def no_trade_nearby_run_data(node, run_data):
+def no_trade_order_nearby_run_data(node, run_data):
     params = node.get("params")
     if params.get("mode_base_price") != "\"current\"":
         value_fetch_price = params.get("price")

@@ -785,8 +785,8 @@ class ExpertBuilder:
                 self.draw_editfield(node)
             elif task_name == "check_trendline_price_level":
                 self.check_trendline_price_level(node)
-            elif task_name == "no_trade_nearby":
-                self.no_trade_nearby_run_data(node)
+            elif task_name == "no_trade_order_nearby":
+                self.no_trade_order_nearby_run_data(node)
 
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
@@ -1039,7 +1039,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "tsm_cl"
             self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
 
-    def no_trade_nearby_run_data(self, node):
+    def no_trade_order_nearby_run_data(self, node):
         params = node.get("params")
         if params.get("mode_base_price") != "\"current\"":
             value_fetch_price = params.get("price")
