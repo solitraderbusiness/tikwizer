@@ -42,6 +42,12 @@ def create_specific_input(nodes):
             params["n"] = 1
         elif block_name == "Volume profile":
             params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
+        elif block_name in ["If trade", "If trade/order", "If pending order"]:
+            params["count_limit"] = 0
+            params["operator"] = ">"
+        elif block_name in ["No trade", "No trade/order", "No pending order"]:
+            params["count_limit"] = 0
+            params["operator"] = "=="
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):
@@ -233,7 +239,7 @@ def correct_block_names_mql(nodes):
             node["block_name_mql"] = "once_every_n_bars"
         elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
             node["block_name_mql"] = "buy_sell"
-        elif block_name == "If trade":
+        elif block_name in ["Check trades count", "Check pending orders", "If trade", "If trade/order", "If pending order", "No trade", "No trade/order", "No pending order"]:
             node["block_name_mql"] = "check_trades_orders_count"
 
 

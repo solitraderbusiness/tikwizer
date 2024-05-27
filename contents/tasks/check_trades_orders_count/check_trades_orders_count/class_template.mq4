@@ -39,7 +39,7 @@ public:
            }
         }
 
-      bool result = count>count_limit;
+      bool result = count operator_val count_limit;
       if(result)
         {
          printf("task" + block_id + " passed route 1");

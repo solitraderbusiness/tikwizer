@@ -5,6 +5,6 @@
 	"group_number" : 25,
 	"type" : "{0,1}",
 	"type_pending" : "{0,1,2,3,4,5}",
-	"count_limit" : 0,
+	"count_limit" : 10,
 	"operator": ">"
 }
