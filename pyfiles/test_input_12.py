@@ -1218,3 +1218,100 @@ input_data_7 = {
         "constants": []
     }
 }
+
+# No pending order nearby
+input_data_8 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "2f6ac49f-7d00-47e0-b949-ea82d464e526",
+            "sourceHandle": "blue",
+            "target": "8d8c089c-ed13-4647-85f3-3d488d2ea7ef",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2f6ac49f-7d00-47e0-b949-ea82d464e526blue-8d8c089c-ed13-4647-85f3-3d488d2ea7efc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "2f6ac49f-7d00-47e0-b949-ea82d464e526",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "type": "{3,5}",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "type_pending": "{2,3}",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "mode_base_price": "current",
+              "mode_range": "pips",
+              "range_position": "0",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0",
+                  "time_source": "TIME_SERVER"
+                }
+              },
+              "time_2": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0",
+                  "time_source": "TIME_SERVER"
+                }
+              },
+              "range_pips": "10"
+            },
+            "id": "8d8c089c-ed13-4647-85f3-3d488d2ea7ef",
+            "id_by_user": 3,
+            "blockName": "No pending order nearby",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_pending_order_nearby"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8962631d-4ec0-4d2c-ac3e-e713bc2bb5b4",
+  "name_by_user": "test",
+  "highestIndex": "4"
+}
