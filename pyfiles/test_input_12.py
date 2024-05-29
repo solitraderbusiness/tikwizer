@@ -1392,3 +1392,509 @@ input_data_9 = {
   "name_by_user": "test",
   "highestIndex": "3"
 }
+
+# Trailing pending orders
+input_data_10 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "04ad8b87-5f37-4dac-b55a-f9126fae3ad3",
+            "sourceHandle": "blue",
+            "target": "443b39d7-f095-4b19-b586-e1672c8fdd68",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-04ad8b87-5f37-4dac-b55a-f9126fae3ad3blue-443b39d7-f095-4b19-b586-e1672c8fdd68c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "trailing_distance_mode": "TRAILING_DISTANCE_MODE_DYNAMIC",
+              "t_step_pips": "1",
+              "symbols_str": "",
+              "dynamic_size_pips_input": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": 30,
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "443b39d7-f095-4b19-b586-e1672c8fdd68",
+            "id_by_user": 1,
+            "blockName": "Trailing pending orders",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "trailing_pending_orders"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "04ad8b87-5f37-4dac-b55a-f9126fae3ad3",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "cf9a5141-18ad-4015-80a4-2ba82df2712b",
+  "name_by_user": "تست",
+  "highestIndex": "3"
+}
+
+# Trailing pending orders 2
+input_data_11 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "7ba964bc-825c-46b2-b846-07601cc50daf",
+            "sourceHandle": "blue",
+            "target": "e4c7bce6-2025-4bde-ae4a-a4328dce8a56",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-7ba964bc-825c-46b2-b846-07601cc50dafblue-e4c7bce6-2025-4bde-ae4a-a4328dce8a56c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "trailing_distance_mode": "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS",
+              "t_step_pips": "1",
+              "symbols_str": "",
+              "dynamic_size_digits_input": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": 0.003,
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "e4c7bce6-2025-4bde-ae4a-a4328dce8a56",
+            "id_by_user": 1,
+            "blockName": "Trailing pending orders",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "trailing_pending_orders"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "7ba964bc-825c-46b2-b846-07601cc50daf",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "43916177-a4d5-404c-9f54-eec10c8096e8",
+  "name_by_user": "test test",
+  "highestIndex": "3"
+}
+
+# Sell now > Point calculations corrected
+input_data_12 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "7ba964bc-825c-46b2-b846-07601cc50daf",
+            "sourceHandle": "blue",
+            "target": "f2438e05-3437-45ac-a95b-79d042ff09f9",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-7ba964bc-825c-46b2-b846-07601cc50dafblue-f2438e05-3437-45ac-a95b-79d042ff09f9c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "7ba964bc-825c-46b2-b846-07601cc50daf",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          },
+          {
+            "params": {
+              "symbol": "EURUSD_o",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "f2438e05-3437-45ac-a95b-79d042ff09f9",
+            "id_by_user": 2,
+            "blockName": "Sell now",
+            "category": "buy_sell",
+            "block_name_mql": "sell_now"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "43916177-a4d5-404c-9f54-eec10c8096e8",
+  "name_by_user": "test test",
+  "highestIndex": "3"
+}
+
+# Buy now > Point / Entry price calculations corrected (Now msymbol is taken into account)
+input_data_13 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "d63e4574-3252-4f73-b98d-2c517927d315",
+            "sourceHandle": "blue",
+            "target": "f0ce422a-2d60-4b03-8f51-322845c2c4fa",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-d63e4574-3252-4f73-b98d-2c517927d315blue-f0ce422a-2d60-4b03-8f51-322845c2c4fac"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT",
+              "max_times_to_pass": "1"
+            },
+            "id": "d63e4574-3252-4f73-b98d-2c517927d315",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "f0ce422a-2d60-4b03-8f51-322845c2c4fa",
+            "id_by_user": 3,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "7a20c904-ef43-4410-a1ea-e4a86661dfae",
+  "name_by_user": "testx",
+  "highestIndex": "4"
+}
+
+# trailing stop, break even
+input_data_14 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "d63e4574-3252-4f73-b98d-2c517927d315",
+            "sourceHandle": "blue",
+            "target": "e79eedcf-645b-4820-b508-1869420899a8",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-d63e4574-3252-4f73-b98d-2c517927d315blue-e79eedcf-645b-4820-b508-1869420899a8c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT",
+              "max_times_to_pass": "1"
+            },
+            "id": "d63e4574-3252-4f73-b98d-2c517927d315",
+            "id_by_user": 2,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_MANUAL",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "on_profit_mode": "ON_PROFIT_MODE_FIXED_VALUE",
+              "bep_offset_mode": "BEP_OFFSET_MODE_NONE",
+              "symbols_str": "GBPUSD",
+              "pips_on_profit": "18"
+            },
+            "id": "e79eedcf-645b-4820-b508-1869420899a8",
+            "id_by_user": 4,
+            "blockName": "Break even point (each trade)",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "break_even_point_each_trade"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "7a20c904-ef43-4410-a1ea-e4a86661dfae",
+  "name_by_user": "testx",
+  "highestIndex": "undefined"
+}
+
+# for each: break
+input_data_15 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ec",
+            "sourceHandle": "blue",
+            "target": "f20e181b-093f-4268-a9eb-19c009259a0c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ecblue-f20e181b-093f-4268-a9eb-19c009259a0cc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "loop_direction": "LOOP_DIRECTION_NEWEST_TO_OLDEST",
+              "skip_n": "1",
+              "every_n": "3",
+              "not_more_than_n": "5",
+              "symbols_str": ""
+            },
+            "id": "4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ec",
+            "id_by_user": 1,
+            "blockName": "For each Trade",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "for_each_trade"
+          },
+          {
+            "params": {},
+            "id": "f20e181b-093f-4268-a9eb-19c009259a0c",
+            "id_by_user": 2,
+            "blockName": "(loop) break",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "loop_break"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "7a20c904-ef43-4410-a1ea-e4a86661dfae",
+  "name_by_user": "testx",
+  "highestIndex": "3"
+}

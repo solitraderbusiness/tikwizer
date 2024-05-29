@@ -231,7 +231,7 @@ private:
             calc_sl_sell();
            }
       calcVolume();
-      if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/Point()<MarketInfo(Symbol(), MODE_SPREAD))
+      if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/MarketInfo(msymbol, MODE_POINT)<MarketInfo(Symbol(), MODE_SPREAD))
         {
          printf("Takeprofit and Stoploss too close");
          initialized = false;
@@ -244,12 +244,12 @@ private:
      {
       if(cmd==OP_BUY)
         {
-         price = Ask;
+         price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
         }
       else
          if(cmd==OP_SELL)
            {
-            price = Bid;
+            price = SymbolInfoDouble(msymbol, SYMBOL_BID);
            }
          else
            {
@@ -276,7 +276,7 @@ private:
 
       double offset = price_offset;
       if(price_offset_as_pip)
-         offset = price_offset * Point() * 10;
+         offset = price_offset *  MarketInfo(msymbol, MODE_POINT) * 10;
 
       if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
          price -= offset;

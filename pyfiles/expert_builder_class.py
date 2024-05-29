@@ -945,7 +945,7 @@ class ExpertBuilder:
             elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
                 key = "dynamic_size_pips_input"
             elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
-                key = "dynamic_size_digits_only"
+                key = "dynamic_size_digits_input"
             value_fetch = params.get(key)
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")

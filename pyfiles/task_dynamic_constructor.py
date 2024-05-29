@@ -612,7 +612,7 @@ def trailing_pending_orders_run_data(node, run_data):
         elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
             key = "dynamic_size_pips_input"
         elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
-            key = "dynamic_size_digits_only"
+            key = "dynamic_size_digits_input"
         value_fetch = params.get(key)
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -658,7 +658,7 @@ def trailing_pending_orders_run_data(node, run_data):
 def trailing_stop_each_trade_run_data(node, run_data):
     params = node.get("params")
     if params.get("trailing_stop_mode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-        value_fetch = params.get("value_fetch_trailing_stop_mode")
+        value_fetch = params.get("value_fetch_trailing_stop_mode_custom_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "tsm_cl"
