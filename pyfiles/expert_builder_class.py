@@ -35,6 +35,12 @@ def get_version():
             return "\n\n\n//g-v: " + version_file.read()
 
 
+def handle_const_var_value(data):
+    if data.strip().get("value"):
+        return " = " + str(data.get("value"))
+    return ""
+
+
 class ExpertBuilder:
     from . import block_constructor
     from . import task_dynamic_constructor
@@ -73,7 +79,6 @@ class ExpertBuilder:
         self.on_chart = []
         self.on_deinit = []
 
-        self.pass_n_times_done = False
         self.and_done = False
         self.spread_filter_done = False
         self.close_partially_done = False
@@ -346,9 +351,12 @@ class ExpertBuilder:
         on_trade_event_detector_var = self.on_trade_event_detector_class_constructor.get_var()
         self.vars_system.append(on_trade_event_detector_var)
 
+        exit_loop_var = self.global_vars.get__exit_loop()
+        self.vars_system.append(exit_loop_var)
+
     def add_vars_user(self, mvars):
         for var in mvars:
-            var_str = var.get("type") + " " + var.get("name") + " = " + var.get("value") + "; // " + var.get(
+            var_str = var.get("type") + " " + var.get("name") + handle_const_var_value(var) + "; // " + var.get(
                 "description") + "\n"
             self.vars_user.append(var_str)
 
@@ -356,9 +364,9 @@ class ExpertBuilder:
         self.consts_system.extend(self.constants_constructor.get_constants())
 
     def add_consts_user(self, const_inputs):  # Defined by user
-        for input in const_inputs:
-            input_str = "extern " + input.get("type") + " " + input.get("name") + " = " + str(
-                input.get("value")) + "; // " + input.get("description") + "\n"
+        for my_input in const_inputs:
+            input_str = "extern " + my_input.get("type") + " " + my_input.get("name") \
+                        + handle_const_var_value(my_input) + "; // " + my_input.get("description") + "\n"
             self.consts_user.append(input_str)
 
     def add_global_functions(self, data):
@@ -720,12 +728,6 @@ class ExpertBuilder:
         for node in nodes:
             task_name = node.get("block_name_mql")
             match task_name:
-                case "loop_pass_n_times":
-                    if self.pass_n_times_done:
-                        continue
-                    var_data = self.task_dynamic_constructor.get_var_data(node.get("category"), task_name)
-                    self.vars_system.append(var_data)
-                    self.pass_n_times_done = True
                 case "spread_filter":
                     if self.spread_filter_done:
                         continue

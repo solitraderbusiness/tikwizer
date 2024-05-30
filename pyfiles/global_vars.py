@@ -5,6 +5,8 @@ TEMPLATE_BLOCKS_TRADE = "Block *blocks_trade[];\n"
 TEMPLATE_BLOCKS_CHART = "Block *blocks_chart[];\n"
 TEMPLATE_BLOCKS_DEINIT = "Block *blocks_deinit[];\n"
 
+TEMPLATE_EXIT_LOOP = "bool exit_loop = false;\n"
+
 TEMPLATE_OVERRIDING_SYMBOL = "string overriding_symbol = \"\";\n"
 TEMPLATE_OVERRIDING_TIMEFRAME = "int overriding_timeframe = -1;\n"
 
@@ -25,3 +27,7 @@ def get__overriding_timeframe():
 
 def get__onchart_event_holder():
     return TEMPLATE_ONCHART_EVENT_HOLDER
+
+
+def get__exit_loop():
+    return TEMPLATE_EXIT_LOOP

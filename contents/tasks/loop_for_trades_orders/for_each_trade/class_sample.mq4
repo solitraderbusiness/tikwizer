@@ -58,6 +58,8 @@ public:
       if(starti<=size-1)
          for(int i = starti ; i < MathMin(endi, size) ; i+every_n)
            {
+            if(exit_loop)
+                return;//STest, logical?
             if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
               {
                if(!filterGeneral())
