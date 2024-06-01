@@ -1898,3 +1898,80 @@ input_data_15 = {
   "name_by_user": "testx",
   "highestIndex": "3"
 }
+
+# for each: break 2
+input_data_16 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ec",
+            "sourceHandle": "blue",
+            "target": "f20e181b-093f-4268-a9eb-19c009259a0c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ecblue-f20e181b-093f-4268-a9eb-19c009259a0cc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "79",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{1}",
+              "loop_direction": "LOOP_DIRECTION_NEWEST_TO_OLDEST",
+              "skip_n": "11",
+              "every_n": "30",
+              "not_more_than_n": "50"
+            },
+            "id": "4ee1b4ac-a9e6-472a-ad3b-f4cafd5f57ec",
+            "id_by_user": 1,
+            "blockName": "For each Trade",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "for_each_trade"
+          },
+          {
+            "params": {},
+            "id": "f20e181b-093f-4268-a9eb-19c009259a0c",
+            "id_by_user": 2,
+            "blockName": "(loop) break",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "loop_break"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "7a20c904-ef43-4410-a1ea-e4a86661dfae",
+  "name_by_user": "testx",
+  "highestIndex": "undefined"
+}

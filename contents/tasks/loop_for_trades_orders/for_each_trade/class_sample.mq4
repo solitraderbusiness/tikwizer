@@ -56,7 +56,7 @@ public:
       starti = skip_n;
       endi = not_more_than_n*every_n+starti;
       if(starti<=size-1)
-         for(int i = starti ; i < MathMin(endi, size) ; i+every_n)
+         for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
            {
             if(exit_loop)
                 return;//STest, logical?

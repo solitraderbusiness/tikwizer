@@ -970,19 +970,19 @@ class Task1 : public Task
 public:
                      Task1(string name):Task(name)
      {
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = "";
+      symbol_mode = SYMBOL_MODE_ANY;
+      symbols_str = "EURUSD,GBPUSD";
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 11;
-      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      group_number = 79;
+      int mtype[] = {1}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
       loop_direction = LOOP_DIRECTION_NEWEST_TO_OLDEST;
-      skip_n = 1;//STest, default must be 0
-      not_more_than_n = 5;
-      every_n = 3;//STest default must be 1
+      skip_n = 11;//STest, default must be 0
+      not_more_than_n = 50;
+      every_n = 30;//STest default must be 1
      }
    virtual void               run(int block_id, BlockParent &block)
      {
@@ -1004,6 +1004,8 @@ public:
       if(starti<=size-1)
          for(int i = starti ; i < MathMin(endi, size) ; i+every_n)
            {
+            if(exit_loop)
+               return;//STest, logical?
             if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
               {
                if(!filterGeneral())
@@ -1333,6 +1335,7 @@ string overriding_symbol = "";
 int overriding_timeframe = -1;
 OnChartEventHolder onchartEventHolder;
 OnTradeEventDetector onTradeEventDetector;
+bool exit_loop = false;
 template <typename T>
 void AddToArray(T& A[], T &value)
   {
