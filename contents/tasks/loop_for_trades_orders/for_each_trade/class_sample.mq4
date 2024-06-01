@@ -47,6 +47,7 @@ public:
       int size = ArraySize(trades);
       if(size==0)
         {
+         printf("task"+block_id + " passed route 2 ");
          block.onResult(ROUTE_2_PASSED);
          return;
         }
@@ -54,7 +55,7 @@ public:
          sortTrades(trades, loop_direction);
       int starti, endi;
       starti = skip_n;
-      endi = not_more_than_n*every_n+starti;
+      endi = not_more_than_n<=0 ? size : not_more_than_n*every_n+starti;
       if(starti<=size-1)
          for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
            {
@@ -64,9 +65,11 @@ public:
               {
                if(!filterGeneral())
                   continue;
+               printf("task"+block_id + " passed route 1 ");
                block.onResult(ROUTE_1_PASSED);
               }
            }
+      printf("task"+block_id + " passed route 2 ");
       block.onResult(ROUTE_2_PASSED);
      }
    virtual void      reset(int level)
