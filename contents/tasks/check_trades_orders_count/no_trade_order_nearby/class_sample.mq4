@@ -81,7 +81,7 @@ public:
                  }
 
                // checking the position
-               if(OrderType() == 0)  // buy?
+               if(MathMod(OrderType(), 2)==0)  // buy?
                  {
                   if(use_current_price)
                     {

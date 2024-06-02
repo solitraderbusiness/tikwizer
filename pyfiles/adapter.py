@@ -72,7 +72,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "close_mode", "mode_range", "mode_base_price",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
             "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8",
-            "stops_mode", "sl_only", "tp_only", "Id", "message"]
+            "stops_mode", "sl_only", "tp_only", "Id", "message", "block_ids"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
