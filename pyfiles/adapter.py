@@ -72,7 +72,8 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "close_mode", "mode_range", "mode_base_price",
             "obj_chart_subwindow", "title", "obj_title_font", "obj_label_font", "obj_font",
             "label_1", "label_2", "label_3", "label_4", "label_5", "label_6", "label_7", "label_8",
-            "stops_mode", "sl_only", "tp_only", "Id", "message", "block_ids"]
+            "stops_mode", "sl_only", "tp_only", "Id", "message", "block_ids", "obj_name_contains",
+            "obj_name_prefix", "loop_direction"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -243,6 +244,15 @@ def correct_block_names_mql(nodes):
             node["block_name_mql"] = "check_trades_orders_count"
         elif block_name in ["No trade nearby", "No pending order nearby"]:
             node["block_name_mql"] = "no_trade_order_nearby"
+        elif block_name == "Turn ON blocks":
+            node["block_name_mql"] = "blocks_on_off"
+            node.get("params")["what"] = "BLOCK_STATE_ENABLE"
+        elif block_name == "Turn OFF blocks":
+            node["block_name_mql"] = "blocks_on_off"
+            node.get("params")["what"] = "BLOCK_STATE_DISABLE"
+        elif block_name == "Toggle blocks":
+            node["block_name_mql"] = "blocks_on_off"
+            node.get("params")["what"] = "BLOCK_STATE_TOGGLE"
 
 
 def get_nexts_true(node, edges):

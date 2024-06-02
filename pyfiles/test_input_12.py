@@ -1975,3 +1975,633 @@ input_data_16 = {
   "name_by_user": "testx",
   "highestIndex": "undefined"
 }
+
+# break even point each trade
+input_data_17 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "eb3fc70d-f701-4026-81bc-3946f7c0e2e0",
+            "sourceHandle": "blue",
+            "target": "50dbfd11-b368-4bad-96cf-2e072fce7c6b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-eb3fc70d-f701-4026-81bc-3946f7c0e2e0blue-50dbfd11-b368-4bad-96cf-2e072fce7c6bc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "on_profit_mode": "ON_PROFIT_MODE_FIXED_VALUE",
+              "bep_offset_mode": "BEP_OFFSET_MODE_NONE",
+              "symbols_str": "",
+              "pips_on_profit": "15"
+            },
+            "id": "50dbfd11-b368-4bad-96cf-2e072fce7c6b",
+            "id_by_user": 4,
+            "blockName": "Break even point (each trade)",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "break_even_point_each_trade"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "eb3fc70d-f701-4026-81bc-3946f7c0e2e0",
+            "id_by_user": 5,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "6"
+}
+
+# break even point each trade test 2
+input_data_18 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "696149b3-38fd-4e88-833e-265b7fff6cc0",
+            "sourceHandle": "blue",
+            "target": "bce8acbd-f816-4708-b43b-3268cf3c2415",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-696149b3-38fd-4e88-833e-265b7fff6cc0blue-bce8acbd-f816-4708-b43b-3268cf3c2415c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "stoploss": "20",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "takeprofit": "20",
+              "symbol": "",
+              "group": "11",
+              "volume_upper_limit": "0",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "how_much_volume": "0.1"
+            },
+            "id": "696149b3-38fd-4e88-833e-265b7fff6cc0",
+            "id_by_user": 1,
+            "category": "buy_sell",
+            "block_name_mql": "buy_now",
+            "blockName": "Buy now"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "on_profit_mode": "ON_PROFIT_MODE_FIXED_VALUE",
+              "bep_offset_mode": "BEP_OFFSET_MODE_NONE",
+              "symbols_str": "",
+              "pips_on_profit": "15"
+            },
+            "id": "bce8acbd-f816-4708-b43b-3268cf3c2415",
+            "id_by_user": 2,
+            "blockName": "Break even point (each trade)",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "break_even_point_each_trade"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# toggle blocks
+input_data_19 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "sourceHandle": "blue",
+            "target": "5117a00c-ca82-4948-8bba-0b8e38c55f82",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-cd1344fe-ed17-4104-bce0-063bfee6499cblue-5117a00c-ca82-4948-8bba-0b8e38c55f82c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "block_ids": "2,4,5"
+            },
+            "id": "5117a00c-ca82-4948-8bba-0b8e38c55f82",
+            "id_by_user": 1,
+            "blockName": "Toggle blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "toggle_blocks"
+          },
+          {
+            "params": {},
+            "id": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "id_by_user": 2,
+            "blockName": "OR",
+            "category": "controlling_blocks",
+            "block_name_mql": "or"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# turn on blocks
+input_data_20 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "sourceHandle": "blue",
+            "target": "02e69014-4d86-4431-9b95-d735ed2cbbac",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-cd1344fe-ed17-4104-bce0-063bfee6499cblue-02e69014-4d86-4431-9b95-d735ed2cbbacc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "id_by_user": 2,
+            "blockName": "OR",
+            "category": "controlling_blocks",
+            "block_name_mql": "or"
+          },
+          {
+            "params": {
+              "block_ids": ""
+            },
+            "id": "02e69014-4d86-4431-9b95-d735ed2cbbac",
+            "id_by_user": 3,
+            "blockName": "Turn ON blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "turn_on_blocks"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "4"
+}
+
+# turn off blocks
+input_data_21 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "sourceHandle": "blue",
+            "target": "ff3a44f4-d32d-4c81-bef4-faddd685897b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-cd1344fe-ed17-4104-bce0-063bfee6499cblue-ff3a44f4-d32d-4c81-bef4-faddd685897bc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "cd1344fe-ed17-4104-bce0-063bfee6499c",
+            "id_by_user": 2,
+            "blockName": "OR",
+            "category": "controlling_blocks",
+            "block_name_mql": "or"
+          },
+          {
+            "params": {
+              "block_ids": "8,9,10"
+            },
+            "id": "ff3a44f4-d32d-4c81-bef4-faddd685897b",
+            "id_by_user": 3,
+            "blockName": "Turn OFF blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "turn_off_blocks"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "4"
+}
+
+# for each object: delete
+input_data_22 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "1eb42bb5-a649-4196-958b-5eab7e92e551",
+            "sourceHandle": "blue",
+            "target": "28825f45-ef43-45a0-8203-ad0d5bc03391",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-1eb42bb5-a649-4196-958b-5eab7e92e551blue-28825f45-ef43-45a0-8203-ad0d5bc03391c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "obj_chart_id": "0",
+              "obj_subwindow": "-1",
+              "obj_type": "-1",
+              "is_arrow_type": "-1",
+              "obj_color": "clrNONE",
+              "obj_name_prefix": "",
+              "obj_name_contains": "",
+              "loop_direction": "z-a",
+              "loop_skip": "0",
+              "loop_limit": "0",
+              "arrow_code": "0"
+            },
+            "id": "1eb42bb5-a649-4196-958b-5eab7e92e551",
+            "id_by_user": 3,
+            "blockName": "For each Object",
+            "category": "loop_for_chart_objects",
+            "block_name_mql": "for_each_object"
+          },
+          {
+            "params": {},
+            "id": "28825f45-ef43-45a0-8203-ad0d5bc03391",
+            "id_by_user": 4,
+            "blockName": "Delete",
+            "category": "loop_for_chart_objects",
+            "block_name_mql": "delete"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "5"
+}
+
+# for each object: delete 2
+input_data_23 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "1eb42bb5-a649-4196-958b-5eab7e92e551",
+            "sourceHandle": "blue",
+            "target": "28825f45-ef43-45a0-8203-ad0d5bc03391",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-1eb42bb5-a649-4196-958b-5eab7e92e551blue-28825f45-ef43-45a0-8203-ad0d5bc03391c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "obj_chart_id": "5",
+              "obj_subwindow": "-5",
+              "obj_type": "OBJ_ARROW_THUMB_UP",
+              "is_arrow_type": "OBJ_ARROW_CHECK",
+              "obj_color": "clrNavy",
+              "obj_name_prefix": "test name",
+              "obj_name_contains": "hello test",
+              "loop_direction": "a-z",
+              "loop_skip": "5",
+              "loop_limit": "20"
+            },
+            "id": "1eb42bb5-a649-4196-958b-5eab7e92e551",
+            "id_by_user": 3,
+            "blockName": "For each Object",
+            "category": "loop_for_chart_objects",
+            "block_name_mql": "for_each_object"
+          },
+          {
+            "params": {},
+            "id": "28825f45-ef43-45a0-8203-ad0d5bc03391",
+            "id_by_user": 4,
+            "blockName": "Delete",
+            "category": "loop_for_chart_objects",
+            "block_name_mql": "delete"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "8d5ca693-c96b-4b62-9a06-eebc4912d4f1",
+  "name_by_user": "test",
+  "highestIndex": "5"
+}
+
+# toggle blocks, turn on, turn off
+input_data_24 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "9ce96074-bf89-421d-be50-b9b1c5b8ba1d",
+            "sourceHandle": "blue",
+            "target": "f415c096-0c3f-40e2-9440-be38108f7473",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-9ce96074-bf89-421d-be50-b9b1c5b8ba1dblue-f415c096-0c3f-40e2-9440-be38108f7473c"
+          },
+          {
+            "source": "9ce96074-bf89-421d-be50-b9b1c5b8ba1d",
+            "sourceHandle": "blue",
+            "target": "223ce020-f8e6-4dfb-b851-5e57106aada8",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-9ce96074-bf89-421d-be50-b9b1c5b8ba1dblue-223ce020-f8e6-4dfb-b851-5e57106aada8c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "block_ids": ""
+            },
+            "id": "223ce020-f8e6-4dfb-b851-5e57106aada8",
+            "id_by_user": 1,
+            "blockName": "Turn ON blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "turn_on_blocks"
+          },
+          {
+            "params": {
+              "block_ids": ""
+            },
+            "id": "f415c096-0c3f-40e2-9440-be38108f7473",
+            "id_by_user": 3,
+            "blockName": "Toggle blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "toggle_blocks"
+          },
+          {
+            "params": {
+              "block_ids": ""
+            },
+            "id": "9ce96074-bf89-421d-be50-b9b1c5b8ba1d",
+            "id_by_user": 2,
+            "blockName": "Turn OFF blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "turn_off_blocks"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "1dbc3b9d-98e5-4253-b9b8-ff061520f0b6",
+  "name_by_user": "بسیبسی",
+  "highestIndex": "4"
+}

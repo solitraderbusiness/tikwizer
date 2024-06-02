@@ -953,179 +953,223 @@ public:
 
   };
 
-//For each Trade
+//Turn ON blocks
 class Task1 : public Task
   {
-   //defined by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   int               loop_direction;
-   int               skip_n;
-   int               not_more_than_n;
-   int               every_n;
+   string            block_ids;
+   int               what;
 public:
                      Task1(string name):Task(name)
      {
-      symbol_mode = SYMBOL_MODE_ANY;
-      symbols_str = "EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 79;
-      int mtype[] = {1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-      loop_direction = LOOP_DIRECTION_NEWEST_TO_OLDEST;
-      skip_n = 11;//STest, default must be 0
-      not_more_than_n = 50;
-      every_n = 30;//STest default must be 1
+      block_ids = "";
+      what = BLOCK_STATE_ENABLE;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      int trades[];
-      getTrades(trades);
-      int size = ArraySize(trades);
-      if(size==0)
+      string ids[];
+      ushort u_sep=StringGetCharacter(",",0);
+      int totalElements = StringSplit(block_ids, u_sep, ids);
+      if(totalElements<=0)
+         block.onResult(ROUTE_1_PASSED);
+      for(int i=0; i<ArraySize(ids); i++)
         {
-         block.onResult(ROUTE_2_PASSED);
-         return;
+         string id = ids[i];
+         id = StringTrimLeft(id);
+         id = StringTrimRight(id);
+         int mid = StrToInteger(id);
+
+         for(int j=0; j<ArraySize(blocks_init); j++)
+            if(blocks_init[j].id_by_user == mid)
+               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
+
+         for(int k=0; k<ArraySize(blocks_timer); k++)
+            if(blocks_timer[k].id_by_user == mid)
+               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
+
+         for(int l=0; l<ArraySize(blocks_tick); l++)
+            if(blocks_tick[l].id_by_user == mid)
+               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
+
+         for(int m=0; m<ArraySize(blocks_trade); m++)
+            if(blocks_trade[m].id_by_user == mid)
+               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
+
+         for(int n=0; n<ArraySize(blocks_chart); n++)
+            if(blocks_chart[n].id_by_user == mid)
+               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
+
+         for(int p=0; p<ArraySize(blocks_deinit); p++)
+            if(blocks_deinit[p].id_by_user == mid)
+               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
         }
-      if(size>=2)
-         sortTrades(trades, loop_direction);
-      int starti, endi;
-      starti = skip_n;
-      endi = not_more_than_n*every_n+starti;
-      if(starti<=size-1)
-         for(int i = starti ; i < MathMin(endi, size) ; i+every_n)
-           {
-            if(exit_loop)
-               return;//STest, logical?
-            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
-              {
-               if(!filterGeneral())
-                  continue;
-               block.onResult(ROUTE_1_PASSED);
-              }
-           }
-      block.onResult(ROUTE_2_PASSED);
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
 
      }
-   bool              filterGeneral()
+   bool              newValue(bool currentValue)
      {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-
-
-   //+------------------------------------------------------------------+
-   //|                                                                  |
-   //+------------------------------------------------------------------+
-   void              getTrades(int &trades[])
-     {
-      for(int i=0; i<OrdersTotal(); i++)
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(OrderType()==OP_BUY || OrderType()==OP_SELL)
-              {
-               AddToArray(trades, i);
-              }
-           }
-      return trades;
-     }
-
-
-
-   //+------------------------------------------------------------------+
-   //|                                                                  |
-   //+------------------------------------------------------------------+
-   void              sortTrades(int &trades[], int loop_direction)
-     {
-      if(loop_direction == LOOP_DIRECTION_OLDEST_TO_NEWEST)
-         return trades;
-      else
-         if(loop_direction == LOOP_DIRECTION_NEWEST_TO_OLDEST)
-           {
-            ReverseList(trades);
-            return trades;
-           }
-         else
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST || loop_direction == LOOP_DIRECTION_PROFITABLE_LAST)
-              {
-               sortTradesByProfit(trades, loop_direction);
-               return trades;
-              }
-      return trades;
-     }
-
-   //+------------------------------------------------------------------+
-   //|                                                                  |
-   //+------------------------------------------------------------------+
-   void              sortTradesByProfit(int &trades[], int loop_direction)
-     {
-      if(ArraySize(trades)<2)
-         return;
-      for(int i=0; i<ArraySize(trades)-1; i++)
+      switch(what)
         {
-         for(int j=i+1; j<ArraySize(trades); j++)
-           {
-            double profit1 = 0, profit2 = 0;
-            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
-               profit1 = OrderProfit();
-            if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
-               profit2 = OrderProfit();
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST && profit1<profit2)
-              {
-               int swap1 = trades[i];
-               trades[i] = trades[j];
-               trades[j] = swap1;
-              }
-            else
-              {
-               if(loop_direction == LOOP_DIRECTION_PROFITABLE_LAST && profit1>profit2)
-                 {
-                  int swap2 = trades[i];
-                  trades[i] = trades[j];
-                  trades[j] = swap2;
-                 }
-              }
-           }
+         case BLOCK_STATE_ENABLE:
+            return true;
+         case BLOCK_STATE_DISABLE:
+            return false;
+         case BLOCK_STATE_TOGGLE:
+            return !currentValue;
+         default:
+            return true;
         }
      }
-
   };
 
-//(loop) break
+//Toggle blocks
+class Task3 : public Task
+  {
+   string            block_ids;
+   int               what;
+public:
+                     Task3(string name):Task(name)
+     {
+      block_ids = "";
+      what = BLOCK_STATE_TOGGLE;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      string ids[];
+      ushort u_sep=StringGetCharacter(",",0);
+      int totalElements = StringSplit(block_ids, u_sep, ids);
+      if(totalElements<=0)
+         block.onResult(ROUTE_1_PASSED);
+      for(int i=0; i<ArraySize(ids); i++)
+        {
+         string id = ids[i];
+         id = StringTrimLeft(id);
+         id = StringTrimRight(id);
+         int mid = StrToInteger(id);
+
+         for(int j=0; j<ArraySize(blocks_init); j++)
+            if(blocks_init[j].id_by_user == mid)
+               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
+
+         for(int k=0; k<ArraySize(blocks_timer); k++)
+            if(blocks_timer[k].id_by_user == mid)
+               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
+
+         for(int l=0; l<ArraySize(blocks_tick); l++)
+            if(blocks_tick[l].id_by_user == mid)
+               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
+
+         for(int m=0; m<ArraySize(blocks_trade); m++)
+            if(blocks_trade[m].id_by_user == mid)
+               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
+
+         for(int n=0; n<ArraySize(blocks_chart); n++)
+            if(blocks_chart[n].id_by_user == mid)
+               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
+
+         for(int p=0; p<ArraySize(blocks_deinit); p++)
+            if(blocks_deinit[p].id_by_user == mid)
+               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
+        }
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              newValue(bool currentValue)
+     {
+      switch(what)
+        {
+         case BLOCK_STATE_ENABLE:
+            return true;
+         case BLOCK_STATE_DISABLE:
+            return false;
+         case BLOCK_STATE_TOGGLE:
+            return !currentValue;
+         default:
+            return true;
+        }
+     }
+  };
+
+//Turn OFF blocks
 class Task2 : public Task
   {
-
+   string            block_ids;
+   int               what;
 public:
                      Task2(string name):Task(name)
      {
-
+      block_ids = "";
+      what = BLOCK_STATE_DISABLE;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      exit_loop = true;
+
+      string ids[];
+      ushort u_sep=StringGetCharacter(",",0);
+      int totalElements = StringSplit(block_ids, u_sep, ids);
+      if(totalElements<=0)
+         block.onResult(ROUTE_1_PASSED);
+      for(int i=0; i<ArraySize(ids); i++)
+        {
+         string id = ids[i];
+         id = StringTrimLeft(id);
+         id = StringTrimRight(id);
+         int mid = StrToInteger(id);
+
+         for(int j=0; j<ArraySize(blocks_init); j++)
+            if(blocks_init[j].id_by_user == mid)
+               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
+
+         for(int k=0; k<ArraySize(blocks_timer); k++)
+            if(blocks_timer[k].id_by_user == mid)
+               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
+
+         for(int l=0; l<ArraySize(blocks_tick); l++)
+            if(blocks_tick[l].id_by_user == mid)
+               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
+
+         for(int m=0; m<ArraySize(blocks_trade); m++)
+            if(blocks_trade[m].id_by_user == mid)
+               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
+
+         for(int n=0; n<ArraySize(blocks_chart); n++)
+            if(blocks_chart[n].id_by_user == mid)
+               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
+
+         for(int p=0; p<ArraySize(blocks_deinit); p++)
+            if(blocks_deinit[p].id_by_user == mid)
+               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
+        }
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
-      //STest, commented below cuz in fxdreema loop break works till the end. Though this is not logical.
-      //exit_loop = false;
-     }
 
+     }
+   bool              newValue(bool currentValue)
+     {
+      switch(what)
+        {
+         case BLOCK_STATE_ENABLE:
+            return true;
+         case BLOCK_STATE_DISABLE:
+            return false;
+         case BLOCK_STATE_TOGGLE:
+            return !currentValue;
+         default:
+            return true;
+        }
+     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1276,7 +1320,7 @@ public:
   };
 
 
-//For each Trade
+//Turn ON blocks
 class Block1 : public Block
   {
 public:
@@ -1284,13 +1328,13 @@ public:
      {
       id = 0;
       id_by_user = 1;
-      name = "for_each_trade";
+      name = "blocks_on_off";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {2};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1301,21 +1345,46 @@ public:
      }
   };
 
-//(loop) break
-class Block2 : public Block
+//Toggle blocks
+class Block3 : public Block
   {
 public:
-                     Block2()
+                     Block3()
      {
       id = 1;
-      id_by_user = 2;
-      name = "loop_break";
+      id_by_user = 3;
+      name = "blocks_on_off";
       enabled = True;
       event = EVENT_ON_TICK;
 
       int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {2};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
+     }
+  };
+
+//Turn OFF blocks
+class Block2 : public Block
+  {
+public:
+                     Block2()
+     {
+      id = 2;
+      id_by_user = 2;
+      name = "blocks_on_off";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {0, 1};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1391,12 +1460,14 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 2);
+   ArrayResize(blocks_tick, 3);
    Block1 *block1 = new Block1();
+   Block3 *block3 = new Block3();
    Block2 *block2 = new Block2();
 
    blocks_tick[0] = block1;
-   blocks_tick[1] = block2;
+   blocks_tick[1] = block3;
+   blocks_tick[2] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3474,7 +3545,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 2);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
