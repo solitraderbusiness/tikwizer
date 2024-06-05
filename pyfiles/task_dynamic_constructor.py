@@ -135,7 +135,7 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_shape_run_data(node, run_data_static)
     elif task_name == "draw_line":
         run_data = draw_line_run_data(node, run_data_static)
-    elif task_name == "draw_editfield":
+    elif task_name == "draw_edit_field":
         run_data = draw_editfield_run_data(node, run_data_static)
     elif task_name == "check_trendline_price_level":
         run_data = check_trendline_price_level_run_data(node, run_data_static)

@@ -783,7 +783,7 @@ class ExpertBuilder:
                 self.draw_shape(node)
             elif task_name == "draw_line":
                 self.draw_line(node)
-            elif task_name == "draw_editfield":
+            elif task_name == "draw_edit_field":
                 self.draw_editfield(node)
             elif task_name == "check_trendline_price_level":
                 self.check_trendline_price_level(node)
