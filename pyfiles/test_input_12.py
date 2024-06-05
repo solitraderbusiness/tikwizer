@@ -2605,3 +2605,276 @@ input_data_24 = {
   "name_by_user": "بسیبسی",
   "highestIndex": "4"
 }
+
+# draw button
+input_data_25 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "83d60adf-a4f5-4d62-9d7d-1d2229d22fb0",
+            "sourceHandle": "blue",
+            "target": "3f10c72a-5c9f-4e9c-b817-ad31a94ab57e",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-83d60adf-a4f5-4d62-9d7d-1d2229d22fb0blue-3f10c72a-5c9f-4e9c-b817-ad31a94ab57ec"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "obj_name": "hello test"
+            },
+            "id": "83d60adf-a4f5-4d62-9d7d-1d2229d22fb0",
+            "id_by_user": 1,
+            "blockName": "Select Object by Name",
+            "category": "loop_for_chart_objects",
+            "block_name_mql": "select_object_by_name"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_arrow",
+              "obj_x": "10",
+              "obj_y": "10",
+              "obj_font": "Arial",
+              "obj_font_size": "10",
+              "obj_x_size": "100",
+              "obj_y_size": "20",
+              "obj_bg_color": "clrWhite",
+              "obj_border_color": "clrNONE",
+              "obj_corner": "CORNER_LEFT_UPPER",
+              "obj_state": "false",
+              "obj_color": "clrDeepPink",
+              "obj_back": "false",
+              "obj_selectable": "true",
+              "obj_hidden": "true",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "text": {
+                "row1": "value",
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "3f10c72a-5c9f-4e9c-b817-ad31a94ab57e",
+            "id_by_user": 1,
+            "blockName": "Draw Button",
+            "category": "chart_objects",
+            "block_name_mql": "draw_button"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "1dbc3b9d-98e5-4253-b9b8-ff061520f0b6",
+  "name_by_user": "بسیبسی",
+  "highestIndex": "2"
+}
+
+# set current timeframe
+input_data_26 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "9ec6e737-da40-4399-85ad-b9c35c4cf6f7",
+            "sourceHandle": "blue",
+            "target": "1fc49f31-fcbd-42eb-8436-79a0b1c4a64f",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-9ec6e737-da40-4399-85ad-b9c35c4cf6f7blue-1fc49f31-fcbd-42eb-8436-79a0b1c4a64fc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "9ec6e737-da40-4399-85ad-b9c35c4cf6f7",
+            "id_by_user": 4,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "timeframe_1": "PERIOD_M30",
+              "timeframe_2": "-1",
+              "timeframe_3": "-1",
+              "timeframe_4": "PERIOD_H12",
+              "timeframe_5": "-1",
+              "timeframe_6": "PERIOD_M4",
+              "timeframe_7": "-1",
+              "timeframe_8": "-1",
+              "timeframe_9": "PERIOD_D1",
+              "timeframe_10": "-1"
+            },
+            "id": "1fc49f31-fcbd-42eb-8436-79a0b1c4a64f",
+            "id_by_user": 5,
+            "blockName": "Set \"Current Timeframe\" for next blocks",
+            "category": "controlling_blocks",
+            "block_name_mql": "set_current_timeframe_for_next_blocks"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "1dbc3b9d-98e5-4253-b9b8-ff061520f0b6",
+  "name_by_user": "بسیبسی",
+  "highestIndex": "6"
+}
+
+# draw button
+input_data_27 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "9ec6e737-da40-4399-85ad-b9c35c4cf6f7",
+            "sourceHandle": "blue",
+            "target": "1f07599f-2752-46e6-8d03-4b3c5284b087",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-9ec6e737-da40-4399-85ad-b9c35c4cf6f7blue-1f07599f-2752-46e6-8d03-4b3c5284b087c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "9ec6e737-da40-4399-85ad-b9c35c4cf6f7",
+            "id_by_user": 4,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_arrow",
+              "obj_x": "10",
+              "obj_y": "10",
+              "obj_font": "Arial",
+              "obj_font_size": "10",
+              "obj_x_size": "100",
+              "obj_y_size": "20",
+              "obj_bg_color": "clrWhite",
+              "obj_border_color": "clrNONE",
+              "obj_corner": "CORNER_LEFT_UPPER",
+              "obj_state": "false",
+              "obj_color": "clrDeepPink",
+              "obj_back": "false",
+              "obj_selectable": "true",
+              "obj_hidden": "true",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "text": {
+                "row1": "value",
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "1f07599f-2752-46e6-8d03-4b3c5284b087",
+            "id_by_user": 2,
+            "blockName": "Draw Button",
+            "category": "chart_objects",
+            "block_name_mql": "draw_button"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "1dbc3b9d-98e5-4253-b9b8-ff061520f0b6",
+  "name_by_user": "بسیبسی",
+  "highestIndex": "3"
+}

@@ -1,3 +1,12 @@
 {
-  "timeframes": [15, 30]
+  "timeframe_1": "-1",
+  "timeframe_2": "-1",
+  "timeframe_3": "-1",
+  "timeframe_4": "-1",
+  "timeframe_5": "-1",
+  "timeframe_6": "-1",
+  "timeframe_7": "-1",
+  "timeframe_8": "-1",
+  "timeframe_9": "-1",
+  "timeframe_10": "-1"
 }

@@ -1,3 +1,3 @@
 {
-	"constructor_data" : "int mtimeframes[] = timeframes_val;\n      ArrayCopy(timeframes, mtimeframes, 0, 0, WHOLE_ARRAY);"
+	"constructor_data" : "      timeframe_1  = timeframe_1_val;\n      timeframe_2  = timeframe_2_val;\n      timeframe_3  = timeframe_3_val;\n      timeframe_4  = timeframe_4_val;\n      timeframe_5  = timeframe_5_val;\n      timeframe_6  = timeframe_6_val;\n      timeframe_7  = timeframe_7_val;\n      timeframe_8  = timeframe_8_val;\n      timeframe_9  = timeframe_9_val;\n      timeframe_10 = timeframe_10_val;"
 }

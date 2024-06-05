@@ -953,223 +953,446 @@ public:
 
   };
 
-//Turn ON blocks
-class Task1 : public Task
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Value2_obj_text
   {
-   string            block_ids;
-   int               what;
 public:
-                     Task1(string name):Task(name)
+
+   string               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
+   string            symbol;
+   //for time (phase 2)
+   //defined by user
+   int               mode_time;
+   int               time_source;
+   string            time_stamp;
+   int               time_candle_id;
+   string            time_market;
+   ENUM_TIMEFRAMES   time_candle_timeframe;
+   int               time_component_year;
+   int               time_component_month;
+   double            time_component_day;
+   double            time_component_hour;
+   double            time_component_minute;
+   int               time_component_second;
+   datetime          time_value;
+   int               mode_time_shift;
+   int               time_shift_years;
+   int               time_shift_months;
+   int               time_shift_weeks;
+   double            time_shift_days;
+   double            time_shift_hours;
+   double            time_shift_minutes;
+   int               time_shift_seconds;
+   bool              time_skip_weekdays;
+   //defined by system
+   datetime          retval;
+   datetime          retval0;
+   datetime          Time[];
+   string            msymbol;
+
+public:
+
+   void              init()
+
      {
-      block_ids = "";
-      what = BLOCK_STATE_ENABLE;
+      value = "sample text";
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = NULL;
+      //for time (phase 2)
+      //defined by user
+      mode_time = 0;
+      time_source = 0;
+      time_stamp = "00:00";
+      time_candle_id = 1;
+      time_market = NULL;
+      time_candle_timeframe = 0;
+      time_component_year = 0;
+      time_component_month = 0;
+      time_component_day = 0.0;
+      time_component_hour = 12.0;
+      time_component_minute = 0.0;
+      time_component_second = 0;
+      time_value = 0;
+      mode_time_shift = 0;
+      time_shift_years = 0;
+      time_shift_months = 0;
+      time_shift_weeks = 0;
+      time_shift_days = 0.0;
+      time_shift_hours = 0.0;
+      time_shift_minutes = 0.0;
+      time_shift_seconds = 0;
+      time_skip_weekdays = False;
+      //defined by system
+      retval =  0;
+      retval0 =  0;
+
+     }
+
+   template<typename T>
+   T                 calc()
+     {
+      msymbol = getSymbol(symbol);
+      string result = "";
+      string value_type = "Text";
+      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
+        {
+         result = value;
+        }
+      else
+         if(value_type=="Text(code input)")
+           {
+            result = "\"" + value + "\"";
+           }
+         else
+            if(value_type=="Pips")
+              {
+
+               if(pips_mode == VALUE_PIPS_AS_IS)
+                 {
+                  result = value;
+                 }
+               else
+                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                    {
+                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                     result = point*10*(double)value;  //STest, *10 works for all symbols?
+                    }
+              }
+            else
+               if(value_type=="Time")
+                 {
+
+                  if(time_market == "" || time_market == NULL)
+                     time_market = Symbol();
+
+                  if(mode_time == MODE_TIME_NOW)
+                    {
+                     if(time_source == TIME_SERVER)
+                       {
+                        retval = TimeCurrent();
+                       }
+                     else
+                        if(time_source == TIME_LOCAL)
+                          {
+                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
+                          }
+                        else
+                           if(time_source == TIME_GMT)
+                             {
+                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
+                             }
+                    }
+                  else
+                     if(mode_time == MODE_TIME_TIMESTAMP)
+                       {
+                        retval  = StringToTime(time_stamp);
+                        retval0 = retval;
+                       }
+                     else
+                        if(mode_time==MODE_TIME_COMPONENTS)
+                          {
+                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
+                          }
+                        else
+                           if(mode_time == MODE_TIME_CANDLE_TIME)
+                             {
+                              ArraySetAsSeries(Time,true);
+                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
+                              retval = Time[0];
+                             }
+                           else
+                              if(mode_time == MODE_TIME_TIME_VALUE)
+                                {
+                                 retval = time_value;
+                                }
+
+                  if(mode_time_shift > 0)
+                    {
+                     int sh = 1;
+
+                     if(mode_time_shift == 1)
+                       {
+                        sh = -1;
+                       }
+
+                     if(time_shift_years > 0 || time_shift_months > 0)
+                       {
+                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
+
+                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
+                          {
+                           year   = time_component_year;
+                           month  = time_component_month;
+                           day    = (int)MathFloor(time_component_day);
+                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
+                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
+                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
+                          }
+                        else
+                          {
+                           year   = TimeYear(retval);
+                           month  = TimeMonth(retval);
+                           day    = TimeDay(retval);
+                           hour   = TimeHour(retval);
+                           minute = TimeMinute(retval);
+                           second = TimeSeconds(retval);
+                          }
+
+                        year  = year + time_component_year * sh;
+                        month = month + time_component_month * sh;
+
+                        if(month < 0)
+                          {
+                           month = 12 - month;
+                          }
+                        else
+                           if(month > 12)
+                             {
+                              month = month - 12;
+                             }
+
+                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
+                       }
+
+                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
+
+                     if(time_skip_weekdays == true)
+                       {
+                        int weekday = TimeDayOfWeek(retval);
+
+                        if(sh > 0)    // forward
+                          {
+                           if(weekday == 0)
+                             {
+                              retval = retval + 86400;
+                             }
+                           else
+                              if(weekday == 6)
+                                {
+                                 retval = retval + 172800;
+                                }
+                          }
+                        else
+                           if(sh < 0) // back
+                             {
+                              if(weekday == 0)
+                                {
+                                 retval = retval - 172800;
+                                }
+                              else
+                                 if(weekday == 6)
+                                   {
+                                    retval = retval - 86400;
+                                   }
+                             }
+                       }
+                    }
+
+                  result = retval;
+                 }
+      return result;
+     }
+  };
+
+//Pass
+class Task4 : public Task
+  {
+
+public:
+                     Task4(string name):Task(name)
+     {
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-
-      string ids[];
-      ushort u_sep=StringGetCharacter(",",0);
-      int totalElements = StringSplit(block_ids, u_sep, ids);
-      if(totalElements<=0)
-         block.onResult(ROUTE_1_PASSED);
-      for(int i=0; i<ArraySize(ids); i++)
-        {
-         string id = ids[i];
-         id = StringTrimLeft(id);
-         id = StringTrimRight(id);
-         int mid = StrToInteger(id);
-
-         for(int j=0; j<ArraySize(blocks_init); j++)
-            if(blocks_init[j].id_by_user == mid)
-               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
-
-         for(int k=0; k<ArraySize(blocks_timer); k++)
-            if(blocks_timer[k].id_by_user == mid)
-               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
-
-         for(int l=0; l<ArraySize(blocks_tick); l++)
-            if(blocks_tick[l].id_by_user == mid)
-               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
-
-         for(int m=0; m<ArraySize(blocks_trade); m++)
-            if(blocks_trade[m].id_by_user == mid)
-               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
-
-         for(int n=0; n<ArraySize(blocks_chart); n++)
-            if(blocks_chart[n].id_by_user == mid)
-               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
-
-         for(int p=0; p<ArraySize(blocks_deinit); p++)
-            if(blocks_deinit[p].id_by_user == mid)
-               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
-        }
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
 
      }
-   bool              newValue(bool currentValue)
-     {
-      switch(what)
-        {
-         case BLOCK_STATE_ENABLE:
-            return true;
-         case BLOCK_STATE_DISABLE:
-            return false;
-         case BLOCK_STATE_TOGGLE:
-            return !currentValue;
-         default:
-            return true;
-        }
-     }
+
   };
 
-//Toggle blocks
-class Task3 : public Task
-  {
-   string            block_ids;
-   int               what;
-public:
-                     Task3(string name):Task(name)
-     {
-      block_ids = "";
-      what = BLOCK_STATE_TOGGLE;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      string ids[];
-      ushort u_sep=StringGetCharacter(",",0);
-      int totalElements = StringSplit(block_ids, u_sep, ids);
-      if(totalElements<=0)
-         block.onResult(ROUTE_1_PASSED);
-      for(int i=0; i<ArraySize(ids); i++)
-        {
-         string id = ids[i];
-         id = StringTrimLeft(id);
-         id = StringTrimRight(id);
-         int mid = StrToInteger(id);
-
-         for(int j=0; j<ArraySize(blocks_init); j++)
-            if(blocks_init[j].id_by_user == mid)
-               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
-
-         for(int k=0; k<ArraySize(blocks_timer); k++)
-            if(blocks_timer[k].id_by_user == mid)
-               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
-
-         for(int l=0; l<ArraySize(blocks_tick); l++)
-            if(blocks_tick[l].id_by_user == mid)
-               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
-
-         for(int m=0; m<ArraySize(blocks_trade); m++)
-            if(blocks_trade[m].id_by_user == mid)
-               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
-
-         for(int n=0; n<ArraySize(blocks_chart); n++)
-            if(blocks_chart[n].id_by_user == mid)
-               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
-
-         for(int p=0; p<ArraySize(blocks_deinit); p++)
-            if(blocks_deinit[p].id_by_user == mid)
-               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
-        }
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              newValue(bool currentValue)
-     {
-      switch(what)
-        {
-         case BLOCK_STATE_ENABLE:
-            return true;
-         case BLOCK_STATE_DISABLE:
-            return false;
-         case BLOCK_STATE_TOGGLE:
-            return !currentValue;
-         default:
-            return true;
-        }
-     }
-  };
-
-//Turn OFF blocks
+//Draw Button
 class Task2 : public Task
   {
-   string            block_ids;
-   int               what;
+   //defined by user
+   bool                  object_per_bar;
+   bool                  object_update;
+   string                obj_name;
+   int                   obj_x;
+   int                   obj_y;
+   string                obj_font;
+   int                   obj_font_size;
+   int                   obj_x_size;
+   int                   obj_y_size;
+   color                 obj_bg_color;
+   color                 obj_border_color;
+   int                   obj_corner;
+   bool                  obj_state;
+   color                 obj_color;
+   bool                  obj_back;
+   bool                  obj_selectable;
+   bool                  obj_selected;
+   bool                  obj_hidden;
+   int                   obj_z_order;
+   string                obj_chart_subwindow;
+   //defined by system
+   int               count;
+   datetime          time0;
 public:
                      Task2(string name):Task(name)
      {
-      block_ids = "";
-      what = BLOCK_STATE_DISABLE;
+      //defined by user
+      object_per_bar = false;
+      object_update = true;
+      obj_name = "my_arrow";
+      obj_x = 10;
+      obj_y = 10;
+      obj_font = "Arial";
+      obj_font_size = 10;
+      obj_x_size = 100;
+      obj_y_size = 20;
+      obj_bg_color = clrWhite;
+      obj_border_color = clrNONE;
+      obj_corner = CORNER_LEFT_UPPER;
+      obj_state = false;
+      obj_color = clrDeepPink;
+      obj_back = false;
+      obj_selectable = true;
+      obj_selected = False;
+      obj_hidden = true;
+      obj_z_order = 0;
+      obj_chart_subwindow = "";
+      //defined by system
+      count =  0;
+      time0 =  0;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      string ids[];
-      ushort u_sep=StringGetCharacter(",",0);
-      int totalElements = StringSplit(block_ids, u_sep, ids);
-      if(totalElements<=0)
-         block.onResult(ROUTE_1_PASSED);
-      for(int i=0; i<ArraySize(ids); i++)
+      string obj_name_prefix = "goldbox_button_";
+      long obj_chart_id      = 0;
+      int subwindow_id     = WindowFindVisible(obj_chart_id, obj_chart_subwindow);
+
+      if(subwindow_id >= 0)
         {
-         string id = ids[i];
-         id = StringTrimLeft(id);
-         id = StringTrimRight(id);
-         int mid = StrToInteger(id);
+         string name       = "";
+         string name_base  = "";
+         bool get_new_name = false;
+         bool do_update    = true;
 
-         for(int j=0; j<ArraySize(blocks_init); j++)
-            if(blocks_init[j].id_by_user == mid)
-               blocks_init[j].enabled = newValue(blocks_init[j].enabled);
+         if(object_per_bar == true)
+           {
+            datetime time = iTime(Symbol(),0,1);
 
-         for(int k=0; k<ArraySize(blocks_timer); k++)
-            if(blocks_timer[k].id_by_user == mid)
-               blocks_timer[k].enabled = newValue(blocks_timer[k].enabled);
+            if(time0 < time)
+              {
+               time0        = time;
+               get_new_name = true;
+              }
+            else
+              {
+               if(object_update == false)
+                 {
+                  do_update = false;
+                 }
+              }
+           }
+         else
+           {
+            if(object_update == false)
+              {
+               get_new_name = true;
+              }
+           }
 
-         for(int l=0; l<ArraySize(blocks_tick); l++)
-            if(blocks_tick[l].id_by_user == mid)
-               blocks_tick[l].enabled = newValue(blocks_tick[l].enabled);
+         if(do_update)
+           {
 
-         for(int m=0; m<ArraySize(blocks_trade); m++)
-            if(blocks_trade[m].id_by_user == mid)
-               blocks_trade[m].enabled = newValue(blocks_trade[m].enabled);
+            if(obj_name != "")
+              {
+               name_base = obj_name;
+              }
+            else
+              {
+               Block *mblock = (Block*) GetPointer(block);
+               name_base = obj_name_prefix + mblock.id_by_user + "_";
+              }
 
-         for(int n=0; n<ArraySize(blocks_chart); n++)
-            if(blocks_chart[n].id_by_user == mid)
-               blocks_chart[n].enabled = newValue(blocks_chart[n].enabled);
+            if(get_new_name == false)
+              {
+               name = name_base + IntegerToString(count);
+              }
+            else
+              {
+               while(true)
+                 {
+                  count++;
+                  name = name_base + IntegerToString(count);
 
-         for(int p=0; p<ArraySize(blocks_deinit); p++)
-            if(blocks_deinit[p].id_by_user == mid)
-               blocks_deinit[p].enabled = newValue(blocks_deinit[p].enabled);
+                  if(ObjectFind(obj_chart_id,name) < 0)
+                    {
+                     break;
+                    }
+                 }
+              }
+
+            if(obj_name != "" && count == 0)
+              {
+               name = obj_name;
+              }
+
+            if(ObjectFind(obj_chart_id,name) < 0 && !ObjectCreate(obj_chart_id,name,OBJ_BUTTON,subwindow_id,0,0))
+              {
+               Print(__FUNCTION__,": button failed to create! Error code = ",GetLastError());
+              }
+
+
+            Value2_obj_text value2_obj_text;
+            value2_obj_text.init();
+            string valueValue2_obj_text = value2_obj_text.calc<string>();
+
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_XDISTANCE,obj_x);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_YDISTANCE,obj_y);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_XSIZE,obj_x_size);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_YSIZE,obj_y_size);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_BGCOLOR,obj_bg_color);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_BORDER_COLOR,obj_border_color);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_CORNER,obj_corner);
+            ObjectSetString(obj_chart_id,name,OBJPROP_FONT,obj_font);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_FONTSIZE,obj_font_size);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_STATE,obj_state);
+            ObjectSetString(obj_chart_id,name,OBJPROP_TEXT, valueValue2_obj_text);
+
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_COLOR,obj_color);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_BACK,obj_back);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTABLE,obj_selectable);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTED,obj_selected);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_HIDDEN,obj_hidden);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_ZORDER,obj_z_order);
+
+            ChartRedraw();
+           }
         }
+
+      printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
 
      }
-   bool              newValue(bool currentValue)
-     {
-      switch(what)
-        {
-         case BLOCK_STATE_ENABLE:
-            return true;
-         case BLOCK_STATE_DISABLE:
-            return false;
-         case BLOCK_STATE_TOGGLE:
-            return !currentValue;
-         default:
-            return true;
-        }
-     }
+
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1320,71 +1543,46 @@ public:
   };
 
 
-//Turn ON blocks
-class Block1 : public Block
+//Pass
+class Block4 : public Block
   {
 public:
-                     Block1()
+                     Block4()
      {
       id = 0;
-      id_by_user = 1;
-      name = "blocks_on_off";
+      id_by_user = 4;
+      name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
-      int mprevs_true[] = {2};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task4(name);
      }
   };
 
-//Toggle blocks
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 1;
-      id_by_user = 3;
-      name = "blocks_on_off";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {2};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
-     }
-  };
-
-//Turn OFF blocks
+//Draw Button
 class Block2 : public Block
   {
 public:
                      Block2()
      {
-      id = 2;
+      id = 1;
       id_by_user = 2;
-      name = "blocks_on_off";
+      name = "draw_button";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {0, 1};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {0};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1460,14 +1658,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 3);
-   Block1 *block1 = new Block1();
-   Block3 *block3 = new Block3();
+   ArrayResize(blocks_tick, 2);
+   Block4 *block4 = new Block4();
    Block2 *block2 = new Block2();
 
-   blocks_tick[0] = block1;
-   blocks_tick[1] = block3;
-   blocks_tick[2] = block2;
+   blocks_tick[0] = block4;
+   blocks_tick[1] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3545,7 +3741,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 2);
+   runBlockTick(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
