@@ -3,7 +3,7 @@ class Task_id : public Task
   {
 public:
    string              symbol;
-   bool              spread_mode;
+   int               spread_mode;
    double            spread_benchmark_fix_value;
    int               average_spread_time_period;
    double            average_spread_adjust;
