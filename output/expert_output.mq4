@@ -953,59 +953,199 @@ public:
 
   };
 
-//Edit Field modified
+//Delete objects
 class Task1 : public Task
   {
-   string            name_filter_mode;
-   string            obj_name;
+   string                name_starts_with;
+   string                name_contains;
+   color                 obj_color;
+   string                sort_mode;
+   int                   max_objects;
+   int                   skip_objects;
 public:
                      Task1(string name):Task(name)
      {
-      name_filter_mode = "";
-      obj_name = "TEST";
+      name_starts_with = "";
+      name_contains = "";
+      obj_color = EMPTY_VALUE;
+      sort_mode = "z_a";
+      max_objects = "";
+      skip_objects = "";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      bool next = false;
-      if(onchartEventHolder.id == CHARTEVENT_OBJECT_ENDEDIT)
+
+      // STest: from FXdreema: Fix the problem with "Any color" and the EMPTY_VALUE value
+
+      int index         = 0;
+      int total         = ObjectsTotal(0,-1,-1);
+      int length        = 0;
+      bool deleted      = false;
+      int deleted_count = 0;
+      int skipped_count = 0;
+      string name       = "";
+
+      if(sort_mode == "a-z")
         {
-         if(name_filter_mode == "name" || name_filter_mode == "names")
+         for(index=0; index<total; index++)
            {
-            string names[];
+            name = ObjectName(0,index);
 
-            if(obj_name != "")
+            if(name != "")
               {
-               StringExplode(",", obj_name, names);
-               int size = ArraySize(names);
-
-               for(int i = 0; i < size; i++)
+               if(max_objects > 0 && deleted_count >= max_objects)
                  {
-                  if(onchartEventHolder.sparam == StringTrim(names[i]))
+                  break;
+                 }
+
+               deleted = false;
+
+               // ObjColor != clrBlack below is because in MQL5 when the value is EMPTY_VALUE, it is turned into clrBlack because of the data type
+               if(obj_color != EMPTY_VALUE && obj_color != clrBlack && ObjectGetInteger(0, name, OBJPROP_COLOR) != obj_color)
+                 {
+                  continue;
+                 }
+
+               if(name_starts_with == "" && name_contains == "")
+                 {
+                  if(skip_objects > 0 && skipped_count < skip_objects)
                     {
-                     next = true;
-                     break;
+                     skipped_count++;
+                     continue;
+                    }
+
+                  if(ObjectDelete(0,name))
+                    {
+                     deleted_count++;
+                    }
+                 }
+               else
+                 {
+                  if(name_starts_with != "")
+                    {
+                     length = StringLen(name_starts_with);
+
+                     if(StringSubstr(name,0,length) == name_starts_with)
+                       {
+                        if(skip_objects > 0 && skipped_count < skip_objects)
+                          {
+                           skipped_count++;
+                           continue;
+                          }
+
+                        if(ObjectDelete(0,name))
+                          {
+                           deleted_count++;
+                          }
+                       }
+                    }
+
+                  if(deleted == false && name_contains != "")
+                    {
+                     if(StringFind(name,name_contains,0) > -1)
+                       {
+                        if(skip_objects > 0 && skipped_count < skip_objects)
+                          {
+                           skipped_count++;
+                           continue;
+                          }
+
+                        if(ObjectDelete(0,name))
+                          {
+                           deleted_count++;
+                          }
+                       }
                     }
                  }
               }
            }
-         else
-           {
-            next = true;
-           }
-        }
-
-
-      if(next)
-        {
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
         }
       else
+         if(sort_mode == "z-a")
+           {
+            for(index=total-1; index>=0; index--)
+              {
+               name = ObjectName(0,index);
+
+               if(name != "")
+                 {
+                  if(max_objects > 0 && deleted_count >= max_objects)
+                    {
+                     break;
+                    }
+
+                  deleted = false;
+
+                  // obj_color != clrBlack below is because in MQL5 when the value is EMPTY_VALUE, it is turned into clrBlack because of the data type
+                  if(obj_color != EMPTY_VALUE && obj_color != clrBlack && ObjectGetInteger(0, name, OBJPROP_COLOR) != obj_color)
+                    {
+                     continue;
+                    }
+
+                  if(name_starts_with == "" && name_contains == "")
+                    {
+                     if(skip_objects > 0 && skipped_count < skip_objects)
+                       {
+                        skipped_count++;
+                        continue;
+                       }
+
+                     if(ObjectDelete(0,name))
+                       {
+                        deleted_count++;
+                       }
+                    }
+                  else
+                    {
+                     if(name_starts_with != "")
+                       {
+                        length = StringLen(name_starts_with);
+
+                        if(StringSubstr(name,0,length) == name_starts_with)
+                          {
+                           if(skip_objects > 0 && skipped_count < skip_objects)
+                             {
+                              skipped_count++;
+                              continue;
+                             }
+
+                           if(ObjectDelete(0,name))
+                             {
+                              deleted_count++;
+                             }
+                          }
+                       }
+
+                     if(deleted == false && name_contains != "")
+                       {
+                        if(StringFind(name,name_contains,0) > -1)
+                          {
+                           if(skip_objects > 0 && skipped_count < skip_objects)
+                             {
+                              skipped_count++;
+                              continue;
+                             }
+
+                           if(ObjectDelete(0,name))
+                             {
+                              deleted_count++;
+                             }
+                          }
+                       }
+                    }
+                 }
+              }
+           }
+
+      if(deleted_count > 0)
         {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
+         ChartRedraw();
         }
+
+      printf("task" + block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+
      }
    virtual void      reset(int level)
      {
@@ -1014,181 +1154,19 @@ public:
 
   };
 
-//Mouse clicked on object
+//Pass
 class Task2 : public Task
   {
-   string            name_filter_mode;
-   string            obj_name;
+
 public:
                      Task2(string name):Task(name)
      {
-      name_filter_mode = "names";
-      obj_name = "TEST";
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      bool next = false;
-      if(onchartEventHolder.id == CHARTEVENT_OBJECT_CLICK)
-        {
-         if(name_filter_mode == "name" || name_filter_mode == "names")
-           {
-            string names[];
-
-            if(obj_name != "")
-              {
-               StringExplode(",", obj_name, names);
-               int size = ArraySize(names);
-
-               for(int i = 0; i < size; i++)
-                 {
-                  if(onchartEventHolder.sparam == StringTrim(names[i]))
-                    {
-                     next = true;
-                     break;
-                    }
-                 }
-              }
-           }
-         else
-           {
-            next = true;
-           }
-        }
-
-
-      if(next)
-        {
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Object modified
-class Task3 : public Task
-  {
-   string            name_filter_mode;
-   string            obj_name;
-public:
-                     Task3(string name):Task(name)
-     {
-      name_filter_mode = "names";
-      obj_name = "TEST";
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      bool next = false;
-      if(onchartEventHolder.id == CHARTEVENT_OBJECT_CHANGE || onchartEventHolder.id == CHARTEVENT_OBJECT_ENDEDIT)
-        {
-         if(name_filter_mode == "name" || name_filter_mode == "names")
-           {
-            string names[];
-
-            if(obj_name != "")
-              {
-               StringExplode(",", obj_name, names);
-               int size = ArraySize(names);
-
-               for(int i = 0; i < size; i++)
-                 {
-                  if(onchartEventHolder.sparam == StringTrim(names[i]))
-                    {
-                     next = true;
-                     break;
-                    }
-                 }
-              }
-           }
-         else
-           {
-            next = true;
-           }
-        }
-
-
-      if(next)
-        {
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Object dragged
-class Task4 : public Task
-  {
-   string            name_filter_mode;
-   string            obj_name;
-public:
-                     Task4(string name):Task(name)
-     {
-      name_filter_mode = "names";
-      obj_name = "";
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      bool next = false;
-      if(onchartEventHolder.id == CHARTEVENT_OBJECT_DRAG)
-        {
-         if(name_filter_mode == "name" || name_filter_mode == "names")
-           {
-            string names[];
-
-            if(obj_name != "")
-              {
-               StringExplode(",", obj_name, names);
-               int size = ArraySize(names);
-
-               for(int i = 0; i < size; i++)
-                 {
-                  if(onchartEventHolder.sparam == StringTrim(names[i]))
-                    {
-                     next = true;
-                     break;
-                    }
-                 }
-              }
-           }
-         else
-           {
-            next = true;
-           }
-        }
-
-
-      if(next)
-        {
-         printf("task" + block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task" + block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
@@ -1345,7 +1323,7 @@ public:
   };
 
 
-//Edit Field modified
+//Delete objects
 class Block1 : public Block
   {
 public:
@@ -1353,13 +1331,13 @@ public:
      {
       id = 0;
       id_by_user = 1;
-      name = "edit_field_modified";
+      name = "delete_objects";
       enabled = True;
       event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {1, 2};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1370,7 +1348,7 @@ public:
      }
   };
 
-//Mouse clicked on object
+//Pass
 class Block2 : public Block
   {
 public:
@@ -1378,13 +1356,13 @@ public:
      {
       id = 1;
       id_by_user = 2;
-      name = "mouse_clicked_on_object";
+      name = "pass";
       enabled = True;
       event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1392,56 +1370,6 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task2(name);
-     }
-  };
-
-//Object modified
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 2;
-      id_by_user = 3;
-      name = "object_modified";
-      enabled = True;
-      event = EVENT_ON_CHART;
-
-      int mnexts_true[] = {3};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
-     }
-  };
-
-//Object dragged
-class Block4 : public Block
-  {
-public:
-                     Block4()
-     {
-      id = 3;
-      id_by_user = 4;
-      name = "object_dragged";
-      enabled = True;
-      event = EVENT_ON_CHART;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {2};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task4(name);
      }
   };
 Block *blocks_init[];
@@ -1535,16 +1463,12 @@ void runBlockChart(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksChart()
   {
-   ArrayResize(blocks_chart, 4);
+   ArrayResize(blocks_chart, 2);
    Block1 *block1 = new Block1();
    Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
-   Block4 *block4 = new Block4();
 
    blocks_chart[0] = block1;
    blocks_chart[1] = block2;
-   blocks_chart[2] = block3;
-   blocks_chart[3] = block4;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3346,17 +3270,11 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
@@ -3632,7 +3550,7 @@ void OnChartEvent(const int id,         // Event identifier
    onchartEventHolder.dparam = dparam;
    onchartEventHolder.sparam = sparam;
    resetBlocksChart(RESET_LEVEL_DEFAULT);
-   runBlockChart(-1, -1, 0);
+   runBlockChart(-1, -1, 1);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

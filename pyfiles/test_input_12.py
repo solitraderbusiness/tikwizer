@@ -3767,3 +3767,78 @@ input_data_35 = {
   "highestIndex": "5"
 }
 
+# delete objects
+input_data_36 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "name_starts_with": "",
+              "name_contains": "",
+              "obj_color": "EMPTY_VALUE",
+              "sort_mode": "z_a",
+              "max_objects": "",
+              "skip_objects": ""
+            },
+            "id": "266f4ce6-5217-4ed3-9e7f-697af8102388",
+            "id_by_user": 1,
+            "blockName": "Delete objects",
+            "category": "chart_objects",
+            "block_name_mql": "delete_objects"
+          },
+          {
+            "params": {},
+            "id": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ],
+        "edges": [
+          {
+            "source": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "sourceHandle": "blue",
+            "target": "266f4ce6-5217-4ed3-9e7f-697af8102388",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b230473f-b1d7-4925-b909-11b0eb992feeblue-266f4ce6-5217-4ed3-9e7f-697af8102388c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "3"
+}
+
