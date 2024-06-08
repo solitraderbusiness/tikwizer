@@ -917,21 +917,21 @@ class ExpertBuilder:
             value_fetch = params.get("value_fetch_relative_to")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_rt = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_rt"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_rt, id_val))
 
         if params.get("new_tpsl_mode") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
             value_fetch_tp = params.get("new_take_profit_level")
             row1_tp = value_fetch_tp.get("row1")
             row2_tp = value_fetch_tp.get("row2")
-            params_tp = value_fetch_tp.get("params_tp")
+            params_tp = value_fetch_tp.get("params")
             id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
 
             value_fetch_sl = params.get("new_stop_loss_level")
             row1_sl = value_fetch_sl.get("row1")
             row2_sl = value_fetch_sl.get("row2")
-            params_sl = value_fetch_sl.get("params_sl")
+            params_sl = value_fetch_sl.get("params")
             id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
 
             self.task_elements.append(self.value_fetch_class(row1_tp, row2_tp, params_tp, id_val_tp))

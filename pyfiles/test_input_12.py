@@ -3842,3 +3842,283 @@ input_data_36 = {
   "highestIndex": "3"
 }
 
+# modify stops of trades
+input_data_37 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "group_mode": "ORDER_GROUP_MODE_MANUAL",
+              "type": "{1}",
+              "older_than": "10",
+              "relative_to": "PRICE_RELATIVE_TO_CURRENT_PRICE",
+              "new_tpsl_mode": "NEW_STOPS_CUSTOM_PRICE_LEVEL",
+              "level_color": "clrGray",
+              "new_stop_loss_level": {
+                "row1": "indicator",
+                "row2": "accelerator_oscillator",
+                "params": {
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "new_take_profit_level": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "1aa23a60-1bc4-407f-a7db-7ce90d4170fb",
+            "id_by_user": 3,
+            "blockName": "Modify stops of trades",
+            "category": "trading_actions",
+            "block_name_mql": "modify_stops_of_trades"
+          }
+        ],
+        "edges": [
+          {
+            "source": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "sourceHandle": "blue",
+            "target": "1aa23a60-1bc4-407f-a7db-7ce90d4170fb",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b230473f-b1d7-4925-b909-11b0eb992feeblue-1aa23a60-1bc4-407f-a7db-7ce90d4170fbc"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "4"
+}
+
+# modify stops of trades 2
+input_data_38 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "type": "{0,1}",
+              "order_age_mins": "0",
+              "relative_to": "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL",
+              "new_tpsl_mode": "NEW_STOPS_CUSTOM_PRICE_LEVEL",
+              "level_color": "clrDeepPink",
+              "group_number": "11",
+              "value_fetch_relative_to": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_OPEN",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              },
+              "new_stop_loss_level": {
+                "row1": "indicator",
+                "row2": "accelerator_oscillator",
+                "params": {
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "new_take_profit_level": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "ec3c43b0-96bf-435a-9b63-032823f86725",
+            "id_by_user": 1,
+            "blockName": "Modify stops of trades",
+            "category": "trading_actions",
+            "block_name_mql": "modify_stops_of_trades"
+          }
+        ],
+        "edges": [
+          {
+            "source": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "sourceHandle": "blue",
+            "target": "ec3c43b0-96bf-435a-9b63-032823f86725",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b230473f-b1d7-4925-b909-11b0eb992feeblue-ec3c43b0-96bf-435a-9b63-032823f86725c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "2"
+}
+
+# modify stops of trades 3
+input_data_39 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "type": "{0}",
+              "order_age_mins": "20",
+              "relative_to": "PRICE_RELATIVE_TO_OPEN_PRICE",
+              "new_tpsl_mode": "NEW_STOPS_PERCENT_OF_CURRENT_TPSL",
+              "level_color": "clrDeepSkyBlue",
+              "group_number": "14",
+              "new_stoploss_percent": "65",
+              "new_takeprofit_percent": "35"
+            },
+            "id": "ec3c43b0-96bf-435a-9b63-032823f86725",
+            "id_by_user": 1,
+            "blockName": "Modify stops of trades",
+            "category": "trading_actions",
+            "block_name_mql": "modify_stops_of_trades"
+          }
+        ],
+        "edges": [
+          {
+            "source": "b230473f-b1d7-4925-b909-11b0eb992fee",
+            "sourceHandle": "blue",
+            "target": "ec3c43b0-96bf-435a-9b63-032823f86725",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b230473f-b1d7-4925-b909-11b0eb992feeblue-ec3c43b0-96bf-435a-9b63-032823f86725c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "2"
+}

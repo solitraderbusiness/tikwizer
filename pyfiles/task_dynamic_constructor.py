@@ -416,7 +416,7 @@ def draw_arrow_run_data(node, function_data_static):
 def modify_stops_of_trades_run_data(node, function_data_static):
     params = node.get("params")
     if params.get("relative_to") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
-        value_fetch = params.get("value_fetch")
+        value_fetch = params.get("value_fetch_relative_to")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_rt"

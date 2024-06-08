@@ -953,207 +953,6 @@ public:
 
   };
 
-//Delete objects
-class Task1 : public Task
-  {
-   string                name_starts_with;
-   string                name_contains;
-   color                 obj_color;
-   string                sort_mode;
-   int                   max_objects;
-   int                   skip_objects;
-public:
-                     Task1(string name):Task(name)
-     {
-      name_starts_with = "";
-      name_contains = "";
-      obj_color = EMPTY_VALUE;
-      sort_mode = "z_a";
-      max_objects = "";
-      skip_objects = "";
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      // STest: from FXdreema: Fix the problem with "Any color" and the EMPTY_VALUE value
-
-      int index         = 0;
-      int total         = ObjectsTotal(0,-1,-1);
-      int length        = 0;
-      bool deleted      = false;
-      int deleted_count = 0;
-      int skipped_count = 0;
-      string name       = "";
-
-      if(sort_mode == "a-z")
-        {
-         for(index=0; index<total; index++)
-           {
-            name = ObjectName(0,index);
-
-            if(name != "")
-              {
-               if(max_objects > 0 && deleted_count >= max_objects)
-                 {
-                  break;
-                 }
-
-               deleted = false;
-
-               // ObjColor != clrBlack below is because in MQL5 when the value is EMPTY_VALUE, it is turned into clrBlack because of the data type
-               if(obj_color != EMPTY_VALUE && obj_color != clrBlack && ObjectGetInteger(0, name, OBJPROP_COLOR) != obj_color)
-                 {
-                  continue;
-                 }
-
-               if(name_starts_with == "" && name_contains == "")
-                 {
-                  if(skip_objects > 0 && skipped_count < skip_objects)
-                    {
-                     skipped_count++;
-                     continue;
-                    }
-
-                  if(ObjectDelete(0,name))
-                    {
-                     deleted_count++;
-                    }
-                 }
-               else
-                 {
-                  if(name_starts_with != "")
-                    {
-                     length = StringLen(name_starts_with);
-
-                     if(StringSubstr(name,0,length) == name_starts_with)
-                       {
-                        if(skip_objects > 0 && skipped_count < skip_objects)
-                          {
-                           skipped_count++;
-                           continue;
-                          }
-
-                        if(ObjectDelete(0,name))
-                          {
-                           deleted_count++;
-                          }
-                       }
-                    }
-
-                  if(deleted == false && name_contains != "")
-                    {
-                     if(StringFind(name,name_contains,0) > -1)
-                       {
-                        if(skip_objects > 0 && skipped_count < skip_objects)
-                          {
-                           skipped_count++;
-                           continue;
-                          }
-
-                        if(ObjectDelete(0,name))
-                          {
-                           deleted_count++;
-                          }
-                       }
-                    }
-                 }
-              }
-           }
-        }
-      else
-         if(sort_mode == "z-a")
-           {
-            for(index=total-1; index>=0; index--)
-              {
-               name = ObjectName(0,index);
-
-               if(name != "")
-                 {
-                  if(max_objects > 0 && deleted_count >= max_objects)
-                    {
-                     break;
-                    }
-
-                  deleted = false;
-
-                  // obj_color != clrBlack below is because in MQL5 when the value is EMPTY_VALUE, it is turned into clrBlack because of the data type
-                  if(obj_color != EMPTY_VALUE && obj_color != clrBlack && ObjectGetInteger(0, name, OBJPROP_COLOR) != obj_color)
-                    {
-                     continue;
-                    }
-
-                  if(name_starts_with == "" && name_contains == "")
-                    {
-                     if(skip_objects > 0 && skipped_count < skip_objects)
-                       {
-                        skipped_count++;
-                        continue;
-                       }
-
-                     if(ObjectDelete(0,name))
-                       {
-                        deleted_count++;
-                       }
-                    }
-                  else
-                    {
-                     if(name_starts_with != "")
-                       {
-                        length = StringLen(name_starts_with);
-
-                        if(StringSubstr(name,0,length) == name_starts_with)
-                          {
-                           if(skip_objects > 0 && skipped_count < skip_objects)
-                             {
-                              skipped_count++;
-                              continue;
-                             }
-
-                           if(ObjectDelete(0,name))
-                             {
-                              deleted_count++;
-                             }
-                          }
-                       }
-
-                     if(deleted == false && name_contains != "")
-                       {
-                        if(StringFind(name,name_contains,0) > -1)
-                          {
-                           if(skip_objects > 0 && skipped_count < skip_objects)
-                             {
-                              skipped_count++;
-                              continue;
-                             }
-
-                           if(ObjectDelete(0,name))
-                             {
-                              deleted_count++;
-                             }
-                          }
-                       }
-                    }
-                 }
-              }
-           }
-
-      if(deleted_count > 0)
-        {
-         ChartRedraw();
-        }
-
-      printf("task" + block_id + " passed route 1");
-      block.onResult(ROUTE_1_PASSED);
-
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
 //Pass
 class Task2 : public Task
   {
@@ -1171,6 +970,191 @@ public:
    virtual void      reset(int level)
      {
 
+     }
+
+  };
+
+//Modify stops of trades
+class Task1 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   string            msymbol;
+
+   int               order_age_mins;
+   int               relative_to;
+   int               new_tpsl_mode;
+   double            new_stoploss;
+   double            new_stoploss_percent;
+   double            new_takeprofit;
+   double            new_takeprofit_percent;
+   color             level_color;
+public:
+                     Task1(string name):Task(name)
+     {
+      symbol_mode = SYMBOL_MODE_ANY;
+      symbols_str = "EURUSD,GBPUSD";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 14;
+      int mtype[] = {0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+
+      order_age_mins = 20;
+      relative_to = PRICE_RELATIVE_TO_OPEN_PRICE;
+      new_tpsl_mode = NEW_STOPS_PERCENT_OF_CURRENT_TPSL;
+      new_stoploss = 30.0;
+      new_stoploss_percent = 65;
+      new_takeprofit = 80.0;
+      new_takeprofit_percent = 35;
+      level_color = clrDeepSkyBlue;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      for(int m = OrdersTotal()-1 ; m >= 0 ; m--)
+        {
+         if(OrderSelect(m, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(!filterGeneral())
+               continue;
+
+            if(!filterAge())
+               continue;
+
+
+            string symbol = OrderSymbol();//STest, conflict with symbol in the field
+
+            int digits   = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+            double oldSL = NormalizeDouble(OrderStopLoss(), digits);
+            double oldTP = NormalizeDouble(OrderTakeProfit(), digits);
+            double OP    = NormalizeDouble(OrderOpenPrice(), digits);
+
+            //reference price
+            double price = 0;
+
+            if(relative_to == PRICE_RELATIVE_TO_OPEN_PRICE)
+              {
+               price = OP;
+              }
+            else
+               if(relative_to == PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL)
+                 {
+
+
+                  price = "";
+
+
+                 }
+               else
+                  if(relative_to == PRICE_RELATIVE_TO_CURRENT_PRICE)
+                    {
+                     price = (OrderType() == 0) ? SymbolInfoDouble(symbol, SYMBOL_ASK) : SymbolInfoDouble(symbol, SYMBOL_BID);
+                    }
+
+            //-- Calculate the new SL and TP
+            double SL = 0;
+            double TP = 0;
+
+            if(new_tpsl_mode == NEW_STOPS_FIXED)
+              {
+
+               SL = toDigits(new_stoploss, symbol);
+               TP = toDigits(new_takeprofit, symbol);
+
+               printf(SL);
+
+               if(OrderType() == 0)
+                 {
+                  if(SL != 0)
+                    {
+                     SL = price - SL;
+                    }
+                  if(TP != 0)
+                    {
+                     TP = price + TP;
+                    }
+                 }
+               else
+                 {
+                  if(SL != 0)
+                    {
+                     SL = price + SL;
+                    }
+                  if(TP != 0)
+                    {
+                     TP = price - TP;
+                    }
+                 }
+              }
+            else
+               if(new_tpsl_mode == NEW_STOPS_PERCENT_OF_CURRENT_TPSL)
+                 {
+                  if(OrderType() == 0)
+                    {
+                     SL = price - (((OP - oldSL) * new_stoploss_percent) / 100);
+                     TP = price + (((oldTP - OP) * new_takeprofit_percent) / 100);
+                    }
+                  else
+                    {
+                     SL = price + (((oldSL - OP) * new_stoploss_percent) / 100);
+                     TP = price - (((OP - oldTP) * new_takeprofit_percent) / 100);
+                    }
+                 }
+               else
+                  if(new_tpsl_mode == NEW_STOPS_CUSTOM_PRICE_LEVEL)
+                    {
+
+
+                     SL = "";
+
+
+                     TP = "";
+
+                    }
+
+            SL = NormalizeDouble(SL, digits);
+            TP = NormalizeDouble(TP, digits);
+
+            if(SL != oldSL || TP != oldTP)
+              {
+               bool result = OrderModify(OrderTicket(), OrderOpenPrice(), SL, TP, OrderExpiration(), level_color);
+              }
+           }
+        }
+
+      printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+   bool              filterAge()
+     {
+      datetime time_diff = TimeCurrent() - OrderOpenTime();
+      if(time_diff < 0)// sometimes happens
+        {
+         time_diff = 0;
+        }
+      return time_diff >= 60 * order_age_mins;
      }
 
   };
@@ -1323,44 +1307,19 @@ public:
   };
 
 
-//Delete objects
-class Block1 : public Block
-  {
-public:
-                     Block1()
-     {
-      id = 0;
-      id_by_user = 1;
-      name = "delete_objects";
-      enabled = True;
-      event = EVENT_ON_CHART;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {1};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task1(name);
-     }
-  };
-
 //Pass
 class Block2 : public Block
   {
 public:
                      Block2()
      {
-      id = 1;
+      id = 0;
       id_by_user = 2;
       name = "pass";
       enabled = True;
       event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {0};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1370,6 +1329,31 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task2(name);
+     }
+  };
+
+//Modify stops of trades
+class Block1 : public Block
+  {
+public:
+                     Block1()
+     {
+      id = 1;
+      id_by_user = 1;
+      name = "modify_stops_of_trades";
+      enabled = True;
+      event = EVENT_ON_CHART;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task1(name);
      }
   };
 Block *blocks_init[];
@@ -1464,11 +1448,11 @@ void runBlockChart(int source_id, int source_result, int dest_id)
 void addBlocksChart()
   {
    ArrayResize(blocks_chart, 2);
-   Block1 *block1 = new Block1();
    Block2 *block2 = new Block2();
+   Block1 *block1 = new Block1();
 
-   blocks_chart[0] = block1;
-   blocks_chart[1] = block2;
+   blocks_chart[0] = block2;
+   blocks_chart[1] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3550,7 +3534,7 @@ void OnChartEvent(const int id,         // Event identifier
    onchartEventHolder.dparam = dparam;
    onchartEventHolder.sparam = sparam;
    resetBlocksChart(RESET_LEVEL_DEFAULT);
-   runBlockChart(-1, -1, 1);
+   runBlockChart(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
