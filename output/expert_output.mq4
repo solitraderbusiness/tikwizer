@@ -1,8 +1,3 @@
-//+------------------------------------------------------------------+
-//|                                                      ProjectName |
-//|                                      Copyright 2018, CompanyName |
-//|                                       http://www.companyname.net |
-//+------------------------------------------------------------------+
 #define EVENT_ON_INIT   1
 #define EVENT_ON_TIMER  2
 #define EVENT_ON_TICK   3
@@ -177,11 +172,7 @@ struct OnChartEventHolder
    long              lparam;
    double            dparam;
    string            sparam;
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class OnTradeEventDetector
+  };class OnTradeEventDetector
   {
 private:
    //--- structures
@@ -915,11 +906,7 @@ public:
 
    string            EventValueComment() {return eventValues[eventValuesQueueIndex].comment;}
    string            EventValueSymbol()  {return eventValues[eventValuesQueueIndex].symbol;}
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class BlockParent
+  };class BlockParent
   {
 public:
    int               current_source_id;
@@ -931,9 +918,6 @@ public:
 public:
    virtual void      onResult(int result) = NULL;
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Task
   {
 public:
@@ -941,7 +925,7 @@ public:
 public:
                      Task(string name)
      {
-      this.name = name;
+        this.name = name;
      }
 
    virtual void               run(int block_id, BlockParent &block)
@@ -953,214 +937,161 @@ public:
 
   };
 
-//Pass
+//Time filter
 class Task2 : public Task
   {
-
+   int               server_or_local_time;
+   int               time_start_mode;
+   string            time_start;
+   int               time_start_year;
+   int               time_start_month;
+   double            time_start_day;
+   double            time_start_hour;
+   double            time_start_minute;
+   int               time_start_second;
+   int               time_end_mode;
+   string            time_end;
+   int               time_end_year;
+   int               time_end_month;
+   double            time_end_day;
+   double            time_end_hour;
+   double            time_end_minute;
+   int               time_end_second;
+   int               time_end_rel_years;
+   int               time_end_rel_months;
+   double            time_end_rel_days;
+   double            time_end_rel_hours;
+   double            time_end_rel_minutes;
+   int               time_end_rel_seconds;
 public:
                      Task2(string name):Task(name)
      {
-
+         server_or_local_time = TIME_SERVER;
+      time_start_mode = TIME_MODE_TEXT;
+      time_start = "00:00";
+      time_start_year = 0;
+      time_start_month = 0;
+      time_start_day = 0.0;
+      time_start_hour = 1.0;
+      time_start_minute = 0.0;
+      time_start_second = 0;
+      time_end_mode = TIME_MODE_TEXT;
+      time_end = "00:01";
+      time_end_year = 0;
+      time_end_month = 0;
+      time_end_day = 0.0;
+      time_end_hour = 1.0;
+      time_end_minute = 1.0;
+      time_end_second = 0;
+      time_end_year = 0;
+      time_end_rel_months = 0;
+      time_end_rel_days = 0.0;
+      time_end_rel_hours = 0.0;
+      time_end_rel_minutes = 1.0;
+      time_end_rel_seconds = 0;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-      Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
+            Task::run(block_id, block);
+      datetime t0 = 0, t1 = 0, tx = 0, now = 0;
+      int mode_time = 0;
 
-     }
-
-  };
-
-//Modify stops of trades
-class Task1 : public Task
-  {
-   //defined by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   string            msymbol;
-
-   int               order_age_mins;
-   int               relative_to;
-   int               new_tpsl_mode;
-   double            new_stoploss;
-   double            new_stoploss_percent;
-   double            new_takeprofit;
-   double            new_takeprofit_percent;
-   color             level_color;
-public:
-                     Task1(string name):Task(name)
-     {
-      symbol_mode = SYMBOL_MODE_ANY;
-      symbols_str = "EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 14;
-      int mtype[] = {0}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-
-      order_age_mins = 20;
-      relative_to = PRICE_RELATIVE_TO_OPEN_PRICE;
-      new_tpsl_mode = NEW_STOPS_PERCENT_OF_CURRENT_TPSL;
-      new_stoploss = 30.0;
-      new_stoploss_percent = 65;
-      new_takeprofit = 80.0;
-      new_takeprofit_percent = 35;
-      level_color = clrDeepSkyBlue;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      for(int m = OrdersTotal()-1 ; m >= 0 ; m--)
+      if(server_or_local_time == TIME_SERVER)
         {
-         if(OrderSelect(m, SELECT_BY_POS, MODE_TRADES))
+         mode_time = 0;
+         now = TimeCurrent();
+        }
+      else
+         if(server_or_local_time == TIME_LOCAL)
            {
-            if(!filterGeneral())
-               continue;
-
-            if(!filterAge())
-               continue;
-
-
-            string symbol = OrderSymbol();//STest, conflict with symbol in the field
-
-            int digits   = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-            double oldSL = NormalizeDouble(OrderStopLoss(), digits);
-            double oldTP = NormalizeDouble(OrderTakeProfit(), digits);
-            double OP    = NormalizeDouble(OrderOpenPrice(), digits);
-
-            //reference price
-            double price = 0;
-
-            if(relative_to == PRICE_RELATIVE_TO_OPEN_PRICE)
-              {
-               price = OP;
-              }
-            else
-               if(relative_to == PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL)
-                 {
-
-
-                  price = "";
-
-
-                 }
-               else
-                  if(relative_to == PRICE_RELATIVE_TO_CURRENT_PRICE)
-                    {
-                     price = (OrderType() == 0) ? SymbolInfoDouble(symbol, SYMBOL_ASK) : SymbolInfoDouble(symbol, SYMBOL_BID);
-                    }
-
-            //-- Calculate the new SL and TP
-            double SL = 0;
-            double TP = 0;
-
-            if(new_tpsl_mode == NEW_STOPS_FIXED)
-              {
-
-               SL = toDigits(new_stoploss, symbol);
-               TP = toDigits(new_takeprofit, symbol);
-
-               printf(SL);
-
-               if(OrderType() == 0)
-                 {
-                  if(SL != 0)
-                    {
-                     SL = price - SL;
-                    }
-                  if(TP != 0)
-                    {
-                     TP = price + TP;
-                    }
-                 }
-               else
-                 {
-                  if(SL != 0)
-                    {
-                     SL = price + SL;
-                    }
-                  if(TP != 0)
-                    {
-                     TP = price - TP;
-                    }
-                 }
-              }
-            else
-               if(new_tpsl_mode == NEW_STOPS_PERCENT_OF_CURRENT_TPSL)
-                 {
-                  if(OrderType() == 0)
-                    {
-                     SL = price - (((OP - oldSL) * new_stoploss_percent) / 100);
-                     TP = price + (((oldTP - OP) * new_takeprofit_percent) / 100);
-                    }
-                  else
-                    {
-                     SL = price + (((oldSL - OP) * new_stoploss_percent) / 100);
-                     TP = price - (((OP - oldTP) * new_takeprofit_percent) / 100);
-                    }
-                 }
-               else
-                  if(new_tpsl_mode == NEW_STOPS_CUSTOM_PRICE_LEVEL)
-                    {
-
-
-                     SL = "";
-
-
-                     TP = "";
-
-                    }
-
-            SL = NormalizeDouble(SL, digits);
-            TP = NormalizeDouble(TP, digits);
-
-            if(SL != oldSL || TP != oldTP)
-              {
-               bool result = OrderModify(OrderTicket(), OrderOpenPrice(), SL, TP, OrderExpiration(), level_color);
-              }
+            mode_time = 1;
+            now = TimeLocal();
            }
-        }
+         else
+            if(server_or_local_time == TIME_GMT)
+              {
+               mode_time = 2;
+               now = TimeGMT();
+              }
 
-      printf("task"+block_id + " passed route 1");
+      //-- start time
+      if(time_start_mode == TIME_MODE_TEXT)
+        {
+         t0 = TimeFromString(mode_time, time_start);
+        }
+      else
+         if(time_start_mode == TIME_MODE_COMPONENT)
+           {
+            t0 = TimeFromComponents(mode_time, time_start_year, time_start_month, time_start_day, time_start_hour, time_start_minute, time_start_second);
+           }
+
+      //-- end time
+      if(time_end_mode == TIME_MODE_TEXT)
+        {
+         t1 = TimeFromString(mode_time, time_end);
+        }
+      else
+         if(time_end_mode == TIME_MODE_COMPONENT)
+           {
+            t1 = TimeFromComponents(mode_time, time_end_year, time_end_month, time_end_day, time_end_hour, time_end_minute, time_end_second);
+           }
+         else
+            if(time_end_mode == TIME_MODE_RELATIVE)
+              {
+               MqlDateTime tm;
+               TimeToStruct(t0, tm);
+
+               tm.year += time_end_rel_years;
+               tm.mon  += time_end_rel_months;
+               tm.day  += (int)MathFloor(time_end_rel_days);
+               tm.hour += (int)(MathFloor(time_end_rel_hours) + (24 * (time_end_rel_hours - MathFloor(time_end_rel_hours))));
+               tm.min  += (int)(MathFloor(time_end_rel_minutes) + (60 * (time_end_rel_minutes - MathFloor(time_end_rel_minutes))));
+               tm.sec  += (int)((double)time_end_rel_seconds + (60 * (time_end_rel_seconds - MathFloor(time_end_rel_seconds))));
+
+               t1 = StructToTime(tm);
+
+               if(t1 < t0)
+                 {
+                  t1 = t1 + 86400;
+                 }
+              }
+
+      if((now >= t0 && now < t1) || (t0 > t1 && (now >= t0 || now < t1)))
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level) {
+      
+   }
+   
+  };
+
+//Pass
+class Task3 : public Task
+  {
+   
+public:
+                     Task3(string name):Task(name)
+     {
+         
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
       block.onResult(ROUTE_1_PASSED);
      }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-
-   bool              filterAge()
-     {
-      datetime time_diff = TimeCurrent() - OrderOpenTime();
-      if(time_diff < 0)// sometimes happens
-        {
-         time_diff = 0;
-        }
-      return time_diff >= 60 * order_age_mins;
-     }
-
+   virtual void      reset(int level) {
+      
+   }
+   
   };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block : BlockParent
   {
 
@@ -1192,53 +1123,27 @@ public:
      {
       for(int i=0; i<ArraySize(nexts_true); i++)
          //-1 : block id to block index
-         switch(event)
-           {
-            case EVENT_ON_INIT  :
-               runBlockInit(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-            case EVENT_ON_TIMER :
-               runBlockTimer(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-            case EVENT_ON_TICK  :
-               runBlockTick(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-            case EVENT_ON_TRADE :
-               runBlockTrade(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-            case EVENT_ON_CHART :
-               runBlockChart(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-            case EVENT_ON_DEINIT:
-               runBlockDeinit(id, ROUTE_1_PASSED, nexts_true[i]);
-               break;
-           }
+         switch (event){
+            case EVENT_ON_INIT  : runBlockInit  (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TIMER : runBlockTimer (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TICK  : runBlockTick  (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_TRADE : runBlockTrade (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_CHART : runBlockChart (id, ROUTE_1_PASSED, nexts_true[i]); break;
+            case EVENT_ON_DEINIT: runBlockDeinit(id, ROUTE_1_PASSED, nexts_true[i]); break;
+        }
      }
 
    virtual void      next_false()
      {
       for(int i=0; i<ArraySize(nexts_false); i++)
-         switch(event)
-           {
-            case EVENT_ON_INIT  :
-               runBlockInit(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-            case EVENT_ON_TIMER :
-               runBlockTimer(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-            case EVENT_ON_TICK  :
-               runBlockTick(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-            case EVENT_ON_TRADE :
-               runBlockTrade(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-            case EVENT_ON_CHART :
-               runBlockChart(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-            case EVENT_ON_DEINIT:
-               runBlockDeinit(id, ROUTE_2_PASSED, nexts_false[i]);
-               break;
-           }
+         switch (event){
+            case EVENT_ON_INIT  : runBlockInit  (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TIMER : runBlockTimer (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TICK  : runBlockTick  (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_TRADE : runBlockTrade (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_CHART : runBlockChart (id, ROUTE_2_PASSED, nexts_false[i]); break;
+            case EVENT_ON_DEINIT: runBlockDeinit(id, ROUTE_2_PASSED, nexts_false[i]); break;
+        }
      }
 
    virtual void              run(int source_id, int source_result)
@@ -1307,7 +1212,7 @@ public:
   };
 
 
-//Pass
+//Time filter
 class Block2 : public Block
   {
 public:
@@ -1315,13 +1220,13 @@ public:
      {
       id = 0;
       id_by_user = 2;
-      name = "pass";
+      name = "time_filter";
       enabled = True;
       event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1332,28 +1237,28 @@ public:
      }
   };
 
-//Modify stops of trades
-class Block1 : public Block
+//Pass
+class Block3 : public Block
   {
 public:
-                     Block1()
+                     Block3()
      {
       id = 1;
-      id_by_user = 1;
-      name = "modify_stops_of_trades";
+      id_by_user = 3;
+      name = "pass";
       enabled = True;
       event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -1364,224 +1269,129 @@ Block *blocks_chart[];
 Block *blocks_deinit[];
 string overriding_symbol = "";
 int overriding_timeframe = -1;
-OnChartEventHolder onchartEventHolder;
-OnTradeEventDetector onTradeEventDetector;
-bool exit_loop = false;
+OnChartEventHolder onchartEventHolder; 
+OnTradeEventDetector onTradeEventDetector;bool exit_loop = false;
 template <typename T>
-void AddToArray(T& A[], T &value)
-  {
-   ArrayResize(A, ArraySize(A)+1);
-   A[ArraySize(A)-1] = value;
-  }
-template <typename T>
-void RemoveIndexFromArray(T& A[], int iPos)
-  {
-   int iLast;
-   for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
-      A[iPos] = A[iPos + 1];
-   ArrayResize(A, iLast);
-  }// Function to join two arrays into one
-void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[])
-  {
-   int size1 = ArraySize(array1);
-   int size2 = ArraySize(array2);
-   int newSize = size1 + size2;
-   ArrayCopy(arrayJoined, array1, 0, 0, size1);
-   ArrayCopy(arrayJoined, array2, 0, size1, size2);
-  }
+ void AddToArray(T& A[], T &value) {
+ ArrayResize(A, ArraySize(A)+1);
+ A[ArraySize(A)-1] = value;
+ }template <typename T>
+ void RemoveIndexFromArray(T& A[], int iPos) {
+ int iLast;
+ for(iLast = ArraySize(A) - 1; iPos < iLast; ++iPos)
+ A[iPos] = A[iPos + 1];
+ ArrayResize(A, iLast);
+ }// Function to join two arrays into one
+ void JoinArrays(const int& array1[], const int& array2[], int& arrayJoined[]) {
+ int size1 = ArraySize(array1);
+ int size2 = ArraySize(array2);
+ int newSize = size1 + size2;
+ ArrayCopy(arrayJoined, array1, 0, 0, size1);
+ ArrayCopy(arrayJoined, array2, 0, size1, size2);
+ }
 // Check if all items in arrayB are in ArrayA
-bool areAllItemsPresent(int &arrayA[], int &arrayB[])
-  {
-   for(int i = 0; i < ArraySize(arrayA); i++)
-     {
-      bool isPresent = false;
-      for(int j = 0; j < ArraySize(arrayB); j++)
-        {
-         if(arrayA[i] == arrayB[j])
-           {
-            isPresent = true;
-            break;
-           }
-        }
-      if(!isPresent)
-        {
-         return false;
-        }
-     }
-   return true;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+ bool areAllItemsPresent(int &arrayA[], int &arrayB[]) {
+ for(int i = 0; i < ArraySize(arrayA); i++) {
+ bool isPresent = false;
+ for(int j = 0; j < ArraySize(arrayB); j++) {
+ if(arrayA[i] == arrayB[j]) {
+ isPresent = true;
+ break;
+ }
+ }
+ if(!isPresent) {
+ return false;
+ }
+ } 
+return true;
+ }
 void runBlockTick(int source_id, int source_result, int dest_id)
-  {
-   blocks_tick[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksTick()
-  {
-   ArrayResize(blocks_tick, 0);
+{
+blocks_tick[dest_id].run(source_id, source_result);
+}void addBlocksTick()
+{
+ArrayResize(blocks_tick, 0);
 
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksTick(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_tick); i++)
-     {
-      blocks_tick[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void runBlockChart(int source_id, int source_result, int dest_id)
-  {
-   blocks_chart[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksChart()
-  {
-   ArrayResize(blocks_chart, 2);
-   Block2 *block2 = new Block2();
-   Block1 *block1 = new Block1();
+{
+    for(int i=0; i<ArraySize(blocks_tick); i++){
+        blocks_tick[i].reset(level);
+    }
+}void runBlockChart(int source_id, int source_result, int dest_id)
+{
+blocks_chart[dest_id].run(source_id, source_result);
+}void addBlocksChart()
+{
+ArrayResize(blocks_chart, 2);
+Block2 *block2 = new Block2();
+Block3 *block3 = new Block3();
 
-   blocks_chart[0] = block2;
-   blocks_chart[1] = block1;
+blocks_chart[0] = block2;
+blocks_chart[1] = block3;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksChart(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_chart); i++)
-     {
-      blocks_chart[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void runBlockTrade(int source_id, int source_result, int dest_id)
-  {
-   blocks_trade[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksTrade()
-  {
-   ArrayResize(blocks_trade, 0);
+{
+    for(int i=0; i<ArraySize(blocks_chart); i++){
+        blocks_chart[i].reset(level);
+    }
+}void runBlockTrade(int source_id, int source_result, int dest_id)
+{
+blocks_trade[dest_id].run(source_id, source_result);
+}void addBlocksTrade()
+{
+ArrayResize(blocks_trade, 0);
 
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksTrade(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_trade); i++)
-     {
-      blocks_trade[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void runBlockTimer(int source_id, int source_result, int dest_id)
-  {
-   blocks_timer[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksTimer()
-  {
-   ArrayResize(blocks_timer, 0);
+{
+    for(int i=0; i<ArraySize(blocks_trade); i++){
+        blocks_trade[i].reset(level);
+    }
+}void runBlockTimer(int source_id, int source_result, int dest_id)
+{
+blocks_timer[dest_id].run(source_id, source_result);
+}void addBlocksTimer()
+{
+ArrayResize(blocks_timer, 0);
 
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksTimer(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_timer); i++)
-     {
-      blocks_timer[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void runBlockInit(int source_id, int source_result, int dest_id)
-  {
-   blocks_init[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksInit()
-  {
-   ArrayResize(blocks_init, 0);
+{
+    for(int i=0; i<ArraySize(blocks_timer); i++){
+        blocks_timer[i].reset(level);
+    }
+}void runBlockInit(int source_id, int source_result, int dest_id)
+{
+blocks_init[dest_id].run(source_id, source_result);
+}void addBlocksInit()
+{
+ArrayResize(blocks_init, 0);
 
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksInit(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_init); i++)
-     {
-      blocks_init[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void runBlockDeinit(int source_id, int source_result, int dest_id)
-  {
-   blocks_deinit[dest_id].run(source_id, source_result);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void addBlocksDeinit()
-  {
-   ArrayResize(blocks_deinit, 0);
+{
+    for(int i=0; i<ArraySize(blocks_init); i++){
+        blocks_init[i].reset(level);
+    }
+}void runBlockDeinit(int source_id, int source_result, int dest_id)
+{
+blocks_deinit[dest_id].run(source_id, source_result);
+}void addBlocksDeinit()
+{
+ArrayResize(blocks_deinit, 0);
 
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void resetBlocksDeinit(int level)
-  {
-   for(int i=0; i<ArraySize(blocks_deinit); i++)
-     {
-      blocks_deinit[i].reset(level);
-     }
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-string syncSymbolOverriding(string symbol)
-  {
-   return overriding_symbol == "" ? symbol : overriding_symbol;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int syncTimeframeOverriding(int timeframe)
-  {
-   return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-datetime TimeFromString(int mode_time, string stamp)
+{
+    for(int i=0; i<ArraySize(blocks_deinit); i++){
+        blocks_deinit[i].reset(level);
+    }
+}string syncSymbolOverriding(string symbol) {
+ return overriding_symbol == "" ? symbol : overriding_symbol;
+}int syncTimeframeOverriding(int timeframe) {
+ return overriding_timeframe == -1 ? timeframe : overriding_timeframe;
+ }datetime TimeFromString(int mode_time, string stamp)
   {
    datetime t = 0;
 
@@ -1619,9 +1429,6 @@ datetime TimeFromString(int mode_time, string stamp)
    return StringToTime(stamp);
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 datetime TimeFromComponents(
    int time_src = 0,
    int    y = 0,
@@ -1679,25 +1486,19 @@ datetime TimeFromComponents(
   }
 //Considering each magic number is a 7 digit number like 2088100,
 //I choose to take first two digits as group number.
-int getGroupNumber(int magic)
-  {
+int getGroupNumber (int magic){
    return (int)(magic/100000);
-  }//This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
-  {
-   for(int i=0; i<ArraySize(type); i++)
-      if(orderType==type[i])
+}//This just checks if order is buy or sell
+bool sameOrderType (int type[], int orderType){
+   for (int i=0; i<ArraySize(type); i++)
+      if (orderType==type[i])
          return true;
    return false;
-  }//72 is the number in magic 3rd and 4th
+}//72 is the number in magic 3rd and 4th
 //digits that show it is opened by the expert
-bool isAutomated(int magic)
-  {
+bool isAutomated (int magic){
    return MathMod((int)(magic/1000), 100) == 72;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+}
 void ReverseList(int &arr[])
   {
    int size = ArraySize(arr);
@@ -1714,9 +1515,6 @@ void ReverseList(int &arr[])
 bool SleepEx(int ms, bool bAlertable);
 #import
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
   {
    bool success=false;
@@ -1747,9 +1545,6 @@ bool DeleteOrder(ulong ticket, color arrowcolor=clrNONE)
    return(false);
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 void WaitTradeContextIfBusy()
   {
    if(IsTradeContextBusy())
@@ -1766,9 +1561,6 @@ void WaitTradeContextIfBusy()
      }
    return;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int CheckForTradingError(int error_code=-1, string msg_prefix="")
   {
 // return 0 -> no error
@@ -1970,9 +1762,6 @@ int CheckForTradingError(int error_code=-1, string msg_prefix="")
 
    return(retval);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string ErrorMessage(int error_code=-1)
   {
    string e = "";
@@ -2430,11 +2219,7 @@ string ErrorMessage(int error_code=-1)
    e = StringConcatenate(e, " (", error_code, ")");
 
    return e;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double BetMartingale(
+  }double BetMartingale(
    string symbol,
    int look_up_on,
    int group,
@@ -2497,11 +2282,7 @@ double BetMartingale(
      }
 
    return lots;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void GetBetTradesInfo(
+  }void GetBetTradesInfo(
    double &output[],
    string symbol,
    int look_up_on, // 0: try running trades first and then history trades, 1: try running only, 2: try history only
@@ -2590,9 +2371,6 @@ void GetBetTradesInfo(
       GetBetTradesInfo(output, symbol, look_up_on, group, type, findConsecutive);
      }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool TradeSelectByIndex(
    int index,
    string group_mode,
@@ -2611,9 +2389,6 @@ bool TradeSelectByIndex(
 
    return false;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool HistoryTradeSelectByIndex(
    int index,
    string group_mode,
@@ -2631,41 +2406,25 @@ bool HistoryTradeSelectByIndex(
      }
 
    return false;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool              filterGeneral(string symbols[], int symbol_mode, int type[], int group_mode, int group_number)
-  {
-   bool con1 = is_symbol_accepted(symbol_mode, symbols);
-   bool con2 = sameOrderType(type, OrderType());
-   bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-   bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-   return con1 && con2 && con3 && con4;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int SymbolDigits(string symbol)
+  }   bool              filterGeneral(string symbols[], int symbol_mode, int type[], int group_mode, int group_number)
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }int SymbolDigits(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool IsOrderTypeSell()
+  }bool IsOrderTypeSell()
   {
    int type = OrderType();
 
    return (type == OP_SELL || type == OP_SELLSTOP || type == OP_SELLLIMIT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
+  }double DynamicLots(string symbol, int mode, double value=0, double sl=0, string align="align", double RJFR_initial_lots=0)
   {
    double size=0;
    double LotStep=MarketInfo(symbol,MODE_LOTSTEP);
@@ -2810,20 +2569,13 @@ double DynamicLots(string symbol, int mode, double value=0, double sl=0, string 
    size=MathRound(size/LotStep)*LotStep;
    return (size);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double PipValue(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return CustomPoint(symbol) / SymbolInfoDouble(symbol, SYMBOL_POINT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double CustomPoint(string symbol)
+  }double CustomPoint(string symbol)
   {
    static string symbols[];
    static double points[];
@@ -3007,9 +2759,6 @@ void StringExplode(string delimiter, string inputString, T &output[])
       output[element] = empty_val;
      }
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double toDigits(double pips, string symbol)
   {
    if(symbol == "")
@@ -3020,9 +2769,6 @@ double toDigits(double pips, string symbol)
 
    return NormalizeDouble(pips * PipValue(symbol) * point, digits);
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 string StringTrim(string str)
   {
    str = StringTrimRight(str);
@@ -3111,9 +2857,6 @@ string FormatValueForPrinting(
   {
    return value;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int WindowFindVisible(long chart_id, string term)
   {
 //-- the search term can be chart name, such as Force(13), or subwindow index
@@ -3136,61 +2879,35 @@ int WindowFindVisible(long chart_id, string term)
 
    return subwindow;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double SymbolAsk(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_ASK);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-double SymbolBid(string symbol)
+  }double SymbolBid(string symbol)
   {
    if(symbol == "")
       symbol = Symbol();
 
    return SymbolInfoDouble(symbol, SYMBOL_BID);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool IsOrderTypeBuy()
+  }bool IsOrderTypeBuy()
   {
    int type = OrderType();
 
    return (type == OP_BUY || type == OP_BUYSTOP || type == OP_BUYLIMIT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-bool IsOrderTypeStop()
+  }bool IsOrderTypeStop()
   {
    int type = OrderType();
 
    return (type == OP_BUYSTOP || type == OP_SELLSTOP);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-string getSymbol(string symbol)
+  }string getSymbol(string symbol)
   {
    return (symbol==NULL || symbol=="") && overriding_symbol != "" ? overriding_symbol : (symbol==NULL || symbol=="") ? Symbol() : symbol;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int getTimeframe(int timeframe)
+  }int getTimeframe(int timeframe)
   {
    return timeframe==PERIOD_CURRENT && overriding_timeframe != -1 ? overriding_timeframe : timeframe;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool is_symbol_accepted(int symbol_mode, string &symbols[])
   {
    if(symbol_mode == SYMBOL_MODE_ANY)
@@ -3202,7 +2919,7 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
         {
          bool case_1 = OrderSymbol() == getSymbol("");
          bool case_2 = OrderSymbol() == Symbol() && getSymbol("")=="";
-         return case_1 || case_2;
+         return case_1 || case_2;   
         }
       else
         {
@@ -3217,11 +2934,7 @@ bool is_symbol_accepted(int symbol_mode, string &symbols[])
            }
         }
    return false;
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int SecondsFromComponents(double days, double hours, double minutes, int seconds)
+  }int SecondsFromComponents(double days, double hours, double minutes, int seconds)
   {
    int retval =
       86400 * (int)MathFloor(days)
@@ -3231,9 +2944,6 @@ int SecondsFromComponents(double days, double hours, double minutes, int seconds
 
    return retval;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 bool load_object(int index, long chart_id,int sub_window, int obj_type)
   {
    string name = ObjectName(chart_id,index,sub_window, obj_type);
@@ -3250,14 +2960,8 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 
    return true;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
@@ -3298,17 +3002,13 @@ bool in_array(T &array[], T value)
 
    return false;
   }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double ObjectGetValueByShift(long chart_id, string name, int shift)
-  {
-   MqlRates rates[];
-   CopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);
+{
+	MqlRates rates[];
+	CopyRates(NULL, PERIOD_CURRENT, shift, 1, rates);
 
-   return ObjectGetValueByTime(chart_id, name, rates[0].time, 0);
-  }
-template<typename T>
+	return ObjectGetValueByTime(chart_id, name, rates[0].time, 0);
+}template<typename T>
 bool ArrayStripKey(T &array[], int key)
   {
    int x    = 0;
@@ -3333,9 +3033,6 @@ bool ArrayStripKey(T &array[], int key)
    return false; // not stripped
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 long attrTicketParent(long ticket)
   {
    int pos = 0;
@@ -3468,9 +3165,6 @@ int e_attrTicket() {return (int)onTradeEventDetector.EventValueTicket();}
 
 int e_attrType() {return onTradeEventDetector.EventValueType();}
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 double toPips(double digits, string symbol)
   {
    if(symbol == "")
@@ -3479,70 +3173,37 @@ double toPips(double digits, string symbol)
    return digits / (PipValue(symbol) * SymbolInfoDouble(symbol, SYMBOL_POINT));
   }
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-int init()
-  {
-   addBlocksTick();
-   addBlocksChart();
-   addBlocksTrade();
-   addBlocksTimer();
-   addBlocksInit();
-   resetBlocksInit(RESET_LEVEL_DEFAULT);
-   addBlocksDeinit();
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTimer()
-  {
-   resetBlocksTimer(RESET_LEVEL_DEFAULT);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTick()
-  {
-   resetBlocksTick(RESET_LEVEL_TICK);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void OnTrade()
-  {
-   resetBlocksTrade(RESET_LEVEL_DEFAULT);
-   while(onTradeEventDetector.Start())
-     {
+int init(){
+addBlocksTick();addBlocksChart();addBlocksTrade();addBlocksTimer();addBlocksInit();resetBlocksInit(RESET_LEVEL_DEFAULT);addBlocksDeinit();
+}
+void OnTimer(){
+resetBlocksTimer(RESET_LEVEL_DEFAULT);
+}
+void OnTick(){
+resetBlocksTick(RESET_LEVEL_TICK);
+}
+void OnTrade(){
+resetBlocksTrade(RESET_LEVEL_DEFAULT);   while(onTradeEventDetector.Start())
+{
      }
 
-   onTradeEventDetector.End();
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
+    onTradeEventDetector.End();
+}
 void OnChartEvent(const int id,         // Event identifier
-                  const long& lparam,   // Event parameter of long type
-                  const double& dparam, // Event parameter of double type
-                  const string& sparam  // Event parameter of string type
-                 )
-  {
+const long& lparam,   // Event parameter of long type
+const double& dparam, // Event parameter of double type
+const string& sparam  // Event parameter of string type
+){
 
 //hold event params then process blocks
    onchartEventHolder.id     = id;
    onchartEventHolder.lparam = lparam;
    onchartEventHolder.dparam = dparam;
-   onchartEventHolder.sparam = sparam;
-   resetBlocksChart(RESET_LEVEL_DEFAULT);
-   runBlockChart(-1, -1, 0);
-  }
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void deinit(const int reason)
-  {
-   resetBlocksDeinit(RESET_LEVEL_DEFAULT);
-  }
+   onchartEventHolder.sparam = sparam;resetBlocksChart(RESET_LEVEL_DEFAULT);runBlockChart(-1, -1, 1);
+}
+void deinit(const int reason){
+resetBlocksDeinit(RESET_LEVEL_DEFAULT);
+}
 
 
 

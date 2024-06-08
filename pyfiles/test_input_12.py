@@ -4122,3 +4122,77 @@ input_data_39 = {
   "name_by_user": "test 89",
   "highestIndex": "2"
 }
+
+# time fitler
+input_data_40 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "time_mode": "TIME_SERVER",
+              "time_start_mode": "TIME_MODE_TEXT",
+              "time_end_mode": "TIME_MODE_TEXT",
+              "time_start": "00:00",
+              "time_end": "00:01"
+            },
+            "id": "5475376e-7034-4de5-978b-c51de5f71258",
+            "id_by_user": 2,
+            "blockName": "Time filter",
+            "category": "time_filters",
+            "block_name_mql": "time_filter"
+          },
+          {
+            "params": {},
+            "id": "94a372bb-248d-4b4a-bcad-5c63b218cce8",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ],
+        "edges": [
+          {
+            "source": "94a372bb-248d-4b4a-bcad-5c63b218cce8",
+            "sourceHandle": "blue",
+            "target": "5475376e-7034-4de5-978b-c51de5f71258",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-94a372bb-248d-4b4a-bcad-5c63b218cce8blue-5475376e-7034-4de5-978b-c51de5f71258c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "4"
+}
