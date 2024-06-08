@@ -59,7 +59,7 @@ public:
      {
       Task::run(block_id, block);
 
-      string obj_name_prefix = "goldbox_shape_";
+      string obj_name_prefix = "goldblox_shape_";
       long obj_chart_id      = 0;
       int subwindow_id     = WindowFindVisible(obj_chart_id, obj_chart_subwindow);
 

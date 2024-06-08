@@ -953,266 +953,59 @@ public:
 
   };
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value2_text
+//Edit Field modified
+class Task1 : public Task
   {
+   string            name_filter_mode;
+   string            obj_name;
 public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
+                     Task1(string name):Task(name)
      {
-      value = "sample text";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = 0;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   template<typename T>
-   T                 calc()
-     {
-      msymbol = getSymbol(symbol);
-      string result = "";
-      string value_type = "Text";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = point*10*(double)value;  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result +  "MyText";
-     }
-  };
-
-//Pass
-class Task4 : public Task
-  {
-
-public:
-                     Task4(string name):Task(name)
-     {
-
+      name_filter_mode = "";
+      obj_name = "TEST";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
+      bool next = false;
+      if(onchartEventHolder.id == CHARTEVENT_OBJECT_ENDEDIT)
+        {
+         if(name_filter_mode == "name" || name_filter_mode == "names")
+           {
+            string names[];
+
+            if(obj_name != "")
+              {
+               StringExplode(",", obj_name, names);
+               int size = ArraySize(names);
+
+               for(int i = 0; i < size; i++)
+                 {
+                  if(onchartEventHolder.sparam == StringTrim(names[i]))
+                    {
+                     next = true;
+                     break;
+                    }
+                 }
+              }
+           }
+         else
+           {
+            next = true;
+           }
+        }
+
+
+      if(next)
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -1221,174 +1014,181 @@ public:
 
   };
 
-//Draw Edit Field
+//Mouse clicked on object
 class Task2 : public Task
   {
-   //defined by user
-   bool                object_per_bar;
-   bool                object_update;
-   string              obj_name;
-   int                 obj_x;
-   int                 obj_y;
-   string              obj_font;
-   int                 obj_font_size;
-   int                 obj_align;
-   int                 obj_x_size;
-   int                 obj_y_size;
-   color               obj_bg_color;
-   color               obj_border_color;
-   int                 obj_corner;
-   bool                obj_read_only;
-   color               obj_color;
-   bool                obj_back;
-   bool                obj_selectable;
-   bool                obj_selected;
-   bool                obj_hidden;
-   int                 obj_z_order;
-   string              obj_chart_subwindow;
-   //defined by system
-   int                 count;
-   datetime            time0;
+   string            name_filter_mode;
+   string            obj_name;
 public:
                      Task2(string name):Task(name)
      {
-      //defined by user
-      object_per_bar = true;
-      object_update = false;
-      obj_name = "";
-
-      obj_x = 100;
-      obj_y = 1000;
-      obj_font = "Tahoma";
-      obj_font_size = 14;
-      obj_align = ALIGN_LEFT;
-      obj_x_size = 80;
-      obj_y_size = 90;
-      obj_bg_color = clrWhite;
-      obj_border_color = clrNONE;
-      obj_corner = CORNER_RIGHT_LOWER;
-      obj_read_only = true;
-      obj_color = clrSpringGreen;
-      obj_back = true;
-      obj_selectable = false;
-      obj_selected = False;
-      obj_hidden = true;
-      obj_z_order = 15;
-      obj_chart_subwindow = "YASSSS";
-      //defined by system
-      count =  0;
-      time0 =  0;
+      name_filter_mode = "names";
+      obj_name = "TEST";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-
-      string obj_name_prefix = "goldbox_edit_";
-      long obj_chart_id      = 0;
-      int subwindow_id     = WindowFindVisible(obj_chart_id, obj_chart_subwindow);
-
-      if(subwindow_id >= 0)
+      bool next = false;
+      if(onchartEventHolder.id == CHARTEVENT_OBJECT_CLICK)
         {
-         string name       = "";
-         string name_base  = "";
-         bool get_new_name = false;
-         bool do_update    = true;
-
-         if(object_per_bar == true)
+         if(name_filter_mode == "name" || name_filter_mode == "names")
            {
-            datetime time = iTime(Symbol(),0,1);
+            string names[];
 
-            if(time0 < time)
+            if(obj_name != "")
               {
-               time0        = time;
-               get_new_name = true;
-              }
-            else
-              {
-               if(object_update == false)
+               StringExplode(",", obj_name, names);
+               int size = ArraySize(names);
+
+               for(int i = 0; i < size; i++)
                  {
-                  do_update = false;
+                  if(onchartEventHolder.sparam == StringTrim(names[i]))
+                    {
+                     next = true;
+                     break;
+                    }
                  }
               }
            }
          else
            {
-            if(object_update == false)
-              {
-               get_new_name = true;
-              }
+            next = true;
            }
+        }
 
-         if(do_update)
+
+      if(next)
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Object modified
+class Task3 : public Task
+  {
+   string            name_filter_mode;
+   string            obj_name;
+public:
+                     Task3(string name):Task(name)
+     {
+      name_filter_mode = "names";
+      obj_name = "TEST";
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      bool next = false;
+      if(onchartEventHolder.id == CHARTEVENT_OBJECT_CHANGE || onchartEventHolder.id == CHARTEVENT_OBJECT_ENDEDIT)
+        {
+         if(name_filter_mode == "name" || name_filter_mode == "names")
            {
+            string names[];
+
             if(obj_name != "")
               {
-               name_base = obj_name;
-              }
-            else
-              {
-               Block *mblock = (Block*) GetPointer(block);
-               name_base = obj_name_prefix + mblock.id_by_user + "_";
-              }
+               StringExplode(",", obj_name, names);
+               int size = ArraySize(names);
 
-            if(get_new_name == false)
-              {
-               name = name_base + IntegerToString(count);
-              }
-            else
-              {
-               while(true)
+               for(int i = 0; i < size; i++)
                  {
-                  count++;
-                  name = name_base + IntegerToString(count);
-
-                  if(ObjectFind(obj_chart_id,name) < 0)
+                  if(onchartEventHolder.sparam == StringTrim(names[i]))
                     {
+                     next = true;
                      break;
                     }
                  }
               }
-
-            if(obj_name != "" && count == 0)
-              {
-               name = obj_name;
-              }
-
-            if(ObjectFind(obj_chart_id,name) < 0 && !ObjectCreate(obj_chart_id,name,OBJ_EDIT,subwindow_id,0,0))
-              {
-               Print(__FUNCTION__,": Edit field failed to create! Error code = ",GetLastError());
-              }
-
-            Value2_text value2_text;
-            value2_text.init();
-            string valueValue2_text = value2_text.calc<string>();
-
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_XDISTANCE,obj_x);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_YDISTANCE,obj_y);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_XSIZE,obj_x_size);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_YSIZE,obj_y_size);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_BGCOLOR,obj_bg_color);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_BORDER_COLOR,obj_border_color);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_CORNER,obj_corner);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_READONLY,obj_read_only);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_ALIGN,obj_align);
-            ObjectSetString(obj_chart_id,name,OBJPROP_FONT,obj_font);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_FONTSIZE,obj_font_size);
-            ObjectSetString(obj_chart_id,name,OBJPROP_TEXT,valueValue2_text);
-
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_COLOR,obj_color);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_BACK,obj_back);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTABLE,obj_selectable);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTED,obj_selected);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_HIDDEN,obj_hidden);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_ZORDER,obj_z_order);
-
-            ChartRedraw();
+           }
+         else
+           {
+            next = true;
            }
         }
 
-      printf("task" + block_id + " passed route 1");
-      block.onResult(ROUTE_1_PASSED);
+
+      if(next)
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Object dragged
+class Task4 : public Task
+  {
+   string            name_filter_mode;
+   string            obj_name;
+public:
+                     Task4(string name):Task(name)
+     {
+      name_filter_mode = "names";
+      obj_name = "";
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      bool next = false;
+      if(onchartEventHolder.id == CHARTEVENT_OBJECT_DRAG)
+        {
+         if(name_filter_mode == "name" || name_filter_mode == "names")
+           {
+            string names[];
+
+            if(obj_name != "")
+              {
+               StringExplode(",", obj_name, names);
+               int size = ArraySize(names);
+
+               for(int i = 0; i < size; i++)
+                 {
+                  if(onchartEventHolder.sparam == StringTrim(names[i]))
+                    {
+                     next = true;
+                     break;
+                    }
+                 }
+              }
+           }
+         else
+           {
+            next = true;
+           }
+        }
+
+
+      if(next)
+        {
+         printf("task" + block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task" + block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -1545,19 +1345,19 @@ public:
   };
 
 
-//Pass
-class Block4 : public Block
+//Edit Field modified
+class Block1 : public Block
   {
 public:
-                     Block4()
+                     Block1()
      {
       id = 0;
-      id_by_user = 4;
-      name = "pass";
+      id_by_user = 1;
+      name = "edit_field_modified";
       enabled = True;
-      event = EVENT_ON_TICK;
+      event = EVENT_ON_CHART;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {1, 2};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1566,11 +1366,11 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task4(name);
+      task = new Task1(name);
      }
   };
 
-//Draw Edit Field
+//Mouse clicked on object
 class Block2 : public Block
   {
 public:
@@ -1578,9 +1378,9 @@ public:
      {
       id = 1;
       id_by_user = 2;
-      name = "draw_edit_field";
+      name = "mouse_clicked_on_object";
       enabled = True;
-      event = EVENT_ON_TICK;
+      event = EVENT_ON_CHART;
 
       int mnexts_true[] = {};
       int mnexts_false[] = {};
@@ -1592,6 +1392,56 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task2(name);
+     }
+  };
+
+//Object modified
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 2;
+      id_by_user = 3;
+      name = "object_modified";
+      enabled = True;
+      event = EVENT_ON_CHART;
+
+      int mnexts_true[] = {3};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
+     }
+  };
+
+//Object dragged
+class Block4 : public Block
+  {
+public:
+                     Block4()
+     {
+      id = 3;
+      id_by_user = 4;
+      name = "object_dragged";
+      enabled = True;
+      event = EVENT_ON_CHART;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {2};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task4(name);
      }
   };
 Block *blocks_init[];
@@ -1660,12 +1510,8 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 2);
-   Block4 *block4 = new Block4();
-   Block2 *block2 = new Block2();
+   ArrayResize(blocks_tick, 0);
 
-   blocks_tick[0] = block4;
-   blocks_tick[1] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1689,8 +1535,16 @@ void runBlockChart(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksChart()
   {
-   ArrayResize(blocks_chart, 0);
+   ArrayResize(blocks_chart, 4);
+   Block1 *block1 = new Block1();
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
+   Block4 *block4 = new Block4();
 
+   blocks_chart[0] = block1;
+   blocks_chart[1] = block2;
+   blocks_chart[2] = block3;
+   blocks_chart[3] = block4;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3492,11 +3346,17 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
@@ -3743,7 +3603,6 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3773,6 +3632,7 @@ void OnChartEvent(const int id,         // Event identifier
    onchartEventHolder.dparam = dparam;
    onchartEventHolder.sparam = sparam;
    resetBlocksChart(RESET_LEVEL_DEFAULT);
+   runBlockChart(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

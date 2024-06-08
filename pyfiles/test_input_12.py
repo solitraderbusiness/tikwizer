@@ -3269,3 +3269,501 @@ input_data_31 = {
   "name_by_user": "بسیبسی",
   "highestIndex": "2"
 }
+
+# on chart events
+input_data_32 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "59e94ea2-a43d-45d0-b359-a437c6d6ae8f",
+            "sourceHandle": "blue",
+            "target": "f1f6ec30-6cb0-4054-8fc8-10301cb2df42",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-59e94ea2-a43d-45d0-b359-a437c6d6ae8fblue-f1f6ec30-6cb0-4054-8fc8-10301cb2df42c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "59e94ea2-a43d-45d0-b359-a437c6d6ae8f",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_arrow",
+              "object_type": "OBJ_ARROW_UP",
+              "obj_anchor": "ANCHOR_TOP",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0",
+                  "time_source": "TIME_SERVER"
+                }
+              },
+              "price_1": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_OPEN",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "f1f6ec30-6cb0-4054-8fc8-10301cb2df42",
+            "id_by_user": 3,
+            "blockName": "Draw Arrow",
+            "category": "chart_objects",
+            "block_name_mql": "draw_arrow"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "id_by_user": 1,
+            "blockName": "Edit Field modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "edit_field_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "36468608-738f-401f-8ccb-c3ec28d470a7",
+            "id_by_user": 2,
+            "blockName": "Mouse clicked on object",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "mouse_clicked_on_object"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "5cd3b010-a30d-40f5-85fa-e403f1f05688",
+            "id_by_user": 3,
+            "blockName": "Object modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "c664da6e-193d-431d-b6b3-68d8ce673f73",
+            "id_by_user": 4,
+            "blockName": "Object dragged",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_dragged"
+          }
+        ],
+        "edges": [
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "blue",
+            "target": "5cd3b010-a30d-40f5-85fa-e403f1f05688",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704blue-5cd3b010-a30d-40f5-85fa-e403f1f05688c"
+          },
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "red",
+            "target": "36468608-738f-401f-8ccb-c3ec28d470a7",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704red-36468608-738f-401f-8ccb-c3ec28d470a7c"
+          },
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "red",
+            "target": "c664da6e-193d-431d-b6b3-68d8ce673f73",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704red-c664da6e-193d-431d-b6b3-68d8ce673f73c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "30789b7a-81e6-4e7c-9060-8767e04c25c0",
+  "name_by_user": "test 14",
+  "highestIndex": "5"
+}
+
+# on chart events 2
+input_data_33 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "id_by_user": 1,
+            "blockName": "Edit Field modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "edit_field_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "36468608-738f-401f-8ccb-c3ec28d470a7",
+            "id_by_user": 2,
+            "blockName": "Mouse clicked on object",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "mouse_clicked_on_object"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "5cd3b010-a30d-40f5-85fa-e403f1f05688",
+            "id_by_user": 3,
+            "blockName": "Object modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "c664da6e-193d-431d-b6b3-68d8ce673f73",
+            "id_by_user": 4,
+            "blockName": "Object dragged",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_dragged"
+          }
+        ],
+        "edges": [
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "blue",
+            "target": "5cd3b010-a30d-40f5-85fa-e403f1f05688",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704blue-5cd3b010-a30d-40f5-85fa-e403f1f05688c"
+          },
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "red",
+            "target": "36468608-738f-401f-8ccb-c3ec28d470a7",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704red-36468608-738f-401f-8ccb-c3ec28d470a7c"
+          },
+          {
+            "source": "f354a367-a9ca-4dd4-a358-db15b576a704",
+            "sourceHandle": "red",
+            "target": "c664da6e-193d-431d-b6b3-68d8ce673f73",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f354a367-a9ca-4dd4-a358-db15b576a704red-c664da6e-193d-431d-b6b3-68d8ce673f73c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "30789b7a-81e6-4e7c-9060-8767e04c25c0",
+  "name_by_user": "test 14",
+  "highestIndex": "undefined"
+}
+
+# on chart events 3
+input_data_34 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "45f05286-3146-4234-aea1-71e4919fb686",
+            "id_by_user": 1,
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "edit_field_modified",
+            "blockName": "Edit Field modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "3622b3a9-8a73-4223-bf5e-b53ea9dba51e",
+            "id_by_user": 2,
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "mouse_clicked_on_object",
+            "blockName": "Mouse clicked on object"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "id_by_user": 3,
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_modified",
+            "blockName": "Object modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": ""
+            },
+            "id": "926eeb0e-5dbf-4eac-9ea2-e67a1138f994",
+            "id_by_user": 4,
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_dragged",
+            "blockName": "Object dragged"
+          }
+        ],
+        "edges": [
+          {
+            "source": "45f05286-3146-4234-aea1-71e4919fb686",
+            "sourceHandle": "blue",
+            "target": "3622b3a9-8a73-4223-bf5e-b53ea9dba51e",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-45f05286-3146-4234-aea1-71e4919fb686blue-3622b3a9-8a73-4223-bf5e-b53ea9dba51ec"
+          },
+          {
+            "source": "45f05286-3146-4234-aea1-71e4919fb686",
+            "sourceHandle": "blue",
+            "target": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-45f05286-3146-4234-aea1-71e4919fb686blue-1d01ccf4-ad1d-4271-92eb-d97fb0d57df6c"
+          },
+          {
+            "source": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "sourceHandle": "blue",
+            "target": "926eeb0e-5dbf-4eac-9ea2-e67a1138f994",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-1d01ccf4-ad1d-4271-92eb-d97fb0d57df6blue-926eeb0e-5dbf-4eac-9ea2-e67a1138f994c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "5"
+}
+
+# on chart events 4
+input_data_35 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [
+          {
+            "params": {
+              "name_filter_mode": "names",
+              "obj_name": "TEST"
+            },
+            "id": "45f05286-3146-4234-aea1-71e4919fb686",
+            "id_by_user": 1,
+            "blockName": "Edit Field modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "edit_field_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": "names",
+              "obj_name": "TEST"
+            },
+            "id": "3622b3a9-8a73-4223-bf5e-b53ea9dba51e",
+            "id_by_user": 2,
+            "blockName": "Mouse clicked on object",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "mouse_clicked_on_object"
+          },
+          {
+            "params": {
+              "name_filter_mode": "names",
+              "obj_name": "TEST"
+            },
+            "id": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "id_by_user": 3,
+            "blockName": "Object modified",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_modified"
+          },
+          {
+            "params": {
+              "name_filter_mode": "names",
+              "obj_name": ""
+            },
+            "id": "926eeb0e-5dbf-4eac-9ea2-e67a1138f994",
+            "id_by_user": 4,
+            "blockName": "Object dragged",
+            "category": "on_chart_filter_specific_event",
+            "block_name_mql": "object_dragged"
+          }
+        ],
+        "edges": [
+          {
+            "source": "45f05286-3146-4234-aea1-71e4919fb686",
+            "sourceHandle": "blue",
+            "target": "3622b3a9-8a73-4223-bf5e-b53ea9dba51e",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-45f05286-3146-4234-aea1-71e4919fb686blue-3622b3a9-8a73-4223-bf5e-b53ea9dba51ec"
+          },
+          {
+            "source": "45f05286-3146-4234-aea1-71e4919fb686",
+            "sourceHandle": "blue",
+            "target": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-45f05286-3146-4234-aea1-71e4919fb686blue-1d01ccf4-ad1d-4271-92eb-d97fb0d57df6c"
+          },
+          {
+            "source": "1d01ccf4-ad1d-4271-92eb-d97fb0d57df6",
+            "sourceHandle": "blue",
+            "target": "926eeb0e-5dbf-4eac-9ea2-e67a1138f994",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-1d01ccf4-ad1d-4271-92eb-d97fb0d57df6blue-926eeb0e-5dbf-4eac-9ea2-e67a1138f994c"
+          }
+        ]
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e45e4fb4-0015-498b-b67f-f99dc87dbef9",
+  "name_by_user": "test 89",
+  "highestIndex": "5"
+}
+
