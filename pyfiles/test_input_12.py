@@ -4274,3 +4274,226 @@ input_data_41 = {
   "name_by_user": "test 8978",
   "highestIndex": "4"
 }
+
+# test trade created event
+input_data_42 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "38236fc3-8b1b-419d-8fa9-5001d086669b",
+            "sourceHandle": "blue",
+            "target": "611211a0-5faa-4fdc-846d-6e79b8db94b5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-38236fc3-8b1b-419d-8fa9-5001d086669bblue-611211a0-5faa-4fdc-846d-6e79b8db94b5c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "611211a0-5faa-4fdc-846d-6e79b8db94b5",
+            "id_by_user": 2,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {},
+            "id": "38236fc3-8b1b-419d-8fa9-5001d086669b",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "dd672263-821d-4278-b74a-4ec7f715cea9",
+            "id_by_user": 4,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{0,1}"
+            },
+            "id": "e24a978a-2af6-4b07-be48-1fec27181ab5",
+            "id_by_user": 5,
+            "blockName": "Trade created",
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_created"
+          }
+        ],
+        "edges": [
+          {
+            "source": "dd672263-821d-4278-b74a-4ec7f715cea9",
+            "sourceHandle": "blue",
+            "target": "e24a978a-2af6-4b07-be48-1fec27181ab5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-dd672263-821d-4278-b74a-4ec7f715cea9blue-e24a978a-2af6-4b07-be48-1fec27181ab5c"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "a518d20f-7aac-4f96-aa09-6d1bb4cd0228",
+  "name_by_user": "test 8978",
+  "highestIndex": "6"
+}
+
+# test pending order created event
+input_data_43 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "38236fc3-8b1b-419d-8fa9-5001d086669b",
+            "sourceHandle": "blue",
+            "target": "61d8eb72-276c-4251-9639-145a46ed570a",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-38236fc3-8b1b-419d-8fa9-5001d086669bblue-61d8eb72-276c-4251-9639-145a46ed570ac"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "38236fc3-8b1b-419d-8fa9-5001d086669b",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "open_at_price": "OPEN_AT_ASK",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrDarkBlue",
+              "price_offset": "20",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "61d8eb72-276c-4251-9639-145a46ed570a",
+            "id_by_user": 6,
+            "blockName": "Buy pending order",
+            "category": "buy_sell",
+            "block_name_mql": "buy_pending_order"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "dd672263-821d-4278-b74a-4ec7f715cea9",
+            "id_by_user": 4,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "5bf9f13c-5780-425b-8c5d-e5b582e21e38",
+            "id_by_user": 5,
+            "blockName": "Order created",
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_created"
+          }
+        ],
+        "edges": [
+          {
+            "source": "dd672263-821d-4278-b74a-4ec7f715cea9",
+            "sourceHandle": "blue",
+            "target": "5bf9f13c-5780-425b-8c5d-e5b582e21e38",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-dd672263-821d-4278-b74a-4ec7f715cea9blue-5bf9f13c-5780-425b-8c5d-e5b582e21e38c"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "a518d20f-7aac-4f96-aa09-6d1bb4cd0228",
+  "name_by_user": "test 8978",
+  "highestIndex": "7"
+}

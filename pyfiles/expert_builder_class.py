@@ -146,6 +146,9 @@ class ExpertBuilder:
             call_run_block = self.global_functions.get_call__run_block_tick(-1, -1, id_block)
             self.on_tick.append(call_run_block)
 
+        # append OnTrade call
+        self.on_tick.append("   if(ArraySize(blocks_trade)>0)\n      OnTrade();")
+
     def process_blocks_chart(self, data):
         if data is None:
             return

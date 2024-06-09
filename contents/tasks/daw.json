@@ -1,5 +1,5 @@
 {
-  "": ""
+  "": "   if(ArraySize(blocks_trade)>0)\n      OnTrade();"
 }
 
 
