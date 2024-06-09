@@ -721,9 +721,9 @@ class ExpertBuilder:
         return task_comment + task
 
     def get_block_child(self, block_name, input_dic, id_block):
-        block_comment = "\n//" + block_name + "\n"
+        # block_comment = "\n//" + block_name + "\n"
         block = self.block_constructor.get_block_child(input_dic, id_block)
-        return block_comment + block
+        return block
 
     # Elements that are assigned to multiple
     # tasks of same type or to multiple task types

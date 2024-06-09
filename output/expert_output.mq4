@@ -1384,6 +1384,63 @@ private:
      }
   };
 
+//Delete Pending Orders
+class Task1 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   color             arrow_color;
+public:
+                     Task1(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_ANY;
+      symbols_str = "EURUSD,GBPUSD";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_ALL;
+      group_number = 15;
+      int mtype[] = {5,2,4,3}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+      arrow_color = clrOlive;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      for(int i = OrdersTotal()-1 ; i >= 0 ; i--)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(!filterGeneral())
+               continue;
+            bool success = DeleteOrder(OrderTicket(), arrow_color);
+            if(success)
+               OnTrade();
+           }
+        }
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+  };
+
 //Pass
 class Task4 : public Task
   {
@@ -1405,8 +1462,8 @@ public:
 
   };
 
-//Order created
-class Task5 : public Task
+//Order deleted
+class Task7 : public Task
   {
    int               symbol_mode;
    string            symbols_str;
@@ -1414,8 +1471,9 @@ class Task5 : public Task
    int               group_mode;
    int               group_number;
    int               type[];
+   string            close_mode;
 public:
-                     Task5(string name):Task(name)
+                     Task7(string name):Task(name)
      {
       symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = ",EURUSD,GBPUSD";
@@ -1424,18 +1482,21 @@ public:
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {3,5,2,4}; //0 for buy and 1 for sell
+      int mtype[] = {5,2,4,3}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
 
+      close_mode = "";
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
       if(
-         e_Reason() == "new"
+         (e_Reason() == "close")
+         && ((close_mode == "") || (close_mode == "noexp" && e_ReasonDetail() != "expire") || (close_mode == "exp" && e_ReasonDetail() == "expire"))
          && e_attrType() >= 2
-         && filterGeneral())
+         && (filterGeneral())
+      )
         {
          block.onResult(ROUTE_1_PASSED);
         }
@@ -1606,8 +1667,9 @@ public:
 
   };
 
-
-//Pass
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block3 : public Block
   {
 public:
@@ -1619,7 +1681,7 @@ public:
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {1, 2};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1631,8 +1693,9 @@ public:
       task = new Task3(name);
      }
   };
-
-//Buy pending order
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block6 : public Block
   {
 public:
@@ -1656,8 +1719,35 @@ public:
       task = new Task6(name);
      }
   };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block1 : public Block
+  {
+public:
+                     Block1()
+     {
+      id = 2;
+      id_by_user = 1;
+      name = "delete_pending_orders";
+      enabled = True;
+      event = EVENT_ON_TICK;
 
-//Pass
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task1(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
@@ -1681,16 +1771,17 @@ public:
       task = new Task4(name);
      }
   };
-
-//Order created
-class Block5 : public Block
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block7 : public Block
   {
 public:
-                     Block5()
+                     Block7()
      {
       id = 1;
-      id_by_user = 5;
-      name = "order_created";
+      id_by_user = 7;
+      name = "order_deleted";
       enabled = True;
       event = EVENT_ON_TRADE;
 
@@ -1703,7 +1794,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task5(name);
+      task = new Task7(name);
      }
   };
 Block *blocks_init[];
@@ -1772,12 +1863,14 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 2);
+   ArrayResize(blocks_tick, 3);
    Block3 *block3 = new Block3();
    Block6 *block6 = new Block6();
+   Block1 *block1 = new Block1();
 
    blocks_tick[0] = block3;
    blocks_tick[1] = block6;
+   blocks_tick[2] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1828,10 +1921,10 @@ void addBlocksTrade()
   {
    ArrayResize(blocks_trade, 2);
    Block4 *block4 = new Block4();
-   Block5 *block5 = new Block5();
+   Block7 *block7 = new Block7();
 
    blocks_trade[0] = block4;
-   blocks_trade[1] = block5;
+   blocks_trade[1] = block7;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
