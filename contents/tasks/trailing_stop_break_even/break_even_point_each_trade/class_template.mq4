@@ -75,7 +75,9 @@ public:
                      be_offset *=-1;
                  }
                double new_slPrice = OrderOpenPrice()+be_offset;
-               OrderModify(OrderTicket(), OrderOpenPrice(), new_slPrice, OrderTakeProfit(), 0, clrNONE);
+               bool result = OrderModify(OrderTicket(), OrderOpenPrice(), new_slPrice, OrderTakeProfit(), 0, clrNONE);
+               if (result)
+                  OnTrade();
               }
            }
         }

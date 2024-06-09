@@ -4196,3 +4196,81 @@ input_data_40 = {
   "name_by_user": "test 89",
   "highestIndex": "4"
 }
+
+# trailing pending order after adding OnTrade()
+input_data_41 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "23035cd7-ffdd-44a7-9f78-7628378d8788",
+            "sourceHandle": "blue",
+            "target": "35ab0e10-f176-4e2b-8d36-8bd1d799a740",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-23035cd7-ffdd-44a7-9f78-7628378d8788blue-35ab0e10-f176-4e2b-8d36-8bd1d799a740c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "23035cd7-ffdd-44a7-9f78-7628378d8788",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "trailing_distance_mode": "TRAILING_DISTANCE_MODE_FIXED",
+              "t_step_pips": "1",
+              "symbols_str": "",
+              "t_distance_pips": "30"
+            },
+            "id": "35ab0e10-f176-4e2b-8d36-8bd1d799a740",
+            "id_by_user": 3,
+            "blockName": "Trailing pending orders",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "trailing_pending_orders"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "a518d20f-7aac-4f96-aa09-6d1bb4cd0228",
+  "name_by_user": "test 8978",
+  "highestIndex": "4"
+}

@@ -383,14 +383,18 @@ public:
                     {
                      if(sltp == 0 || sltp < fsl)
                        {
-                        OrderModify(OrderTicket(), OrderOpenPrice(), askbid - t_stop, t_opp, 0, LevelColor);
+                        bool result_1 = OrderModify(OrderTicket(), OrderOpenPrice(), askbid - t_stop, t_opp, 0, LevelColor);
+                        if (result_1)
+                            OnTrade();
                        }
                     }
                   else   // trail TP
                     {
                      if(sltp == 0 || sltp > fsl)
                        {
-                        OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid + t_stop, 0, LevelColor);
+                        bool result_2 = OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid + t_stop, 0, LevelColor);
+                        if (result_2)
+                            OnTrade();
                        }
                     }
                  }
@@ -414,7 +418,9 @@ public:
                         // trail SL
                         if(sltp == 0 || sltp > fsl)
                           {
-                           OrderModify(OrderTicket(), OrderOpenPrice(), askbid + t_stop, t_opp, 0, LevelColor);
+                           bool result_3 = OrderModify(OrderTicket(), OrderOpenPrice(), askbid + t_stop, t_opp, 0, LevelColor);
+                           if (result_3)
+                                OnTrade();
                           }
                        }
                      else
@@ -422,7 +428,9 @@ public:
                         // trail TP
                         if(sltp == 0 || sltp < fsl)
                           {
-                           OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid - t_stop, 0, LevelColor);
+                           bool result_4 = OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid - t_stop, 0, LevelColor);
+                           if (result_4)
+                                OnTrade();
                           }
                        }
                     }

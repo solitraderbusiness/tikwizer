@@ -35,7 +35,9 @@ public:
            {
             if(!filterGeneral())
                continue;
-            DeleteOrder(OrderTicket(), arrow_color);
+            bool success = DeleteOrder(OrderTicket(), arrow_color);
+            if (success)
+                OnTrade();
            }
         }
       block.onResult(ROUTE_1_PASSED);

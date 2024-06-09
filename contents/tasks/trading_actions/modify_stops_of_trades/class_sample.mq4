@@ -168,7 +168,9 @@ public:
 
             if(SL != oldSL || TP != oldTP)
               {
-                bool result = OrderModify(OrderTicket(), OrderOpenPrice(), SL, TP, OrderExpiration(), level_color);  
+                bool result = OrderModify(OrderTicket(), OrderOpenPrice(), SL, TP, OrderExpiration(), level_color);
+                if (result)
+                    OnTrade();
               }
            }
         }

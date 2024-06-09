@@ -53,15 +53,13 @@ public:
             if(!result)  //STest, if fatal error, skip retry, otherwise retry.
               {
                int err = GetLastError();
-
+              } else {
+                OnTrade();
               }
            }
         }
       retryCount++;
-      if(retryCount<=1) //This is just a retry.
-         run(block_id, block);
-      else
-         block.onResult(ROUTE_1_PASSED);
+      block.onResult(ROUTE_1_PASSED);
      }
 
    bool              filterGeneral()

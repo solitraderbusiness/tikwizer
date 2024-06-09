@@ -98,7 +98,9 @@ public:
                      new_tp = new_op - (old_op - old_tp);
                  }
 
-               OrderModify(OrderTicket(), new_op, new_sl, new_tp, 0, clrBlack);
+               bool result = OrderModify(OrderTicket(), new_op, new_sl, new_tp, 0, clrBlack);
+               if (result)
+                  OnTrade();
               }
            }
         }
