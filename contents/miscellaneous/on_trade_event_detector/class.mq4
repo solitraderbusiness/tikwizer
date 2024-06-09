@@ -286,7 +286,7 @@ private:
            {
             int previousIndex = -1;
 
-            ITEMS_TYPE current = currentItems[index];
+            ITEMS_TYPE current = currentItems[index3];
             ITEMS_TYPE previous;
             previous.ticket = 0;
 

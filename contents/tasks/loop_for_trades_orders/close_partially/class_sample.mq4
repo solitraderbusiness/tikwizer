@@ -84,6 +84,8 @@ public:
         {
          if(updateTicket) //new ticket number is old ticket + 1. So update ticket number in static orders list
             updateTicket(ticket);
+
+         OnTrade();
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }

@@ -73,6 +73,8 @@ public:
               {
                int err = GetLastError();
 
+              } else {
+                OnTrade();
               }
            }
         }

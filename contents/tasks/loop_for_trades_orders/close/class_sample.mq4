@@ -28,6 +28,7 @@ public:
 
       if(success)
         {
+         OnTrade();
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
