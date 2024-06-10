@@ -4859,3 +4859,410 @@ input_data_46 = {
   "name_by_user": "test 7523",
   "highestIndex": "4"
 }
+
+# test time filter
+input_data_47 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "sourceHandle": "blue",
+            "target": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-ace4d216-d5e9-48fe-8595-a5f7c9002322blue-c77ab867-bf00-4f63-93d3-ba41efea94e7c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "server_or_local_time": "TIME_SERVER",
+              "time_start_mode": "TIME_MODE_TEXT",
+              "time_end_mode": "TIME_MODE_RELATIVE",
+              "time_start": "00:00",
+              "time_end_rel_years": "0",
+              "time_end_rel_months": "0",
+              "time_end_rel_days": "0",
+              "time_end_rel_hours": "0",
+              "time_end_rel_minutes": "1",
+              "time_end_rel_seconds": "0"
+            },
+            "id": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "id_by_user": 1,
+            "blockName": "Time filter",
+            "category": "time_filters",
+            "block_name_mql": "time_filter"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc4ff52f-24ca-46c3-aae9-4fac5a66bf5f",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# test time filter 2
+input_data_48 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "sourceHandle": "blue",
+            "target": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-ace4d216-d5e9-48fe-8595-a5f7c9002322blue-c77ab867-bf00-4f63-93d3-ba41efea94e7c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "server_or_local_time": "TIME_SERVER",
+              "time_start_mode": "TIME_MODE_COMPONENT",
+              "time_end_mode": "TIME_MODE_RELATIVE",
+              "time_end_rel_years": "89",
+              "time_end_rel_months": "11",
+              "time_end_rel_days": "10",
+              "time_end_rel_hours": "9",
+              "time_end_rel_minutes": "8",
+              "time_end_rel_seconds": "7",
+              "time_start_year": "1980",
+              "time_start_month": "9",
+              "time_start_day": "8",
+              "time_start_hour": "7",
+              "time_start_minute": "6",
+              "time_start_second": "5"
+            },
+            "id": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "id_by_user": 1,
+            "blockName": "Time filter",
+            "category": "time_filters",
+            "block_name_mql": "time_filter"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc4ff52f-24ca-46c3-aae9-4fac5a66bf5f",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# test time filter 3
+input_data_49 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "sourceHandle": "blue",
+            "target": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-ace4d216-d5e9-48fe-8595-a5f7c9002322blue-c77ab867-bf00-4f63-93d3-ba41efea94e7c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "server_or_local_time": "TIME_SERVER",
+              "time_start_mode": "TIME_MODE_COMPONENT",
+              "time_end_mode": "TIME_MODE_RELATIVE",
+              "time_start_year": "2024",
+              "time_start_month": "6",
+              "time_start_day": "10",
+              "time_start_hour": "0",
+              "time_start_minute": "0",
+              "time_start_second": "0",
+              "time_end_rel_years": "0",
+              "time_end_rel_months": "0",
+              "time_end_rel_days": "0",
+              "time_end_rel_hours": "5",
+              "time_end_rel_minutes": "0",
+              "time_end_rel_seconds": "0"
+            },
+            "id": "c77ab867-bf00-4f63-93d3-ba41efea94e7",
+            "id_by_user": 1,
+            "blockName": "Time filter",
+            "category": "time_filters",
+            "block_name_mql": "time_filter"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "ace4d216-d5e9-48fe-8595-a5f7c9002322",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc4ff52f-24ca-46c3-aae9-4fac5a66bf5f",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# test every n bars
+input_data_50 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "ed4f284b-d489-4efb-8bcc-c06da3a9d128",
+            "sourceHandle": "blue",
+            "target": "3945f481-a1a4-4734-af5a-117ccac362d5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-ed4f284b-d489-4efb-8bcc-c06da3a9d128blue-3945f481-a1a4-4734-af5a-117ccac362d5c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "n": "5",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "ed4f284b-d489-4efb-8bcc-c06da3a9d128",
+            "id_by_user": 2,
+            "category": "time_filters",
+            "block_name_mql": "every_n_bars",
+            "blockName": "Every \"n\" bars"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "n": "5",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "3945f481-a1a4-4734-af5a-117ccac362d5",
+            "id_by_user": 3,
+            "category": "time_filters",
+            "block_name_mql": "every_n_bars",
+            "blockName": "Every \"n\" bars"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc4ff52f-24ca-46c3-aae9-4fac5a66bf5f",
+  "name_by_user": "test",
+  "highestIndex": "4"
+}
+
+# test every n bars 2
+input_data_51 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "7eddb7fb-3d66-4908-900e-996d5b1e620a",
+            "sourceHandle": "blue",
+            "target": "3945f481-a1a4-4734-af5a-117ccac362d5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-7eddb7fb-3d66-4908-900e-996d5b1e620ablue-3945f481-a1a4-4734-af5a-117ccac362d5c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "EURUSD_o",
+              "timeframe": "PERIOD_M3",
+              "n": "15"
+            },
+            "id": "3945f481-a1a4-4734-af5a-117ccac362d5",
+            "id_by_user": 3,
+            "blockName": "Every \"n\" bars",
+            "category": "time_filters",
+            "block_name_mql": "every_n_bars"
+          },
+          {
+            "params": {},
+            "id": "7eddb7fb-3d66-4908-900e-996d5b1e620a",
+            "id_by_user": 4,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc4ff52f-24ca-46c3-aae9-4fac5a66bf5f",
+  "name_by_user": "test",
+  "highestIndex": "5"
+}

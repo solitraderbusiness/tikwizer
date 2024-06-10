@@ -54,7 +54,7 @@ public:
       time_end_hour = 1.0;
       time_end_minute = 1.0;
       time_end_second = 0;
-      time_end_year = 0;
+      time_end_rel_year = 0;
       time_end_rel_months = 0;
       time_end_rel_days = 0.0;
       time_end_rel_hours = 0.0;

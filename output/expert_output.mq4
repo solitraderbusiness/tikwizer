@@ -953,320 +953,50 @@ public:
 
   };
 
-//Once per bar
-class Task1 : public Task
-  {
-   string                   symbol;
-   ENUM_TIMEFRAMES       timeframe;
-   int                max_times_to_pass;
-   // System parameters Parameters
-   string            tokens[];
-   int               passes[];
-   datetime          old_values[];
-public:
-                     Task1(string name):Task(name)
-     {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      max_times_to_pass = 1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      string msymbol = getSymbol(symbol);
-      int mtimeframe = getTimeframe(timeframe);
-
-      bool next    = false;
-      string token = msymbol + IntegerToString(mtimeframe);
-      int index    = ArraySearch(tokens, token);
-
-      if(index == -1)
-        {
-         index = ArraySize(tokens);
-
-         ArrayResize(tokens, index + 1);
-         ArrayResize(old_values, index + 1);
-         ArrayResize(passes, index + 1);
-
-         tokens[index] = token;
-         passes[index] = 0;
-         old_values[index] = 0;
-        }
-
-      if(max_times_to_pass > 0)
-        {
-
-         datetime new_value = iTime(msymbol, mtimeframe, 1);
-
-         if(new_value == 0)
-           {
-            Print("Failed to get the time from candle 1 on symbol ", msymbol, " and timeframe ", EnumToString((ENUM_TIMEFRAMES)mtimeframe), ". The history data needs to be fixed.");
-           }
-
-         if(new_value > old_values[index])
-           {
-            passes[index]++;
-
-            if(passes[index] >= max_times_to_pass)
-              {
-               old_values[index]  = new_value;
-               passes[index] = 0;
-              }
-
-            next = true;
-           }
-        }
-
-      if(next)
-        {
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   template<typename T>
-   int               ArraySearch(T &array[], T value)
-     {
-      int index = -1;
-      int size  = ArraySize(array);
-
-      for(int i = 0; i < size; i++)
-        {
-         if(array[i] == value)
-           {
-            index = i;
-            break;
-           }
-        }
-
-      return index;
-     }
-
-  };
-
-//Set "Current Timeframe" for next blocks
-class Task2 : public Task
-  {
-   int               timeframe_1;
-   int               timeframe_2;
-   int               timeframe_3;
-   int               timeframe_4;
-   int               timeframe_5;
-   int               timeframe_6;
-   int               timeframe_7;
-   int               timeframe_8;
-   int               timeframe_9;
-   int               timeframe_10;
-public:
-                     Task2(string name):Task(name)
-     {
-      timeframe_1  = PERIOD_M1;
-      timeframe_2  = PERIOD_M5;
-      timeframe_3  = -1;
-      timeframe_4  = -1;
-      timeframe_5  = -1;
-      timeframe_6  = -1;
-      timeframe_7  = -1;
-      timeframe_8  = -1;
-      timeframe_9  = -1;
-      timeframe_10 = -1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      int               timeframes[];
-      if(timeframe_1>-1)
-         AddToArray(timeframes, timeframe_1);
-      if(timeframe_2>-1)
-         AddToArray(timeframes, timeframe_2);
-      if(timeframe_3>-1)
-         AddToArray(timeframes, timeframe_3);
-      if(timeframe_4>-1)
-         AddToArray(timeframes, timeframe_4);
-      if(timeframe_5>-1)
-         AddToArray(timeframes, timeframe_5);
-      if(timeframe_6>-1)
-         AddToArray(timeframes, timeframe_6);
-      if(timeframe_7>-1)
-         AddToArray(timeframes, timeframe_7);
-      if(timeframe_8>-1)
-         AddToArray(timeframes, timeframe_8);
-      if(timeframe_9>-1)
-         AddToArray(timeframes, timeframe_9);
-      if(timeframe_10>-1)
-         AddToArray(timeframes, timeframe_10);
-
-
-
-      int size = ArraySize(timeframes);
-      if(size==0)
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-         return;
-        }
-
-
-      for(int i=0; i<size; i++)
-        {
-         overriding_timeframe = timeframes[i];
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-
-      overriding_timeframe = -1;
-      printf("task"+block_id + " passed route 2");
-      block.onResult(ROUTE_2_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Buy now
+//Every "n" bars
 class Task3 : public Task
   {
-   //values set by user
-   string            symbol;
-   int               group;
-   int               order_type;
-   int               money_management;
-   double            how_much_volume;
-   double            volume_upper_limit;
-   int               open_at_price;
-   double            price_offset;
-   bool              price_offset_as_pip;
-   int               slippage;
-   int               stop_loss_mode;
-   int               take_profit_mode;
-   double            stoploss;
-   double            takeprofit;
-   string            comment;
-   int               magic;
-   datetime          expiration;
-   color             arrow_color;
-   //values set by system
-   int               cmd;
-   double            price;
-   double            volume;
-   int               ticket;
-   double            slPrice;
-   double            tpPrice;
-   double            mstoploss;
-   double            mtakeprofit;
-   bool              initialized;
-   string            msymbol;
-   //martingale inputs
-   int               look_up_on;
-   double            martingale_init_vol;
-   double            martingale_multiply_on_loss;
-   double            martingale_multiply_on_profit;
-   double            martingale_addlots_on_loss;
-   double            martingale_addlots_on_profit;
-   double            martingale_reset_on_n_losses;
-   double            martingale_reset_on_n_profits;
-   int               type[];
+   string                symbol;
+   ENUM_TIMEFRAMES       timeframe;
+   int                   n;
+   //system parameters
+   datetime               barTime;
+   int                    barCount;
 public:
                      Task3(string name):Task(name)
      {
       symbol = "";
-      group = 11;
-      order_type = ORDER_BUY;
-      money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
-      how_much_volume = 0.1;
-      volume_upper_limit = 0;
-      open_at_price = OPEN_AT_ASK;
-      price_offset = 25;
-      price_offset_as_pip = True;
-
-      slippage = 4;
-      stoploss = 20;
-      takeprofit = 20;
-      take_profit_mode = TPSL_MODE_FIXED_PIPS;
-      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
-      comment = "";
-      expiration = 0;
-      arrow_color = clrMaroon;
-
-      //martingale
-      look_up_on = LOOK_UP_RUNNING_ONLY;
-      int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
-      ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
-      martingale_init_vol = 0.1;
-      martingale_multiply_on_loss = 0;
-      martingale_multiply_on_profit = 0;
-      martingale_addlots_on_loss = 0.1;
-      martingale_addlots_on_profit = 0.1;
-      martingale_reset_on_n_losses = 5;
-      martingale_reset_on_n_profits = 5;
+      timeframe = PERIOD_CURRENT;
+      n = 5;
+      //system parameters
+      barTime =  0;
+      barCount =  0;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      msymbol = getSymbol(symbol);
+      bool pass = false;
 
-      calc();
-      if(!initialized)
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
+
+
+      if(barTime < iTime(msymbol, mtimeframe, 1))
         {
-         printf("Not initialized");
-         block.onResult(ROUTE_2_PASSED);
-         return;
-        }
+         barCount++;
 
-      int retryCount = 0;
-
-      while(!IsStopped())
-        {
-
-         if(retryCount>30)
-            break;
-
-         WaitTradeContextIfBusy();
-
-         //-- send ---------------------------------------------------------
-         ResetLastError();
-
-         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
-         if(ticket>0)  //Must be here
-            break;
-         //-- error check --------------------------------------------------
-         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
-
-         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
-
-         if(erraction==0)
+         if(barCount == n || barTime == 0)
            {
-            break;    // no error
+            barCount = 0;
+            pass     = true;
            }
-         else
-            if(erraction==1)
-              {
-               retryCount ++;
-               continue; // overcomable error
-              }
-            else
-               if(erraction==2)
-                 {
-                  break;    // fatal error
-                 }
+
+         barTime = iTime(msymbol, mtimeframe, 1);
         }
 
-      if(ticket > 0)
+      if(pass)
         {
-         OnTrade();
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
@@ -1280,269 +1010,28 @@ public:
      {
 
      }
-private:
-   //does needed calculations
-   void              calc()
+
+  };
+
+//Pass
+class Task4 : public Task
+  {
+
+public:
+                     Task4(string name):Task(name)
      {
-      fitGroup();
-      buildMagic();
-      if(order_type==ORDER_BUY)
-        {
-         cmd = OP_BUY;
-        }
-      else
-         if(order_type==ORDER_SELL)
-           {
-            cmd = OP_SELL;
-           }
-         else
-            if(order_type==ORDER_BUY_PENDING)
-              {
-               if(price_offset>=0)
-                  cmd = OP_BUYSTOP;
-               else
-                  cmd = OP_BUYLIMIT;
-              }
-            else
-               if(order_type==ORDER_SELL_PENDING)
-                 {
-                  if(price_offset>=0)
-                     cmd = OP_SELLSTOP;
-                  else
-                     cmd = OP_SELLLIMIT;
-                 }
 
-      calc_entry_price();
-      if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
-        {
-         calc_tp_buy();
-         calc_sl_buy();
-        }
-      else
-         if(cmd==OP_SELL || cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
-           {
-            calc_tp_sell();
-            calc_sl_sell();
-           }
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
 
-      calcVolume();
-      if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/ MarketInfo(msymbol, MODE_POINT)<MarketInfo(Symbol(), MODE_SPREAD))
-        {
-         printf("Takeprofit and Stoploss too close");
-         initialized = false;
-         return;
-        }
-      initialized = true;
      }
 
-   void              calc_entry_price()
-     {
-      if(cmd==OP_BUY)
-        {
-         price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
-        }
-      else
-         if(cmd==OP_SELL)
-           {
-            price = SymbolInfoDouble(msymbol, SYMBOL_BID);
-           }
-         else
-           {
-            switch(open_at_price)
-              {
-               case OPEN_AT_ASK:
-                  price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
-                  break;
-               case OPEN_AT_BID:
-                  price = SymbolInfoDouble(msymbol, SYMBOL_BID);
-                  break;
-               case OPEN_AT_MID:
-                  price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
-                  break;
-               case OPEN_AT_CUSTOM_PRICE:
-
-                  price = "";
-                  break;
-              }
-           }
-
-
-      double offset = price_offset;
-      if(price_offset_as_pip)
-         offset = price_offset *  MarketInfo(msymbol, MODE_POINT) * 10;
-
-      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
-         price -= offset;
-      else
-         if(cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
-            price += offset;
-     }
-
-   ////////////////////////////////////////////////////////////
-
-   void              calc_tp_buy()
-     {
-      switch(take_profit_mode)
-        {
-         case TPSL_MODE_FIXED_PIPS:
-            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
-            tpPrice = price + mtakeprofit;
-            break;
-         case TPSL_MODE_NO_TP:
-            tpPrice = 0;
-            break;
-        }
-     }
-
-   void              calc_sl_buy()
-     {
-      switch(stop_loss_mode)
-        {
-         case TPSL_MODE_FIXED_PIPS:
-            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
-            slPrice = price - mstoploss;
-            break;
-         case TPSL_MODE_NO_SL:
-            slPrice = 0;
-            break;
-        }
-     }
-
-   void              calc_tp_sell()
-     {
-      switch(take_profit_mode)
-        {
-         case TPSL_MODE_FIXED_PIPS:
-            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
-            tpPrice = price - mtakeprofit;
-            break;
-         case TPSL_MODE_NO_TP:
-            tpPrice = 0;
-            break;
-        }
-     }
-
-   void              calc_sl_sell()
-     {
-      switch(stop_loss_mode)
-        {
-         case TPSL_MODE_FIXED_PIPS:
-            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
-            slPrice = price + mstoploss;
-            break;
-         case TPSL_MODE_NO_SL:
-            slPrice = 0;
-            break;
-        }
-     }
-
-   void              calcVolume()
-     {
-      if(money_management == MONEY_MANAGEMENT_FIXED_VOLUME)
-        {
-         volume = DynamicLots(msymbol, money_management, how_much_volume);
-        }
-      else
-         if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
-           {
-            volume = lotsPercentOfEquity(msymbol, price, slPrice, how_much_volume);
-           }
-         else
-            if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
-              {
-               //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
-              }
-            else
-               if(money_management == MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN)
-                 {
-                  //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
-                 }
-               else
-                  if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY)
-                    {
-                     //lots = DynamicLots(Symbol, money_management, VolumePercent);
-                    }
-                  else
-                     if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE)
-                       {
-                        //lots = DynamicLots(Symbol, money_management, VolumePercent);
-                       }
-                     else
-                        if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN)
-                          {
-                           //lots = DynamicLots(Symbol, money_management, VolumePercent);
-                          }
-                        else
-                           if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY)
-                             {
-                              //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
-                             }
-                           else
-                              if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE)
-                                {
-                                 //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
-                                }
-                              else
-                                 if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN)
-                                   {
-                                    //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
-                                   }
-                                 else
-                                    if(money_management == MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY)
-                                      {
-                                       //lots = DynamicLots(Symbol, money_management, VolumeSizeRisk, pre_sl_pips);
-                                      }
-                                    else
-                                       if(money_management == MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES)
-                                         {
-                                          //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
-                                         }
-                                       else
-                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
-                                            {
-                                             int mlook_up_on =  order_type == ORDER_BUY || ORDER_SELL ? look_up_on : 0;
-                                             volume = BetMartingale(msymbol, mlook_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
-                                            }
-                                          else
-                                             if(money_management == MONEY_MANAGEMENT_CUSTOM_VALUE)
-                                               {
-                                                //lots = _dVolumeSize_();
-                                               }
-
-
-      if(volume_upper_limit>0 && volume>volume_upper_limit)
-         volume = volume_upper_limit;
-     }
-
-   double            lotsPercentOfEquity(string symbol, double entry, double stopLossLevel, double riskPercent)
-     {
-      double point = MarketInfo(symbol,MODE_POINT);
-      if(point==0)
-        {
-         printf("Failed to calc lot size: point value is zero");
-         return 0;
-        }
-      double stopLossPips = MathAbs(entry - stopLossLevel) / point;
-      double accountEquity = AccountEquity();
-      double riskAmount = (riskPercent / 100.0) * accountEquity;
-      double pipValue = MarketInfo(symbol, MODE_TICKVALUE);
-      double lotSize = riskAmount / (stopLossPips * pipValue);
-      return NormalizeDouble(lotSize, 2); // round to 2 decimal places
-     }
-
-   void              fitGroup()
-     {
-      //STest, take care of group number rules later
-      if(group<11)
-         group = 11;
-      if(group>99)
-         group = 99;
-     }
-
-   void              buildMagic()
-     {
-      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
-     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1695,18 +1184,18 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block1 : public Block
+class Block3 : public Block
   {
 public:
-                     Block1()
+                     Block3()
      {
       id = 0;
-      id_by_user = 1;
-      name = "once_per_bar";
+      id_by_user = 3;
+      name = "every_n_bars";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {2};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
       int mprevs_true[] = {1};
       int mprevs_false[] = {};
@@ -1715,20 +1204,20 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task3(name);
      }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
+class Block4 : public Block
   {
 public:
-                     Block2()
+                     Block4()
      {
       id = 1;
-      id_by_user = 2;
-      name = "set_current_timeframe_for_next_blocks";
+      id_by_user = 4;
+      name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
@@ -1741,33 +1230,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 2;
-      id_by_user = 3;
-      name = "buy_sell";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
+      task = new Task4(name);
      }
   };
 Block *blocks_init[];
@@ -1836,14 +1299,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 3);
-   Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
+   ArrayResize(blocks_tick, 2);
    Block3 *block3 = new Block3();
+   Block4 *block4 = new Block4();
 
-   blocks_tick[0] = block1;
-   blocks_tick[1] = block2;
-   blocks_tick[2] = block3;
+   blocks_tick[0] = block3;
+   blocks_tick[1] = block4;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

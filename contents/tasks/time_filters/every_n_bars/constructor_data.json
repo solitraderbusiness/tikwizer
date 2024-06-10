@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      symbol = symbol_val;\n      timeframe = timeframe_val;\n      n = n_val;\n      //system parameters\n      barTime =  0;\n      barCount =  0;"
+}

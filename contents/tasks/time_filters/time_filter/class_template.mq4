@@ -46,7 +46,7 @@ public:
       time_end_hour = time_end_hour_val;
       time_end_minute = time_end_minute_val;
       time_end_second = time_end_second_val;
-      time_end_year = time_end_year_val;
+      time_end_rel_years = time_end_rel_years_val;
       time_end_rel_months = time_end_rel_months_val;
       time_end_rel_days = time_end_rel_days_val;
       time_end_rel_hours = time_end_rel_hours_val;
