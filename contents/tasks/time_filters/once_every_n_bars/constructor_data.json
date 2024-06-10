@@ -1,3 +1,0 @@
-{
-	"constructor_data" : "      symbol = symbol_val;\n      timeframe = timeframe_val;\n      n = n_val;\n      max_times_to_pass = max_times_to_pass_val;\n      \n      \n      count_n = 0;\n      count_max_times = 1;\n      lastSavedTime = -1;"
-}
