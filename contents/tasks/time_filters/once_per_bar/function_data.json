@@ -1,0 +1,3 @@
+{
+	"function_data" : "   template<typename T>\n   int               ArraySearch(T &array[], T value)\n     {\n      int index = -1;\n      int size  = ArraySize(array);\n\n      for(int i = 0; i < size; i++)\n        {\n         if(array[i] == value)\n           {\n            index = i;\n            break;\n           }\n        }\n\n      return index;\n     }\n"
+}

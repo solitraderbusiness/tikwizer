@@ -953,19 +953,180 @@ public:
 
   };
 
-//Pass
-class Task3 : public Task
+//Once per bar
+class Task1 : public Task
   {
-
+   string                   symbol;
+   ENUM_TIMEFRAMES       timeframe;
+   int                max_times_to_pass;
+   // System parameters Parameters
+   string            tokens[];
+   int               passes[];
+   datetime          old_values[];
 public:
-                     Task3(string name):Task(name)
+                     Task1(string name):Task(name)
      {
-
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      max_times_to_pass = 1;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
+
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
+
+      bool next    = false;
+      string token = msymbol + IntegerToString(mtimeframe);
+      int index    = ArraySearch(tokens, token);
+
+      if(index == -1)
+        {
+         index = ArraySize(tokens);
+
+         ArrayResize(tokens, index + 1);
+         ArrayResize(old_values, index + 1);
+         ArrayResize(passes, index + 1);
+
+         tokens[index] = token;
+         passes[index] = 0;
+         old_values[index] = 0;
+        }
+
+      if(max_times_to_pass > 0)
+        {
+
+         datetime new_value = iTime(msymbol, mtimeframe, 1);
+
+         if(new_value == 0)
+           {
+            Print("Failed to get the time from candle 1 on symbol ", msymbol, " and timeframe ", EnumToString((ENUM_TIMEFRAMES)mtimeframe), ". The history data needs to be fixed.");
+           }
+
+         if(new_value > old_values[index])
+           {
+            passes[index]++;
+
+            if(passes[index] >= max_times_to_pass)
+              {
+               old_values[index]  = new_value;
+               passes[index] = 0;
+              }
+
+            next = true;
+           }
+        }
+
+      if(next)
+        {
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   template<typename T>
+   int               ArraySearch(T &array[], T value)
+     {
+      int index = -1;
+      int size  = ArraySize(array);
+
+      for(int i = 0; i < size; i++)
+        {
+         if(array[i] == value)
+           {
+            index = i;
+            break;
+           }
+        }
+
+      return index;
+     }
+
+  };
+
+//Set "Current Timeframe" for next blocks
+class Task2 : public Task
+  {
+   int               timeframe_1;
+   int               timeframe_2;
+   int               timeframe_3;
+   int               timeframe_4;
+   int               timeframe_5;
+   int               timeframe_6;
+   int               timeframe_7;
+   int               timeframe_8;
+   int               timeframe_9;
+   int               timeframe_10;
+public:
+                     Task2(string name):Task(name)
+     {
+      timeframe_1  = PERIOD_M1;
+      timeframe_2  = PERIOD_M5;
+      timeframe_3  = -1;
+      timeframe_4  = -1;
+      timeframe_5  = -1;
+      timeframe_6  = -1;
+      timeframe_7  = -1;
+      timeframe_8  = -1;
+      timeframe_9  = -1;
+      timeframe_10 = -1;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      int               timeframes[];
+      if(timeframe_1>-1)
+         AddToArray(timeframes, timeframe_1);
+      if(timeframe_2>-1)
+         AddToArray(timeframes, timeframe_2);
+      if(timeframe_3>-1)
+         AddToArray(timeframes, timeframe_3);
+      if(timeframe_4>-1)
+         AddToArray(timeframes, timeframe_4);
+      if(timeframe_5>-1)
+         AddToArray(timeframes, timeframe_5);
+      if(timeframe_6>-1)
+         AddToArray(timeframes, timeframe_6);
+      if(timeframe_7>-1)
+         AddToArray(timeframes, timeframe_7);
+      if(timeframe_8>-1)
+         AddToArray(timeframes, timeframe_8);
+      if(timeframe_9>-1)
+         AddToArray(timeframes, timeframe_9);
+      if(timeframe_10>-1)
+         AddToArray(timeframes, timeframe_10);
+
+
+
+      int size = ArraySize(timeframes);
+      if(size==0)
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
+
+
+      for(int i=0; i<size; i++)
+        {
+         overriding_timeframe = timeframes[i];
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+
+      overriding_timeframe = -1;
+      printf("task"+block_id + " passed route 2");
+      block.onResult(ROUTE_2_PASSED);
      }
    virtual void      reset(int level)
      {
@@ -974,8 +1135,8 @@ public:
 
   };
 
-//Buy pending order
-class Task6 : public Task
+//Buy now
+class Task3 : public Task
   {
    //values set by user
    string            symbol;
@@ -1018,16 +1179,16 @@ class Task6 : public Task
    double            martingale_reset_on_n_profits;
    int               type[];
 public:
-                     Task6(string name):Task(name)
+                     Task3(string name):Task(name)
      {
       symbol = "";
       group = 11;
-      order_type = ORDER_BUY_PENDING;
+      order_type = ORDER_BUY;
       money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
       how_much_volume = 0.1;
       volume_upper_limit = 0;
       open_at_price = OPEN_AT_ASK;
-      price_offset = 20;
+      price_offset = 25;
       price_offset_as_pip = True;
 
       slippage = 4;
@@ -1037,7 +1198,7 @@ public:
       stop_loss_mode = TPSL_MODE_FIXED_PIPS;
       comment = "";
       expiration = 0;
-      arrow_color = clrDarkBlue;
+      arrow_color = clrMaroon;
 
       //martingale
       look_up_on = LOOK_UP_RUNNING_ONLY;
@@ -1383,142 +1544,6 @@ private:
       magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
   };
-
-//Delete Pending Orders
-class Task1 : public Task
-  {
-   //defined by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   color             arrow_color;
-public:
-                     Task1(string name):Task(name)
-     {
-      //specified by user
-      symbol_mode = SYMBOL_MODE_ANY;
-      symbols_str = "EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 15;
-      int mtype[] = {5,2,4,3}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-      arrow_color = clrOlive;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      for(int i = OrdersTotal()-1 ; i >= 0 ; i--)
-        {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(!filterGeneral())
-               continue;
-            bool success = DeleteOrder(OrderTicket(), arrow_color);
-            if(success)
-               OnTrade();
-           }
-        }
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-  };
-
-//Pass
-class Task4 : public Task
-  {
-
-public:
-                     Task4(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Order deleted
-class Task7 : public Task
-  {
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[];
-   string            close_mode;
-public:
-                     Task7(string name):Task(name)
-     {
-      symbol_mode = SYMBOL_MODE_ANY;
-      symbols_str = ",EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 15;
-      int mtype[] = {5,2,4,3}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-
-      close_mode = "";
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      if(
-         (e_Reason() == "close")
-         && ((close_mode == "") || (close_mode == "noexp" && e_ReasonDetail() != "expire") || (close_mode == "exp" && e_ReasonDetail() == "expire"))
-         && e_attrType() >= 2
-         && (filterGeneral())
-      )
-        {
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-
-  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -1670,18 +1695,44 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block3 : public Block
+class Block1 : public Block
   {
 public:
-                     Block3()
+                     Block1()
      {
       id = 0;
-      id_by_user = 3;
-      name = "pass";
+      id_by_user = 1;
+      name = "once_per_bar";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1, 2};
+      int mnexts_true[] = {2};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {1};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task1(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block2 : public Block
+  {
+public:
+                     Block2()
+     {
+      id = 1;
+      id_by_user = 2;
+      name = "set_current_timeframe_for_next_blocks";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1690,19 +1741,19 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task3(name);
+      task = new Task2(name);
      }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block6 : public Block
+class Block3 : public Block
   {
 public:
-                     Block6()
+                     Block3()
      {
-      id = 1;
-      id_by_user = 6;
+      id = 2;
+      id_by_user = 3;
       name = "buy_sell";
       enabled = True;
       event = EVENT_ON_TICK;
@@ -1716,85 +1767,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task6(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block1 : public Block
-  {
-public:
-                     Block1()
-     {
-      id = 2;
-      id_by_user = 1;
-      name = "delete_pending_orders";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task1(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block4 : public Block
-  {
-public:
-                     Block4()
-     {
-      id = 0;
-      id_by_user = 4;
-      name = "pass";
-      enabled = True;
-      event = EVENT_ON_TRADE;
-
-      int mnexts_true[] = {1};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task4(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block7 : public Block
-  {
-public:
-                     Block7()
-     {
-      id = 1;
-      id_by_user = 7;
-      name = "order_deleted";
-      enabled = True;
-      event = EVENT_ON_TRADE;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task7(name);
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -1864,13 +1837,13 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 3);
-   Block3 *block3 = new Block3();
-   Block6 *block6 = new Block6();
    Block1 *block1 = new Block1();
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
 
-   blocks_tick[0] = block3;
-   blocks_tick[1] = block6;
-   blocks_tick[2] = block1;
+   blocks_tick[0] = block1;
+   blocks_tick[1] = block2;
+   blocks_tick[2] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1919,12 +1892,8 @@ void runBlockTrade(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTrade()
   {
-   ArrayResize(blocks_trade, 2);
-   Block4 *block4 = new Block4();
-   Block7 *block7 = new Block7();
+   ArrayResize(blocks_trade, 0);
 
-   blocks_trade[0] = block4;
-   blocks_trade[1] = block7;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3952,7 +3921,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }
@@ -3964,7 +3933,6 @@ void OnTrade()
    resetBlocksTrade(RESET_LEVEL_DEFAULT);
    while(onTradeEventDetector.Start())
      {
-      runBlockTrade(-1, -1, 0);
      }
 
    onTradeEventDetector.End();

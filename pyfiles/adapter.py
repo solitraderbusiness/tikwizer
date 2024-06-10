@@ -38,8 +38,6 @@ def create_specific_input(nodes):
             params["order_type"] = "ORDER_BUY_PENDING"
         elif block_name == "Sell pending order":
             params["order_type"] = "ORDER_SELL_PENDING"
-        elif block_name == "Once per bar":
-            params["n"] = 1
         elif block_name == "Volume profile":
             params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
         elif block_name in ["If trade", "If trade/order", "If pending order"]:
@@ -236,8 +234,6 @@ def correct_block_names_mql(nodes):
                 node["block_name_mql"] = "condition_1_cross"
             else:
                 node["block_name_mql"] = "condition_1_normal"
-        elif block_name == "Once per bar":
-            node["block_name_mql"] = "once_every_n_bars"
         elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
             node["block_name_mql"] = "buy_sell"
         elif block_name in ["Check trades count", "Check pending orders count", "If trade", "If trade/order",
