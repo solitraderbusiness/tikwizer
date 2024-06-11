@@ -1,38 +1,56 @@
-class Task0 : public Task
+//Weekday filter
+class Task3 : public Task
   {
-   int               weekdays[]; //0 sunday, 1 monday, ...
-   string            time_mode;
+   int                 server_or_local_time;
+   bool                monday;
+   bool                tuesday;
+   bool                wednesday;
+   bool                thursday;
+   bool                friday;
+   bool                saturday;
+   bool                sunday;
+
 public:
-                     Task0(string name):Task(name)
+                     Task3(string name):Task(name)
      {
-      int mweekdays[]  = {1, 2};
-      ArrayCopy(weekdays, mweekdays, 0, 0, WHOLE_ARRAY);
-      time_mode = TIME_SERVER;
+      server_or_local_time = TIME_SERVER;
+      monday = true;
+      tuesday = true;
+      wednesday = true;
+      thursday = true;
+      friday = true;
+      saturday = false;
+      sunday = false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      int day;
-      if(time_mode==TIME_SERVER)
-         day = TimeDayOfWeek(TimeCurrent());
-      else
-         if(time_mode==TIME_LOCAL)
-            day = TimeDayOfWeek(TimeLocal());
-         else
-            if(time_mode==TIME_GMT)
-               day = TimeDayOfWeek(TimeGMT());
+      int day = 0;
 
-      bool result = false;
-      if(ArraySize(weekdays)>0)//STest, in case size is zero, should it return true or false?
+      if(server_or_local_time == TIME_SERVER)
         {
-         for(int i=0; i<ArraySize(weekdays); i++)
-            if(day==weekdays[i])
-              {
-               result = true;
-               break;
-              }
+         day = TimeDayOfWeek(TimeCurrent());
         }
-      if(result)
+      else
+         if(server_or_local_time == TIME_LOCAL)
+           {
+            day = TimeDayOfWeek(TimeLocal());
+           }
+         else
+            if(server_or_local_time == TIME_GMT)
+              {
+               day = TimeDayOfWeek(TimeGMT());
+              }
+
+      if(
+         (monday    && day == 1)
+         || (tuesday   && day == 2)
+         || (wednesday && day == 3)
+         || (thursday  && day == 4)
+         || (friday    && day == 5)
+         || (saturday  && day == 6)
+         || (sunday    && day == 0)
+      )
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -42,6 +60,8 @@ public:
          printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
+
+
      }
    virtual void      reset(int level)
      {

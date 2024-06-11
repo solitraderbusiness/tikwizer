@@ -1,3 +1,3 @@
 {
-	"constructor_data" : "int mweekdays[]  = weekdays_val;\n      ArrayCopy(weekdays, mweekdays, 0, 0, WHOLE_ARRAY);\n      time_mode = time_mode_val;"
+	"constructor_data" : "      server_or_local_time = server_or_local_time_val;\n      monday = monday_val;\n      tuesday = tuesday_val;\n      wednesday = wednesday_val;\n      thursday = thursday_val;\n      friday = friday_val;\n      saturday = saturday_val;\n      sunday = sunday_val;"
 }

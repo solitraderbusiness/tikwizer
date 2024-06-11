@@ -953,456 +953,6 @@ public:
 
   };
 
-
-class Parabolic_SAR1tsm_cl
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   double            step;
-   double            maximum;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = "";
-
-      timeframe = PERIOD_CURRENT;
-
-      step = 0.02;
-
-      maximum = 0.2;
-
-      shift = 0;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iSAR(symbol,timeframe,step, maximum, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-//Trailing stop (each trade)
-class Task1 : public Task
-  {
-   //defined by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-
-   int               TrailWhat;
-   int               TrailingReferencePrice;
-   string            TrailingStopMode;
-   double            tStopPips;
-   double            tStopMoney;
-   string            tStopMultiple;
-   double            tStopPercentTP;
-   double            tStopPercentProfit;
-   string            TrailingStepMode;
-   double            tStepPips;
-   double            tStepPercentTS;
-   string            TrailingStartMode;
-   double            tStartPips;
-   double            tStartPercentTS;
-   double            tStartPercentSL;
-   double            tStartPercentTP;
-   string            TrailingTPmode;
-   double            tTPpips;
-   double            tTPpercentTS;
-   color             LevelColor;
-
-public:
-                     Task1(string name):Task(name)
-     {
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = "";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 11;
-      int mtype[] = {0}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-
-      TrailWhat = 0;
-      TrailingReferencePrice = 2;
-      TrailingStopMode = TRAILING_STOP_MODE_CUSTOM_LEVEL;
-      tStopPips = 40.0;
-      tStopMoney = 10.0;
-      tStopMultiple = "20/5, 30/10";
-      tStopPercentTP = 100.0;
-      tStopPercentProfit = 50.0;
-      TrailingStepMode = TRAILING_STEP_MODE_PERCENT_OF_TRAILING_STOP;
-      tStepPips = 1.0;
-      tStepPercentTS = 15;
-      TrailingStartMode = TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP;
-      tStartPips = 10.0;
-      tStartPercentTS = 97;
-      tStartPercentSL = 10.0;
-      tStartPercentTP = 10.0;
-      TrailingTPmode = TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP;
-      tTPpips = 20.0;
-      tTPpercentTS = 23;
-      LevelColor = clrSlateGray;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      for(int m = OrdersTotal()-1 ; m >= 0 ; m--)
-        {
-         if(OrderSelect(m, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(!filterGeneral())
-               continue;
-
-            string symbol     = OrderSymbol();//STest, conflict with symbol in field (?)
-            double ask        = SymbolInfoDouble(symbol, SYMBOL_ASK);
-            double bid        = SymbolInfoDouble(symbol, SYMBOL_BID);
-            double stopslevel = (double)SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL);
-            int digits        = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-            int polarity      = 1;   // 1 = buy, -1 = sell
-            double askbid     = ask; // could be Ask or Bid
-            double bidask     = bid; // the opposite of askbid
-            double sltp       = 0;   // could be SL or TP
-            double tpsl       = 0;   // the opposite of sltp
-            double fsl        = 0;   // Freeze Level
-            double limit      = 0;
-            double t_stop     = 0;   // trailing STOP
-            double t_start    = 0;   // trailing START
-            double t_step     = 0;   // trailing STEP
-            double t_opp      = 0;   // trailing Opposite (TP when trailing SL or SL when trailing TP)
-
-            if(TrailWhat > 0)
-              {
-               sltp = OrderStopLoss();
-               tpsl = OrderTakeProfit();
-              }
-            else
-              {
-               sltp = OrderTakeProfit();
-               tpsl = OrderStopLoss();
-              }
-
-            if(OrderType() == 0)
-              {
-               polarity = 1;
-
-               if(TrailingReferencePrice == 1)
-                 {
-                  askbid = bid;
-                  bidask = ask;
-                 }
-              }
-            else
-               if(OrderType() == 1)
-                 {
-                  polarity = -1;
-                  askbid   = bid;
-                  bidask   = ask;
-
-                  if(TrailingReferencePrice == 1)
-                    {
-                     askbid = ask;
-                     bidask = bid;
-                    }
-                 }
-
-            if(TrailingReferencePrice == 2)
-              {
-               askbid = (ask + bid) / 2;
-               bidask = (ask + bid) / 2;
-              }
-
-            // Trailing Stop Size
-            if(TrailingStopMode == TRAILING_STOP_MODE_PIP)
-              {
-               t_stop = toDigits(tStopPips, symbol);
-              }
-            else
-               if(TrailingStopMode == TRAILING_STOP_MODE_PERCENT_OF_OPPOSITE_STOP)
-                 {
-                  t_stop = (MathAbs(OrderOpenPrice() - tpsl)) * (tStopPercentTP / 100);
-                 }
-               else
-                  if(TrailingStopMode == TRAILING_STOP_MODE_PERCENT_OF_PROFIT)
-                    {
-                     t_stop = (MathAbs(askbid - OrderOpenPrice())) * (tStopPercentProfit / 100);
-                    }
-                  else
-                     if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_PIPS)
-                       {
-                        //t_stop = toDigits(_ftStop_(), symbol);
-                       }
-                     else
-                        if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_PRICE_FRACTION)
-                          {
-                           //t_stop = _ftDigits_();
-                          }
-                        else
-                           if(TrailingStopMode == TRAILING_STOP_MODE_CUSTOM_LEVEL)
-                             {
-                              Parabolic_SAR1tsm_cl parabolic_sar1tsm_cl;
-                              parabolic_sar1tsm_cl.init();
-                              double valueParabolic_SAR1tsm_cl = parabolic_sar1tsm_cl.calc();
-                              t_stop = valueParabolic_SAR1tsm_cl;
-
-                              t_stop = (polarity == 1) ? ask - t_stop : t_stop - bid;
-                             }
-                           else
-                              if(TrailingStopMode == TRAILING_STOP_MODE_MONEY)
-                                {
-                                 t_stop = tStopMoney;
-
-                                 double lotsize   = SymbolInfoDouble(symbol, SYMBOL_TRADE_CONTRACT_SIZE);
-                                 double tickvalue = (SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_VALUE) / SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_SIZE)) * SymbolInfoDouble(symbol, SYMBOL_POINT);
-                                 t_stop = t_stop / (OrderLots() * PipValue(symbol));
-                                 // TODO: remove this toDigits(), the calculation should be made directly into digits
-                                 t_stop = toDigits(t_stop / tickvalue, symbol);
-                                }
-
-            // Trailing Start Level
-            if(TrailingStartMode == TRAILING_START_MODE_OFF)
-              {
-               t_start = -EMPTY_VALUE;
-              }
-            else
-               if(TrailingStartMode == TRAILING_START_MODE_OPEN_PRICE)
-                 {
-                  t_start = 0;
-                 }
-               else
-                  if(TrailingStartMode == TRAILING_START_MODE_PIPS_OFFSET)
-                    {
-                     t_start = toDigits(tStartPips, symbol);
-                    }
-                  else
-                     if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP)
-                       {
-                        t_start = t_stop * (tStartPercentTS / 100);
-                       }
-                     else
-                        if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_OPPOSITE_STOP)
-                          {
-                           t_start = (MathAbs(OrderOpenPrice() - tpsl)) * (tStartPercentTP / 100);
-                          }
-                        else
-                           if(TrailingStartMode == TRAILING_START_MODE_PERCENT_OF_STOP)
-                             {
-                              t_start = (MathAbs(OrderOpenPrice() - sltp)) * (tStartPercentSL / 100);
-                             }
-                           else
-                              if(TrailingStartMode == TRAILING_START_MODE_CUSTOM_PIPS)
-                                {
-                                 //t_start = toDigits(_ftStart_(), symbol);
-                                }
-                              else
-                                 if(TrailingStartMode == TRAILING_START_MODE_CUSTOM_PRICE_FRACTION)
-                                   {
-                                    //t_start = _ftStartFraction_();
-                                   }
-
-            // Trailing Step Size
-            if(TrailingStepMode == TRAILING_STEP_MODE_PIPS)
-              {
-               t_step = toDigits(tStepPips, symbol);
-              }
-            else
-               if(TrailingStepMode == TRAILING_STEP_MODE_PERCENT_OF_TRAILING_STOP)
-                 {
-                  t_step = t_stop * (tStepPercentTS / 100);
-                 }
-
-            // Trailing Opposite Size
-            if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_NO_CHANGE)
-              {
-               t_opp = tpsl;
-              }
-            else
-               if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_CLEAR_STOP)
-                 {
-                  t_opp = 0;
-                 }
-               else
-                  if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_PIPS_FROM_OPEN_PRICE)
-                    {
-                     t_opp = TrailWhat * (OrderOpenPrice() + (polarity * toDigits(tTPpips, symbol)));
-                    }
-                  else
-                     if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP)
-                       {
-                        t_opp = TrailWhat * (OrderOpenPrice() + (polarity * toDigits(t_stop * (tTPpercentTS / 100), symbol)));
-                       }
-                     else
-                        if(TrailingTPmode == TRAILING_OPPOSITE_STOP_MODE_CUSTOM)
-                          {
-                           //t_opp = _ftTP_();
-                          }
-
-            // this mode is located here because it overrides Start, Stop and Step
-            // the idea here is to use Start as target profits
-            if(TrailingStopMode == TRAILING_STOP_MODE_MULTIPLE_LEVELS)
-              {
-               bool next = false;
-               string tmp1[];
-               string tmp2[];
-
-               StringExplode(",", tStopMultiple, tmp1);
-
-               for(int i = ArraySize(tmp1)-1; i >= 0; i--)
-                 {
-                  StringExplode("/", tmp1[i], tmp2);
-
-                  if(ArraySize(tmp2) != 2)
-                    {
-                     continue;
-                    }
-
-                  // trailing start will be used as the treshold level
-                  double new_start = toDigits(StringToDouble(StringTrim(tmp2[0])), symbol);
-
-                  // the regular trailing start is bigger than this level -> skip
-                  if(new_start < t_start)
-                    {
-                     continue;
-                    }
-
-                  // check whether the current price<->op distance is bigger than some of the desired levels
-                  double diff = NormalizeDouble(askbid - OrderOpenPrice(), digits);
-
-                  if(polarity * TrailWhat * diff >= new_start)
-                    {
-                     // and setup parameters so SL will be moved
-                     t_start = new_start;
-                     t_stop  = polarity * TrailWhat * diff - toDigits(StringToDouble(StringTrim(tmp2[1])), symbol);
-
-                     next = true;
-                     break;
-                    }
-                 }
-
-               if(next == false)
-                 {
-                  continue;
-                 }
-              }
-
-            stopslevel   = stopslevel * SymbolInfoDouble(symbol, SYMBOL_POINT);
-
-            if(t_stop <= 0)
-              {
-               continue;
-              }
-
-            if(OrderType() == 0 && TrailWhat * (askbid - OrderOpenPrice()) > t_start)
-              {
-               if((TrailWhat * (askbid - sltp) >= t_stop + t_step) || sltp == 0)
-                 {
-                  // consider minimum stop
-                  fsl   = MathAbs(askbid - t_stop);
-                  limit = bidask - stopslevel * TrailWhat;
-
-                  if(fsl > limit)
-                    {
-                     fsl = limit;
-                    }
-
-                  if(TrailWhat == 1)  // trail SL
-                    {
-                     if(sltp == 0 || sltp < fsl)
-                       {
-                        bool result_1 = OrderModify(OrderTicket(), OrderOpenPrice(), askbid - t_stop, t_opp, 0, LevelColor);
-                        if(result_1)
-                           OnTrade();
-                       }
-                    }
-                  else   // trail TP
-                    {
-                     if(sltp == 0 || sltp > fsl)
-                       {
-                        bool result_2 = OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid + t_stop, 0, LevelColor);
-                        if(result_2)
-                           OnTrade();
-                       }
-                    }
-                 }
-              }
-            else
-               if(OrderType() == 1 && TrailWhat * (OrderOpenPrice() - askbid) > t_start)
-                 {
-                  if((TrailWhat * (sltp - askbid) >= t_stop + t_step) || sltp == 0)
-                    {
-                     // consider minimum stop
-                     fsl   = MathAbs(askbid + t_stop);
-                     limit = bidask + stopslevel * TrailWhat;
-
-                     if(fsl < limit)
-                       {
-                        fsl = limit;
-                       }
-
-                     if(TrailWhat == 1)
-                       {
-                        // trail SL
-                        if(sltp == 0 || sltp > fsl)
-                          {
-                           bool result_3 = OrderModify(OrderTicket(), OrderOpenPrice(), askbid + t_stop, t_opp, 0, LevelColor);
-                           if(result_3)
-                              OnTrade();
-                          }
-                       }
-                     else
-                       {
-                        // trail TP
-                        if(sltp == 0 || sltp < fsl)
-                          {
-                           bool result_4 = OrderModify(OrderTicket(), OrderOpenPrice(), t_opp, askbid - t_stop, 0, LevelColor);
-                           if(result_4)
-                              OnTrade();
-                          }
-                       }
-                    }
-                 }
-           }
-        }
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-  };
-
 //Pass
 class Task2 : public Task
   {
@@ -1416,6 +966,76 @@ public:
      {
       Task::run(block_id, block);
       block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Weekday filter
+class Task3 : public Task
+  {
+   int                 server_or_local_time;
+   bool                monday;
+   bool                tuesday;
+   bool                wednesday;
+   bool                thursday;
+   bool                friday;
+   bool                saturday;
+   bool                sunday;
+public:
+                     Task3(string name):Task(name)
+     {
+      server_or_local_time = TIME_GMT;
+      monday = true;
+      tuesday = true;
+      wednesday = false;
+      thursday = false;
+      friday = true;
+      saturday = false;
+      sunday = true;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      int day = 0;
+
+      if(server_or_local_time == TIME_SERVER)
+        {
+         day = TimeDayOfWeek(TimeCurrent());
+        }
+      else
+         if(server_or_local_time == TIME_LOCAL)
+           {
+            day = TimeDayOfWeek(TimeLocal());
+           }
+         else
+            if(server_or_local_time == TIME_GMT)
+              {
+               day = TimeDayOfWeek(TimeGMT());
+              }
+
+      if(
+         (monday    && day == 1)
+         || (tuesday   && day == 2)
+         || (wednesday && day == 3)
+         || (thursday  && day == 4)
+         || (friday    && day == 5)
+         || (saturday  && day == 6)
+         || (sunday    && day == 0)
+      )
+        {
+         printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+
      }
    virtual void      reset(int level)
      {
@@ -1574,44 +1194,18 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block1 : public Block
-  {
-public:
-                     Block1()
-     {
-      id = 0;
-      id_by_user = 1;
-      name = "trailing_stop_each_trade";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {1};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task1(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block2 : public Block
   {
 public:
                      Block2()
      {
-      id = 1;
+      id = 0;
       id_by_user = 2;
       name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {0};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1621,6 +1215,32 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task2(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 1;
+      id_by_user = 3;
+      name = "weekday_filter";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -1690,11 +1310,11 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
-   Block1 *block1 = new Block1();
    Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
 
-   blocks_tick[0] = block1;
-   blocks_tick[1] = block2;
+   blocks_tick[0] = block2;
+   blocks_tick[1] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3772,7 +3392,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 1);
+   runBlockTick(-1, -1, 0);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

@@ -5362,3 +5362,157 @@ input_data_52 = {
   "name_by_user": "test 9541",
   "highestIndex": "3"
 }
+
+# test weekday filter
+input_data_53 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "sourceHandle": "blue",
+            "target": "6fc300bf-688c-4864-b7d2-6672799abe24",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4afd77dc-82a4-4656-9f0a-6f2b0bb17b9bblue-6fc300bf-688c-4864-b7d2-6672799abe24c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "server_or_local_time": "TIME_SERVER",
+              "monday": "true",
+              "wednesday": "true",
+              "tuesday": "true",
+              "thursday": "true",
+              "friday": "true",
+              "saturday": "false",
+              "sunday": "false"
+            },
+            "id": "6fc300bf-688c-4864-b7d2-6672799abe24",
+            "id_by_user": 3,
+            "blockName": "Weekday filter",
+            "category": "time_filters",
+            "block_name_mql": "weekday_filter"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "4"
+}
+
+# test weekday filter 2
+input_data_54 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "sourceHandle": "blue",
+            "target": "6fc300bf-688c-4864-b7d2-6672799abe24",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4afd77dc-82a4-4656-9f0a-6f2b0bb17b9bblue-6fc300bf-688c-4864-b7d2-6672799abe24c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "server_or_local_time": "TIME_GMT",
+              "monday": "true",
+              "wednesday": "false",
+              "tuesday": "true",
+              "thursday": "false",
+              "friday": "true",
+              "saturday": "false",
+              "sunday": "true"
+            },
+            "id": "6fc300bf-688c-4864-b7d2-6672799abe24",
+            "id_by_user": 3,
+            "blockName": "Weekday filter",
+            "category": "time_filters",
+            "block_name_mql": "weekday_filter"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "4"
+}
