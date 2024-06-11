@@ -657,8 +657,10 @@ def trailing_pending_orders_run_data(node, run_data):
 
 def trailing_stop_each_trade_run_data(node, run_data):
     params = node.get("params")
-    if params.get("trailing_stop_mode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-        value_fetch = params.get("value_fetch_trailing_stop_mode_custom_level")
+    print(params.get("TrailingStopMode"))
+    if params.get("TrailingStopMode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        print("AAAAAAAAAAAAAAAAA")
+        value_fetch = params.get("value_fetch_trailingstopmode_custom_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "tsm_cl"
@@ -668,6 +670,7 @@ def trailing_stop_each_trade_run_data(node, run_data):
         run_data = run_data.replace("initializer_trailing_stop_mode", init)
         run_data = run_data.replace("variable_name_trailing_stop_mode", val)
     else:
+        print("BBBBBBBBBBBBBBBBB")
         run_data = run_data.replace("initializer_trailing_stop_mode", "")
         run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
     return run_data

@@ -797,17 +797,17 @@ class ExpertBuilder:
         value_fetch = node.get("params").get("price_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        params = value_fetch.get("params")
+        params_price_level = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_price_level"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+        self.task_elements.append(self.value_fetch_class(row1, row2, params_price_level, id_val))
 
     def draw_editfield(self, node):
         value_fetch = node.get("params").get("text")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        params = value_fetch.get("params")
+        params_text = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_text"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+        self.task_elements.append(self.value_fetch_class(row1, row2, params_text, id_val))
 
     def draw_line(self, node):
         params = node.get("params")
@@ -895,9 +895,9 @@ class ExpertBuilder:
         value_fetch = node.get("params").get("text")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        params = value_fetch.get("params")
+        params_obj_text = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_obj_text"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+        self.task_elements.append(self.value_fetch_class(row1, row2, params_obj_text, id_val))
 
     def draw_arrow(self, node):
         value_fetch_time_1 = node.get("params").get("time_1")
@@ -954,9 +954,9 @@ class ExpertBuilder:
             value_fetch = params.get(key)
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_tdmd = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_tdmd"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_tdmd, id_val))
 
     def buy_sell(self, node):
         params = node.get("params")
@@ -964,9 +964,9 @@ class ExpertBuilder:
             value_fetch = params.get("price_to_open_dynamic_level")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_oacp = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "oacp"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_oacp, id_val))
 
     def comment(self, node):
         params = node.get("params")
@@ -1036,13 +1036,13 @@ class ExpertBuilder:
 
     def trailing_stop_each_trade(self, node):
         params = node.get("params")
-        if params.get("trailing_stop_mode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-            value_fetch = params.get("value_fetch_trailing_stop_mode")
+        if params.get("TrailingStopMode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+            value_fetch = params.get("value_fetch_trailingstopmode_custom_level")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
-            params = value_fetch.get("params")
+            params_tsm = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "tsm_cl"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_tsm, id_val))
 
     def no_trade_order_nearby_run_data(self, node):
         params = node.get("params")

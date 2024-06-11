@@ -5266,3 +5266,99 @@ input_data_51 = {
   "name_by_user": "test",
   "highestIndex": "5"
 }
+
+# test trailing stop each trade
+input_data_52 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "sourceHandle": "blue",
+            "target": "e44bb335-3d39-4c87-a8f4-7be791aabef5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4afd77dc-82a4-4656-9f0a-6f2b0bb17b9bblue-e44bb335-3d39-4c87-a8f4-7be791aabef5c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0}",
+              "TrailWhat": "0",
+              "TrailingReferencePrice": "2",
+              "TrailingStopMode": "TRAILING_STOP_MODE_CUSTOM_LEVEL",
+              "TrailingStepMode": "TRAILING_STEP_MODE_PERCENT_OF_TRAILING_STOP",
+              "TrailingStartMode": "TRAILING_START_MODE_PERCENT_OF_TRAILING_STOP",
+              "TrailingTPmode": "TRAILING_OPPOSITE_STOP_MODE_PERCENT_OF_TRAILING_STOP",
+              "LevelColor": "clrSlateGray",
+              "symbols_str": "",
+              "value_fetch_trailingstopmode_custom_level": {
+                "row1": "indicator",
+                "row2": "parabolic_sar",
+                "params": {
+                  "step": "0.02",
+                  "maximum": "0.2",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "tStepPercentTS": "15",
+              "tStartPercentTS": "97",
+              "tTPpercentTS": "23"
+            },
+            "id": "e44bb335-3d39-4c87-a8f4-7be791aabef5",
+            "id_by_user": 1,
+            "blockName": "Trailing stop (each trade)",
+            "category": "trailing_stop_break_even",
+            "block_name_mql": "trailing_stop_each_trade"
+          },
+          {
+            "params": {},
+            "id": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "3"
+}
