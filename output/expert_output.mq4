@@ -982,8 +982,8 @@ class Task1 : public Task
 public:
                      Task1(string name):Task(name)
      {
-      TimesToPass = 30;
-      CounterID = 11;
+      TimesToPass = 12;
+      CounterID = 13;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
