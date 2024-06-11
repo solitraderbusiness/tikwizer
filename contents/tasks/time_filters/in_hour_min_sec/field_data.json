@@ -1,3 +1,0 @@
-{
-	"field_data" : "string            time_mode;\n\n   string            start_time_1;\n   string            end_time_1;\n\n   string            start_time_2;\n   string            end_time_2;\n\n   string            start_time_3;\n   string            end_time_3;\n\n   string            start_time_4;\n   string            end_time_4;"
-}

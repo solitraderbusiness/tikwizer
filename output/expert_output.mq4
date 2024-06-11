@@ -953,108 +953,12 @@ public:
 
   };
 
-//Seconds filter
-class Task2 : public Task
-  {
-   int                 server_or_local_time;
-   int                 FirstStartSecond;
-   int                 FirstEndSecond;
-   bool                SecondSecondsBlock;
-   int                 SecondStartSecond;
-   int                 SecondEndSecond;
-   bool                ThirdSecondsBlock;
-   int                 ThirdStartSecond;
-   int                 ThirdEndSecond;
-   bool                FourthSecondsBlock;
-   int                 FourthStartSecond;
-   int                 FourthEndSecond;
-public:
-                     Task2(string name):Task(name)
-     {
-      server_or_local_time = TIME_LOCAL;
-      FirstStartSecond = 1;
-      FirstEndSecond = 4;
-      SecondSecondsBlock = true;
-      SecondStartSecond = 13;
-      SecondEndSecond = 18;
-      ThirdSecondsBlock = true;
-      ThirdStartSecond = 29;
-      ThirdEndSecond = 37;
-      FourthSecondsBlock = true;
-      FourthStartSecond = 51;
-      FourthEndSecond = 58;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      // get the current second
-      MqlDateTime time;
-
-      if(server_or_local_time == TIME_LOCAL)
-         TimeLocal(time);
-      else
-         if(server_or_local_time == TIME_SERVER)
-            TimeCurrent(time);
-         else
-            if(server_or_local_time == TIME_GMT)
-               TimeGMT(time);
-            else
-               TimeCurrent(time);
-
-      int thisSecond = time.sec;
-
-      // fix the end second
-      if(FirstEndSecond <= 0)
-         FirstEndSecond += 60;
-      if(SecondEndSecond <= 0)
-         SecondEndSecond += 60;
-      if(ThirdEndSecond <= 0)
-         ThirdEndSecond += 60;
-      if(FourthEndSecond <= 0)
-         FourthEndSecond += 60;
-
-      // check and pass
-      if(
-         (thisSecond >= FirstStartSecond && thisSecond < FirstEndSecond)
-         ||
-         (FirstStartSecond > FirstEndSecond && (thisSecond >= FirstStartSecond || thisSecond < FirstEndSecond))
-         ||
-         (SecondSecondsBlock && thisSecond >= SecondStartSecond && thisSecond < SecondEndSecond)
-         ||
-         (SecondSecondsBlock && SecondStartSecond > SecondEndSecond && (thisSecond >= SecondStartSecond || thisSecond < SecondEndSecond))
-         ||
-         (ThirdSecondsBlock  && thisSecond >= ThirdStartSecond  && thisSecond < ThirdEndSecond)
-         ||
-         (ThirdSecondsBlock  && ThirdStartSecond > ThirdEndSecond && (thisSecond >= ThirdStartSecond || thisSecond < ThirdEndSecond))
-         ||
-         (FourthSecondsBlock && thisSecond >= FourthStartSecond && thisSecond < FourthEndSecond)
-         ||
-         (FourthSecondsBlock && FourthStartSecond > FourthEndSecond && (thisSecond >= FourthStartSecond || thisSecond < FourthEndSecond))
-      )
-        {
-         printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
 //Pass
-class Task3 : public Task
+class Task7 : public Task
   {
 
 public:
-                     Task3(string name):Task(name)
+                     Task7(string name):Task(name)
      {
 
      }
@@ -1066,6 +970,96 @@ public:
    virtual void      reset(int level)
      {
 
+     }
+
+  };
+
+//Counter: Pass "n" times
+class Task1 : public Task
+  {
+   int                TimesToPass;
+   int                CounterID;
+public:
+                     Task1(string name):Task(name)
+     {
+      TimesToPass = 30;
+      CounterID = 11;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      int passes = Counter(CounterID, "increment");
+
+      if(passes < TimesToPass)
+        {
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         block.onResult(ROUTE_2_PASSED);
+        }
+
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   int               Counter(int id, string cmd = "", int set_passes = 0)
+     {
+      static int idx[]; // index list
+      static int pl[];  // passes list
+      int size    = 0;
+      int passes  = 0;
+      int cnt_idx = ArraySearch(idx, id);
+
+      if(cnt_idx == -1)
+        {
+         // Counter not found
+         size = ArraySize(idx);
+
+         ArrayResize(idx, size + 1);
+         ArrayResize(pl, size + 1);
+
+         idx[size] = id;
+         pl[size]  = 0;
+         cnt_idx   = size;
+        }
+
+      passes = pl[cnt_idx];
+
+      if(cmd != "")
+        {
+         if(cmd == "increment")
+           {
+            pl[cnt_idx] = pl[cnt_idx] + 1;
+           }
+         else
+            if(cmd == "reset")
+              {
+               pl[cnt_idx] = 0;
+              }
+        }
+
+      return passes;
+     }
+
+   template<typename T>
+   int               ArraySearch(T &array[], T value)
+     {
+      int index = -1;
+      int size  = ArraySize(array);
+
+      for(int i = 0; i < size; i++)
+        {
+         if(array[i] == value)
+           {
+            index = i;
+            break;
+           }
+        }
+
+      return index;
      }
 
   };
@@ -1220,44 +1214,18 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
+class Block7 : public Block
   {
 public:
-                     Block2()
+                     Block7()
      {
       id = 0;
-      id_by_user = 2;
-      name = "seconds_filter";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {1};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 1;
-      id_by_user = 3;
+      id_by_user = 7;
       name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {0};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1266,7 +1234,33 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task3(name);
+      task = new Task7(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block1 : public Block
+  {
+public:
+                     Block1()
+     {
+      id = 1;
+      id_by_user = 1;
+      name = "counter_pass_n_times";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task1(name);
      }
   };
 Block *blocks_init[];
@@ -1336,11 +1330,11 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
-   Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
+   Block7 *block7 = new Block7();
+   Block1 *block1 = new Block1();
 
-   blocks_tick[0] = block2;
-   blocks_tick[1] = block3;
+   blocks_tick[0] = block7;
+   blocks_tick[1] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3418,7 +3412,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 1);
+   runBlockTick(-1, -1, 0);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

@@ -6127,3 +6127,145 @@ input_data_62 = {
   "name_by_user": "test 9541",
   "highestIndex": "4"
 }
+
+# test counter: pass n times
+input_data_63 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "c79d2704-dafa-424f-a19d-d258deafa179",
+            "sourceHandle": "blue",
+            "target": "ef1f6736-8e88-4b04-932f-dba870460425",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-c79d2704-dafa-424f-a19d-d258deafa179blue-ef1f6736-8e88-4b04-932f-dba870460425c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "c79d2704-dafa-424f-a19d-d258deafa179",
+            "id_by_user": 7,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "n": "3",
+              "Counter-id": "1"
+            },
+            "id": "ef1f6736-8e88-4b04-932f-dba870460425",
+            "id_by_user": 8,
+            "blockName": "Counter: Pass \"n\" times",
+            "category": "counters",
+            "block_name_mql": "counter_pass_n_times"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "9"
+}
+
+# test counter: pass n times 2
+input_data_64 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "c79d2704-dafa-424f-a19d-d258deafa179",
+            "sourceHandle": "blue",
+            "target": "e4c11a4d-4a43-4cf7-8cc1-e21c24c91b87",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-c79d2704-dafa-424f-a19d-d258deafa179blue-e4c11a4d-4a43-4cf7-8cc1-e21c24c91b87c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "c79d2704-dafa-424f-a19d-d258deafa179",
+            "id_by_user": 7,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "TimesToPass": "30",
+              "CounterID": "11"
+            },
+            "id": "e4c11a4d-4a43-4cf7-8cc1-e21c24c91b87",
+            "id_by_user": 1,
+            "blockName": "Counter: Pass \"n\" times",
+            "category": "counters",
+            "block_name_mql": "counter_pass_n_times"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "2"
+}

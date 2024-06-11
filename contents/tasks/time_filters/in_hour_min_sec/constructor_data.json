@@ -1,3 +1,0 @@
-{
-	"constructor_data" : " //Specified by user\n      time_mode = TIME_SERVER;\n\n      start_time_1 = start_time_1_val;\n      end_time_1 = end_time_1_val;\n\n      start_time_2 = start_time_2_val;\n      end_time_2 = end_time_2_val;\n\n      start_time_3 = start_time_3_val;\n      end_time_3 = end_time_3_val;\n\n      start_time_4 = start_time_4_val;\n      end_time_4 = end_time_4_val;"
-}
