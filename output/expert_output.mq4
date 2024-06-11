@@ -953,75 +953,84 @@ public:
 
   };
 
-//Pass
+//Seconds filter
 class Task2 : public Task
   {
-
+   int                 server_or_local_time;
+   int                 FirstStartSecond;
+   int                 FirstEndSecond;
+   bool                SecondSecondsBlock;
+   int                 SecondStartSecond;
+   int                 SecondEndSecond;
+   bool                ThirdSecondsBlock;
+   int                 ThirdStartSecond;
+   int                 ThirdEndSecond;
+   bool                FourthSecondsBlock;
+   int                 FourthStartSecond;
+   int                 FourthEndSecond;
 public:
                      Task2(string name):Task(name)
      {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Month filter
-class Task1 : public Task
-  {
-   bool                january;
-   bool                february;
-   bool                march;
-   bool                april;
-   bool                may;
-   bool                june;
-   bool                july;
-   bool                august;
-   bool                september;
-   bool                october;
-   bool                november;
-   bool                december;
-public:
-                     Task1(string name):Task(name)
-     {
-      january = true;
-      february = true;
-      march = true;
-      april = false;
-      may = true;
-      june = true;
-      july = true;
-      august = true;
-      september = true;
-      october = false;
-      november = true;
-      december = true;
+      server_or_local_time = TIME_LOCAL;
+      FirstStartSecond = 1;
+      FirstEndSecond = 4;
+      SecondSecondsBlock = true;
+      SecondStartSecond = 13;
+      SecondEndSecond = 18;
+      ThirdSecondsBlock = true;
+      ThirdStartSecond = 29;
+      ThirdEndSecond = 37;
+      FourthSecondsBlock = true;
+      FourthStartSecond = 51;
+      FourthEndSecond = 58;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
+      // get the current second
+      MqlDateTime time;
+
+      if(server_or_local_time == TIME_LOCAL)
+         TimeLocal(time);
+      else
+         if(server_or_local_time == TIME_SERVER)
+            TimeCurrent(time);
+         else
+            if(server_or_local_time == TIME_GMT)
+               TimeGMT(time);
+            else
+               TimeCurrent(time);
+
+      int thisSecond = time.sec;
+
+      // fix the end second
+      if(FirstEndSecond <= 0)
+         FirstEndSecond += 60;
+      if(SecondEndSecond <= 0)
+         SecondEndSecond += 60;
+      if(ThirdEndSecond <= 0)
+         ThirdEndSecond += 60;
+      if(FourthEndSecond <= 0)
+         FourthEndSecond += 60;
+
+      // check and pass
       if(
-         (january   && Month() == 1)
-         || (february  && Month() == 2)
-         || (march     && Month() == 3)
-         || (april     && Month() == 4)
-         || (may       && Month() == 5)
-         || (june      && Month() == 6)
-         || (july      && Month() == 7)
-         || (august    && Month() == 8)
-         || (september && Month() == 9)
-         || (october   && Month() == 10)
-         || (november  && Month() == 11)
-         || (december  && Month() == 12)
+         (thisSecond >= FirstStartSecond && thisSecond < FirstEndSecond)
+         ||
+         (FirstStartSecond > FirstEndSecond && (thisSecond >= FirstStartSecond || thisSecond < FirstEndSecond))
+         ||
+         (SecondSecondsBlock && thisSecond >= SecondStartSecond && thisSecond < SecondEndSecond)
+         ||
+         (SecondSecondsBlock && SecondStartSecond > SecondEndSecond && (thisSecond >= SecondStartSecond || thisSecond < SecondEndSecond))
+         ||
+         (ThirdSecondsBlock  && thisSecond >= ThirdStartSecond  && thisSecond < ThirdEndSecond)
+         ||
+         (ThirdSecondsBlock  && ThirdStartSecond > ThirdEndSecond && (thisSecond >= ThirdStartSecond || thisSecond < ThirdEndSecond))
+         ||
+         (FourthSecondsBlock && thisSecond >= FourthStartSecond && thisSecond < FourthEndSecond)
+         ||
+         (FourthSecondsBlock && FourthStartSecond > FourthEndSecond && (thisSecond >= FourthStartSecond || thisSecond < FourthEndSecond))
       )
         {
          printf("task"+block_id + " passed route 1");
@@ -1032,6 +1041,27 @@ public:
          printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Pass
+class Task3 : public Task
+  {
+
+public:
+                     Task3(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
@@ -1197,13 +1227,13 @@ public:
      {
       id = 0;
       id_by_user = 2;
-      name = "pass";
+      name = "seconds_filter";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1216,27 +1246,27 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block1 : public Block
+class Block3 : public Block
   {
 public:
-                     Block1()
+                     Block3()
      {
       id = 1;
-      id_by_user = 1;
-      name = "month_filter";
+      id_by_user = 3;
+      name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -1307,10 +1337,10 @@ void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
    Block2 *block2 = new Block2();
-   Block1 *block1 = new Block1();
+   Block3 *block3 = new Block3();
 
    blocks_tick[0] = block2;
-   blocks_tick[1] = block1;
+   blocks_tick[1] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3388,7 +3418,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

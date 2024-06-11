@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      server_or_local_time = server_or_local_time_val;\n      FirstStartHour = FirstStartHour_val;\n      FirstEndHour = FirstEndHour_val;\n      SecondHoursBlock = SecondHoursBlock_val;\n      SecondStartHour = SecondStartHour_val;\n      SecondEndHour = SecondEndHour_val;\n      ThirdHoursBlock = ThirdHoursBlock_val;\n      ThirdStartHour = ThirdStartHour_val;\n      ThirdEndHour = ThirdEndHour_val;\n      FourthHoursBlock = FourthHoursBlock_val;\n      FourthStartHour = FourthStartHour_val;\n      FourthEndHour = FourthEndHour_val;"
+}
