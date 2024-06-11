@@ -974,57 +974,54 @@ public:
 
   };
 
-//Weekday filter
-class Task3 : public Task
+//Month filter
+class Task1 : public Task
   {
-   int                 server_or_local_time;
-   bool                monday;
-   bool                tuesday;
-   bool                wednesday;
-   bool                thursday;
-   bool                friday;
-   bool                saturday;
-   bool                sunday;
+   bool                january;
+   bool                february;
+   bool                march;
+   bool                april;
+   bool                may;
+   bool                june;
+   bool                july;
+   bool                august;
+   bool                september;
+   bool                october;
+   bool                november;
+   bool                december;
 public:
-                     Task3(string name):Task(name)
+                     Task1(string name):Task(name)
      {
-      server_or_local_time = TIME_GMT;
-      monday = true;
-      tuesday = true;
-      wednesday = false;
-      thursday = false;
-      friday = true;
-      saturday = false;
-      sunday = true;
+      january = true;
+      february = true;
+      march = true;
+      april = false;
+      may = true;
+      june = true;
+      july = true;
+      august = true;
+      september = true;
+      october = false;
+      november = true;
+      december = true;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      int day = 0;
-
-      if(server_or_local_time == TIME_SERVER)
-        {
-         day = TimeDayOfWeek(TimeCurrent());
-        }
-      else
-         if(server_or_local_time == TIME_LOCAL)
-           {
-            day = TimeDayOfWeek(TimeLocal());
-           }
-         else
-            if(server_or_local_time == TIME_GMT)
-              {
-               day = TimeDayOfWeek(TimeGMT());
-              }
 
       if(
-         (monday    && day == 1)
-         || (tuesday   && day == 2)
-         || (wednesday && day == 3)
-         || (thursday  && day == 4)
-         || (friday    && day == 5)
-         || (saturday  && day == 6)
-         || (sunday    && day == 0)
+         (january   && Month() == 1)
+         || (february  && Month() == 2)
+         || (march     && Month() == 3)
+         || (april     && Month() == 4)
+         || (may       && Month() == 5)
+         || (june      && Month() == 6)
+         || (july      && Month() == 7)
+         || (august    && Month() == 8)
+         || (september && Month() == 9)
+         || (october   && Month() == 10)
+         || (november  && Month() == 11)
+         || (december  && Month() == 12)
       )
         {
          printf("task"+block_id + " passed route 1");
@@ -1035,7 +1032,6 @@ public:
          printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
-
      }
    virtual void      reset(int level)
      {
@@ -1220,14 +1216,14 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block3 : public Block
+class Block1 : public Block
   {
 public:
-                     Block3()
+                     Block1()
      {
       id = 1;
-      id_by_user = 3;
-      name = "weekday_filter";
+      id_by_user = 1;
+      name = "month_filter";
       enabled = True;
       event = EVENT_ON_TICK;
 
@@ -1240,7 +1236,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task3(name);
+      task = new Task1(name);
      }
   };
 Block *blocks_init[];
@@ -1311,10 +1307,10 @@ void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
    Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
+   Block1 *block1 = new Block1();
 
    blocks_tick[0] = block2;
-   blocks_tick[1] = block3;
+   blocks_tick[1] = block1;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

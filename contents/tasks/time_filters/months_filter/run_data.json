@@ -1,3 +1,0 @@
-{
-	"run_data" : "Task::run(block_id, block);\n      int month = Month();\n      bool result = false;\n      if(ArraySize(months)>0)//STest, in case size is zero, should it return true or false?\n        {\n         for(int i=0; i<ArraySize(months); i++)\n            if(month==months[i])\n              {\n               result = true;\n               break;\n              }\n        }\n      if(result)\n        {\n         printf(\"task\"+block_id + \" passed route 1\");\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         printf(\"task\"+block_id + \" passed route 2\");\n         block.onResult(ROUTE_2_PASSED);\n        }"
-}

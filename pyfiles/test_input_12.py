@@ -5516,3 +5516,84 @@ input_data_54 = {
   "name_by_user": "test 9541",
   "highestIndex": "4"
 }
+
+# test month filter
+input_data_55 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "sourceHandle": "blue",
+            "target": "dcf07280-b31b-42cb-8fe4-aeb22644061d",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4afd77dc-82a4-4656-9f0a-6f2b0bb17b9bblue-dcf07280-b31b-42cb-8fe4-aeb22644061dc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "4afd77dc-82a4-4656-9f0a-6f2b0bb17b9b",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "january": "true",
+              "february": "true",
+              "march": "true",
+              "april": "false",
+              "may": "true",
+              "june": "true",
+              "july": "true",
+              "august": "true",
+              "september": "true",
+              "october": "false",
+              "november": "true",
+              "december": "true"
+            },
+            "id": "dcf07280-b31b-42cb-8fe4-aeb22644061d",
+            "id_by_user": 1,
+            "blockName": "Month filter",
+            "category": "time_filters",
+            "block_name_mql": "month_filter"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "12302dfb-ac61-45c1-a388-f93acc8c56cd",
+  "name_by_user": "test 9541",
+  "highestIndex": "2"
+}
