@@ -37,7 +37,10 @@ def get_version():
 
 def handle_const_var_value(data):
     if data.get("value").strip():
-        return " = " + str(data.get("value"))
+        if data.get("type").strip() in ["enum", "struct"]:
+            return " " + str(data.get("value"))
+        else:
+            return " = " + str(data.get("value"))
     return ""
 
 
@@ -646,10 +649,10 @@ class ExpertBuilder:
             expert += prop
         for const in self.consts_system:
             expert += const
-        for const in self.consts_user:
-            expert += const
         for var in self.vars_user:
             expert += var
+        for const in self.consts_user:
+            expert += const
         for struct in self.classes_structs_enums:
             expert += struct
         expert += self.block_parent_blueprint

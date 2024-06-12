@@ -6686,3 +6686,775 @@ input_data_69 = {
   "name_by_user": "test 8426",
   "highestIndex": "undefined"
 }
+
+# test vars consts with enum
+input_data_70 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      },
+      {
+        "type": "ENUM_MA_PERIOD",
+        "name": "variable",
+        "value": "50",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars consts with enum 2
+input_data_71 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "ENUM_MA_METHOD ",
+        "name": "MA_Method",
+        "value": "MODE_SMMA",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars consts with enum 3
+input_data_72 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "ENUM_MA_METHOD ",
+        "name": "MA_Method",
+        "value": "",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars const with custom enum
+input_data_73 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "enum",
+        "name": "months",
+        "value": "{     January,     February,     March,     April,     May,     June,     July,     August,     September,     October,     November,     December    }",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars consts with custom enum 2
+input_data_74 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      },
+      {
+        "type": "enum",
+        "name": "months",
+        "value": "{     January,     February,     March,     April,     May,     June,     July,     August,     September,     October,     November,     December    }",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars consts with custom enum 3
+input_data_75 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      },
+      {
+        "type": "enum",
+        "name": "months",
+        "value": "{     January,     February,     March,     April,     May,     June,     July,     August,     September,     October,     November,     December    }",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "months",
+        "name": "my_months",
+        "value": "January",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
+
+# test vars consts with custom enum 4
+input_data_76 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      },
+      {
+        "type": "enum",
+        "name": "months",
+        "value": "{     January,     February,     March,     April,     May,     June,     July,     August,     September,     October,     November,     December    }",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "months",
+        "name": "my_months",
+        "value": "January",
+        "description": ""
+      },
+      {
+        "type": "ENUM_MA_METHOD",
+        "name": "testx",
+        "value": "",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
