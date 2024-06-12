@@ -97,8 +97,8 @@ class ExpertBuilder:
         self.process_blocks_chart(self.data.get("events").get("on_chart"))
         self.process_blocks_trade(self.data.get("events").get("on_trade"))
         self.process_blocks_timer(self.data.get("events").get("on_timer"))
-        self.process_blocks_init(self.data.get("events").get("on_init"))
         self.process_blocks_deinit(self.data.get("events").get("on_deinit"))
+        self.process_blocks_init(self.data.get("events").get("on_init"))
 
         return self.build()
 
@@ -356,6 +356,9 @@ class ExpertBuilder:
 
         exit_loop_var = self.global_vars.get__exit_loop()
         self.vars_system.append(exit_loop_var)
+
+        timer_period = self.global_vars.get__timer_period()
+        self.vars_system.append(timer_period)
 
     def add_vars_user(self, mvars):
         for var in mvars:
@@ -673,9 +676,11 @@ class ExpertBuilder:
         return expert
 
     def get_on_init_items(self):
-        result = "int init(){\n"
+        result = "int OnInit(){\n"
         for item in self.on_init:
             result += item
+        result += "\n       if (ArraySize(blocks_timer)>0)\n           EventSetTimer(timer_period);"
+        result += "\n    	return(INIT_SUCCEEDED);"
         result += "\n}\n"
         return result
 
@@ -708,7 +713,7 @@ class ExpertBuilder:
         return result
 
     def get_on_deinit_items(self):
-        result = "void deinit(const int reason){\n"
+        result = "void OnDeinit(const int reason){\n"
         for item in self.on_deinit:
             result += item
         result += "\n}\n"
