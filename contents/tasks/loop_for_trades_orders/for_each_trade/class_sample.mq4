@@ -1,12 +1,5 @@
-#define LOOP_DIRECTION_NEWEST_TO_OLDEST 1
-#define LOOP_DIRECTION_OLDEST_TO_NEWEST 2
-#define LOOP_DIRECTION_PROFITABLE_FIRST 3
-#define LOOP_DIRECTION_PROFITABLE_LAST 4
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Task12 : public Task
+//For each Trade
+class Task2 : public Task
   {
    //defined by user
    int               symbol_mode;
@@ -19,29 +12,29 @@ class Task12 : public Task
    int               skip_n;
    int               not_more_than_n;
    int               every_n;
-
-
+   string            second_output;
 public:
-                     Task12(string name):Task(name)
+                     Task2(string name):Task(name)
      {
       symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = "EURUSD,BTCUSD";
+      symbols_str = "";
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
 
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 15;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
-      loop_direction = LOOP_DIRECTION_OLDEST_TO_NEWEST;
-      skip_n = 1;//STest, default must be 0
-      not_more_than_n = 5;
-      every_n = 2;//STest default must be 1
+      loop_direction = "newest_last";
+      skip_n = 0;//STest, default must be 0
+      not_more_than_n = 0;
+      every_n = 1;//STest default must be 1
+      second_output = "if_not_empty";
      }
-
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
       int trades[];
       getTrades(trades);
       int size = ArraySize(trades);
@@ -60,7 +53,7 @@ public:
          for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
            {
             if(exit_loop)
-                return;//STest, logical?
+               return;//STest, logical?
             if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
               {
                if(!filterGeneral())
@@ -69,8 +62,15 @@ public:
                block.onResult(ROUTE_1_PASSED);
               }
            }
-      printf("task"+block_id + " passed route 2 ");
-      block.onResult(ROUTE_2_PASSED);
+      if(
+         second_output=="always" ||
+         (second_output=="if_empty" && ArraySize(trades)==0) ||
+         (second_output=="if_not_empty" && ArraySize(trades)>0)
+      )
+        {
+         printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -109,16 +109,16 @@ public:
    //+------------------------------------------------------------------+
    void              sortTrades(int &trades[], int loop_direction)
      {
-      if(loop_direction == LOOP_DIRECTION_OLDEST_TO_NEWEST)
+      if(loop_direction == "oldest_first")
          return trades;
       else
-         if(loop_direction == LOOP_DIRECTION_NEWEST_TO_OLDEST)
+         if(loop_direction == "newest_first")
            {
             ReverseList(trades);
             return trades;
            }
          else
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST || loop_direction == LOOP_DIRECTION_PROFITABLE_LAST)
+            if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
               {
                sortTradesByProfit(trades, loop_direction);
                return trades;
@@ -142,7 +142,7 @@ public:
                profit1 = OrderProfit();
             if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
                profit2 = OrderProfit();
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST && profit1<profit2)
+            if(loop_direction == "profitable_first" && profit1<profit2)
               {
                int swap1 = trades[i];
                trades[i] = trades[j];
@@ -150,7 +150,7 @@ public:
               }
             else
               {
-               if(loop_direction == LOOP_DIRECTION_PROFITABLE_LAST && profit1>profit2)
+               if(loop_direction == "profitable_last" && profit1>profit2)
                  {
                   int swap2 = trades[i];
                   trades[i] = trades[j];
@@ -161,23 +161,4 @@ public:
         }
      }
 
-
   };
-
-
-
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-void ReverseList(int &arr[])
-  {
-   int size = ArraySize(arr);
-   ArraySetAsSeries(arr, true);
-
-   for(int i = 0; i < size / 2; i++)
-     {
-      int temp = arr[i];
-      arr[i] = arr[size - 1 - i];
-      arr[size - 1 - i] = temp;
-     }
-  }

@@ -1,5 +1,5 @@
-
-class Task_id : public Task
+//For each Trade
+class Task2 : public Task
   {
    //defined by user
    int               symbol_mode;
@@ -12,10 +12,9 @@ class Task_id : public Task
    int               skip_n;
    int               not_more_than_n;
    int               every_n;
-
-
+   string            second_output;
 public:
-                     Task_id(string name):Task(name)
+                     Task2(string name):Task(name)
      {
       symbol_mode = symbol_mode_val;
       symbols_str = symbols_str_val;
@@ -30,8 +29,9 @@ public:
       skip_n = skip_n_val;//STest, default must be 0
       not_more_than_n = not_more_than_n_val;
       every_n = every_n_val;//STest default must be 1
-     }
+      second_output = second_output_val;
 
+     }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
@@ -54,7 +54,7 @@ public:
          for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
            {
             if(exit_loop)
-                return;//STest, logical?
+               return;//STest, logical?
             if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
               {
                if(!filterGeneral())
@@ -63,8 +63,15 @@ public:
                block.onResult(ROUTE_1_PASSED);
               }
            }
-      printf("task"+block_id + " passed route 2 ");
-      block.onResult(ROUTE_2_PASSED);
+     if(
+         second_output=="always" ||
+         (second_output=="if_empty" && ArraySize(trades)==0) ||
+         (second_output=="if_not_empty" && ArraySize(trades)>0)
+      )
+        {
+         printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -103,16 +110,16 @@ public:
    //+------------------------------------------------------------------+
    void              sortTrades(int &trades[], int loop_direction)
      {
-      if(loop_direction == LOOP_DIRECTION_OLDEST_TO_NEWEST)
+      if(loop_direction == "oldest_first")
          return trades;
       else
-         if(loop_direction == LOOP_DIRECTION_NEWEST_TO_OLDEST)
+         if(loop_direction == "newest_first")
            {
             ReverseList(trades);
             return trades;
            }
          else
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST || loop_direction == LOOP_DIRECTION_PROFITABLE_LAST)
+            if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
               {
                sortTradesByProfit(trades, loop_direction);
                return trades;
@@ -136,7 +143,7 @@ public:
                profit1 = OrderProfit();
             if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
                profit2 = OrderProfit();
-            if(loop_direction == LOOP_DIRECTION_PROFITABLE_FIRST && profit1<profit2)
+            if(loop_direction == "profitable_first" && profit1<profit2)
               {
                int swap1 = trades[i];
                trades[i] = trades[j];
@@ -144,7 +151,7 @@ public:
               }
             else
               {
-               if(loop_direction == LOOP_DIRECTION_PROFITABLE_LAST && profit1>profit2)
+               if(loop_direction == "profitable_last" && profit1>profit2)
                  {
                   int swap2 = trades[i];
                   trades[i] = trades[j];
@@ -154,6 +161,5 @@ public:
            }
         }
      }
-
 
   };

@@ -73,7 +73,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "obj_name_prefix", "loop_direction", "sort_mode", "skip_objects", "max_objects",
             "name_contains", "name_starts_with", "time_start", "time_end", "FirstStartHour", "FirstEndHour",
             "SecondStartHour", "SecondEndHour", "ThirdStartHour", "ThirdEndHour", "FourthStartHour",
-            "FourthEndHour"]
+            "FourthEndHour", "second_output"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)

@@ -59,10 +59,6 @@
 #define PROFIT_MODE_PIPS "pips"
 #define PROFIT_MODE_PIPS_SUM "pips-sum"
 #define PROFIT_MODE_NO_MATTER "no-matter"
-#define LOOP_DIRECTION_NEWEST_TO_OLDEST 1
-#define LOOP_DIRECTION_OLDEST_TO_NEWEST 2
-#define LOOP_DIRECTION_PROFITABLE_FIRST 3
-#define LOOP_DIRECTION_PROFITABLE_LAST 4
 #define VALUE_PIPS_AS_IS 1
 #define VALUE_PIPS_AS_PRICE_FRACTION 2
 #define MODE_TIME_NOW 1
@@ -163,10 +159,6 @@
 #define RGB_TO_COLOR(R, G, B) ((color)((((B) & 0x0000FF) << 16) + (((G) & 0x0000FF) << 8) + ((R) & 0x0000FF)))
 #define ROUND_PRICE(A, P) ((int)((A) / P + 0.5))
 #define NORM_PRICE(A, P) (((int)((A) / P + 0.5)) * P)
-double xx = 20; //
-enum months {     January,     February,     March,     April,     May,     June,     July,     August,     September,     October,     November,     December    }; //
-extern months my_months = January; //
- ENUM_MA_METHOD testx; //
 struct MarketPropertiesResult
   {
    double            price;
@@ -957,253 +949,6 @@ public:
 
   };
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Value2_time_1
-  {
-public:
-
-   string               value;
-   string               adjust;
-   //for pips
-   int               pips_mode;
-   string            symbol;
-   //for time (phase 2)
-   //defined by user
-   int               mode_time;
-   int               time_source;
-   string            time_stamp;
-   int               time_candle_id;
-   string            time_market;
-   ENUM_TIMEFRAMES   time_candle_timeframe;
-   int               time_component_year;
-   int               time_component_month;
-   double            time_component_day;
-   double            time_component_hour;
-   double            time_component_minute;
-   int               time_component_second;
-   datetime          time_value;
-   int               mode_time_shift;
-   int               time_shift_years;
-   int               time_shift_months;
-   int               time_shift_weeks;
-   double            time_shift_days;
-   double            time_shift_hours;
-   double            time_shift_minutes;
-   int               time_shift_seconds;
-   bool              time_skip_weekdays;
-   //defined by system
-   datetime          retval;
-   datetime          retval0;
-   datetime          Time[];
-   string            msymbol;
-
-public:
-
-   void              init()
-
-     {
-      value = "0";
-      //for pips
-      pips_mode = VALUE_PIPS_AS_IS;
-      symbol = NULL;
-      //for time (phase 2)
-      //defined by user
-      mode_time = MODE_TIME_NOW;
-      time_source = 0;
-      time_stamp = "00:00";
-      time_candle_id = 1;
-      time_market = NULL;
-      time_candle_timeframe = 0;
-      time_component_year = 0;
-      time_component_month = 0;
-      time_component_day = 0.0;
-      time_component_hour = 12.0;
-      time_component_minute = 0.0;
-      time_component_second = 0;
-      time_value = 0;
-      mode_time_shift = 0;
-      time_shift_years = 0;
-      time_shift_months = 0;
-      time_shift_weeks = 0;
-      time_shift_days = 0.0;
-      time_shift_hours = 0.0;
-      time_shift_minutes = 0.0;
-      time_shift_seconds = 0;
-      time_skip_weekdays = False;
-      //defined by system
-      retval =  0;
-      retval0 =  0;
-
-     }
-
-   template<typename T>
-   T                 calc()
-     {
-      msymbol = getSymbol(symbol);
-      datetime result = 0;
-      string value_type = "Time";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text")
-        {
-         result = value;
-        }
-      else
-         if(value_type=="Text(code input)")
-           {
-            result = "\"" + value + "\"";
-           }
-         else
-            if(value_type=="Pips")
-              {
-
-               if(pips_mode == VALUE_PIPS_AS_IS)
-                 {
-                  result = value;
-                 }
-               else
-                  if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
-                    {
-                     double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = point*10*(double)value;  //STest, *10 works for all symbols?
-                    }
-              }
-            else
-               if(value_type=="Time")
-                 {
-
-                  if(time_market == "" || time_market == NULL)
-                     time_market = Symbol();
-
-                  if(mode_time == MODE_TIME_NOW)
-                    {
-                     if(time_source == TIME_SERVER)
-                       {
-                        retval = TimeCurrent();
-                       }
-                     else
-                        if(time_source == TIME_LOCAL)
-                          {
-                           retval = TimeLocal() + (TimeCurrent() - TimeLocal());
-                          }
-                        else
-                           if(time_source == TIME_GMT)
-                             {
-                              retval = TimeGMT() + (TimeCurrent() - TimeGMT());
-                             }
-                    }
-                  else
-                     if(mode_time == MODE_TIME_TIMESTAMP)
-                       {
-                        retval  = StringToTime(time_stamp);
-                        retval0 = retval;
-                       }
-                     else
-                        if(mode_time==MODE_TIME_COMPONENTS)
-                          {
-                           retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
-                          }
-                        else
-                           if(mode_time == MODE_TIME_CANDLE_TIME)
-                             {
-                              ArraySetAsSeries(Time,true);
-                              CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
-                              retval = Time[0];
-                             }
-                           else
-                              if(mode_time == MODE_TIME_TIME_VALUE)
-                                {
-                                 retval = time_value;
-                                }
-
-                  if(mode_time_shift > 0)
-                    {
-                     int sh = 1;
-
-                     if(mode_time_shift == 1)
-                       {
-                        sh = -1;
-                       }
-
-                     if(time_shift_years > 0 || time_shift_months > 0)
-                       {
-                        int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
-
-                        if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
-                          {
-                           year   = time_component_year;
-                           month  = time_component_month;
-                           day    = (int)MathFloor(time_component_day);
-                           hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
-                           minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
-                           second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
-                          }
-                        else
-                          {
-                           year   = TimeYear(retval);
-                           month  = TimeMonth(retval);
-                           day    = TimeDay(retval);
-                           hour   = TimeHour(retval);
-                           minute = TimeMinute(retval);
-                           second = TimeSeconds(retval);
-                          }
-
-                        year  = year + time_component_year * sh;
-                        month = month + time_component_month * sh;
-
-                        if(month < 0)
-                          {
-                           month = 12 - month;
-                          }
-                        else
-                           if(month > 12)
-                             {
-                              month = month - 12;
-                             }
-
-                        retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
-                       }
-
-                     retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
-
-                     if(time_skip_weekdays == true)
-                       {
-                        int weekday = TimeDayOfWeek(retval);
-
-                        if(sh > 0)    // forward
-                          {
-                           if(weekday == 0)
-                             {
-                              retval = retval + 86400;
-                             }
-                           else
-                              if(weekday == 6)
-                                {
-                                 retval = retval + 172800;
-                                }
-                          }
-                        else
-                           if(sh < 0) // back
-                             {
-                              if(weekday == 0)
-                                {
-                                 retval = retval - 172800;
-                                }
-                              else
-                                 if(weekday == 6)
-                                   {
-                                    retval = retval - 86400;
-                                   }
-                             }
-                       }
-                    }
-
-                  result = retval;
-                 }
-      return result;
-     }
-  };
-
 //Pass
 class Task1 : public Task
   {
@@ -1225,200 +970,168 @@ public:
 
   };
 
-//Draw Line
+//For each Trade
 class Task2 : public Task
   {
    //defined by user
-   bool                object_per_bar;
-   bool                object_update;
-   string              obj_name;
-   ENUM_OBJECT         object_type;
-   double              obj_angle;
-   bool                obj_ray;
-   bool                obj_ray_left;
-   bool                obj_ray_right;
-   color               obj_color;
-   ENUM_LINE_STYLE     obj_style;
-   int                 obj_width;
-   bool                obj_back;
-   bool                obj_selectable;
-   bool                obj_selected;
-   bool                obj_hidden;
-   int                 obj_z_order;
-   string              obj_chart_subwindow;
-   //defined by system
-   int               count;
-   datetime          time0;
-
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   int               loop_direction;
+   int               skip_n;
+   int               not_more_than_n;
+   int               every_n;
+   string            second_output;
 public:
                      Task2(string name):Task(name)
      {
-      //defined by user
-      object_per_bar = false;
-      object_update = true;
-      obj_name = "my_line";
-      object_type = OBJ_VLINE;
-      obj_angle = 45;
-      obj_ray = true;
-      obj_ray_left = false;
-      obj_ray_right = false;
-      obj_color = clrDeepPink;
-      obj_style = STYLE_SOLID;
-      obj_width = 1;
-      obj_back = false;
-      obj_selectable = false;
-      obj_selected = false;
-      obj_hidden = false;
-      obj_z_order = 0;
-      obj_chart_subwindow = "";
-      //defined by system
-      count =  0;
-      time0 =  0;
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+      loop_direction = "newest_last";
+      skip_n = 0;//STest, default must be 0
+      not_more_than_n = 0;
+      every_n = 1;//STest default must be 1
+      second_output = "if_not_empty";
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      string obj_name_prefix = "goldblox_line_";
-      long obj_chart_id      = 0;
-      int subwindow_id     = WindowFindVisible(obj_chart_id, obj_chart_subwindow);
-
-      if(subwindow_id >= 0)
+      int trades[];
+      getTrades(trades);
+      int size = ArraySize(trades);
+      if(size==0)
         {
-         string name       = "";
-         string name_base  = "";
-         bool get_new_name = false;
-         bool do_update    = true;
-
-         if(object_per_bar == true)
-           {
-            datetime time = iTime(Symbol(),0,1);
-
-            if(time0 < time)
-              {
-               time0        = time;
-               get_new_name = true;
-              }
-            else
-              {
-               if(object_update == false)
-                 {
-                  do_update = false;
-                 }
-              }
-           }
-         else
-           {
-            if(object_update == false)
-              {
-               get_new_name = true;
-              }
-           }
-
-         if(do_update)
-           {
-            if(obj_name != "")
-              {
-               name_base = obj_name;
-              }
-            else
-              {
-               Block *mblock = (Block*) GetPointer(block);
-               name_base = obj_name_prefix + mblock.id_by_user + "_";
-              }
-
-            if(get_new_name == false)
-              {
-               name = name_base + IntegerToString(count);
-              }
-            else
-              {
-               while(true)
-                 {
-                  count++;
-                  name = name_base + IntegerToString(count);
-
-                  if(ObjectFind(obj_chart_id,name) < 0)
-                    {
-                     break;
-                    }
-                 }
-              }
-
-            if(obj_name != "" && count == 0)
-              {
-               name = obj_name;
-              }
-
-            if(ObjectFind(obj_chart_id,name) < 0 && !ObjectCreate(obj_chart_id,name,(ENUM_OBJECT)object_type,subwindow_id,0,0))
-              {
-               Print(__FUNCTION__,": failed to create line object! Error code = ",GetLastError());
-              }
-
-            double p1=0, p2=0;
-            datetime t1=0, t2=0;
-
-            switch(object_type)
-              {
-               case OBJ_VLINE        :
-                 {t1=1; break;}
-               case OBJ_HLINE        :
-                 {p1=1; break;}
-               case OBJ_TREND        :
-                 {t1=1; p1=1; t2=1; p2=1; break;}
-               case OBJ_TRENDBYANGLE :
-                 {t1=1; p1=1; break;}
-               case OBJ_CYCLES       :
-                 {t1=1; p1=1; t2=1; p2=1; break;}
-              }
-
-            if(t1 == 1)
-              {
-               Value2_time_1 value2_time_1;
-               value2_time_1.init();
-               datetime valueValue2_time_1 = value2_time_1.calc<datetime>();
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,valueValue2_time_1);
-              }
-            if(t2 == 1)
-              {
-
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,1,"");
-              }
-            if(p1 == 1)
-              {
-
-               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,"");
-              }
-            if(p2 == 1)
-              {
-
-               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,1,"");
-              }
-
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_STYLE,obj_style);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_COLOR,obj_color);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_BACK,obj_back);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_WIDTH,obj_width);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTABLE,obj_selectable);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTED,obj_selected);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_HIDDEN,obj_hidden);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_ZORDER,obj_z_order);
-
-            ObjectSetDouble(obj_chart_id,name,OBJPROP_ANGLE,obj_angle);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_RAY,obj_ray);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_RAY_LEFT,obj_ray_left);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_RAY_RIGHT,obj_ray_right);
-
-            ChartRedraw();
-           }
+         printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+         return;
         }
-
-      printf("task"+block_id + " passed route 1");
-      block.onResult(ROUTE_1_PASSED);
+      if(size>=2)
+         sortTrades(trades, loop_direction);
+      int starti, endi;
+      starti = skip_n;
+      endi = not_more_than_n<=0 ? size : not_more_than_n*every_n+starti;
+      if(starti<=size-1)
+         for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
+           {
+            if(exit_loop)
+               return;//STest, logical?
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+              {
+               if(!filterGeneral())
+                  continue;
+               printf("task"+block_id + " passed route 1 ");
+               block.onResult(ROUTE_1_PASSED);
+              }
+           }
+      if(
+         second_output=="always" ||
+         (second_output=="if_empty" && ArraySize(trades)==0) ||
+         (second_output=="if_not_empty" && ArraySize(trades)>0)
+         )
+        {
+         printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
 
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              getTrades(int &trades[])
+     {
+      for(int i=0; i<OrdersTotal(); i++)
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(OrderType()==OP_BUY || OrderType()==OP_SELL)
+              {
+               AddToArray(trades, i);
+              }
+           }
+      return trades;
+     }
+
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTrades(int &trades[], int loop_direction)
+     {
+      if(loop_direction == "oldest_first")
+         return trades;
+      else
+         if(loop_direction == "newest_first")
+           {
+            ReverseList(trades);
+            return trades;
+           }
+         else
+            if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
+              {
+               sortTradesByProfit(trades, loop_direction);
+               return trades;
+              }
+      return trades;
+     }
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTradesByProfit(int &trades[], int loop_direction)
+     {
+      if(ArraySize(trades)<2)
+         return;
+      for(int i=0; i<ArraySize(trades)-1; i++)
+        {
+         for(int j=i+1; j<ArraySize(trades); j++)
+           {
+            double profit1 = 0, profit2 = 0;
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+               profit1 = OrderProfit();
+            if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
+               profit2 = OrderProfit();
+            if(loop_direction == "profitable_first" && profit1<profit2)
+              {
+               int swap1 = trades[i];
+               trades[i] = trades[j];
+               trades[j] = swap1;
+              }
+            else
+              {
+               if(loop_direction == "profitable_last" && profit1>profit2)
+                 {
+                  int swap2 = trades[i];
+                  trades[i] = trades[j];
+                  trades[j] = swap2;
+                 }
+              }
+           }
+        }
      }
 
   };
@@ -1582,7 +1295,7 @@ public:
       id_by_user = 1;
       name = "pass";
       enabled = True;
-      event = EVENT_ON_TIMER;
+      event = EVENT_ON_TICK;
 
       int mnexts_true[] = {1};
       int mnexts_false[] = {};
@@ -1606,9 +1319,9 @@ public:
      {
       id = 1;
       id_by_user = 2;
-      name = "draw_line";
+      name = "for_each_trade";
       enabled = True;
-      event = EVENT_ON_TIMER;
+      event = EVENT_ON_TICK;
 
       int mnexts_true[] = {};
       int mnexts_false[] = {};
@@ -1689,8 +1402,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 0);
+   ArrayResize(blocks_tick, 2);
+   Block1 *block1 = new Block1();
+   Block2 *block2 = new Block2();
 
+   blocks_tick[0] = block1;
+   blocks_tick[1] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1764,12 +1481,8 @@ void runBlockTimer(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTimer()
   {
-   ArrayResize(blocks_timer, 2);
-   Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
+   ArrayResize(blocks_timer, 0);
 
-   blocks_timer[0] = block1;
-   blocks_timer[1] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3768,7 +3481,6 @@ int OnInit()
 void OnTimer()
   {
    resetBlocksTimer(RESET_LEVEL_DEFAULT);
-   runBlockTimer(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3776,6 +3488,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
+   runBlockTick(-1, -1, 0);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

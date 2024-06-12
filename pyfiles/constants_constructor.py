@@ -84,12 +84,6 @@ constants = [
     "#define PROFIT_MODE_PIPS_SUM \"pips-sum\"",
     "#define PROFIT_MODE_NO_MATTER \"no-matter\"",
 
-    # ##################### for each trade ##########################
-    "#define LOOP_DIRECTION_NEWEST_TO_OLDEST 1",
-    "#define LOOP_DIRECTION_OLDEST_TO_NEWEST 2",
-    "#define LOOP_DIRECTION_PROFITABLE_FIRST 3",
-    "#define LOOP_DIRECTION_PROFITABLE_LAST 4",
-
     # ##################### value ##########################
 
     "#define VALUE_PIPS_AS_IS 1",
