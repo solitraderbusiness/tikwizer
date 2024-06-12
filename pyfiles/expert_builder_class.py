@@ -36,7 +36,7 @@ def get_version():
 
 
 def handle_const_var_value(data):
-    if data.strip().get("value"):
+    if data.get("value").strip():
         return " = " + str(data.get("value"))
     return ""
 

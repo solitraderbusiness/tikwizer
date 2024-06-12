@@ -6585,3 +6585,104 @@ input_data_68 = {
   "name_by_user": "test 8426",
   "highestIndex": "undefined"
 }
+
+# test vars consts
+input_data_69 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [],
+        "nodesData": [],
+        "nodes": []
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "my_line",
+              "object_type": "OBJ_VLINE",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_NOW",
+                  "mode_time_shift": "0"
+                }
+              }
+            },
+            "id": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "id_by_user": 2,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          }
+        ],
+        "edges": [
+          {
+            "source": "2be48b94-0765-49d1-9746-cc43e820a5c5",
+            "sourceHandle": "blue",
+            "target": "b5da1051-624b-40d1-919d-5ef18e5f6590",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-2be48b94-0765-49d1-9746-cc43e820a5c5blue-b5da1051-624b-40d1-919d-5ef18e5f6590c"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "xx",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "60229a84-3fc3-40cf-9eac-395f5cf24895",
+  "name_by_user": "test 8426",
+  "highestIndex": "undefined"
+}
