@@ -1,0 +1,3 @@
+{
+	"init_body" : "symbol = symbol_val;\n      timeframe = timeframe_val;\n      find_method = find_method_val;\n      price_mode = price_mode_val;\n      timestr = timestr_val;\n      shift = shift_val;"
+}

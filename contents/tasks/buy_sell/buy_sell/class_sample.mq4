@@ -127,7 +127,7 @@ public:
       calc();
       if(!initialized)
         {
-         printf("Not initialized");
+         printf("Buy/Sell/Pending class calcs failed");
          block.onResult(ROUTE_2_PASSED);
          return;
         }
