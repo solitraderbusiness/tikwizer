@@ -224,7 +224,16 @@ constants = [
     "#define ROUND_PRICE(A, P) ((int)((A) / P + 0.5))",
     "#define NORM_PRICE(A, P) (((int)((A) / P + 0.5)) * P)",
 
-    # #####################  ##########################
+    # ##################### ObjectOnTheChart ##########################
+
+    "#define TLOBJPROP_TIME1 801",
+    "#define OBJPROP_TL_PRICE_BY_SHIFT 802",
+    "#define OBJPROP_TL_SHIFT_BY_PRICE 803",
+    "#define OBJPROP_FIBOVALUE 804",
+    "#define OBJPROP_FIBOPRICEVALUE 805",
+    "#define OBJPROP_BARSHIFT1 807",
+    "#define OBJPROP_BARSHIFT2 808",
+    "#define OBJPROP_BARSHIFT3 809",
 
     # #####################  ##########################
 

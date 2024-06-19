@@ -518,3 +518,4 @@ def get_fun__e_functions():
 def get_fun__to_pips():
     result = "double toPips(double digits, string symbol)\n  {\n   if(symbol == \"\")\n      symbol = Symbol();\n\n   return digits / (PipValue(symbol) * SymbolInfoDouble(symbol, SYMBOL_POINT));\n  }\n\n"
     return result
+

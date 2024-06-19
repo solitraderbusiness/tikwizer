@@ -36,7 +36,7 @@ public:
 
       if(ObjSource == "objloop")
         {
-         name = LoadedObjectName();
+         name = loaded_object_name();
         }
       if(ObjectFind(0,name)<0)
         {
@@ -289,7 +289,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-string LoadedObjectName(string name="")
+string loaded_object_name(string name="")
   {
    static string memory="";
    if(name!="")
