@@ -455,7 +455,7 @@ input_data_2 = {
                         },
                         "right": {
                             "row1": "Value",
-                            "row2": "Text(code input)",
+                            "row2": "Text_code_input",
                             "params": {
                                 "value": "Testing code input"
                             }
