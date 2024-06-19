@@ -6,6 +6,7 @@ import json
 
 def refactor(data_raw):
     data = data_raw.get("data")
+    data = sort_data(data)
     correct_enabled(data)
     events = data["events"]
     for key in events:
@@ -23,6 +24,21 @@ def refactor(data_raw):
         handle_order_type_issue(event)
     add_extra_double_quotation_vars_consts(data.get("constants"), data.get("variables"))
     return data
+
+
+# This sort fixes the issue with replacing items like shift,
+# ma_shift where shorter one also replaces the longer one
+def sort_data(d):
+    for key, value in d.items():
+        if isinstance(value, dict):
+            if key == "params":
+                # Sort the dictionary by key length in descending order
+                sorted_dict = {k: v for k, v in sorted(value.items(), key=lambda item: len(item[0]), reverse=True)}
+                d[key] = sorted_dict
+            else:
+                # Recursively sort nested dictionaries
+                sort_data(value)
+    return d
 
 
 # This function creates generator specific input like order_type in buy_sell or type in value
