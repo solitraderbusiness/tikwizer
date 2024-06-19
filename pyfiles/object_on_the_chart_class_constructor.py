@@ -6,8 +6,8 @@ path = path_root.get()
 path_sub = "/contents/object_on_the_chart/"
 
 
-def get_class(input_dic, class_id, constants, variables):
-    mpath = path + path_sub
+def get_class(row2, input_dic, class_id, constants, variables):
+    mpath = path + path_sub + row2 + "/"
     class_template_dic = {}
     with open(mpath + "class_template.json") as class_file:
         if class_file:
@@ -27,7 +27,9 @@ def get_class(input_dic, class_id, constants, variables):
             init_body_dic = json.loads(init_txt)
 
     for key in input_dic:
-        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val", get_proper_value(input_dic.get(key), constants, variables))
+        init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val",
+                                                                            get_proper_value(input_dic.get(key),
+                                                                                             constants, variables))
 
     mql4_body = class_template_dic.get("class_template") \
         .replace("_id", str(class_id), 1) \
@@ -61,8 +63,8 @@ def is_not_const_var(value, constants, variables):
     return True
 
 
-def get_initializer(var_id):
-    mpath = path + path_sub
+def get_initializer(row2, var_id):
+    mpath = path + path_sub + row2 + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -71,8 +73,8 @@ def get_initializer(var_id):
             return initializer_body
 
 
-def get_initializer_split(var_id):
-    mpath = path + path_sub
+def get_initializer_split(row2, var_id):
+    mpath = path + path_sub + row2 + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -83,8 +85,8 @@ def get_initializer_split(var_id):
             return initializer_list
 
 
-def get_var_name(var_id):
-    mpath = path + path_sub
+def get_var_name(row2, var_id):
+    mpath = path + path_sub + row2 + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
@@ -94,12 +96,12 @@ def get_var_name(var_id):
 
 # Test
 # input = {
-#   "symbol":"NULL",
-#   "timeframe":0,
-#   "find_method":"FIND_BY_ID",
-#   "price_mode":"CANDLE_HIGH",
-#   "timestr":"\"2023.4.26 13:40:30\"",
-#   "shift":10
+#   "ObjSource": "name",
+#   "Name": "my_object_name",
+#   "Property": "OBJPROP_PRICE1",
+#   "FiboLevelID": 0,
+#   "TLpriceLevel": 1.2,
+#   "Shift": 0
 # }
 # print(get_class(input, 1040))
 # print(get_initializer(1040))

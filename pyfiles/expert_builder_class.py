@@ -54,6 +54,7 @@ class ExpertBuilder:
     from . import candle_class_constructor
     from . import value_class_constructor
     from . import market_properties_class_constructor
+    from . import object_on_the_chart_class_constructor
     from . import spread_filter_struct_constructor
     from . import on_trade_event_detector_class_constructor
     from . import close_partially_items
@@ -1159,3 +1160,6 @@ class ExpertBuilder:
         elif row1 == "value":
             return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
                                                           self.data.get("variables"))
+        elif row1 == "object_on_the_chart":
+            return self.object_on_the_chart_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+                                                                        self.data.get("variables"))

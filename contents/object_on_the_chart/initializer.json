@@ -1,5 +1,0 @@
-{
-  "initializer": "ObjectOnTheChart_id objectOnTheChart_id;\n   objectOnTheChart_id.init();\n   double valueObjectOnTheChart_id = objectOnTheChart_id.calc();",
-  "initializer_split": ["ObjectOnTheChart_id objectOnTheChart_id;\n", "objectOnTheChart_id.init();\n", "double valueObjectOnTheChart_id = objectOnTheChart_id.calc();\n"],
-  "variable_name": "valueObjectOnTheChart_id"
-}

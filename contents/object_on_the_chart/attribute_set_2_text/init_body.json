@@ -1,0 +1,3 @@
+{
+	"init_body" : "      ObjSource = ObjSource_val;\n      Name = Name_val;\n      Property = Property_val;"
+}

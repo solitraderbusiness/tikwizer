@@ -5,6 +5,7 @@ from . import indicator_class_constructor
 from . import candle_class_constructor
 from . import market_properties_class_constructor
 from . import value_class_constructor
+from . import object_on_the_chart_class_constructor
 
 path = path_root.get()
 path_sub = "/contents/"
@@ -659,7 +660,6 @@ def trailing_stop_each_trade_run_data(node, run_data):
     params = node.get("params")
     print(params.get("TrailingStopMode"))
     if params.get("TrailingStopMode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
-        print("AAAAAAAAAAAAAAAAA")
         value_fetch = params.get("value_fetch_trailingstopmode_custom_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -670,7 +670,6 @@ def trailing_stop_each_trade_run_data(node, run_data):
         run_data = run_data.replace("initializer_trailing_stop_mode", init)
         run_data = run_data.replace("variable_name_trailing_stop_mode", val)
     else:
-        print("BBBBBBBBBBBBBBBBB")
         run_data = run_data.replace("initializer_trailing_stop_mode", "")
         run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
     return run_data
@@ -858,6 +857,8 @@ def get_value_fetch_init(row1, row2, suffix):
         init = market_properties_class_constructor.get_initializer(suffix)
     elif row1 == "value":
         init = value_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "object_on_the_chart":
+        init = object_on_the_chart_class_constructor.get_initializer(row2, suffix)
     return init
 
 
@@ -871,6 +872,8 @@ def get_value_fetch_val(row1, row2, suffix):
         val = market_properties_class_constructor.get_var_name(suffix)
     elif row1 == "value":
         val = value_class_constructor.get_var_name(suffix)
+    elif row1 == "object_on_the_chart":
+        val = object_on_the_chart_class_constructor.get_var_name(row2, suffix)
     return val
 
 

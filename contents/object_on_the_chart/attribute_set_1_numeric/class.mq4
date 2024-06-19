@@ -1,12 +1,34 @@
 
-class ObjectOnTheChart_id
+#define TLOBJPROP_TIME1 801
+#define OBJPROP_TL_PRICE_BY_SHIFT 802
+#define OBJPROP_TL_SHIFT_BY_PRICE 803
+#define OBJPROP_FIBOVALUE 804
+#define OBJPROP_FIBOPRICEVALUE 805
+#define OBJPROP_BARSHIFT1 807
+#define OBJPROP_BARSHIFT2 808
+#define OBJPROP_BARSHIFT3 809
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class ObjectOnTheChart_numeric
   {
 public:
-    field_body
+   string            ObjSource;
+   string            Name;
+   int               Property;
+   int               FiboLevelID;
+   double            TLpriceLevel;
+   int               Shift;
 public:
    void              init()
      {
-      init_body
+      ObjSource = "name";
+      Name = "my_object_name";
+      Property = OBJPROP_PRICE1;
+      FiboLevelID = 0;
+      TLpriceLevel = 1.2;
+      Shift = 0;
      }
    double               calc()
      {
@@ -263,3 +285,16 @@ public:
      }
   };
 
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+string loaded_object_name(string name="")
+  {
+   static string memory="";
+   if(name!="")
+     {
+      memory=name;
+     }
+   return(memory);
+  }
