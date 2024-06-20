@@ -26,6 +26,14 @@ def get_class(value_type, input_dic, class_id, constants, variables):
             init_txt = init_file.read()
             init_body_dic = json.loads(init_txt)
 
+    if value_type == "Text" and input_dic.get("value") == "":
+        input_dic["value"] = "\"\""
+    else:
+        if value_type == "Text" and not input_dic.get("value").startswith('"'):
+            input_dic["value"] = "\"" + input_dic["value"]
+        if value_type == "Text" and not input_dic.get("value").endswith('"'):
+            input_dic["value"] = input_dic["value"] + "\""
+
     for key in input_dic:
         init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val",
                                                                             get_proper_value(input_dic.get(key),

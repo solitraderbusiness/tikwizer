@@ -95,10 +95,11 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             add_extra_double_quotation_if_any(value, constants, variables)
         else:
             con1 = key in keys and is_not_const_var(value, constants, variables)
-            con2 = key == "value" and isinstance(value, str) and is_not_const_var(value, constants, variables)
+            # con2 commented as apparently value as key is only used in value_fetch > value and I have to take care of it in constructor class
+            # con2 = key == "value" and isinstance(value, str) and is_not_const_var(value, constants, variables)
             con3 = (key == "symbol" or key == "time_market") and value != "NULL" and is_not_const_var(value, constants,
                                                                                                       variables)
-            if con1 or con2 or con3:
+            if con1 or con3:
                 dic[key] = '\"' + value + '\"'
 
 
