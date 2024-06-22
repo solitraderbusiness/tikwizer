@@ -102,6 +102,7 @@ def run_data_static_fun(path_task_id, input_dic, constants, variables):
         if run_file:
             run_txt = run_file.read()
             run_data = json.loads(run_txt).get("run_data")
+            run_data = add_var_reference_if_any(run_data, input_dic, variables)
             run_data = replace_input_values(run_data, input_dic, constants, variables)
             return run_data
     return ""
@@ -176,6 +177,19 @@ def function_data_dynamic_fun(node, function_data_static):
     return function_data
 
 
+# In GoldBlox, if user references a class field to a global var,
+# then it must get updated with the global var each time block runs.
+# Below function adds this feature by calling field assignment each
+# time block's run method is called.
+def add_var_reference_if_any(data, params, variables):
+    fix_star = "Task::run(block_id, block);"
+    for key, value in params.items():
+        if not isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
+            if is_var(value, variables):
+                data = data.replace(fix_star, fix_star + "\n" + key + " = ::" + value + ";\n")
+    return data
+
+
 def replace_input_values(data, params, constants, variables):
     for key, value in params.items():
         if isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
@@ -187,7 +201,7 @@ def replace_input_values(data, params, constants, variables):
 
 def get_proper_value(value, constants, variables):
     if isinstance(value, str):
-        if is_not_const_var(value, constants, variables):
+        if not is_const_var(value, constants, variables):
             return value
         else:  # The value is the name of a constant/variable, so use the global scope
             return "::" + value
@@ -195,14 +209,21 @@ def get_proper_value(value, constants, variables):
         return str(value)
 
 
-def is_not_const_var(value, constants, variables):
+def is_const_var(value, constants, variables):
     for constant in constants:
         if constant.get("name") == value:
-            return False
+            return True
     for variable in variables:
         if variable.get("name") == value:
-            return False
-    return True
+            return True
+    return False
+
+
+def is_var(value, variables):
+    for variable in variables:
+        if variable.get("name") == value:
+            return True
+    return False
 
 
 def check_trendline_price_level_run_data(node, function_data_static):

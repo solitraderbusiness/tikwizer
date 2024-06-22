@@ -24,6 +24,7 @@ public:
 public:
    virtual void      run(int block_id, BlockParent &block)
      {
+      Task::run(block_id, block);
       string msymbol = getSymbol(symbol);
 
       bool pass = false;
