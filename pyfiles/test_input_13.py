@@ -190,7 +190,7 @@ input_data_3 = {
                             "LevelColor": "clrSlateGray",
                             "symbols_str": "",
                             "value_fetch_trailingstopmode_custom_level": {
-                                "row1": "object_on_the_chart",
+                                "row1": "object-on-the-chart",
                                 "row2": "attribute_set_1_numeric",
                                 "params": {
                                     "ObjSource": "name",
@@ -286,7 +286,7 @@ input_data_4 = {
                             "LevelColor": "clrSlateGray",
                             "symbols_str": "",
                             "value_fetch_trailingstopmode_custom_level": {
-                                "row1": "object_on_the_chart",
+                                "row1": "object-on-the-chart",
                                 "row2": "attribute_set_2_text",
                                 "params": {
                                     "ObjSource": "name",
@@ -799,6 +799,350 @@ input_data_7 = {
             "blockName": "Break even point (each trade)",
             "category": "trailing_stop_break_even",
             "block_name_mql": "break_even_point_each_trade"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "test",
+        "value": "",
+        "description": ""
+      },
+      {
+        "type": "string",
+        "name": "greetings",
+        "value": "hellow how are your",
+        "description": ""
+      },
+      {
+        "type": "int",
+        "name": "my_int",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "e4cb9870-8f3f-4abf-b156-55f656b06c07",
+  "name_by_user": "test 8624",
+  "highestIndex": "9"
+}
+
+# test object on the chart numeric
+input_data_8 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "sourceHandle": "blue",
+            "target": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-00f7330c-2fbe-47e1-a302-bec9470ab009blue-02ec7d05-12f9-4bb3-a61c-013e13eaa98fc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "id_by_user": 7,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "object-on-the-chart",
+                "row2": "attribute_set_1_numeric",
+                "params": {
+                  "ObjSource": "name",
+                  "Property": "OBJPROP_RAY_LEFT",
+                  "Name": "my_object_name"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "id_by_user": 8,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "test",
+        "value": "",
+        "description": ""
+      },
+      {
+        "type": "string",
+        "name": "greetings",
+        "value": "hellow how are your",
+        "description": ""
+      },
+      {
+        "type": "int",
+        "name": "my_int",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "e4cb9870-8f3f-4abf-b156-55f656b06c07",
+  "name_by_user": "test 8624",
+  "highestIndex": "9"
+}
+
+# test object on the chart numeric 2
+input_data_9 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "sourceHandle": "blue",
+            "target": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-00f7330c-2fbe-47e1-a302-bec9470ab009blue-02ec7d05-12f9-4bb3-a61c-013e13eaa98fc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "id_by_user": 7,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "object-on-the-chart",
+                "row2": "attribute_set_1_numeric",
+                "params": {
+                  "ObjSource": "objloop",
+                  "Property": "OBJPROP_PERIOD"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "id_by_user": 8,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "test",
+        "value": "",
+        "description": ""
+      },
+      {
+        "type": "string",
+        "name": "greetings",
+        "value": "hellow how are your",
+        "description": ""
+      },
+      {
+        "type": "int",
+        "name": "my_int",
+        "value": "20",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "e4cb9870-8f3f-4abf-b156-55f656b06c07",
+  "name_by_user": "test 8624",
+  "highestIndex": "9"
+}
+
+# test object on the chart string
+input_data_10 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "sourceHandle": "blue",
+            "target": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-00f7330c-2fbe-47e1-a302-bec9470ab009blue-02ec7d05-12f9-4bb3-a61c-013e13eaa98fc"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "00f7330c-2fbe-47e1-a302-bec9470ab009",
+            "id_by_user": 7,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "object-on-the-chart",
+                "row2": "attribute_set_2_text",
+                "params": {
+                  "ObjSource": "name",
+                  "Property": "OBJPROP_TOOLTIP",
+                  "Name": "my_test_name"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "02ec7d05-12f9-4bb3-a61c-013e13eaa98f",
+            "id_by_user": 8,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
           }
         ]
       },

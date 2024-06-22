@@ -184,7 +184,7 @@ def check_value_fetch_params(side):  # Side means left or right
             path_module = "value" + "/"
         case "candle":
             path_module = "candle" + "/"
-        case "object_on_the_chart":
+        case "object-on-the-chart":
             path_module = "object_on_the_chart" + "/" + side.get("row2").lower() + "/"
     with open(path + path_sub + path_module + "input.json") as input_file:
         if input_file:

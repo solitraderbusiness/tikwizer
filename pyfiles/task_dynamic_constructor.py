@@ -878,7 +878,7 @@ def get_value_fetch_init(row1, row2, suffix):
         init = market_properties_class_constructor.get_initializer(suffix)
     elif row1 == "value":
         init = value_class_constructor.get_initializer(row2, suffix)
-    elif row1 == "object_on_the_chart":
+    elif row1 == "object-on-the-chart":
         init = object_on_the_chart_class_constructor.get_initializer(row2, suffix)
     return init
 
@@ -893,7 +893,7 @@ def get_value_fetch_val(row1, row2, suffix):
         val = market_properties_class_constructor.get_var_name(suffix)
     elif row1 == "value":
         val = value_class_constructor.get_var_name(suffix)
-    elif row1 == "object_on_the_chart":
+    elif row1 == "object-on-the-chart":
         val = object_on_the_chart_class_constructor.get_var_name(row2, suffix)
     return val
 
