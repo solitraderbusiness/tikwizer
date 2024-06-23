@@ -167,9 +167,6 @@
 #define OBJPROP_BARSHIFT1 807
 #define OBJPROP_BARSHIFT2 808
 #define OBJPROP_BARSHIFT3 809
-double test; //
-string greetings = "hellow how are your"; //
-int my_int = 20; //
 struct MarketPropertiesResult
   {
    double            price;
@@ -960,66 +957,58 @@ public:
 
   };
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class ObjectOnTheChart_string8_left
+
+class BOLLINGER_BAND2_left
+
   {
+
+   string            symbol;
+   int               timeframe;
+   int               period;
+   double               deviation;
+   int               bands_shift;
+   int               applied_price;
+   int               mode;
+   int               shift;
+
+
+
 public:
-   string            ObjSource;
-   string            Name;
-   ENUM_OBJECT_PROPERTY_STRING Property;
-public:
+
    void              init()
+
      {
-      ObjSource = "name";
-      Name = "my_test_name";
-      Property = OBJPROP_TOOLTIP;
-     }
-   string               calc()
-     {
-      string name = Name;
 
-      if(ObjSource == "objloop")
-        {
-         name = loaded_object_name();
-        }
-
-      if(ObjectFind(0,name) < 0)
-        {
-         return EMPTY_VALUE;
-        }
-
-      string retval = "";
-
-      if(Property == OBJPROP_NAME)
-        {
-         retval = ObjectGetString(0,name,OBJPROP_NAME,0);
-        }
-      if(Property == OBJPROP_TEXT)
-        {
-         retval = ObjectGetString(0,name,OBJPROP_TEXT,0);
-        }
-      if(Property == OBJPROP_TOOLTIP)
-        {
-         retval = ObjectGetString(0,name,OBJPROP_TOOLTIP,0);
-        }
-      if(Property == OBJPROP_FONT)
-        {
-         retval = ObjectGetString(0,name,OBJPROP_FONT,0);
-        }
-      if(Property == OBJPROP_SYMBOL)
-        {
-         retval = ObjectGetString(0,name,OBJPROP_SYMBOL,0);
-        }
-
-      return retval;
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      period = 20;
+      deviation = 2;
+      bands_shift = 0;
+      applied_price = PRICE_CLOSE;
+      mode = MODE_MAIN;
+      shift = 0;
 
      }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iBands(symbol,timeframe,period,deviation,bands_shift,applied_price,mode,shift);
+
+      return result;
+
+     }
+
+
+
   };
 
-
-class MovingAverage8_right
+class MovingAverage2_right
 
   {
 
@@ -1066,33 +1055,12 @@ public:
 
 
   };
-//Pass
-class Task7 : public Task
-  {
-
-public:
-                     Task7(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
 //Condition
-class Task8 : public Task
+class Task2 : public Task
   {
 
 public:
-                     Task8(string name):Task(name)
+                     Task2(string name):Task(name)
      {
 
      }
@@ -1100,14 +1068,14 @@ public:
      {
       Task::run(block_id, block);
 
-      ObjectOnTheChart_string8_left objectOnTheChart_string8_left;
-      objectOnTheChart_string8_left.init();
-      string valueObjectOnTheChart_string8_left = objectOnTheChart_string8_left.calc();
-      MovingAverage8_right movingaverage8_right;
-      movingaverage8_right.init();
-      double valueMovingAverage8_right = movingaverage8_right.calc();
+      BOLLINGER_BAND2_left bollinger_band2_left;
+      bollinger_band2_left.init();
+      double valueBOLLINGER_BAND2_left = bollinger_band2_left.calc();
+      MovingAverage2_right movingaverage2_right;
+      movingaverage2_right.init();
+      double valueMovingAverage2_right = movingaverage2_right.calc();
 
-      if(valueObjectOnTheChart_string8_left > valueMovingAverage8_right)
+      if(valueBOLLINGER_BAND2_left > valueMovingAverage2_right)
         {
          printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1117,6 +1085,27 @@ public:
          printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Pass
+class Task3 : public Task
+  {
+
+public:
+                     Task3(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
@@ -1275,18 +1264,44 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block7 : public Block
+class Block2 : public Block
   {
 public:
-                     Block7()
+                     Block2()
      {
       id = 0;
-      id_by_user = 7;
+      id_by_user = 2;
+      name = "condition_1_normal";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {1};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task2(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 1;
+      id_by_user = 3;
       name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1295,33 +1310,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task7(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block8 : public Block
-  {
-public:
-                     Block8()
-     {
-      id = 1;
-      id_by_user = 8;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task8(name);
+      task = new Task3(name);
      }
   };
 Block *blocks_init[];
@@ -1392,11 +1381,11 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
-   Block7 *block7 = new Block7();
-   Block8 *block8 = new Block8();
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
 
-   blocks_tick[0] = block7;
-   blocks_tick[1] = block8;
+   blocks_tick[0] = block2;
+   blocks_tick[1] = block3;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3477,7 +3466,7 @@ void OnTimer()
 void OnTick()
   {
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }
