@@ -1472,3 +1472,111 @@ input_data_13 = {
   "name_by_user": "test 8915",
   "highestIndex": "5"
 }
+
+# test formula issue with var update feature
+input_data_14 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "90c3cfc5-bad5-465c-bd5b-e4152d7e4a43",
+            "sourceHandle": "blue",
+            "target": "c6e6c45b-835b-4665-bb85-08e226a14794",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-90c3cfc5-bad5-465c-bd5b-e4152d7e4a43blue-c6e6c45b-835b-4665-bb85-08e226a14794c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT",
+              "max_times_to_pass": "1"
+            },
+            "id": "90c3cfc5-bad5-465c-bd5b-e4152d7e4a43",
+            "id_by_user": 4,
+            "blockName": "Once per bar",
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": "+"
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "adjust": "",
+              "variable": "variable"
+            },
+            "id": "c6e6c45b-835b-4665-bb85-08e226a14794",
+            "id_by_user": 6,
+            "blockName": "Formula",
+            "category": "condition_formula",
+            "block_name_mql": "formula"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "variable",
+        "value": "10",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "string",
+        "name": "test",
+        "value": "",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+  "name_by_user": "test 8915",
+  "highestIndex": "7"
+}

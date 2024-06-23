@@ -11,7 +11,7 @@ from . import test_input_13
 
 
 def test():
-    data = test_input_13.input_data_13
+    data = test_input_13.input_data_14
     result = mql_generator.generate_mql(data)
     path = path_root.get()
     path_sub = "/output/"
