@@ -1301,3 +1301,174 @@ input_data_11 = {
     "name_by_user": "test 8915",
     "highestIndex": "4"
 }
+
+# test formula when no variable is inserted
+input_data_12 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "b4338921-9e69-4eda-b381-ea3217676107",
+            "sourceHandle": "blue",
+            "target": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b4338921-9e69-4eda-b381-ea3217676107blue-2c7551bb-c7d8-4e4c-a8cc-52d645f97187c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "b4338921-9e69-4eda-b381-ea3217676107",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": "+"
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "adjust": "",
+              "variable": ""
+            },
+            "id": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+            "id_by_user": 4,
+            "blockName": "Formula",
+            "category": "condition_formula",
+            "block_name_mql": "formula"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+  "name_by_user": "test 8915",
+  "highestIndex": "5"
+}
+
+# test if double quotation not added
+input_data_13 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "b4338921-9e69-4eda-b381-ea3217676107",
+            "sourceHandle": "blue",
+            "target": "0a1a35ad-ff6d-4828-bb13-e544b3d470c3",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-b4338921-9e69-4eda-b381-ea3217676107blue-0a1a35ad-ff6d-4828-bb13-e544b3d470c3c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "b4338921-9e69-4eda-b381-ea3217676107",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "0a1a35ad-ff6d-4828-bb13-e544b3d470c3",
+            "id_by_user": 4,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+  "name_by_user": "test 8915",
+  "highestIndex": "5"
+}

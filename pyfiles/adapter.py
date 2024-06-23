@@ -36,25 +36,6 @@ def sort_data(d):
     else:
         return d
 
-def sort_dict_by_key_length_desc(d):
-    if isinstance(d, dict):
-        return {k: sort_dict_by_key_length_desc(v) if k == "params" else v for k, v in d.items()}
-    elif isinstance(d, list):
-        return [sort_dict_by_key_length_desc(v) for v in d]
-    else:
-        return d
-
-def sort_params_dict(d):
-    if isinstance(d, dict):
-        for k, v in d.items():
-            if k == "params":
-                d[k] = {k: v for k, v in sorted(v.items(), key=lambda item: len(item[0]), reverse=True)}
-            else:
-                sort_params_dict(v)
-    elif isinstance(d, list):
-        for item in d:
-            sort_params_dict(item)
-    return d
 
 # This function creates generator specific input like order_type in buy_sell
 def create_specific_input(nodes):
@@ -77,6 +58,9 @@ def create_specific_input(nodes):
         elif block_name in ["No trade", "No trade/order", "No pending order"]:
             params["count_limit"] = 0
             params["operator"] = "=="
+        elif block_name == "Formula":
+            if not params.get("variable").strip():
+                params["variable"] = "string undefined_var_" + str(node.get("id"))
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):

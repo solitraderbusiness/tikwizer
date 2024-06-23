@@ -105,7 +105,7 @@ public:
 
    void              getHighest(MarketPropertiesResult &result)
      {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_start-range_end+1, range_end);
       result.price = iHigh(msymbol, mtimeframe, hi);
       result.index = hi;
       result.time = iTime(msymbol, mtimeframe, hi);
@@ -114,7 +114,7 @@ public:
 
    void              getLowest(MarketPropertiesResult &result)
      {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_start-range_end+1, range_end);
       result.price = iLow(msymbol, mtimeframe, li);
       result.index = li;
       result.time = iTime(msymbol, mtimeframe, li);
