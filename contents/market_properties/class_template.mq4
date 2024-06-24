@@ -28,8 +28,8 @@ public:
         {
          datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
          datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-         range_start = iBarShift(msymbol, mtimeframe, timeStart, false);
-         range_end   = iBarShift(msymbol, mtimeframe, timeEnd, false);
+         range_start = iBarShift(msymbol, mtimeframe, timeEnd, false);
+         range_end   = iBarShift(msymbol, mtimeframe, timeStart, false);
         }
       getHiLo(result);
 
@@ -49,7 +49,7 @@ public:
 
    void              getHighest(MarketPropertiesResult &result)
      {
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_start-range_end+1, range_end);
+      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
       result.price = iHigh(msymbol, mtimeframe, hi);
       result.index = hi;
       result.time = iTime(msymbol, mtimeframe, hi);
@@ -58,7 +58,7 @@ public:
 
    void              getLowest(MarketPropertiesResult &result)
      {
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_start-range_end+1, range_end);
+      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
       result.price = iLow(msymbol, mtimeframe, li);
       result.index = li;
       result.time = iTime(msymbol, mtimeframe, li);
