@@ -1161,5 +1161,6 @@ class ExpertBuilder:
             return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
                                                           self.data.get("variables"))
         elif row1 == "object-on-the-chart":
-            return self.object_on_the_chart_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+            return self.object_on_the_chart_class_constructor.get_class(row2, params, id_val,
+                                                                        self.data.get("constants"),
                                                                         self.data.get("variables"))
