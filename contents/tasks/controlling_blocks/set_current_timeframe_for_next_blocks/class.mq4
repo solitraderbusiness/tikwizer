@@ -58,7 +58,7 @@ public:
       int size = ArraySize(timeframes);
       if(size==0)
         {
-         printf("task"+block_id + " passed route 2");
+         //printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
          return;
         }
@@ -67,12 +67,12 @@ public:
       for(int i=0; i<size; i++)
         {
          overriding_timeframe = timeframes[i];
-         printf("task"+block_id + " passed route 1");
+         //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
 
       overriding_timeframe = -1;
-      printf("task"+block_id + " passed route 2");
+      //printf("task"+block_id + " passed route 2");
       block.onResult(ROUTE_2_PASSED);
      }
    virtual void      reset(int level)

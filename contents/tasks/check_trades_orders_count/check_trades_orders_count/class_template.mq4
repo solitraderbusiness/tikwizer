@@ -42,12 +42,12 @@ public:
       bool result = count operator_val count_limit;
       if(result)
         {
-         printf("task" + block_id + " passed route 1");
+         //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task" + block_id + " passed route 2");
+         //printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
 

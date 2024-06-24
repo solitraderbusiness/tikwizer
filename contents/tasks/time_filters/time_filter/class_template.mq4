@@ -121,12 +121,12 @@ public:
 
       if((now >= t0 && now < t1) || (t0 > t1 && (now >= t0 || now < t1)))
         {
-         printf("task" + block_id + " passed route 1");
+         //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
       else
         {
-         printf("task" + block_id + " passed route 2");
+         //printf("task"+block_id + " passed route 2");
          block.onResult(ROUTE_2_PASSED);
         }
 

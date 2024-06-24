@@ -93,7 +93,7 @@ public:
                  {
                   count++;
 
-                  printf("task" + block_id + " passed route 1");
+                  //printf("task"+block_id + " passed route 1");
                   block.onResult(ROUTE_1_PASSED);
 
                   if(count == loop_limit)
@@ -104,7 +104,7 @@ public:
         }
 
 
-      printf("task" + block_id + " passed route 2");
+      //printf("task"+block_id + " passed route 2");
       block.onResult(ROUTE_2_PASSED);
      }
    virtual void      reset(int level)

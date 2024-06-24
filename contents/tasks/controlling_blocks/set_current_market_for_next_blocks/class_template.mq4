@@ -17,7 +17,7 @@ public:
 
       int size = ArraySize(symbols);
       if(size==0) {
-        printf("task"+block_id + " passed route 2");
+        //printf("task"+block_id + " passed route 2");
         block.onResult(ROUTE_2_PASSED);
         return;
       }
@@ -26,12 +26,12 @@ public:
       for(int i=0; i<size; i++)
         {
          overriding_symbol = symbols[i];
-         printf("task"+block_id + " passed route 1");
+         //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
         }
 
       overriding_symbol = "";
-      printf("task"+block_id + " passed route 2");
+      //printf("task"+block_id + " passed route 2");
       block.onResult(ROUTE_2_PASSED);
 
      }

@@ -228,7 +228,7 @@ public:
       if(UpdateAutoColors() || checkVLineDragged())
          Update();
 
-      printf("task"+block_id + " passed route 1");
+      //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
 
 
