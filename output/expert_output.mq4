@@ -167,7 +167,6 @@
 #define OBJPROP_BARSHIFT1 807
 #define OBJPROP_BARSHIFT2 808
 #define OBJPROP_BARSHIFT3 809
-double variable = 10; //
 extern string test = ""; //
 struct MarketPropertiesResult
   {
@@ -962,7 +961,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value6_left
+class Value7_left
   {
 public:
 
@@ -1209,7 +1208,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value6_right
+class Value7_right
   {
 public:
 
@@ -1554,27 +1553,25 @@ public:
   };
 
 //Formula
-class Task6 : public Task
+class Task7 : public Task
   {
 
 public:
-                     Task6(string name):Task(name)
+                     Task7(string name):Task(name)
      {
 
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      variable = ::variable;
 
-
-      Value6_left value6_left;
-      value6_left.init();
-      double valueValue6_left = value6_left.calc<double>();
-      Value6_right value6_right;
-      value6_right.init();
-      double valueValue6_right = value6_right.calc<double>();
-      variable = (valueValue6_left + valueValue6_right);
+      Value7_left value7_left;
+      value7_left.init();
+      double valueValue7_left = value7_left.calc<double>();
+      Value7_right value7_right;
+      value7_right.init();
+      double valueValue7_right = value7_right.calc<double>();
+      string undefined_var_1 = (valueValue7_left + valueValue7_right);
 
       printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
@@ -1762,13 +1759,13 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block6 : public Block
+class Block7 : public Block
   {
 public:
-                     Block6()
+                     Block7()
      {
       id = 1;
-      id_by_user = 6;
+      id_by_user = 7;
       name = "formula";
       enabled = True;
       event = EVENT_ON_TICK;
@@ -1782,7 +1779,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task6(name);
+      task = new Task7(name);
      }
   };
 Block *blocks_init[];
@@ -1854,10 +1851,10 @@ void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
    Block4 *block4 = new Block4();
-   Block6 *block6 = new Block6();
+   Block7 *block7 = new Block7();
 
    blocks_tick[0] = block4;
-   blocks_tick[1] = block6;
+   blocks_tick[1] = block7;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

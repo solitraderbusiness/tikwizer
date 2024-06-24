@@ -182,6 +182,8 @@ def function_data_dynamic_fun(node, function_data_static):
 # Below function adds this feature by calling field assignment each
 # time block's run method is called.
 def add_var_reference_if_any(data, params, variables):
+    if "operator" and "variable" in params:  # This is Formula, don't do anything
+        return data
     fix_star = "Task::run(block_id, block);"
     for key, value in params.items():
         if not isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
