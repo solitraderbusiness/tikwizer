@@ -406,7 +406,7 @@ private:
                                        else
                                           if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
-                                             int mlook_up_on =  order_type == ORDER_BUY || ORDER_SELL ? look_up_on : 0;
+                                             int mlook_up_on =  order_type == ORDER_BUY || order_type == ORDER_SELL ? look_up_on : 0;
                                              volume = BetMartingale(msymbol, mlook_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }
                                           else
@@ -556,9 +556,11 @@ void GetBetTradesInfo(
    double profitOrLoss = output[1]; // 0 is initial value, 1 is profit, -1 is loss
    double consecutive  = output[2]; // the number of consecutive profitable or losable trades
    double profit       = output[3]; // will be the profit of the first loaded trade
-   bool historyTrades  = look_up_on == LOOK_UP_RUNNING_ONLY ? false : true;
+
+   bool historyTrades  = look_up_on == LOOK_UP_HISTORY_ONLY ? true : false;
 
    int total = (historyTrades) ? OrdersHistoryTotal() : OrdersTotal();
+
 
    for(int pos = total - 1; pos >= 0; pos--)
      {

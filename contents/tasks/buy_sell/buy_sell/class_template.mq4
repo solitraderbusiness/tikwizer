@@ -361,7 +361,7 @@ private:
                                        else
                                           if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
                                             {
-                                             int mlook_up_on =  order_type == ORDER_BUY || ORDER_SELL ? look_up_on : 0;
+                                             int mlook_up_on =  order_type == ORDER_BUY || order_type == ORDER_SELL ? look_up_on : 0;
                                              volume = BetMartingale(msymbol, mlook_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
                                             }
                                           else
