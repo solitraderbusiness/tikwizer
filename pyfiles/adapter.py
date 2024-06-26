@@ -88,7 +88,8 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "obj_name_prefix", "loop_direction", "sort_mode", "skip_objects", "max_objects",
             "name_contains", "name_starts_with", "time_start", "time_end", "FirstStartHour", "FirstEndHour",
             "SecondStartHour", "SecondEndHour", "ThirdStartHour", "ThirdEndHour", "FourthStartHour",
-            "FourthEndHour", "second_output", "ObjSource", "Name"]
+            "FourthEndHour", "second_output", "ObjSource", "Name", "ModeTakeProfit", "ModeStopLoss",
+            "margin_check_Symbol"]
     for key, value in dic.items():
         if isinstance(value, dict):
             add_extra_double_quotation_if_any(value, constants, variables)
@@ -185,6 +186,10 @@ def check_value_fetch_params(side):  # Side means left or right
             path_module = "candle" + "/"
         case "object-on-the-chart":
             path_module = "object_on_the_chart" + "/" + side.get("row2").lower() + "/"
+        case "trade-order-in-loop":
+            path_module = "value_fetch/trade_order_in_loop/"
+        case "account":
+            path_module = "value_fetch/account/"
     with open(path + path_sub + path_module + "input.json") as input_file:
         if input_file:
             input_text = input_file.read()

@@ -235,9 +235,45 @@ constants = [
     "#define OBJPROP_BARSHIFT2 808",
     "#define OBJPROP_BARSHIFT3 809",
 
-    # #####################  ##########################
+    # ##################### trade/order in loop ##########################
 
-    # #####################  ##########################
+    "#define IN_LOOP_TRADE_ORDER_CANDLE_ID 1",
+    "#define IN_LOOP_TRADE_ORDER_CANDLE_TIME 2",
+    "#define IN_LOOP_TRADE_ORDER_CLOSE_PRICE 3",
+    "#define IN_LOOP_TRADE_ORDER_CLOSE_TIME 4",
+    "#define IN_LOOP_TRADE_ORDER_COMMENT 5",
+    "#define IN_LOOP_TRADE_ORDER_COMMISSION 6",
+    "#define IN_LOOP_TRADE_ORDER_GROUP_NUMBER 7",
+    "#define IN_LOOP_TRADE_ORDER_MAGIC_NUMBER 8",
+    "#define IN_LOOP_TRADE_ORDER_MARKET_NAME 9",
+    "#define IN_LOOP_TRADE_ORDER_OPEN_PRICE 10",
+    "#define IN_LOOP_TRADE_ORDER_OPEN_TIME 11",
+    "#define IN_LOOP_TRADE_ORDER_PROFIT 12",
+    "#define IN_LOOP_TRADE_ORDER_STOPLOSS 13",
+    "#define IN_LOOP_TRADE_ORDER_SWAP 14",
+    "#define IN_LOOP_TRADE_ORDER_TAKE_PROFIT 15",
+    "#define IN_LOOP_TRADE_ORDER_TICKET_NUMBER 16",
+    "#define IN_LOOP_TRADE_ORDER_VOLUME_SIZE_LOTS 17",
+
+    # ##################### account" ##########################
+
+    "#define ACCOUNT_INFO_BALLANCE 1",
+    "#define ACCOUNT_INFO_CREDIT 2",
+    "#define ACCOUNT_INFO_EQUITY 3",
+    "#define ACCOUNT_INFO_FREE_MARGIN 4",
+    "#define ACCOUNT_INFO_FREE_MARGIN_CHECK 5",
+    "#define ACCOUNT_INFO_LEVERAGE 6",
+    "#define ACCOUNT_INFO_LOGIN_NUMBER 7",
+    "#define ACCOUNT_INFO_MARGIN 8",
+    "#define ACCOUNT_INFO_MARGIN_LEVEL 9",
+    "#define ACCOUNT_INFO_NAME_BROKER 10",
+    "#define ACCOUNT_INFO_NAME_CLIENT 11",
+    "#define ACCOUNT_INFO_NAME_DEPOSIT_CURRENCY 12",
+    "#define ACCOUNT_INFO_NAME_SERVER 13",
+    "#define ACCOUNT_INFO_PROFIT_EQUITY_BALLANCE 14",
+    "#define ACCOUNT_INFO_STOPOUT_LEVEL 15",
+    "#define ACCOUNT_INFO_MARGIN_CALL_LEVEL 16",
+    "#define ACCOUNT_INFO_ORDERS_TRADES_LIMIT 17",
 
     # #####################  ##########################
 

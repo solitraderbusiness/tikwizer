@@ -55,6 +55,8 @@ class ExpertBuilder:
     from . import value_class_constructor
     from . import market_properties_class_constructor
     from . import object_on_the_chart_class_constructor
+    from . import trade_order_in_loop_class_constructor
+    from . import account_class_constructor
     from . import spread_filter_struct_constructor
     from . import on_trade_event_detector_class_constructor
     from . import close_partially_items
@@ -1149,18 +1151,31 @@ class ExpertBuilder:
 
     def value_fetch_class(self, row1, row2, params, id_val):
         if row1 == "indicator":
-            return self.indicator_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+            return self.indicator_class_constructor.get_class(row2, params, id_val,
+                                                              self.data.get("constants"),
                                                               self.data.get("variables"))
         elif row1 == "candle":
-            return self.candle_class_constructor.get_class(params, id_val, self.data.get("constants"),
+            return self.candle_class_constructor.get_class(params, id_val,
+                                                           self.data.get("constants"),
                                                            self.data.get("variables"))
         elif row1 == "market-properties":
-            return self.market_properties_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+            return self.market_properties_class_constructor.get_class(row2, params, id_val,
+                                                                      self.data.get("constants"),
                                                                       self.data.get("variables"))
         elif row1 == "value":
-            return self.value_class_constructor.get_class(row2, params, id_val, self.data.get("constants"),
+            return self.value_class_constructor.get_class(row2, params, id_val,
+                                                          self.data.get("constants"),
                                                           self.data.get("variables"))
         elif row1 == "object-on-the-chart":
             return self.object_on_the_chart_class_constructor.get_class(row2, params, id_val,
                                                                         self.data.get("constants"),
                                                                         self.data.get("variables"))
+        elif row1 == "trade-order-in-loop":
+            return self.trade_order_in_loop_class_constructor.get_class(row2, params, id_val,
+                                                                        self.data.get("constants"),
+                                                                        self.data.get("variables"))
+
+        elif row1 == "account":
+            return self.account_class_constructor.get_class(row2, params, id_val,
+                                                            self.data.get("constants"),
+                                                            self.data.get("variables"))

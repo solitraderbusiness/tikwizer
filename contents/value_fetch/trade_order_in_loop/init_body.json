@@ -1,0 +1,3 @@
+{
+	"init_body" : "      row2 = row2_val;\n      Period_candle_id = (ENUM_TIMEFRAMES)Period_candle_id_val;\n      Period_candle_time = (ENUM_TIMEFRAMES)Period_candle_time_val;\n      ModeProfit = (int)ModeProfit_val;\n      ModeStopLoss = (string)ModeStopLoss_val;\n      ModeTakeProfit = (string)ModeTakeProfit_val;\n      ModeTicket = (int)ModeTicket_val;\n      ModeVolume = (int)ModeVolume_val;//STest: this seems to have a value from project settings set by user"
+}
