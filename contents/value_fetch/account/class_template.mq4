@@ -74,7 +74,6 @@ public:
 
 
 
-
    double            get_ballance()
      {
       return NormalizeDouble(AccountInfoDouble(ACCOUNT_BALANCE), 2);
@@ -180,6 +179,4 @@ public:
      {
       return (int)AccountInfoInteger(ACCOUNT_LIMIT_ORDERS);
      }
-
   };
-//+------------------------------------------------------------------+

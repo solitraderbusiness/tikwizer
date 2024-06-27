@@ -2065,3 +2065,282 @@ input_data_19 = {
   "highestIndex": "3"
 }
 
+# test value_fetch > account
+input_data_20 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "sourceHandle": "blue",
+                        "target": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-b4338921-9e69-4eda-b381-ea3217676107blue-2c7551bb-c7d8-4e4c-a8cc-52d645f97187c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "account",
+                                "row2": "ACCOUNT_INFO_NAME_DEPOSIT_CURRENCY",
+                                "params": {
+                                    "margin_check_OP_TYPE": 0,
+                                    "margin_check_VOLUME": 0.10,
+                                    "margin_check_Symbol": "",
+                                    "margin_level_WhenNoTrades": 0,
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "id_by_user": 4,
+                        "blockName": "Formula",
+                        "category": "condition_formula",
+                        "block_name_mql": "formula"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+    "name_by_user": "test 8915",
+    "highestIndex": "5"
+}
+
+# test value_fetch > account 2
+input_data_21 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "sourceHandle": "blue",
+                        "target": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-b4338921-9e69-4eda-b381-ea3217676107blue-2c7551bb-c7d8-4e4c-a8cc-52d645f97187c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "account",
+                                "row2": "ACCOUNT_INFO_FREE_MARGIN_CHECK",
+                                "params": {
+                                    "margin_check_OP_TYPE": 1,
+                                    "margin_check_VOLUME": 0.20,
+                                    "margin_check_Symbol": "EURUSD",
+                                    "margin_level_WhenNoTrades": 0,
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "id_by_user": 4,
+                        "blockName": "Formula",
+                        "category": "condition_formula",
+                        "block_name_mql": "formula"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+    "name_by_user": "test 8915",
+    "highestIndex": "5"
+}
+
+# test value_fetch > account 3: adjust
+input_data_22 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "sourceHandle": "blue",
+                        "target": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-b4338921-9e69-4eda-b381-ea3217676107blue-2c7551bb-c7d8-4e4c-a8cc-52d645f97187c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "b4338921-9e69-4eda-b381-ea3217676107",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "account",
+                                "row2": "ACCOUNT_INFO_FREE_MARGIN_CHECK",
+                                "params": {
+                                    "margin_check_OP_TYPE": 1,
+                                    "margin_check_VOLUME": 0.20,
+                                    "margin_check_Symbol": "EURUSD",
+                                    "margin_level_WhenNoTrades": 0,
+                                    "adjust": "-15%"
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "2c7551bb-c7d8-4e4c-a8cc-52d645f97187",
+                        "id_by_user": 4,
+                        "blockName": "Formula",
+                        "category": "condition_formula",
+                        "block_name_mql": "formula"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "ebc2e384-235e-4b4e-ad19-08fd935321de",
+    "name_by_user": "test 8915",
+    "highestIndex": "5"
+}
+
