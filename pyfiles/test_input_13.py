@@ -1970,3 +1970,98 @@ input_data_18 = {
     "highestIndex": "5"
 }
 
+# test value_fetch > trade order in loop 4, real data
+input_data_19 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "trade-order-in-loop",
+                "row2": "IN_LOOP_TRADE_ORDER_TAKE_PROFIT",
+                "params": {
+                  "ModeTakeProfit": "fraction",
+                  "adjust": ""
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
+            "id_by_user": 1,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          },
+          {
+            "params": {},
+            "id": "4125d56f-c42c-4156-990e-4e7bd3739395",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ],
+        "edges": [
+          {
+            "source": "4125d56f-c42c-4156-990e-4e7bd3739395",
+            "sourceHandle": "blue",
+            "target": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "21a05ff9-64b7-4bce-aa65-e0915aa09506"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "63aa429c-b475-44a4-9ee5-4b95b6968c4c",
+  "name_by_user": "test 9545",
+  "highestIndex": "3"
+}
+

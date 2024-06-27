@@ -884,6 +884,8 @@ def get_value_fetch_init(row1, row2, suffix):
         init = value_class_constructor.get_initializer(row2, suffix)
     elif row1 == "object-on-the-chart":
         init = object_on_the_chart_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "trade-order-in-loop":
+        init = trade_order_in_loop_class_constructor.get_initializer(row2, suffix)
     elif row1 == "account":
         init = account_class_constructor.get_initializer(row2, suffix)
     return init
