@@ -143,6 +143,8 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_tick()
         self.on_init.append(call_add_blocks)
 
+        self.on_tick.append("TicksData(""); // Collect ticks in case we need it")
+
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_tick()
         self.on_tick.append(call_reset_blocks)
@@ -634,6 +636,9 @@ class ExpertBuilder:
 
         to_pips = self.global_functions.get_fun__to_pips()
         self.functions.append(to_pips)
+
+        ticks_data = self.global_functions.get_fun__ticks_data()
+        self.functions.append(ticks_data)
 
     def add_global_classes_structs(self):
         structs_data_mp = self.market_properties_class_constructor.get_structs()

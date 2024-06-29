@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n      if(MQLInfoInteger(MQL_TESTER))\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

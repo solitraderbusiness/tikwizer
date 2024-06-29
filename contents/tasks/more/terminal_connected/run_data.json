@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n      if(TerminalInfoInteger(TERMINAL_CONNECTED))\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

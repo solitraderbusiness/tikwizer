@@ -14,7 +14,8 @@ def get_fun__add_blocks_tick(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_TICK_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_TICK_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                          str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -55,7 +56,8 @@ def get_fun__add_blocks_chart(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_CHART_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_CHART_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                           str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -97,7 +99,8 @@ def get_fun__add_blocks_trade(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_TRADE_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_TRADE_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                           str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -139,7 +142,8 @@ def get_fun__add_blocks_timer(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_TIMER_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_TIMER_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                           str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -181,7 +185,8 @@ def get_fun__add_blocks_init(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_INIT_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_INIT_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                          str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -223,7 +228,8 @@ def get_fun__add_blocks_deinit(nodes):
         result += TEMPLATE_ADD_BLOCKS.replace("_id", str(node.get("id_by_user")))
     result += "\n"
     for index, node in enumerate(nodes):
-        result += TEMPLATE_ADD_BLOCKS_DEINIT_FUNCTION.replace("_index", str(index)).replace("_id", str(node.get("id_by_user")))
+        result += TEMPLATE_ADD_BLOCKS_DEINIT_FUNCTION.replace("_index", str(index)).replace("_id",
+                                                                                            str(node.get("id_by_user")))
     result += "  }\n"
     return result
 
@@ -519,3 +525,7 @@ def get_fun__to_pips():
     result = "double toPips(double digits, string symbol)\n  {\n   if(symbol == \"\")\n      symbol = Symbol();\n\n   return digits / (PipValue(symbol) * SymbolInfoDouble(symbol, SYMBOL_POINT));\n  }\n\n"
     return result
 
+
+def get_fun__ticks_data():
+    result = "double TicksData(string symbol = \"\", int type = 0, int shift = 0)\n{\n\tstatic bool collecting_ticks = false;\n\tstatic string symbols[];\n\tstatic int zero_sid[];\n\tstatic double memoryASK[][100];\n\tstatic double memoryBID[][100];\n\n\tint sid = 0, size = 0, i = 0, id = 0;\n\tdouble ask = 0, bid = 0, retval = 0;\n\tbool exists = false;\n\n\tif (ArraySize(symbols) == 0)\n\t{\n\t\tArrayResize(symbols, 1);\n\t\tArrayResize(zero_sid, 1);\n\t\tArrayResize(memoryASK, 1);\n\t\tArrayResize(memoryBID, 1);\n\n\t\tsymbols[0] = _Symbol;\n\t}\n\n\tif (type > 0 && shift > 0)\n\t{\n\t\tcollecting_ticks = true;\n\t}\n\n\tif (collecting_ticks == false)\n\t{\n\t\tif (type > 0 && shift == 0)\n\t\t{\n\t\t\t// going to get ticks\n\t\t}\n\t\telse\n\t\t{\n\t\t\treturn 0;\n\t\t}\n\t}\n\n\tif (symbol == \"\") symbol = _Symbol;\n\n\tif (type == 0)\n\t{\n\t\texists = false;\n\t\tsize   = ArraySize(symbols);\n\n\t\tif (size == 0) {ArrayResize(symbols, 1);}\n\n\t\tfor (i=0; i<size; i++)\n\t\t{\n\t\t\tif (symbols[i] == symbol)\n\t\t\t{\n\t\t\t\texists = true;\n\t\t\t\tsid    = i;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\n\t\tif (exists == false)\n\t\t{\n\t\t\tint newsize = ArraySize(symbols) + 1;\n\n\t\t\tArrayResize(symbols, newsize);\n\t\t\tsymbols[newsize-1] = symbol;\n\n\t\t\tArrayResize(zero_sid, newsize);\n\t\t\tArrayResize(memoryASK, newsize);\n\t\t\tArrayResize(memoryBID, newsize);\n\n\t\t\tsid=newsize;\n\t\t}\n\n\t\tif (sid >= 0)\n\t\t{\n\t\t\task = SymbolInfoDouble(symbol, SYMBOL_ASK);\n\t\t\tbid = SymbolInfoDouble(symbol, SYMBOL_BID);\n\n\t\t\tif (bid == 0 && MQLInfoInteger(MQL_TESTER))\n\t\t\t{\n\t\t\t\tPrint(\"Ticks data collector error: \" + symbol + \" cannot be backtested. Only the current symbol can be backtested. The EA will be terminated.\");\n\t\t\t\tExpertRemove();\n\t\t\t}\n\n\t\t\tif (\n\t\t\t\t   symbol == _Symbol\n\t\t\t\t|| ask != memoryASK[sid][0]\n\t\t\t\t|| bid != memoryBID[sid][0]\n\t\t\t)\n\t\t\t{\n\t\t\t\tmemoryASK[sid][zero_sid[sid]] = ask;\n\t\t\t\tmemoryBID[sid][zero_sid[sid]] = bid;\n\t\t\t\tzero_sid[sid]                 = zero_sid[sid] + 1;\n\n\t\t\t\tif (zero_sid[sid] == 100)\n\t\t\t\t{\n\t\t\t\t\tzero_sid[sid] = 0;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\telse\n\t{\n\t\tif (shift <= 0)\n\t\t{\n\t\t\tif (type == SYMBOL_ASK)\n\t\t\t{\n\t\t\t\treturn SymbolInfoDouble(symbol, SYMBOL_ASK);\n\t\t\t}\n\t\t\telse if (type == SYMBOL_BID)\n\t\t\t{\n\t\t\t\treturn SymbolInfoDouble(symbol, SYMBOL_BID); \n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tdouble mid = ((SymbolInfoDouble(symbol, SYMBOL_ASK) + SymbolInfoDouble(symbol, SYMBOL_BID)) / 2);\n\n\t\t\t\treturn mid;\n\t\t\t}\n\t\t}\n\t\telse\n\t\t{\n\t\t\tsize = ArraySize(symbols);\n\n\t\t\tfor (i = 0; i < size; i++)\n\t\t\t{\n\t\t\t\tif (symbols[i] == symbol)\n\t\t\t\t{\n\t\t\t\t\tsid = i;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (shift < 100)\n\t\t\t{\n\t\t\t\tid = zero_sid[sid] - shift - 1;\n\n\t\t\t\tif(id < 0) {id = id + 100;}\n\n\t\t\t\tif (type == SYMBOL_ASK)\n\t\t\t\t{\n\t\t\t\t\tretval = memoryASK[sid][id];\n\n\t\t\t\t\tif (retval == 0)\n\t\t\t\t\t{\n\t\t\t\t\t\tretval = SymbolInfoDouble(symbol, SYMBOL_ASK);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\telse if (type == SYMBOL_BID)\n\t\t\t\t{\n\t\t\t\t\tretval = memoryBID[sid][id];\n\n\t\t\t\t\tif (retval == 0)\n\t\t\t\t\t{\n\t\t\t\t\t\tretval = SymbolInfoDouble(symbol, SYMBOL_BID);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\n\treturn retval;\n}\n"
+    return result

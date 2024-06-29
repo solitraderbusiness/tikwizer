@@ -32,7 +32,7 @@ public:
             retval = get_free_margin_check();
             break;
          case ACCOUNT_INFO_LEVERAGE:
-            retval = get_ballance();
+            retval = get_leverage();
             break;
          case ACCOUNT_INFO_LOGIN_NUMBER:
             retval = get_account_number();

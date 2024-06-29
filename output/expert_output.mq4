@@ -3766,6 +3766,179 @@ double toPips(double digits, string symbol)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+double TicksData(string symbol = "", int type = 0, int shift = 0)
+  {
+   static bool collecting_ticks = false;
+   static string symbols[];
+   static int zero_sid[];
+   static double memoryASK[][100];
+   static double memoryBID[][100];
+
+   int sid = 0, size = 0, i = 0, id = 0;
+   double ask = 0, bid = 0, retval = 0;
+   bool exists = false;
+
+   if(ArraySize(symbols) == 0)
+     {
+      ArrayResize(symbols, 1);
+      ArrayResize(zero_sid, 1);
+      ArrayResize(memoryASK, 1);
+      ArrayResize(memoryBID, 1);
+
+      symbols[0] = _Symbol;
+     }
+
+   if(type > 0 && shift > 0)
+     {
+      collecting_ticks = true;
+     }
+
+   if(collecting_ticks == false)
+     {
+      if(type > 0 && shift == 0)
+        {
+         // going to get ticks
+        }
+      else
+        {
+         return 0;
+        }
+     }
+
+   if(symbol == "")
+      symbol = _Symbol;
+
+   if(type == 0)
+     {
+      exists = false;
+      size   = ArraySize(symbols);
+
+      if(size == 0)
+        {
+         ArrayResize(symbols, 1);
+        }
+
+      for(i=0; i<size; i++)
+        {
+         if(symbols[i] == symbol)
+           {
+            exists = true;
+            sid    = i;
+            break;
+           }
+        }
+
+      if(exists == false)
+        {
+         int newsize = ArraySize(symbols) + 1;
+
+         ArrayResize(symbols, newsize);
+         symbols[newsize-1] = symbol;
+
+         ArrayResize(zero_sid, newsize);
+         ArrayResize(memoryASK, newsize);
+         ArrayResize(memoryBID, newsize);
+
+         sid=newsize;
+        }
+
+      if(sid >= 0)
+        {
+         ask = SymbolInfoDouble(symbol, SYMBOL_ASK);
+         bid = SymbolInfoDouble(symbol, SYMBOL_BID);
+
+         if(bid == 0 && MQLInfoInteger(MQL_TESTER))
+           {
+            Print("Ticks data collector error: " + symbol + " cannot be backtested. Only the current symbol can be backtested. The EA will be terminated.");
+            ExpertRemove();
+           }
+
+         if(
+            symbol == _Symbol
+            || ask != memoryASK[sid][0]
+            || bid != memoryBID[sid][0]
+         )
+           {
+            memoryASK[sid][zero_sid[sid]] = ask;
+            memoryBID[sid][zero_sid[sid]] = bid;
+            zero_sid[sid]                 = zero_sid[sid] + 1;
+
+            if(zero_sid[sid] == 100)
+              {
+               zero_sid[sid] = 0;
+              }
+           }
+        }
+     }
+   else
+     {
+      if(shift <= 0)
+        {
+         if(type == SYMBOL_ASK)
+           {
+            return SymbolInfoDouble(symbol, SYMBOL_ASK);
+           }
+         else
+            if(type == SYMBOL_BID)
+              {
+               return SymbolInfoDouble(symbol, SYMBOL_BID);
+              }
+            else
+              {
+               double mid = ((SymbolInfoDouble(symbol, SYMBOL_ASK) + SymbolInfoDouble(symbol, SYMBOL_BID)) / 2);
+
+               return mid;
+              }
+        }
+      else
+        {
+         size = ArraySize(symbols);
+
+         for(i = 0; i < size; i++)
+           {
+            if(symbols[i] == symbol)
+              {
+               sid = i;
+              }
+           }
+
+         if(shift < 100)
+           {
+            id = zero_sid[sid] - shift - 1;
+
+            if(id < 0)
+              {
+               id = id + 100;
+              }
+
+            if(type == SYMBOL_ASK)
+              {
+               retval = memoryASK[sid][id];
+
+               if(retval == 0)
+                 {
+                  retval = SymbolInfoDouble(symbol, SYMBOL_ASK);
+                 }
+              }
+            else
+               if(type == SYMBOL_BID)
+                 {
+                  retval = memoryBID[sid][id];
+
+                  if(retval == 0)
+                    {
+                     retval = SymbolInfoDouble(symbol, SYMBOL_BID);
+                    }
+                 }
+           }
+        }
+     }
+
+   return retval;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int OnInit()
   {
    addBlocksTick();
@@ -3791,10 +3964,8 @@ void OnTimer()
 //+------------------------------------------------------------------+
 void OnTick()
   {
-   resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 1);
-   if(ArraySize(blocks_trade)>0)
-      OnTrade();
+   TicksData(); // Collect ticks in case we need itresetBlocksTick(RESET_LEVEL_TICK);runBlockTick(-1, -1, 1);   if(ArraySize(blocks_trade)>0)
+   OnTrade();
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
