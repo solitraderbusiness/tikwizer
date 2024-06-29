@@ -8,7 +8,7 @@ class Task2 : public Task
    int               group_mode;
    int               group_number;
    int               type[]; //0 for buy and 1 for sell
-   int               loop_direction;
+   string               loop_direction;
    int               skip_n;
    int               not_more_than_n;
    int               every_n;
@@ -40,12 +40,12 @@ public:
       int size = ArraySize(trades);
       if(size==0)
         {
-         printf("task"+block_id + " passed route 2 ");
+         //printf("task"+block_id + " passed route 2 ");
          block.onResult(ROUTE_2_PASSED);
          return;
         }
       if(size>=2)
-         sortTrades(trades, loop_direction);
+         sortTrades(trades);
       int starti, endi;
       starti = skip_n;
       endi = not_more_than_n<=0 ? size : not_more_than_n*every_n+starti;
@@ -58,7 +58,7 @@ public:
               {
                if(!filterGeneral())
                   continue;
-               printf("task"+block_id + " passed route 1 ");
+               //printf("task"+block_id + " passed route 1 ");
                block.onResult(ROUTE_1_PASSED);
               }
            }
@@ -68,7 +68,7 @@ public:
          (second_output=="if_not_empty" && ArraySize(trades)>0)
       )
         {
-         printf("task"+block_id + " passed route 2 ");
+         //printf("task"+block_id + " passed route 2 ");
          block.onResult(ROUTE_2_PASSED);
         }
      }
@@ -107,7 +107,7 @@ public:
    //+------------------------------------------------------------------+
    //|                                                                  |
    //+------------------------------------------------------------------+
-   void              sortTrades(int &trades[], int loop_direction)
+   void              sortTrades(int &trades[])
      {
       if(loop_direction == "oldest_first")
          return trades;
@@ -120,7 +120,7 @@ public:
          else
             if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
               {
-               sortTradesByProfit(trades, loop_direction);
+               sortTradesByProfit(trades);
                return trades;
               }
       return trades;
@@ -129,7 +129,7 @@ public:
    //+------------------------------------------------------------------+
    //|                                                                  |
    //+------------------------------------------------------------------+
-   void              sortTradesByProfit(int &trades[], int loop_direction)
+   void              sortTradesByProfit(int &trades[])
      {
       if(ArraySize(trades)<2)
          return;

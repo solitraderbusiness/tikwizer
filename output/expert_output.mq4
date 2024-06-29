@@ -991,397 +991,7 @@ public:
 
   };
 
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class TradeOrderInLoop1_left
-  {
-public:
-   int               row2;
-   ENUM_TIMEFRAMES   Period_candle_id; //candle id
-   ENUM_TIMEFRAMES   Period_candle_time; //candle time
-   int               ModeProfit; //Order profit
-   string            ModeStopLoss; //Order stoploss
-   string            ModeTakeProfit; //Order take profit
-   int               ModeTicket; //Order ticket number
-   int               ModeVolume; //Order volume
-
-   void              init()
-     {
-      row2 = IN_LOOP_TRADE_ORDER_TAKE_PROFIT;
-      Period_candle_id = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
-      Period_candle_time = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
-      ModeProfit = (int)0;
-      ModeStopLoss = (string)"level";
-      ModeTakeProfit = (string)"fraction";
-      ModeTicket = (int)0;
-      ModeVolume = (int)0;//STest: this seems to have a value from project settings set by user
-     }
-
-   template<typename T>
-   T                 execute()
-     {
-      T retval;
-      switch(row2)
-        {
-         case IN_LOOP_TRADE_ORDER_CANDLE_ID:
-            retval = get_candle_id();
-            break;
-         case IN_LOOP_TRADE_ORDER_CANDLE_TIME:
-            retval = get_candle_time();
-            break;
-         case IN_LOOP_TRADE_ORDER_CLOSE_PRICE:
-            retval = get_order_close_price();
-            break;
-         case IN_LOOP_TRADE_ORDER_CLOSE_TIME:
-            retval = get_order_close_time();
-            break;
-         case IN_LOOP_TRADE_ORDER_COMMENT:
-            retval = get_order_comment();
-            break;
-         case IN_LOOP_TRADE_ORDER_COMMISSION:
-            retval = get_order_commission();
-            break;
-         case IN_LOOP_TRADE_ORDER_GROUP_NUMBER:
-            retval = get_order_group_number();
-            break;
-         case IN_LOOP_TRADE_ORDER_MAGIC_NUMBER:
-            retval = get_order_magic_number();
-            break;
-         case IN_LOOP_TRADE_ORDER_MARKET_NAME:
-            retval = get_order_symbol();
-            break;
-         case IN_LOOP_TRADE_ORDER_OPEN_PRICE:
-            retval = get_order_open_price();
-            break;
-         case IN_LOOP_TRADE_ORDER_OPEN_TIME:
-            retval = get_order_open_time();
-            break;
-         case IN_LOOP_TRADE_ORDER_PROFIT:
-            retval = get_order_profit();
-            break;
-         case IN_LOOP_TRADE_ORDER_STOPLOSS:
-            retval = get_order_stoploss();
-            break;
-         case IN_LOOP_TRADE_ORDER_SWAP:
-            retval = get_order_swap();
-            break;
-         case IN_LOOP_TRADE_ORDER_TAKE_PROFIT:
-            retval = get_order_take_profit();
-            break;
-         case IN_LOOP_TRADE_ORDER_TICKET_NUMBER:
-            retval = get_order_ticket();
-            break;
-         case IN_LOOP_TRADE_ORDER_VOLUME_SIZE_LOTS:
-            retval = get_order_volume();
-            break;
-        }
-      return retval;
-     }
-
-
-   int               get_candle_id()
-     {
-      datetime orderTime = OrderOpenTime();
-      string orderSymbol = OrderSymbol();
-      int shift          = 0;
-
-      while(true)
-        {
-         datetime candleTime[];
-         int result = CopyTime(orderSymbol,getTimeframe(Period_candle_id), shift, 1, candleTime);
-
-         if(result == 1)
-           {
-            if(candleTime[0] <= orderTime)
-              {
-               break;
-              }
-           }
-
-         shift++;
-        }
-
-      return shift;
-     }
-
-
-   datetime          get_candle_time()
-     {
-      datetime time      = 0;
-      datetime orderTime = OrderOpenTime();
-      string orderSymbol = OrderSymbol();
-      int shift          = 0;
-
-      while(true)
-        {
-         datetime candleTime[];
-         int result = CopyTime(orderSymbol, getTimeframe(Period_candle_time), shift, 1, candleTime);
-
-         if(result == 1)
-           {
-            if(candleTime[0] <= orderTime)
-              {
-               time = candleTime[0];
-
-               break;
-              }
-           }
-
-         shift++;
-        }
-
-      return time;
-     }
-
-
-   double            get_order_close_price()
-     {
-      return OrderClosePrice();
-     }
-
-
-   datetime          get_order_close_time()
-     {
-      return OrderCloseTime();
-     }
-
-
-   string            get_order_comment()
-     {
-      return OrderComment();
-     }
-
-
-   double            get_order_commission()
-     {
-      return OrderCommission();
-     }
-
-
-   int               get_order_group_number()
-     {
-      return getGroupNumber(OrderMagicNumber());
-     }
-
-
-   int               get_order_magic_number()
-     {
-      return OrderMagicNumber();
-     }
-
-
-   string            get_order_symbol()
-     {
-      return OrderSymbol();
-     }
-
-
-   double            get_order_open_price()
-     {
-      return OrderOpenPrice();
-     }
-
-
-   datetime          get_order_open_time()
-     {
-      return OrderOpenTime();
-     }
-
-
-   double            get_order_profit()
-     {
-      double retval = 0;
-
-      if(OrderType() > 1)
-        {
-         return 0;
-        }
-      int digits;
-      switch(ModeProfit)
-        {
-         case 0:
-            retval = NormalizeDouble(OrderProfit(), 2);
-            break;
-         case 1:
-            retval = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2);
-            break;
-         case 2:
-           {
-            digits = (int)SymbolInfoInteger(OrderSymbol(), SYMBOL_DIGITS);
-            retval = OrderClosePrice() - OrderOpenPrice();
-            retval = NormalizeDouble(retval, digits);
-            if(IsOrderTypeSell())
-              {
-               retval = -1 * retval;
-              }
-            break;
-           }
-         case 3:
-           {
-            digits = (int)SymbolInfoInteger(OrderSymbol(), SYMBOL_DIGITS);
-            retval = toPips(OrderClosePrice() - OrderOpenPrice(), OrderSymbol());
-            retval = NormalizeDouble(retval, digits);
-            if(IsOrderTypeSell())
-              {
-               retval = -1 * retval;
-              }
-            break;
-           }
-        }
-
-      return retval;
-     }
-
-
-   double            get_order_stoploss()
-     {
-      double retval = 0;
-      int digits    = (int)SymbolInfoInteger(OrderSymbol(), SYMBOL_DIGITS);
-
-      if(ModeStopLoss == "level")
-        {
-         retval = OrderStopLoss();
-        }
-      else
-         if(ModeStopLoss == "fraction")
-           {
-            if(OrderStopLoss() > 0)
-              {
-               retval = MathAbs(OrderOpenPrice()-OrderStopLoss());
-              }
-           }
-         else
-            if(ModeStopLoss == "pips")
-              {
-               if(OrderStopLoss() > 0)
-                 {
-                  double point = SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT);
-
-                  retval = MathAbs(OrderOpenPrice()-OrderStopLoss())/(PipValue(OrderSymbol())*point);
-                 }
-              }
-
-      return NormalizeDouble(retval, digits);
-     }
-
-
-   double            get_order_swap()
-     {
-      return OrderSwap();
-     }
-
-
-   double            get_order_take_profit()
-     {
-      double retval = 0;
-      int digits    = (int)SymbolInfoInteger(OrderSymbol(), SYMBOL_DIGITS);
-
-      if(ModeTakeProfit == "level")
-        {
-         retval = OrderTakeProfit();
-        }
-      else
-         if(ModeTakeProfit == "fraction")
-           {
-            if(OrderTakeProfit() > 0)
-              {
-               retval = MathAbs(OrderOpenPrice()-OrderTakeProfit());
-              }
-           }
-         else
-            if(ModeTakeProfit == "pips")
-              {
-               if(OrderTakeProfit() > 0)
-                 {
-                  double point = SymbolInfoDouble(OrderSymbol(), SYMBOL_POINT);
-
-                  retval = MathAbs(OrderOpenPrice()-OrderTakeProfit())/(PipValue(OrderSymbol())*point);
-                 }
-              }
-
-      return NormalizeDouble(retval, digits);
-     }
-
-
-   long              get_order_ticket()
-     {
-      long retval = OrderTicket();
-
-      if(ModeTicket == 1)
-        {
-         retval = attrTicketParent(retval);
-        }
-
-      return retval;
-     }
-
-
-   double            get_order_volume()
-     {
-      if(ModeVolume == 0)
-        {
-         return OrderLots();
-        }
-      if(ModeVolume == 1)
-        {
-         //return attrLotsInitial(); //STest, commented cuz it needs much time and effort
-        }
-
-      return 0;
-     }
-  };
-//+------------------------------------------------------------------+
-
-
-class MovingAverage1_right
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               ma_period;
-   int               ma_shift;
-   int               ma_method;
-   int               applied_price;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      ma_period = 20;
-      ma_shift = 0;
-      ma_method = MODE_SMA;
-      applied_price = PRICE_CLOSE;
-      shift = 0;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-//Condition
+//Pass
 class Task1 : public Task
   {
 
@@ -1393,15 +1003,247 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
 
-      TradeOrderInLoop1_left tradeOrderInLoop1_left;
-      tradeOrderInLoop1_left.init();
-      double valueTradeOrderInLoop1_left = tradeOrderInLoop1_left.execute<double>();
-      MovingAverage1_right movingaverage1_right;
-      movingaverage1_right.init();
-      double valueMovingAverage1_right = movingaverage1_right.calc();
+     }
 
-      if(valueTradeOrderInLoop1_left > valueMovingAverage1_right)
+  };
+
+//For each Trade
+class Task4 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   string               loop_direction;
+   int               skip_n;
+   int               not_more_than_n;
+   int               every_n;
+   string            second_output;
+public:
+                     Task4(string name):Task(name)
+     {
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+      loop_direction = "newest_first";
+      skip_n = 0;//STest, default must be 0
+      not_more_than_n = 0;
+      every_n = 1;//STest default must be 1
+      second_output = "always";
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      int trades[];
+      getTrades(trades);
+      int size = ArraySize(trades);
+      if(size==0)
+        {
+         //printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
+      if(size>=2)
+         sortTrades(trades);
+      int starti, endi;
+      starti = skip_n;
+      endi = not_more_than_n<=0 ? size : not_more_than_n*every_n+starti;
+      if(starti<=size-1)
+         for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
+           {
+            if(exit_loop)
+               return;//STest, logical?
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+              {
+               if(!filterGeneral())
+                  continue;
+               //printf("task"+block_id + " passed route 1 ");
+               block.onResult(ROUTE_1_PASSED);
+              }
+           }
+      if(
+         second_output=="always" ||
+         (second_output=="if_empty" && ArraySize(trades)==0) ||
+         (second_output=="if_not_empty" && ArraySize(trades)>0)
+      )
+        {
+         //printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              getTrades(int &trades[])
+     {
+      for(int i=0; i<OrdersTotal(); i++)
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(OrderType()==OP_BUY || OrderType()==OP_SELL)
+              {
+               AddToArray(trades, i);
+              }
+           }
+      return trades;
+     }
+
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTrades(int &trades[])
+     {
+      if(loop_direction == "oldest_first")
+         return trades;
+      else
+         if(loop_direction == "newest_first")
+           {
+            ReverseList(trades);
+            return trades;
+           }
+         else
+            if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
+              {
+               sortTradesByProfit(trades);
+               return trades;
+              }
+      return trades;
+     }
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTradesByProfit(int &trades[])
+     {
+      if(ArraySize(trades)<2)
+         return;
+      for(int i=0; i<ArraySize(trades)-1; i++)
+        {
+         for(int j=i+1; j<ArraySize(trades); j++)
+           {
+            double profit1 = 0, profit2 = 0;
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+               profit1 = OrderProfit();
+            if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
+               profit2 = OrderProfit();
+            if(loop_direction == "profitable_first" && profit1<profit2)
+              {
+               int swap1 = trades[i];
+               trades[i] = trades[j];
+               trades[j] = swap1;
+              }
+            else
+              {
+               if(loop_direction == "profitable_last" && profit1>profit2)
+                 {
+                  int swap2 = trades[i];
+                  trades[i] = trades[j];
+                  trades[j] = swap2;
+                 }
+              }
+           }
+        }
+     }
+
+  };
+
+//Once per bar
+class Task5 : public Task
+  {
+   string                   symbol;
+   ENUM_TIMEFRAMES       timeframe;
+   int                max_times_to_pass;
+   // System parameters Parameters
+   string            tokens[];
+   int               passes[];
+   datetime          old_values[];
+public:
+                     Task5(string name):Task(name)
+     {
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      max_times_to_pass = 1;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      string msymbol = getSymbol(symbol);
+      int mtimeframe = getTimeframe(timeframe);
+
+      bool next    = false;
+      string token = msymbol + IntegerToString(mtimeframe);
+      int index    = ArraySearch(tokens, token);
+
+      if(index == -1)
+        {
+         index = ArraySize(tokens);
+
+         ArrayResize(tokens, index + 1);
+         ArrayResize(old_values, index + 1);
+         ArrayResize(passes, index + 1);
+
+         tokens[index] = token;
+         passes[index] = 0;
+         old_values[index] = 0;
+        }
+
+      if(max_times_to_pass > 0)
+        {
+
+         datetime new_value = iTime(msymbol, mtimeframe, 1);
+
+         if(new_value == 0)
+           {
+            Print("Failed to get the time from candle 1 on symbol ", msymbol, " and timeframe ", EnumToString((ENUM_TIMEFRAMES)mtimeframe), ". The history data needs to be fixed.");
+           }
+
+         if(new_value > old_values[index])
+           {
+            passes[index]++;
+
+            if(passes[index] >= max_times_to_pass)
+              {
+               old_values[index]  = new_value;
+               passes[index] = 0;
+              }
+
+            next = true;
+           }
+        }
+
+      if(next)
         {
          //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1416,28 +1258,434 @@ public:
      {
 
      }
+   template<typename T>
+   int               ArraySearch(T &array[], T value)
+     {
+      int index = -1;
+      int size  = ArraySize(array);
+
+      for(int i = 0; i < size; i++)
+        {
+         if(array[i] == value)
+           {
+            index = i;
+            break;
+           }
+        }
+
+      return index;
+     }
 
   };
 
-//Pass
-class Task2 : public Task
+//Buy now
+class Task6 : public Task
   {
-
+   //values set by user
+   string            symbol;
+   int               group;
+   int               order_type;
+   int               money_management;
+   double            how_much_volume;
+   double            volume_upper_limit;
+   int               open_at_price;
+   double            price_offset;
+   bool              price_offset_as_pip;
+   int               slippage;
+   int               stop_loss_mode;
+   int               take_profit_mode;
+   double            stoploss;
+   double            takeprofit;
+   string            comment;
+   int               magic;
+   datetime          expiration;
+   color             arrow_color;
+   //values set by system
+   int               cmd;
+   double            price;
+   double            volume;
+   int               ticket;
+   double            slPrice;
+   double            tpPrice;
+   double            mstoploss;
+   double            mtakeprofit;
+   bool              initialized;
+   string            msymbol;
+   //martingale inputs
+   int               look_up_on;
+   double            martingale_init_vol;
+   double            martingale_multiply_on_loss;
+   double            martingale_multiply_on_profit;
+   double            martingale_addlots_on_loss;
+   double            martingale_addlots_on_profit;
+   double            martingale_reset_on_n_losses;
+   double            martingale_reset_on_n_profits;
+   int               type[];
 public:
-                     Task2(string name):Task(name)
+                     Task6(string name):Task(name)
      {
+      symbol = "";
+      group = 11;
+      order_type = ORDER_BUY;
+      money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
+      how_much_volume = 0.1;
+      volume_upper_limit = 0;
+      open_at_price = OPEN_AT_ASK;
+      price_offset = 25;
+      price_offset_as_pip = True;
 
+      slippage = 4;
+      stoploss = 20;
+      takeprofit = 20;
+      take_profit_mode = TPSL_MODE_FIXED_PIPS;
+      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
+      comment = "";
+      expiration = 0;
+      arrow_color = clrMaroon;
+
+      //martingale
+      look_up_on = LOOK_UP_RUNNING_ONLY;
+      int mtype[] = {0, 1};//This doesn't seem to be an input. So this remains static forever.
+      ArrayCopy(type, mtype, 0, 0, WHOLE_ARRAY);
+      martingale_init_vol = 0.1;
+      martingale_multiply_on_loss = 0;
+      martingale_multiply_on_profit = 0;
+      martingale_addlots_on_loss = 0.1;
+      martingale_addlots_on_profit = 0.1;
+      martingale_reset_on_n_losses = 5;
+      martingale_reset_on_n_profits = 5;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
+
+      msymbol = getSymbol(symbol);
+
+      calc();
+      if(!initialized)
+        {
+         printf("Buy/Sell/Pending class calcs failed");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
+
+      int retryCount = 0;
+
+      while(!IsStopped())
+        {
+
+         if(retryCount>30)
+            break;
+
+         WaitTradeContextIfBusy();
+
+         //-- send ---------------------------------------------------------
+         ResetLastError();
+
+         ticket = OrderSend(msymbol,cmd,volume,price,(int)(slippage * PipValue(msymbol)),slPrice,tpPrice,comment,magic,expiration,arrow_color);
+         if(ticket>0)  //Must be here
+            break;
+         //-- error check --------------------------------------------------
+         string msg_prefix = (cmd > OP_SELL) ? "New order error" : "New trade error";
+
+         int erraction = CheckForTradingError(GetLastError(), msg_prefix);
+
+         if(erraction==0)
+           {
+            break;    // no error
+           }
+         else
+            if(erraction==1)
+              {
+               retryCount ++;
+               continue; // overcomable error
+              }
+            else
+               if(erraction==2)
+                 {
+                  break;    // fatal error
+                 }
+        }
+
+      if(ticket > 0)
+        {
+         OnTrade();
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
 
      }
+private:
+   //does needed calculations
+   void              calc()
+     {
+      fitGroup();
+      buildMagic();
+      if(order_type==ORDER_BUY)
+        {
+         cmd = OP_BUY;
+        }
+      else
+         if(order_type==ORDER_SELL)
+           {
+            cmd = OP_SELL;
+           }
+         else
+            if(order_type==ORDER_BUY_PENDING)
+              {
+               if(price_offset>=0)
+                  cmd = OP_BUYSTOP;
+               else
+                  cmd = OP_BUYLIMIT;
+              }
+            else
+               if(order_type==ORDER_SELL_PENDING)
+                 {
+                  if(price_offset>=0)
+                     cmd = OP_SELLSTOP;
+                  else
+                     cmd = OP_SELLLIMIT;
+                 }
 
+      calc_entry_price();
+      if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
+        {
+         calc_tp_buy();
+         calc_sl_buy();
+        }
+      else
+         if(cmd==OP_SELL || cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+           {
+            calc_tp_sell();
+            calc_sl_sell();
+           }
+
+      calcVolume();
+      if(take_profit_mode!=TPSL_MODE_NO_TP && stop_loss_mode!=TPSL_MODE_NO_SL && MathAbs(tpPrice-slPrice)/ MarketInfo(msymbol, MODE_POINT)<MarketInfo(Symbol(), MODE_SPREAD))
+        {
+         printf("Takeprofit and Stoploss too close");
+         initialized = false;
+         return;
+        }
+      initialized = true;
+     }
+
+   void              calc_entry_price()
+     {
+      if(cmd==OP_BUY)
+        {
+         price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
+        }
+      else
+         if(cmd==OP_SELL)
+           {
+            price = SymbolInfoDouble(msymbol, SYMBOL_BID);
+           }
+         else
+           {
+            switch(open_at_price)
+              {
+               case OPEN_AT_ASK:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
+                  break;
+               case OPEN_AT_BID:
+                  price = SymbolInfoDouble(msymbol, SYMBOL_BID);
+                  break;
+               case OPEN_AT_MID:
+                  price = (SymbolInfoDouble(msymbol, SYMBOL_ASK)+SymbolInfoDouble(msymbol, SYMBOL_BID))/2;
+                  break;
+               case OPEN_AT_CUSTOM_PRICE:
+
+                  price = "";
+                  break;
+              }
+           }
+
+
+      double offset = price_offset;
+      if(price_offset_as_pip)
+         offset = price_offset *  MarketInfo(msymbol, MODE_POINT) * 10;
+
+      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+         price -= offset;
+      else
+         if(cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
+            price += offset;
+     }
+
+   ////////////////////////////////////////////////////////////
+
+   void              calc_tp_buy()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price + mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_buy()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price - mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_tp_sell()
+     {
+      switch(take_profit_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mtakeprofit = NormalizeDouble(takeprofit*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            tpPrice = price - mtakeprofit;
+            break;
+         case TPSL_MODE_NO_TP:
+            tpPrice = 0;
+            break;
+        }
+     }
+
+   void              calc_sl_sell()
+     {
+      switch(stop_loss_mode)
+        {
+         case TPSL_MODE_FIXED_PIPS:
+            mstoploss = NormalizeDouble(stoploss*MarketInfo(msymbol, MODE_POINT)*10,SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
+            slPrice = price + mstoploss;
+            break;
+         case TPSL_MODE_NO_SL:
+            slPrice = 0;
+            break;
+        }
+     }
+
+   void              calcVolume()
+     {
+      if(money_management == MONEY_MANAGEMENT_FIXED_VOLUME)
+        {
+         volume = DynamicLots(msymbol, money_management, how_much_volume);
+        }
+      else
+         if(money_management == MONEY_MANAGEMENT_PERCENT_OF_EQUITY)
+           {
+            volume = lotsPercentOfEquity(msymbol, price, slPrice, how_much_volume);
+           }
+         else
+            if(money_management == MONEY_MANAGEMENT_PERCENT_OF_BALANCE)
+              {
+               //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+              }
+            else
+               if(money_management == MONEY_MANAGEMENT_PERCENT_OF_FREE_MARGIN)
+                 {
+                  //lots = DynamicLots(Symbol, money_management, VolumeBlockPercent);
+                 }
+               else
+                  if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_EQUITY)
+                    {
+                     //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                    }
+                  else
+                     if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_BALANCE)
+                       {
+                        //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                       }
+                     else
+                        if(money_management == MONEY_MANAGEMENT_FREEZE_PERCENT_OF_FREE_MARGIN)
+                          {
+                           //lots = DynamicLots(Symbol, money_management, VolumePercent);
+                          }
+                        else
+                           if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_EQUITY)
+                             {
+                              //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                             }
+                           else
+                              if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_BALANCE)
+                                {
+                                 //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                }
+                              else
+                                 if(money_management == MONEY_MANAGEMENT_RISK_PERCENT_OF_FREE_MARGIN)
+                                   {
+                                    //lots = DynamicLots(Symbol, money_management, VolumeRisk, pre_sl_pips);
+                                   }
+                                 else
+                                    if(money_management == MONEY_MANAGEMENT_RISK_FIXED_AMOUNT_OF_MONEY)
+                                      {
+                                       //lots = DynamicLots(Symbol, money_management, VolumeSizeRisk, pre_sl_pips);
+                                      }
+                                    else
+                                       if(money_management == MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES)
+                                         {
+                                          //lots = DynamicLots(Symbol, money_management, FixedRatioUnitSize, FixedRatioDelta);
+                                         }
+                                       else
+                                          if(money_management == MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI)
+                                            {
+                                             int mlook_up_on =  order_type == ORDER_BUY || order_type == ORDER_SELL ? look_up_on : 0;
+                                             volume = BetMartingale(msymbol, mlook_up_on, group, type, martingale_init_vol, martingale_multiply_on_loss, martingale_multiply_on_profit, martingale_addlots_on_loss, martingale_addlots_on_profit, martingale_reset_on_n_losses, martingale_reset_on_n_profits);
+                                            }
+                                          else
+                                             if(money_management == MONEY_MANAGEMENT_CUSTOM_VALUE)
+                                               {
+                                                //lots = _dVolumeSize_();
+                                               }
+
+
+      if(volume_upper_limit>0 && volume>volume_upper_limit)
+         volume = volume_upper_limit;
+     }
+
+   double            lotsPercentOfEquity(string symbol, double entry, double stopLossLevel, double riskPercent)
+     {
+      double point = MarketInfo(symbol,MODE_POINT);
+      if(point==0)
+        {
+         printf("Failed to calc lot size: point value is zero");
+         return 0;
+        }
+      double stopLossPips = MathAbs(entry - stopLossLevel) / point;
+      double accountEquity = AccountEquity();
+      double riskAmount = (riskPercent / 100.0) * accountEquity;
+      double pipValue = MarketInfo(symbol, MODE_TICKVALUE);
+      double lotSize = riskAmount / (stopLossPips * pipValue);
+      return NormalizeDouble(lotSize, 2); // round to 2 decimal places
+     }
+
+   void              fitGroup()
+     {
+      //STest, take care of group number rules later
+      if(group<11)
+         group = 11;
+      if(group>99)
+         group = 99;
+     }
+
+   void              buildMagic()
+     {
+      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1597,13 +1845,13 @@ public:
      {
       id = 0;
       id_by_user = 1;
-      name = "condition_1_normal";
+      name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
-      int mprevs_true[] = {1};
+      int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1616,18 +1864,44 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
+class Block4 : public Block
   {
 public:
-                     Block2()
+                     Block4()
      {
       id = 1;
-      id_by_user = 2;
-      name = "pass";
+      id_by_user = 4;
+      name = "for_each_trade";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {0};
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task4(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block5 : public Block
+  {
+public:
+                     Block5()
+     {
+      id = 2;
+      id_by_user = 5;
+      name = "once_per_bar";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {3};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1636,7 +1910,33 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task2(name);
+      task = new Task5(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block6 : public Block
+  {
+public:
+                     Block6()
+     {
+      id = 3;
+      id_by_user = 6;
+      name = "buy_sell";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {2};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task6(name);
      }
   };
 Block *blocks_init[];
@@ -1706,12 +2006,16 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 2);
+   ArrayResize(blocks_tick, 4);
    Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
+   Block4 *block4 = new Block4();
+   Block5 *block5 = new Block5();
+   Block6 *block6 = new Block6();
 
    blocks_tick[0] = block1;
-   blocks_tick[1] = block2;
+   blocks_tick[1] = block4;
+   blocks_tick[2] = block5;
+   blocks_tick[3] = block6;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1985,8 +2289,6 @@ bool isAutomated(int magic)
 void ReverseList(int &arr[])
   {
    int size = ArraySize(arr);
-   ArraySetAsSeries(arr, true);
-
    for(int i = 0; i < size / 2; i++)
      {
       int temp = arr[i];
@@ -3964,8 +4266,12 @@ void OnTimer()
 //+------------------------------------------------------------------+
 void OnTick()
   {
-   TicksData(); // Collect ticks in case we need itresetBlocksTick(RESET_LEVEL_TICK);runBlockTick(-1, -1, 1);   if(ArraySize(blocks_trade)>0)
-   OnTrade();
+   TicksData(); // Collect ticks in case we need it
+   resetBlocksTick(RESET_LEVEL_TICK);
+   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 2);
+   if(ArraySize(blocks_trade)>0)
+      OnTrade();
   }
 //+------------------------------------------------------------------+
 //|                                                                  |

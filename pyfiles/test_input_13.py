@@ -1972,97 +1972,97 @@ input_data_18 = {
 
 # test value_fetch > trade order in loop 4, real data
 input_data_19 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {
-              "operator": {
-                "label": ">",
-                "cross_width": 1
-              },
-              "left": {
-                "row1": "trade-order-in-loop",
-                "row2": "IN_LOOP_TRADE_ORDER_TAKE_PROFIT",
-                "params": {
-                  "ModeTakeProfit": "fraction",
-                  "adjust": ""
-                }
-              },
-              "right": {
-                "row1": "indicator",
-                "row2": "ma",
-                "params": {
-                  "ma_period": "20",
-                  "ma_shift": "0",
-                  "ma_method": "MODE_SMA",
-                  "applied_price": "PRICE_CLOSE",
-                  "adjust": "",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "shift": "0"
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
-            "id_by_user": 1,
-            "blockName": "Condition",
-            "category": "condition_formula",
-            "block_name_mql": "condition"
-          },
-          {
-            "params": {},
-            "id": "4125d56f-c42c-4156-990e-4e7bd3739395",
-            "id_by_user": 2,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          }
-        ],
-        "edges": [
-          {
-            "source": "4125d56f-c42c-4156-990e-4e7bd3739395",
-            "sourceHandle": "blue",
-            "target": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "21a05ff9-64b7-4bce-aa65-e0915aa09506"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "trade-order-in-loop",
+                                "row2": "IN_LOOP_TRADE_ORDER_TAKE_PROFIT",
+                                "params": {
+                                    "ModeTakeProfit": "fraction",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
+                        "id_by_user": 1,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "4125d56f-c42c-4156-990e-4e7bd3739395",
+                        "id_by_user": 2,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "4125d56f-c42c-4156-990e-4e7bd3739395",
+                        "sourceHandle": "blue",
+                        "target": "7cf85181-0cfc-443e-8a3d-5f4ab2160c34",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "21a05ff9-64b7-4bce-aa65-e0915aa09506"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "63aa429c-b475-44a4-9ee5-4b95b6968c4c",
-  "name_by_user": "test 9545",
-  "highestIndex": "3"
+    "selected_name": "63aa429c-b475-44a4-9ee5-4b95b6968c4c",
+    "name_by_user": "test 9545",
+    "highestIndex": "3"
 }
 
 # test value_fetch > account
@@ -2344,3 +2344,339 @@ input_data_22 = {
     "highestIndex": "5"
 }
 
+# test trade/order in loop: comment
+input_data_23 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "fc544226-4fbe-4fb9-85f7-b4056d3076dd",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-fc544226-4fbe-4fb9-85f7-b4056d3076ddc"
+                    },
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "24da57e3-2946-4641-9110-aae54447a054",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-24da57e3-2946-4641-9110-aae54447a054c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "trade-order-in-loop",
+                                "row2": "IN_LOOP_TRADE_ORDER_COMMENT",
+                                "params": {
+
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "fc544226-4fbe-4fb9-85f7-b4056d3076dd",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "profit_mode": "PROFIT_MODE_PIPS_SUM",
+                            "compare": ">",
+                            "profit_amount": "0.0",
+                            "profit_mode_each": "PROFIT_MODE_NO_MATTER"
+                        },
+                        "id": "24da57e3-2946-4641-9110-aae54447a054",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_profit_unrealized",
+                        "blockName": "Check Profit (unrealized)"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "4"
+}
+
+# test every n ticks fix
+input_data_24 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+            "sourceHandle": "blue",
+            "target": "24da57e3-2946-4641-9110-aae54447a054",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-24da57e3-2946-4641-9110-aae54447a054c"
+          },
+          {
+            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+            "sourceHandle": "blue",
+            "target": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-69c32756-d1ec-490e-a86f-3806fbb5edb0c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}",
+              "profit_mode": "PROFIT_MODE_PIPS_SUM",
+              "compare": ">",
+              "profit_amount": "0.0",
+              "profit_mode_each": "PROFIT_MODE_NO_MATTER"
+            },
+            "id": "24da57e3-2946-4641-9110-aae54447a054",
+            "id_by_user": 3,
+            "category": "check_trading_conditions",
+            "block_name_mql": "check_profit_unrealized",
+            "blockName": "Check Profit (unrealized)"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "n": "100"
+            },
+            "id": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
+            "id_by_user": 4,
+            "blockName": "Every \"n\" ticks",
+            "category": "time_filters",
+            "block_name_mql": "every_n_ticks"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+  "name_by_user": "TEST 8962",
+  "highestIndex": "5"
+}
+
+# test for each trade
+input_data_25 = {
+  "data": {
+    "events": {
+      "on_tick": {
+        "edges": [
+          {
+            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+            "sourceHandle": "blue",
+            "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+          },
+          {
+            "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+            "sourceHandle": "blue",
+            "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+          }
+        ],
+        "nodes": [
+          {
+            "params": {},
+            "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}",
+              "skip_n": "0",
+              "every_n": "1",
+              "not_more_than_n": "0",
+              "loop_direction": "newest_first",
+              "second_output": "always"
+            },
+            "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+            "id_by_user": 4,
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "for_each_trade",
+            "blockName": "For each Trade"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+            "id_by_user": 5,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+            "id_by_user": 6,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          }
+        ]
+      },
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+  "name_by_user": "TEST 8962",
+  "highestIndex": "7"
+}

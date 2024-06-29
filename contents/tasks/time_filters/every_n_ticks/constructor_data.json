@@ -1,3 +1,3 @@
 {
-	"constructor_data" : "      Task::run(block_id, block);\n      //specified by user\n      symbol = symbol_val;\n      n = n_val;\n      //specified by system\n      count =  0;"
+	"constructor_data" : "//specified by user\n      symbol = symbol_val;\n      n = n_val;\n      //specified by system\n      count =  0;"
 }
