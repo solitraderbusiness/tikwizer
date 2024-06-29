@@ -1,3 +1,3 @@
 {
-	"field_body" : "   int               row2;\n   int               margin_check_OP_TYPE;\n   double            margin_check_VOLUME;\n   string            margin_check_Symbol;\n   int               margin_level_WhenNoTrades;"
+	"field_body" : "   int               row2;\n   int               margin_check_OP_TYPE;\n   double            margin_check_VOLUME;\n   string            symbol;\n   int               margin_level_WhenNoTrades;"
 }

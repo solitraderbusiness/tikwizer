@@ -100,7 +100,7 @@ public:
 
    double            get_free_margin_check()
      {
-      return AccountFreeMarginCheck(getSymbol(margin_check_Symbol), margin_check_OP_TYPE, margin_check_VOLUME);
+      return AccountFreeMarginCheck(getSymbol(symbol), margin_check_OP_TYPE, margin_check_VOLUME);
      }
 
 

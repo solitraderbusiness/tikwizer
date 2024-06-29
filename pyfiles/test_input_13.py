@@ -2100,7 +2100,7 @@ input_data_20 = {
                                 "params": {
                                     "margin_check_OP_TYPE": 0,
                                     "margin_check_VOLUME": 0.10,
-                                    "margin_check_Symbol": "",
+                                    "symbol": "",
                                     "margin_level_WhenNoTrades": 0,
                                     "adjust": ""
                                 }
@@ -2193,7 +2193,7 @@ input_data_21 = {
                                 "params": {
                                     "margin_check_OP_TYPE": 1,
                                     "margin_check_VOLUME": 0.20,
-                                    "margin_check_Symbol": "EURUSD",
+                                    "symbol": "EURUSD",
                                     "margin_level_WhenNoTrades": 0,
                                     "adjust": ""
                                 }
@@ -2286,7 +2286,7 @@ input_data_22 = {
                                 "params": {
                                     "margin_check_OP_TYPE": 1,
                                     "margin_check_VOLUME": 0.20,
-                                    "margin_check_Symbol": "EURUSD",
+                                    "symbol": "EURUSD",
                                     "margin_level_WhenNoTrades": 0,
                                     "adjust": "-15%"
                                 }

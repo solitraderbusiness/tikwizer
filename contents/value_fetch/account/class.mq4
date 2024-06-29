@@ -28,7 +28,7 @@ public:
    int               row2;
    int               margin_check_OP_TYPE;
    double            margin_check_VOLUME;
-   string            margin_check_Symbol;
+   string            symbol;
    int               margin_level_WhenNoTrades;
 
    void              init()
@@ -36,7 +36,7 @@ public:
       row2 = ACCOUNT_INFO_BALLANCE;
       margin_check_OP_TYPE = (int)0;
       margin_check_VOLUME = (double)0.10;
-      margin_check_Symbol = (string)"";
+      symbol = (string)"";
       margin_level_WhenNoTrades = (int)0;
      }
 
@@ -131,7 +131,7 @@ public:
 
    double            get_free_margin_check()
      {
-      return AccountFreeMarginCheck(getSymbol(margin_check_Symbol), margin_check_OP_TYPE, margin_check_VOLUME);
+      return AccountFreeMarginCheck(getSymbol(symbol), margin_check_OP_TYPE, margin_check_VOLUME);
      }
 
 
