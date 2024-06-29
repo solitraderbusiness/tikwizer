@@ -143,7 +143,7 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_tick()
         self.on_init.append(call_add_blocks)
 
-        self.on_tick.append("TicksData(""); // Collect ticks in case we need it")
+        self.on_tick.append("TicksData(""); // Collect ticks in case we need it\n")
 
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_tick()

@@ -71,7 +71,7 @@ public:
             retval = get_margin();
             break;
          case ACCOUNT_INFO_MARGIN_LEVEL:
-            retval = get_margin_level();
+            retval = get_margin_level(margin_level_WhenNoTrades);
             break;
          case ACCOUNT_INFO_NAME_BROKER:
             retval = get_company();
@@ -152,17 +152,14 @@ public:
       return NormalizeDouble(AccountInfoDouble(ACCOUNT_MARGIN), 2);
      }
 
-
-   double            get_margin_level()
-     {
-      if(AccountInfoDouble(ACCOUNT_MARGIN) > 0)
-        {
-         return AccountInfoDouble(ACCOUNT_MARGIN_LEVEL);
-        }
-
-      return margin_level_WhenNoTrades;
-     }
-
+    double get_margin_level(double returnValue = 0)
+      {
+         if (AccountInfoDouble(ACCOUNT_MARGIN) > 0)
+         {
+             returnValue = AccountInfoDouble(ACCOUNT_MARGIN_LEVEL);
+         }
+         return returnValue;
+      }
 
    string            get_company()
      {
