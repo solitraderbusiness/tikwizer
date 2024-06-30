@@ -86,6 +86,10 @@ def get_return_type(row2, what_to_get):
                 case "GET_TIME": return "datetime"
         case "ask_bid_mid":
             return "double"
+        case "name_symbol_market":
+            return "string"
+        case "timeframe":
+            return "double"
 
 
 def get_var_name(row2, var_id):

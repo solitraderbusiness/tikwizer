@@ -1,0 +1,3 @@
+{
+	"class_template" : "class MarketPropertiesNameSymbolMarket_id\n\n  {\n    field_body\npublic:\n   void              init()\n     {\n        init_body\n     }\n\n   template<typename T>\n   T                 calc()\n     {\n      string result = getSymbol(\"\");\n      return result;\n     }\n  };\n"
+}

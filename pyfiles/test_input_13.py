@@ -3417,3 +3417,190 @@ input_data_30 = {
     "name_by_user": "test 2254",
     "highestIndex": "4"
 }
+
+# test market properties: name symbol market
+input_data_31 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "name_symbol_market",
+                                "params": {
+                                    "adjust": "+14"
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
+
+# test market properties: timeframe
+input_data_32 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
