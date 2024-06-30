@@ -1,3 +1,0 @@
-{
-	"field_body" : "   string            Price;\n   int               TickID;\n   string            symbol;\n\n   string            msymbol;"
-}

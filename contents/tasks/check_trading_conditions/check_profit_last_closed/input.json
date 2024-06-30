@@ -1,0 +1,10 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
+  "group_number": 15,
+  "type": "{0,1}",
+  "ProfitAmount": 0.0,
+  "OncePerTrade": false,
+  "compare": "<"
+}

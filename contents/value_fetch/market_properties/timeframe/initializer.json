@@ -1,4 +1,0 @@
-{
-  "initializer": "MarketPropertiesTimeframe_id marketPropertiesTimeframe_id;\n   marketPropertiesTimeframe_id.init();\n   type valueMarketPropertiesTimeframe_id = marketPropertiesTimeframe_id.calc<type_return>();",
-  "variable_name": "valueMarketPropertiesTimeframe_id"
-}

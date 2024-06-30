@@ -1,4 +1,0 @@
-{
-  "initializer": "MarketPropertiesNameSymbolMarket_id marketPropertiesNameSymbolMarket_id;\n   marketPropertiesNameSymbolMarket_id.init();\n   type valueMarketPropertiesNameSymbolMarket_id = marketPropertiesNameSymbolMarket_id.calc<type_return>();",
-  "variable_name": "valueMarketPropertiesNameSymbolMarket_id"
-}

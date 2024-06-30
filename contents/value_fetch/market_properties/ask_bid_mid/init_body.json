@@ -1,3 +1,0 @@
-{
-	"init_body" : "      Price = (string)Price_val;\n      TickID = (int)TickID_val;\n      symbol = (string)symbol_val;"
-}
