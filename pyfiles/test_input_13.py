@@ -2466,857 +2466,954 @@ input_data_23 = {
 
 # test every n ticks fix
 input_data_24 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
-            "sourceHandle": "blue",
-            "target": "24da57e3-2946-4641-9110-aae54447a054",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-24da57e3-2946-4641-9110-aae54447a054c"
-          },
-          {
-            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
-            "sourceHandle": "blue",
-            "target": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-69c32756-d1ec-490e-a86f-3806fbb5edb0c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {},
-            "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}",
-              "profit_mode": "PROFIT_MODE_PIPS_SUM",
-              "compare": ">",
-              "profit_amount": "0.0",
-              "profit_mode_each": "PROFIT_MODE_NO_MATTER"
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "24da57e3-2946-4641-9110-aae54447a054",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-24da57e3-2946-4641-9110-aae54447a054c"
+                    },
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-69c32756-d1ec-490e-a86f-3806fbb5edb0c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "profit_mode": "PROFIT_MODE_PIPS_SUM",
+                            "compare": ">",
+                            "profit_amount": "0.0",
+                            "profit_mode_each": "PROFIT_MODE_NO_MATTER"
+                        },
+                        "id": "24da57e3-2946-4641-9110-aae54447a054",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_profit_unrealized",
+                        "blockName": "Check Profit (unrealized)"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "n": "100"
+                        },
+                        "id": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
+                        "id_by_user": 4,
+                        "blockName": "Every \"n\" ticks",
+                        "category": "time_filters",
+                        "block_name_mql": "every_n_ticks"
+                    }
+                ]
             },
-            "id": "24da57e3-2946-4641-9110-aae54447a054",
-            "id_by_user": 3,
-            "category": "check_trading_conditions",
-            "block_name_mql": "check_profit_unrealized",
-            "blockName": "Check Profit (unrealized)"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "n": "100"
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "69c32756-d1ec-490e-a86f-3806fbb5edb0",
-            "id_by_user": 4,
-            "blockName": "Every \"n\" ticks",
-            "category": "time_filters",
-            "block_name_mql": "every_n_ticks"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
-  "name_by_user": "TEST 8962",
-  "highestIndex": "5"
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "5"
 }
 
 # test for each trade
 input_data_25 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
-            "sourceHandle": "blue",
-            "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
-          },
-          {
-            "source": "f10a11d3-8a96-421a-8185-19fd71316267",
-            "sourceHandle": "blue",
-            "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {},
-            "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}",
-              "skip_n": "0",
-              "every_n": "1",
-              "not_more_than_n": "0",
-              "loop_direction": "newest_first",
-              "second_output": "always"
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "skip_n": "0",
+                            "every_n": "1",
+                            "not_more_than_n": "0",
+                            "loop_direction": "newest_first",
+                            "second_output": "always"
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "for_each_trade",
+                        "blockName": "For each Trade"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
             },
-            "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
-            "id_by_user": 4,
-            "category": "loop_for_trades_orders",
-            "block_name_mql": "for_each_trade",
-            "blockName": "For each Trade"
-          },
-          {
-            "params": {
-              "max_times_to_pass": "1",
-              "symbol": "",
-              "timeframe": "PERIOD_CURRENT"
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "f10a11d3-8a96-421a-8185-19fd71316267",
-            "id_by_user": 5,
-            "category": "time_filters",
-            "block_name_mql": "once_per_bar",
-            "blockName": "Once per bar"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "group": "11",
-              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
-              "volume_upper_limit": "0",
-              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
-              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
-              "slippage": "4",
-              "comment": "",
-              "arrow_color": "clrMaroon",
-              "how_much_volume": "0.1",
-              "stoploss": "20",
-              "takeprofit": "20"
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
-            "id_by_user": 6,
-            "blockName": "Buy now",
-            "category": "buy_sell",
-            "block_name_mql": "buy_now"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
-  "name_by_user": "TEST 8962",
-  "highestIndex": "7"
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
 }
 
 # test market properties new
 input_data_26 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "sourceHandle": "blue",
-            "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {
-              "title": "Comment Message",
-              "obj_chart_subwindow": "",
-              "obj_corner": "CORNER_LEFT_UPPER",
-              "obj_x": "5",
-              "obj_y": "24",
-              "obj_title_font": "Georgia",
-              "obj_title_font_color": "clrGold",
-              "obj_title_font_size": "13",
-              "obj_label_font": "Vardena",
-              "obj_label_font_color": "clrDarkGray",
-              "obj_label_font_size": "10",
-              "obj_font": "Vardena",
-              "obj_font_color": "clrWhite",
-              "obj_font_size": "10",
-              "label_1": "",
-              "format_number_1": "EMPTY_VALUE",
-              "format_time_1": "EMPTY_VALUE",
-              "label_2": "",
-              "format_number_2": "EMPTY_VALUE",
-              "format_time_2": "EMPTY_VALUE",
-              "label_3": "",
-              "format_number_3": "EMPTY_VALUE",
-              "format_time_3": "EMPTY_VALUE",
-              "label_4": "",
-              "format_number_4": "EMPTY_VALUE",
-              "format_time_4": "EMPTY_VALUE",
-              "label_5": "",
-              "format_number_5": "EMPTY_VALUE",
-              "format_time_5": "EMPTY_VALUE",
-              "label_6": "",
-              "format_number_6": "EMPTY_VALUE",
-              "format_time_6": "EMPTY_VALUE",
-              "label_7": "",
-              "format_number_7": "EMPTY_VALUE",
-              "format_time_7": "EMPTY_VALUE",
-              "label_8": "",
-              "format_number_8": "EMPTY_VALUE",
-              "format_time_8": "EMPTY_VALUE",
-              "value_fetch_1": {
-                "row1": "market-properties",
-                "row2": "highest_price_candles_period",
-                "params": {
-                  "range_start": "20",
-                  "range_end": "30",
-                  "what_to_get": "GET_CANDLE_ID",
-                  "symbol": "EURUSD",
-                  "timeframe": "PERIOD_M5",
-                  "adjust": "*10"
-                }
-              },
-              "value_fetch_2": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_3": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_4": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_5": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_6": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_7": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_8": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "sourceHandle": "blue",
+                        "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "title": "Comment Message",
+                            "obj_chart_subwindow": "",
+                            "obj_corner": "CORNER_LEFT_UPPER",
+                            "obj_x": "5",
+                            "obj_y": "24",
+                            "obj_title_font": "Georgia",
+                            "obj_title_font_color": "clrGold",
+                            "obj_title_font_size": "13",
+                            "obj_label_font": "Vardena",
+                            "obj_label_font_color": "clrDarkGray",
+                            "obj_label_font_size": "10",
+                            "obj_font": "Vardena",
+                            "obj_font_color": "clrWhite",
+                            "obj_font_size": "10",
+                            "label_1": "",
+                            "format_number_1": "EMPTY_VALUE",
+                            "format_time_1": "EMPTY_VALUE",
+                            "label_2": "",
+                            "format_number_2": "EMPTY_VALUE",
+                            "format_time_2": "EMPTY_VALUE",
+                            "label_3": "",
+                            "format_number_3": "EMPTY_VALUE",
+                            "format_time_3": "EMPTY_VALUE",
+                            "label_4": "",
+                            "format_number_4": "EMPTY_VALUE",
+                            "format_time_4": "EMPTY_VALUE",
+                            "label_5": "",
+                            "format_number_5": "EMPTY_VALUE",
+                            "format_time_5": "EMPTY_VALUE",
+                            "label_6": "",
+                            "format_number_6": "EMPTY_VALUE",
+                            "format_time_6": "EMPTY_VALUE",
+                            "label_7": "",
+                            "format_number_7": "EMPTY_VALUE",
+                            "format_time_7": "EMPTY_VALUE",
+                            "label_8": "",
+                            "format_number_8": "EMPTY_VALUE",
+                            "format_time_8": "EMPTY_VALUE",
+                            "value_fetch_1": {
+                                "row1": "market-properties",
+                                "row2": "highest_price_candles_period",
+                                "params": {
+                                    "range_start": "20",
+                                    "range_end": "30",
+                                    "what_to_get": "GET_CANDLE_ID",
+                                    "symbol": "EURUSD",
+                                    "timeframe": "PERIOD_M5",
+                                    "adjust": "*10"
+                                }
+                            },
+                            "value_fetch_2": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_3": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_4": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_5": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_6": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_7": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_8": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "id_by_user": 1,
+                        "blockName": "Comment",
+                        "category": "output_communication",
+                        "block_name_mql": "comment"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "id_by_user": 2,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    }
+                ]
             },
-            "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "id_by_user": 1,
-            "blockName": "Comment",
-            "category": "output_communication",
-            "block_name_mql": "comment"
-          },
-          {
-            "params": {
-              "max_times_to_pass": "1",
-              "symbol": "",
-              "timeframe": "PERIOD_CURRENT"
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "id_by_user": 2,
-            "category": "time_filters",
-            "block_name_mql": "once_per_bar",
-            "blockName": "Once per bar"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
-  "name_by_user": "test 2254",
-  "highestIndex": "3"
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "3"
 }
 
 # test market properties new 2
 input_data_27 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "sourceHandle": "blue",
-            "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {
-              "title": "Comment Message",
-              "obj_chart_subwindow": "",
-              "obj_corner": "CORNER_LEFT_UPPER",
-              "obj_x": "5",
-              "obj_y": "24",
-              "obj_title_font": "Georgia",
-              "obj_title_font_color": "clrGold",
-              "obj_title_font_size": "13",
-              "obj_label_font": "Vardena",
-              "obj_label_font_color": "clrDarkGray",
-              "obj_label_font_size": "10",
-              "obj_font": "Vardena",
-              "obj_font_color": "clrWhite",
-              "obj_font_size": "10",
-              "label_1": "",
-              "format_number_1": "EMPTY_VALUE",
-              "format_time_1": "EMPTY_VALUE",
-              "label_2": "",
-              "format_number_2": "EMPTY_VALUE",
-              "format_time_2": "EMPTY_VALUE",
-              "label_3": "",
-              "format_number_3": "EMPTY_VALUE",
-              "format_time_3": "EMPTY_VALUE",
-              "label_4": "",
-              "format_number_4": "EMPTY_VALUE",
-              "format_time_4": "EMPTY_VALUE",
-              "label_5": "",
-              "format_number_5": "EMPTY_VALUE",
-              "format_time_5": "EMPTY_VALUE",
-              "label_6": "",
-              "format_number_6": "EMPTY_VALUE",
-              "format_time_6": "EMPTY_VALUE",
-              "label_7": "",
-              "format_number_7": "EMPTY_VALUE",
-              "format_time_7": "EMPTY_VALUE",
-              "label_8": "",
-              "format_number_8": "EMPTY_VALUE",
-              "format_time_8": "EMPTY_VALUE",
-              "value_fetch_1": {
-                "row1": "market-properties",
-                "row2": "lowest_price_time_period",
-                "params": {
-                  "server_or_local_time": "TIME_LOCAL",
-                  "timestr_start": "08:00",
-                  "timestr_end": "13:00",
-                  "day_offset": "5",
-                  "what_to_get": "GET_PRICE",
-                  "symbol": "EURUSD",
-                  "timeframe": "PERIOD_M5",
-                  "adjust": "*10"
-                }
-              },
-              "value_fetch_2": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_3": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_4": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_5": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_6": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_7": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_8": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "sourceHandle": "blue",
+                        "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "title": "Comment Message",
+                            "obj_chart_subwindow": "",
+                            "obj_corner": "CORNER_LEFT_UPPER",
+                            "obj_x": "5",
+                            "obj_y": "24",
+                            "obj_title_font": "Georgia",
+                            "obj_title_font_color": "clrGold",
+                            "obj_title_font_size": "13",
+                            "obj_label_font": "Vardena",
+                            "obj_label_font_color": "clrDarkGray",
+                            "obj_label_font_size": "10",
+                            "obj_font": "Vardena",
+                            "obj_font_color": "clrWhite",
+                            "obj_font_size": "10",
+                            "label_1": "",
+                            "format_number_1": "EMPTY_VALUE",
+                            "format_time_1": "EMPTY_VALUE",
+                            "label_2": "",
+                            "format_number_2": "EMPTY_VALUE",
+                            "format_time_2": "EMPTY_VALUE",
+                            "label_3": "",
+                            "format_number_3": "EMPTY_VALUE",
+                            "format_time_3": "EMPTY_VALUE",
+                            "label_4": "",
+                            "format_number_4": "EMPTY_VALUE",
+                            "format_time_4": "EMPTY_VALUE",
+                            "label_5": "",
+                            "format_number_5": "EMPTY_VALUE",
+                            "format_time_5": "EMPTY_VALUE",
+                            "label_6": "",
+                            "format_number_6": "EMPTY_VALUE",
+                            "format_time_6": "EMPTY_VALUE",
+                            "label_7": "",
+                            "format_number_7": "EMPTY_VALUE",
+                            "format_time_7": "EMPTY_VALUE",
+                            "label_8": "",
+                            "format_number_8": "EMPTY_VALUE",
+                            "format_time_8": "EMPTY_VALUE",
+                            "value_fetch_1": {
+                                "row1": "market-properties",
+                                "row2": "lowest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_LOCAL",
+                                    "timestr_start": "08:00",
+                                    "timestr_end": "13:00",
+                                    "day_offset": "5",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "EURUSD",
+                                    "timeframe": "PERIOD_M5",
+                                    "adjust": "*10"
+                                }
+                            },
+                            "value_fetch_2": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_3": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_4": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_5": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_6": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_7": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_8": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "id_by_user": 1,
+                        "blockName": "Comment",
+                        "category": "output_communication",
+                        "block_name_mql": "comment"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "id_by_user": 2,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    }
+                ]
             },
-            "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "id_by_user": 1,
-            "blockName": "Comment",
-            "category": "output_communication",
-            "block_name_mql": "comment"
-          },
-          {
-            "params": {
-              "max_times_to_pass": "1",
-              "symbol": "",
-              "timeframe": "PERIOD_CURRENT"
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "id_by_user": 2,
-            "category": "time_filters",
-            "block_name_mql": "once_per_bar",
-            "blockName": "Once per bar"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
-  "name_by_user": "test 2254",
-  "highestIndex": "3"
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "3"
 }
 
 # test market properties new 3
 input_data_28 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "sourceHandle": "blue",
-            "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {
-              "title": "Comment Message",
-              "obj_chart_subwindow": "",
-              "obj_corner": "CORNER_LEFT_UPPER",
-              "obj_x": "5",
-              "obj_y": "24",
-              "obj_title_font": "Georgia",
-              "obj_title_font_color": "clrGold",
-              "obj_title_font_size": "13",
-              "obj_label_font": "Vardena",
-              "obj_label_font_color": "clrDarkGray",
-              "obj_label_font_size": "10",
-              "obj_font": "Vardena",
-              "obj_font_color": "clrWhite",
-              "obj_font_size": "10",
-              "label_1": "",
-              "format_number_1": "EMPTY_VALUE",
-              "format_time_1": "EMPTY_VALUE",
-              "label_2": "",
-              "format_number_2": "EMPTY_VALUE",
-              "format_time_2": "EMPTY_VALUE",
-              "label_3": "",
-              "format_number_3": "EMPTY_VALUE",
-              "format_time_3": "EMPTY_VALUE",
-              "label_4": "",
-              "format_number_4": "EMPTY_VALUE",
-              "format_time_4": "EMPTY_VALUE",
-              "label_5": "",
-              "format_number_5": "EMPTY_VALUE",
-              "format_time_5": "EMPTY_VALUE",
-              "label_6": "",
-              "format_number_6": "EMPTY_VALUE",
-              "format_time_6": "EMPTY_VALUE",
-              "label_7": "",
-              "format_number_7": "EMPTY_VALUE",
-              "format_time_7": "EMPTY_VALUE",
-              "label_8": "",
-              "format_number_8": "EMPTY_VALUE",
-              "format_time_8": "EMPTY_VALUE",
-              "value_fetch_1": {
-                "row1": "market-properties",
-                "row2": "highest_price_time_period",
-                "params": {
-                  "server_or_local_time": "TIME_LOCAL",
-                  "timestr_start": "12:30",
-                  "timestr_end": "13:00",
-                  "day_offset": "5",
-                  "what_to_get": "GET_TIME",
-                  "symbol": "EURUSD",
-                  "timeframe": "PERIOD_M5",
-                  "adjust": "-10pips"
-                }
-              },
-              "value_fetch_2": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_3": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_4": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_5": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_6": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_7": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_8": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "sourceHandle": "blue",
+                        "target": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-7fc8e3bd-6157-42d2-a702-c64c68857497blue-8e94f376-f0e1-4f7b-acaa-f0a0c2989a28c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "title": "Comment Message",
+                            "obj_chart_subwindow": "",
+                            "obj_corner": "CORNER_LEFT_UPPER",
+                            "obj_x": "5",
+                            "obj_y": "24",
+                            "obj_title_font": "Georgia",
+                            "obj_title_font_color": "clrGold",
+                            "obj_title_font_size": "13",
+                            "obj_label_font": "Vardena",
+                            "obj_label_font_color": "clrDarkGray",
+                            "obj_label_font_size": "10",
+                            "obj_font": "Vardena",
+                            "obj_font_color": "clrWhite",
+                            "obj_font_size": "10",
+                            "label_1": "",
+                            "format_number_1": "EMPTY_VALUE",
+                            "format_time_1": "EMPTY_VALUE",
+                            "label_2": "",
+                            "format_number_2": "EMPTY_VALUE",
+                            "format_time_2": "EMPTY_VALUE",
+                            "label_3": "",
+                            "format_number_3": "EMPTY_VALUE",
+                            "format_time_3": "EMPTY_VALUE",
+                            "label_4": "",
+                            "format_number_4": "EMPTY_VALUE",
+                            "format_time_4": "EMPTY_VALUE",
+                            "label_5": "",
+                            "format_number_5": "EMPTY_VALUE",
+                            "format_time_5": "EMPTY_VALUE",
+                            "label_6": "",
+                            "format_number_6": "EMPTY_VALUE",
+                            "format_time_6": "EMPTY_VALUE",
+                            "label_7": "",
+                            "format_number_7": "EMPTY_VALUE",
+                            "format_time_7": "EMPTY_VALUE",
+                            "label_8": "",
+                            "format_number_8": "EMPTY_VALUE",
+                            "format_time_8": "EMPTY_VALUE",
+                            "value_fetch_1": {
+                                "row1": "market-properties",
+                                "row2": "highest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_LOCAL",
+                                    "timestr_start": "12:30",
+                                    "timestr_end": "13:00",
+                                    "day_offset": "5",
+                                    "what_to_get": "GET_TIME",
+                                    "symbol": "EURUSD",
+                                    "timeframe": "PERIOD_M5",
+                                    "adjust": "-10pips"
+                                }
+                            },
+                            "value_fetch_2": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_3": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_4": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_5": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_6": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_7": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_8": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
+                        "id_by_user": 1,
+                        "blockName": "Comment",
+                        "category": "output_communication",
+                        "block_name_mql": "comment"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
+                        "id_by_user": 2,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    }
+                ]
             },
-            "id": "8e94f376-f0e1-4f7b-acaa-f0a0c2989a28",
-            "id_by_user": 1,
-            "blockName": "Comment",
-            "category": "output_communication",
-            "block_name_mql": "comment"
-          },
-          {
-            "params": {
-              "max_times_to_pass": "1",
-              "symbol": "",
-              "timeframe": "PERIOD_CURRENT"
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "7fc8e3bd-6157-42d2-a702-c64c68857497",
-            "id_by_user": 2,
-            "category": "time_filters",
-            "block_name_mql": "once_per_bar",
-            "blockName": "Once per bar"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
-  "name_by_user": "test 2254",
-  "highestIndex": "3"
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "3"
 }
 
 # test market properties new 4
 input_data_29 = {
-  "data": {
-    "events": {
-      "on_tick": {
-        "edges": [
-          {
-            "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
-            "sourceHandle": "blue",
-            "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
-          }
-        ],
-        "nodes": [
-          {
-            "params": {
-              "operator": {
-                "label": ">",
-                "cross_width": 1
-              },
-              "left": {
-                "row1": "market-properties",
-                "row2": "highest_price_candles_period",
-                "params": {
-                  "range_start": "4",
-                  "range_end": "8",
-                  "what_to_get": "GET_CANDLE_ID",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": ""
-                }
-              },
-              "right": {
-                "row1": "indicator",
-                "row2": "ma",
-                "params": {
-                  "ma_period": "20",
-                  "ma_shift": "0",
-                  "ma_method": "MODE_SMA",
-                  "applied_price": "PRICE_CLOSE",
-                  "adjust": "",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "shift": "0"
-                }
-              }
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "highest_price_candles_period",
+                                "params": {
+                                    "range_start": "4",
+                                    "range_end": "8",
+                                    "what_to_get": "GET_CANDLE_ID",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ]
             },
-            "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
-            "id_by_user": 2,
-            "blockName": "Condition",
-            "category": "condition_formula",
-            "block_name_mql": "condition"
-          },
-          {
-            "params": {},
-            "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
-            "id_by_user": 3,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          }
-        ]
-      },
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
-  "name_by_user": "test 2254",
-  "highestIndex": "4"
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
+
+# test market properties: ask bid mid
+input_data_30 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "ask_bid_mid",
+                                "params": {
+                                    "Price": "BID",
+                                    "TickID": 25,
+                                    "symbol": "XAUUSD",
+                                    "adjust": "+14%"
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
 }

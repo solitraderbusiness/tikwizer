@@ -1136,6 +1136,9 @@ class ExpertBuilder:
         if "shift" in params_left_2:
             params_left_2["shift"] = str(params_left_2["shift"]) + " + " + str(
                 (params.get("operator").get("cross_width")))
+        if "TickID" in params_left_2:
+            params_left_2["TickID"] = str(params_left_2["TickID"]) + " + " + str(
+                (params.get("operator").get("cross_width")))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
         self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
         # right data
@@ -1147,6 +1150,9 @@ class ExpertBuilder:
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:
             params_right_2["shift"] = str(params_right_2["shift"]) + "+" + str(
+                params.get("operator").get("cross_width"))
+        if "TickID" in params_right_2:
+            params_right_2["TickID"] = str(params_right_2["TickID"]) + "+" + str(
                 params.get("operator").get("cross_width"))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
         self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))

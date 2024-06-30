@@ -1,3 +1,0 @@
-{
-  "structs": "struct MarketPropertiesResult\n  {\n   double            price;\n   int               index;\n   datetime          time;\n  };\n\n"
-}

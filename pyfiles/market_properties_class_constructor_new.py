@@ -84,6 +84,8 @@ def get_return_type(row2, what_to_get):
                 case "GET_CANDLE_ID": return "int"
                 case "GET_PRICE": return "double"
                 case "GET_TIME": return "datetime"
+        case "ask_bid_mid":
+            return "double"
 
 
 def get_var_name(row2, var_id):
