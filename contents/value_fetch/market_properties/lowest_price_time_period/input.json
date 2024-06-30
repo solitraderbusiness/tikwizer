@@ -1,0 +1,8 @@
+{
+  "symbol": "NULL",
+  "timeframe": 0,
+  "what_to_get": "GET_PRICE",
+  "timestr_start": "2023.11.23 7:30:30",
+  "timestr_end": "2025.11.23 5:30:00",
+  "adjust": ""
+}

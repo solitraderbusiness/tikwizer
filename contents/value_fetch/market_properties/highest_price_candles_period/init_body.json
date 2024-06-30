@@ -1,0 +1,3 @@
+{
+	"init_body" : "      symbol = symbol_val;\n      timeframe = timeframe_val;\n      what_to_get = what_to_get_val;\n      range_start = range_start_val;\n      range_end   = range_end_val;"
+}

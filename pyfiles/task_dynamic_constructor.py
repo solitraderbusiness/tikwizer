@@ -3,7 +3,7 @@ from . import path_root, adjust
 import collections.abc
 from . import indicator_class_constructor
 from . import candle_class_constructor
-from . import market_properties_class_constructor
+from . import market_properties_class_constructor_new
 from . import value_class_constructor
 from . import object_on_the_chart_class_constructor
 from . import trade_order_in_loop_class_constructor
@@ -236,7 +236,7 @@ def check_trendline_price_level_run_data(node, function_data_static):
     row2 = value_fetch.get("row2")
     id_val = str(node.get("id_by_user")) + "_price_level"
 
-    init = get_value_fetch_init(row1, row2, id_val)
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
     val = get_value_fetch_val(row1, row2, id_val)
     function_data_static = function_data_static.replace("initializer_price_level", init)
     function_data_static = function_data_static.replace("variable_name_price_level", val)
@@ -250,7 +250,7 @@ def draw_editfield_run_data(node, function_data_static):
     row2 = value_fetch.get("row2")
     id_val = str(node.get("id_by_user")) + "_text"
 
-    init = get_value_fetch_init(row1, row2, id_val)
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
     val = get_value_fetch_val(row1, row2, id_val)
     function_data_static = function_data_static.replace("initializer_text", init)
     function_data_static = function_data_static.replace("variable_name_text", val)
@@ -266,7 +266,7 @@ def draw_line_run_data(node, function_data_static):
         row2_time_1 = value_fetch_time_1.get("row2")
         id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
-        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
         val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
         function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
         function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
@@ -279,7 +279,7 @@ def draw_line_run_data(node, function_data_static):
         row2_time_2 = value_fetch_time_2.get("row2")
         id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
 
-        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
         val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
         function_data_static = function_data_static.replace("initializer_time_2", init_time_2)
         function_data_static = function_data_static.replace("variable_name_time_2", val_time_2)
@@ -293,7 +293,7 @@ def draw_line_run_data(node, function_data_static):
         row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
-        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
         val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
         function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
         function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
@@ -307,7 +307,7 @@ def draw_line_run_data(node, function_data_static):
         row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
 
-        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"), id_val_price_2)
         val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
         function_data_static = function_data_static.replace("initializer_price_2", init_price_2)
         function_data_static = function_data_static.replace("variable_name_price_2", val_price_2)
@@ -325,7 +325,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_time_1 = value_fetch_time_1.get("row2")
         id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
-        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
         val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
         function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
         function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
@@ -338,7 +338,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_time_2 = value_fetch_time_2.get("row2")
         id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
 
-        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, id_val_time_2)
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
         val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
         function_data_static = function_data_static.replace("initializer_time_2", init_time_2)
         function_data_static = function_data_static.replace("variable_name_time_2", val_time_2)
@@ -351,7 +351,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_time_3 = value_fetch_time_3.get("row2")
         id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
 
-        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, id_val_time_3)
+        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, value_fetch_time_3.get("params"), id_val_time_3)
         val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
         function_data_static = function_data_static.replace("initializer_time_3", init_time_3)
         function_data_static = function_data_static.replace("variable_name_time_3", val_time_3)
@@ -364,7 +364,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
-        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
         val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
         function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
         function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
@@ -377,7 +377,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
 
-        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, id_val_price_2)
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"), id_val_price_2)
         val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
         function_data_static = function_data_static.replace("initializer_price_2", init_price_2)
         function_data_static = function_data_static.replace("variable_name_price_2", val_price_2)
@@ -390,7 +390,7 @@ def draw_shape_run_data(node, function_data_static):
         row2_price_3 = value_fetch_price_3.get("row2")
         id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
 
-        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, id_val_price_3)
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"), id_val_price_3)
         val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
         function_data_static = function_data_static.replace("initializer_price_3", init_price_3)
         function_data_static = function_data_static.replace("variable_name_price_3", val_price_3)
@@ -407,7 +407,7 @@ def draw_button_run_data(node, function_data_static):
     row2 = value_fetch.get("row2")
     id_val = str(node.get("id_by_user")) + "_obj_text"
 
-    init = get_value_fetch_init(row1, row2, id_val)
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
     val = get_value_fetch_val(row1, row2, id_val)
     function_data_static = function_data_static.replace("initializer_obj_text", init)
     function_data_static = function_data_static.replace("variable_name_obj_text", val)
@@ -421,7 +421,7 @@ def draw_arrow_run_data(node, function_data_static):
     row2_time_1 = value_fetch_time_1.get("row2")
     id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
 
-    init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, id_val_time_1)
+    init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
     val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
     function_data_static = function_data_static.replace("initializer_time_1", init_time_1)
     function_data_static = function_data_static.replace("variable_name_time_1", val_time_1)
@@ -431,7 +431,7 @@ def draw_arrow_run_data(node, function_data_static):
     row2_price_1 = value_fetch_price_1.get("row2")
     id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
-    init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, id_val_price_1)
+    init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
     val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
     function_data_static = function_data_static.replace("initializer_price_1", init_price_1)
     function_data_static = function_data_static.replace("variable_name_price_1", val_price_1)
@@ -447,7 +447,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_rt"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         function_data_static = function_data_static.replace("initializer_rt", init)
         function_data_static = function_data_static.replace("variable_name_rt", val)
@@ -461,7 +461,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         row2_tp = value_fetch_tp.get("row2")
         id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
 
-        init_tp = get_value_fetch_init(row1_tp, row2_tp, id_val_tp)
+        init_tp = get_value_fetch_init(row1_tp, row2_tp, value_fetch_tp.get("params"), id_val_tp)
         val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
 
         value_fetch_sl = params.get("new_stop_loss_level")
@@ -469,7 +469,7 @@ def modify_stops_of_trades_run_data(node, function_data_static):
         row2_sl = value_fetch_sl.get("row2")
         id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
 
-        init_sl = get_value_fetch_init(row1_sl, row2_sl, id_val_sl)
+        init_sl = get_value_fetch_init(row1_sl, row2_sl, value_fetch_sl.get("params"), id_val_sl)
         val_sl = get_value_fetch_val(row1_sl, row2_sl, id_val_sl)
 
         function_data_static = function_data_static.replace("initializer_ntm_tp", init_tp)
@@ -495,7 +495,7 @@ def buy_sell_function_data(node, function_data_static):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "oacp"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         function_data_static = function_data_static.replace("initializer_oacp", init)
         function_data_static = function_data_static.replace("variable_name_oacp", val)
@@ -519,7 +519,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r1"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_1", init)
         run_data = run_data.replace("variable_name_1", val)
@@ -533,7 +533,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r2"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_2", init)
         run_data = run_data.replace("variable_name_2", val)
@@ -547,7 +547,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r3"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_3", init)
         run_data = run_data.replace("variable_name_3", val)
@@ -561,7 +561,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r4"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_4", init)
         run_data = run_data.replace("variable_name_4", val)
@@ -575,7 +575,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r5"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_5", init)
         run_data = run_data.replace("variable_name_5", val)
@@ -589,7 +589,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r6"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_6", init)
         run_data = run_data.replace("variable_name_6", val)
@@ -603,7 +603,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r7"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_7", init)
         run_data = run_data.replace("variable_name_7", val)
@@ -617,7 +617,7 @@ def comment_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "cm_r8"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_8", init)
         run_data = run_data.replace("variable_name_8", val)
@@ -644,7 +644,7 @@ def trailing_pending_orders_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_tdmd"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
 
         if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
@@ -690,7 +690,7 @@ def trailing_stop_each_trade_run_data(node, run_data):
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "tsm_cl"
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
         run_data = run_data.replace("initializer_trailing_stop_mode", init)
         run_data = run_data.replace("variable_name_trailing_stop_mode", val)
@@ -708,7 +708,7 @@ def no_trade_order_nearby_run_data(node, run_data):
         row2_price = value_fetch_price.get("row2")
         id_val_price = str(node.get("id_by_user")) + "_price"
 
-        init_price = get_value_fetch_init(row1_price, row2_price, id_val_price)
+        init_price = get_value_fetch_init(row1_price, row2_price, value_fetch_price.get("params"), id_val_price)
         val_price = get_value_fetch_val(row1_price, row2_price, id_val_price)
         run_data = run_data.replace("initializer_price", init_price)
         run_data = run_data.replace("variable_name_price", val_price)
@@ -721,7 +721,7 @@ def no_trade_order_nearby_run_data(node, run_data):
     row2_t1 = value_fetch_t1.get("row2")
     id_val_t1 = str(node.get("id_by_user")) + "_t1"
 
-    init_t1 = get_value_fetch_init(row1_t1, row2_t1, id_val_t1)
+    init_t1 = get_value_fetch_init(row1_t1, row2_t1, value_fetch_t1.get("params"), id_val_t1)
     val_t1 = get_value_fetch_val(row1_t1, row2_t1, id_val_t1)
     run_data = run_data.replace("initializer_t1", init_t1)
     run_data = run_data.replace("variable_name_t1", val_t1)
@@ -731,7 +731,7 @@ def no_trade_order_nearby_run_data(node, run_data):
     row2_t2 = value_fetch_t2.get("row2")
     id_val_t2 = str(node.get("id_by_user")) + "_t2"
 
-    init_t2 = get_value_fetch_init(row1_t2, row2_t2, id_val_t2)
+    init_t2 = get_value_fetch_init(row1_t2, row2_t2, value_fetch_t2.get("params"), id_val_t2)
     val_t2 = get_value_fetch_val(row1_t2, row2_t2, id_val_t2)
     run_data = run_data.replace("initializer_t2", init_t2)
     run_data = run_data.replace("variable_name_t2", val_t2)
@@ -750,7 +750,7 @@ def modify_variable_run_data(node, run_data):
         row2 = val.get("value_fetch").get("row2")
         id_val = str(node.get("id_by_user")) + "_var_" + str(i)
 
-        init = get_value_fetch_init(row1, row2, id_val)
+        init = get_value_fetch_init(row1, row2, val.get("value_fetch").get("params"), id_val)
         mval = get_value_fetch_val(row1, row2, id_val)
         modify_variables += init + "\n"
         modify_variables += val.get("variable_name") + " = " + mval + ";\n\n"
@@ -766,7 +766,7 @@ def formula(node, run_data):
     row2_left = params.get("left").get("row2")
     id_val_1 = str(node.get("id_by_user")) + "_" + "left"
 
-    init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
+    init_1 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
 
     # Right data
@@ -774,7 +774,7 @@ def formula(node, run_data):
     row2_right = params.get("right").get("row2")
     id_val_2 = str(node.get("id_by_user")) + "_" + "right"
 
-    init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
+    init_2 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
     operator = params.get("operator").get("label")
@@ -801,7 +801,7 @@ def condition_1_run_data_normal(node, run_data):
     row2_left = params.get("left").get("row2")
     id_val_1 = str(node.get("id_by_user")) + "_" + "left"
 
-    init_1 = get_value_fetch_init(row1_left, row2_left, id_val_1)
+    init_1 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_1)
     val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
 
     # Right data
@@ -809,7 +809,7 @@ def condition_1_run_data_normal(node, run_data):
     row2_right = params.get("right").get("row2")
     id_val_2 = str(node.get("id_by_user")) + "_" + "right"
 
-    init_2 = get_value_fetch_init(row1_right, row2_right, id_val_2)
+    init_2 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_2)
     val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
 
     operator = params.get("operator").get("label")
@@ -831,8 +831,8 @@ def condition_1_run_data_cross(node, run_data):
     id_val_11 = str(node.get("id_by_user")) + "_" + "left" + "1"
     id_val_12 = str(node.get("id_by_user")) + "_" + "left" + "2"
 
-    init11 = get_value_fetch_init(row1_left, row2_left, id_val_11)
-    init12 = get_value_fetch_init(row1_left, row2_left, id_val_12)
+    init11 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_11)
+    init12 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_12)
     val_11 = get_value_fetch_val(row1_left, row2_left, id_val_11)
     val_12 = get_value_fetch_val(row1_left, row2_left, id_val_12)
 
@@ -842,8 +842,8 @@ def condition_1_run_data_cross(node, run_data):
     id_val_21 = str(node.get("id_by_user")) + "_" + "right" + "1"
     id_val_22 = str(node.get("id_by_user")) + "_" + "right" + "2"
 
-    init21 = get_value_fetch_init(row1_right, row2_right, id_val_21)
-    init22 = get_value_fetch_init(row1_right, row2_right, id_val_22)
+    init21 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_21)
+    init22 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_22)
     val_21 = get_value_fetch_val(row1_right, row2_right, id_val_21)
     val_22 = get_value_fetch_val(row1_right, row2_right, id_val_22)
 
@@ -873,13 +873,13 @@ def condition_1_run_data_cross(node, run_data):
     return run_data
 
 
-def get_value_fetch_init(row1, row2, suffix):
+def get_value_fetch_init(row1, row2, params, suffix):
     if row1 == "indicator":
         init = indicator_class_constructor.get_initializer(row2, suffix)
     elif row1 == "candle":
         init = candle_class_constructor.get_initializer(suffix)
     elif row1 == "market-properties":
-        init = market_properties_class_constructor.get_initializer(suffix)
+        init = market_properties_class_constructor_new.get_initializer(row2, params, suffix)
     elif row1 == "value":
         init = value_class_constructor.get_initializer(row2, suffix)
     elif row1 == "object-on-the-chart":
@@ -898,7 +898,7 @@ def get_value_fetch_val(row1, row2, suffix):
     elif row1 == "candle":
         val = candle_class_constructor.get_var_name(suffix)
     elif row1 == "market-properties":
-        val = market_properties_class_constructor.get_var_name(suffix)
+        val = market_properties_class_constructor_new.get_var_name(row2, suffix)
     elif row1 == "value":
         val = value_class_constructor.get_var_name(suffix)
     elif row1 == "object-on-the-chart":

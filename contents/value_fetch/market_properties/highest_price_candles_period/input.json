@@ -1,0 +1,8 @@
+{
+      "symbol" : "NULL",
+      "timeframe" : 0,
+      "what_to_get" : "GET_PRICE",
+      "range_start" : 50,
+      "range_end"   : 100,
+      "adjust" : ""
+}

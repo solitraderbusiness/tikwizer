@@ -53,7 +53,7 @@ class ExpertBuilder:
     from . import indicator_class_constructor
     from . import candle_class_constructor
     from . import value_class_constructor
-    from . import market_properties_class_constructor
+    from . import market_properties_class_constructor_new
     from . import object_on_the_chart_class_constructor
     from . import trade_order_in_loop_class_constructor
     from . import account_class_constructor
@@ -641,9 +641,6 @@ class ExpertBuilder:
         self.functions.append(ticks_data)
 
     def add_global_classes_structs(self):
-        structs_data_mp = self.market_properties_class_constructor.get_structs()
-        self.classes_structs_enums.append(structs_data_mp)
-
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
         self.classes_structs_enums.append(structs_data_chart_event)
 
@@ -1164,9 +1161,9 @@ class ExpertBuilder:
                                                            self.data.get("constants"),
                                                            self.data.get("variables"))
         elif row1 == "market-properties":
-            return self.market_properties_class_constructor.get_class(row2, params, id_val,
-                                                                      self.data.get("constants"),
-                                                                      self.data.get("variables"))
+            return self.market_properties_class_constructor_new.get_class(row2, params, id_val,
+                                                                          self.data.get("constants"),
+                                                                          self.data.get("variables"))
         elif row1 == "value":
             return self.value_class_constructor.get_class(row2, params, id_val,
                                                           self.data.get("constants"),

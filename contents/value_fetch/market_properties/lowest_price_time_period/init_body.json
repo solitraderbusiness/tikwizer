@@ -1,0 +1,3 @@
+{
+	"init_body" : "      symbol = symbol_val;\n      timeframe = timeframe_val;\n      what_to_get = what_to_get_val;\n      timestr_start = timestr_start_val;\n      timestr_end   = timestr_end_val;\n      day_offset = day_offset_val;"
+}

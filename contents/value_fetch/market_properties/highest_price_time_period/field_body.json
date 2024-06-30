@@ -1,0 +1,3 @@
+{
+	"field_body" : "   string            symbol;\n   int               timeframe;\n   int               what_to_get;\n   string            timestr_start;\n   string            timestr_end;\n   int               day_offset;"
+}
