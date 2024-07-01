@@ -1228,7 +1228,7 @@ public:
      }
    virtual void      reset(int level)
      {
-
+SYMBOL_BIDLOW
      }
    bool              filterGeneral()
      {

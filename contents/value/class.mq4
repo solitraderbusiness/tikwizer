@@ -142,7 +142,7 @@ public:
                   if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
                     {
                      double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
-                     result = (string)(point*10*(double)value);  //STest, *10 works for all symbols?
+                     result = (double)value*point*PipValue(msymbol);
                     }
               }
             else
