@@ -3656,20 +3656,224 @@ input_data_33 = {
                     },
                     {
                         "params": {
-                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-                            "symbols_str": "",
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "symbols_str": "EURUSD",
                             "group_mode": "ORDER_GROUP_MODE_ALL",
-                            "group_number": 15,
-                            "type": "{0,1}",
-                            "ProfitAmount": 0.0,
-                            "OncePerTrade": False,
-                            "compare": "<"
+                            "group_number": 18,
+                            "type": "{1}",
+                            "ProfitAmount": 20.0,
+                            "OncePerTrade": True,
+                            "compare": "!="
                         },
                         "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
                         "id_by_user": 3,
                         "category": "check_trading_conditions",
                         "block_name_mql": "check_profit_last_closed",
                         "blockName": "Check profit (last closed)"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
+
+# test check consecutive losses
+input_data_34 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "symbols_str": "GBPUSD",
+                            "group_mode": "ORDER_GROUP_MODE_ALL",
+                            "group_number": 18,
+                            "type": "{0}",
+
+                            "ConsecutiveCount": 5,
+                            "compare": "<="
+                        },
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_consecutive_losses",
+                        "blockName": "Check consecutive losses"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
+
+# test check consecutive profits
+input_data_35 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "symbols_str": "GBPUSD",
+                            "group_mode": "ORDER_GROUP_MODE_ALL",
+                            "group_number": 25,
+                            "type": "{1}",
+
+                            "ConsecutiveCount": 4,
+                            "compare": "=="
+                        },
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_consecutive_profits",
+                        "blockName": "Check consecutive profits"
                     }
                 ]
             },
