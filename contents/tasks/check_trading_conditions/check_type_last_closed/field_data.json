@@ -1,0 +1,3 @@
+{
+	"field_data" : "   //specified by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n\n   int               LastOrderType;\n   bool              OncePerTrade;\n   /* Static Parameters */\n   ulong             memory[];\n"
+}

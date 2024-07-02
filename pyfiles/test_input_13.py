@@ -3913,178 +3913,392 @@ input_data_35 = {
 
 # test value > text fix
 input_data_36 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "3357a0da-d060-4ed5-8d1c-aac7a6bf0d34",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "title": "Comment Message",
-              "obj_chart_subwindow": "",
-              "obj_corner": "CORNER_LEFT_UPPER",
-              "obj_x": "5",
-              "obj_y": "24",
-              "obj_title_font": "Georgia",
-              "obj_title_font_color": "clrGold",
-              "obj_title_font_size": "13",
-              "obj_label_font": "Vardena",
-              "obj_label_font_color": "clrDarkGray",
-              "obj_label_font_size": "10",
-              "obj_font": "Vardena",
-              "obj_font_color": "clrWhite",
-              "obj_font_size": "10",
-              "label_1": "my label:",
-              "format_number_1": "EMPTY_VALUE",
-              "format_time_1": "EMPTY_VALUE",
-              "label_2": "",
-              "format_number_2": "EMPTY_VALUE",
-              "format_time_2": "EMPTY_VALUE",
-              "label_3": "",
-              "format_number_3": "EMPTY_VALUE",
-              "format_time_3": "EMPTY_VALUE",
-              "label_4": "",
-              "format_number_4": "EMPTY_VALUE",
-              "format_time_4": "EMPTY_VALUE",
-              "label_5": "",
-              "format_number_5": "EMPTY_VALUE",
-              "format_time_5": "EMPTY_VALUE",
-              "label_6": "",
-              "format_number_6": "EMPTY_VALUE",
-              "format_time_6": "EMPTY_VALUE",
-              "label_7": "",
-              "format_number_7": "EMPTY_VALUE",
-              "format_time_7": "EMPTY_VALUE",
-              "label_8": "",
-              "format_number_8": "EMPTY_VALUE",
-              "format_time_8": "EMPTY_VALUE",
-              "value_fetch_1": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "str",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_2": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_3": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_4": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_5": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_6": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_7": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_8": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "22af07d5-bbff-4bc0-b8fd-3b37479b9f51",
-            "id_by_user": 2,
-            "blockName": "Comment",
-            "category": "output_communication",
-            "block_name_mql": "comment"
-          }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "3357a0da-d060-4ed5-8d1c-aac7a6bf0d34",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "title": "Comment Message",
+                            "obj_chart_subwindow": "",
+                            "obj_corner": "CORNER_LEFT_UPPER",
+                            "obj_x": "5",
+                            "obj_y": "24",
+                            "obj_title_font": "Georgia",
+                            "obj_title_font_color": "clrGold",
+                            "obj_title_font_size": "13",
+                            "obj_label_font": "Vardena",
+                            "obj_label_font_color": "clrDarkGray",
+                            "obj_label_font_size": "10",
+                            "obj_font": "Vardena",
+                            "obj_font_color": "clrWhite",
+                            "obj_font_size": "10",
+                            "label_1": "my label:",
+                            "format_number_1": "EMPTY_VALUE",
+                            "format_time_1": "EMPTY_VALUE",
+                            "label_2": "",
+                            "format_number_2": "EMPTY_VALUE",
+                            "format_time_2": "EMPTY_VALUE",
+                            "label_3": "",
+                            "format_number_3": "EMPTY_VALUE",
+                            "format_time_3": "EMPTY_VALUE",
+                            "label_4": "",
+                            "format_number_4": "EMPTY_VALUE",
+                            "format_time_4": "EMPTY_VALUE",
+                            "label_5": "",
+                            "format_number_5": "EMPTY_VALUE",
+                            "format_time_5": "EMPTY_VALUE",
+                            "label_6": "",
+                            "format_number_6": "EMPTY_VALUE",
+                            "format_time_6": "EMPTY_VALUE",
+                            "label_7": "",
+                            "format_number_7": "EMPTY_VALUE",
+                            "format_time_7": "EMPTY_VALUE",
+                            "label_8": "",
+                            "format_number_8": "EMPTY_VALUE",
+                            "format_time_8": "EMPTY_VALUE",
+                            "value_fetch_1": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "str",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_2": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_3": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_4": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_5": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_6": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_7": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_8": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "22af07d5-bbff-4bc0-b8fd-3b37479b9f51",
+                        "id_by_user": 2,
+                        "blockName": "Comment",
+                        "category": "output_communication",
+                        "block_name_mql": "comment"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "3357a0da-d060-4ed5-8d1c-aac7a6bf0d34",
+                        "sourceHandle": "blue",
+                        "target": "22af07d5-bbff-4bc0-b8fd-3b37479b9f51",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "841233d7-7a4a-402e-80ad-5185069a0277"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "type": "string",
+                "name": "str",
+                "value": "hello world",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "3357a0da-d060-4ed5-8d1c-aac7a6bf0d34",
-            "sourceHandle": "blue",
-            "target": "22af07d5-bbff-4bc0-b8fd-3b37479b9f51",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "841233d7-7a4a-402e-80ad-5185069a0277"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+        "constants": []
     },
-    "variables": [
-      {
-        "type": "string",
-        "name": "str",
-        "value": "hello world",
-        "description": ""
-      }
-    ],
-    "constants": []
-  },
-  "selected_name": "9e1fd44d-c2fe-4a7c-ba98-c0087a57425a",
-  "name_by_user": "test 1357",
-  "highestIndex": "3"
+    "selected_name": "9e1fd44d-c2fe-4a7c-ba98-c0087a57425a",
+    "name_by_user": "test 1357",
+    "highestIndex": "3"
+}
+
+# test check type last closed
+input_data_37 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "symbols_str": "EURUSD",
+                            "group_mode": "ORDER_GROUP_MODE_ALL",
+                            "group_number": 18,
+                            "LastOrderType": 0,
+                            "OncePerTrade": False
+                        },
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_type_last_closed",
+                        "blockName": "Check type (last closed)"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
+}
+
+# test check distance
+input_data_38 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "sourceHandle": "blue",
+                        "target": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-90754c0d-f01e-4aa1-bb06-a2bb630c0451blue-e7ae7deb-3baf-44fa-b296-d05bbee73745c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "×>",
+                                "cross_width": 10
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "e7ae7deb-3baf-44fa-b296-d05bbee73745",
+                        "id_by_user": 2,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "DistanceIsAbsolute": False,
+                            "compare": ">=",
+                            "upper_level": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "lower_level": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            },
+                            "checking_distance": {
+                                "row1": "market-properties",
+                                "row2": "timeframe",
+                                "params": {
+                                }
+                            }
+                        },
+                        "id": "90754c0d-f01e-4aa1-bb06-a2bb630c0451",
+                        "id_by_user": 3,
+                        "category": "check_trading_conditions",
+                        "block_name_mql": "check_distance",
+                        "blockName": "Check distance"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "dd2bd08d-06fe-4bd8-828d-dd65cae56e5e",
+    "name_by_user": "test 2254",
+    "highestIndex": "4"
 }

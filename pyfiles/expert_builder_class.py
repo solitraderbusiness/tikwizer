@@ -805,6 +805,34 @@ class ExpertBuilder:
                 self.check_trendline_price_level(node)
             elif task_name == "no_trade_order_nearby":
                 self.no_trade_order_nearby_run_data(node)
+            elif task_name == "check_distance":
+                self.check_distance(node)
+
+    def check_distance(self, node):
+        value_fetch_upper_level = node.get("params").get("upper_level")
+        row1_upper_level = value_fetch_upper_level.get("row1")
+        row2_upper_level = value_fetch_upper_level.get("row2")
+        params_upper_level = value_fetch_upper_level.get("params")
+        id_val_upper_level = str(node.get("id_by_user")) + "_upper_level"
+        self.task_elements.append(
+            self.value_fetch_class(row1_upper_level, row2_upper_level, params_upper_level, id_val_upper_level))
+
+        value_fetch_lower_level = node.get("params").get("lower_level")
+        row1_lower_level = value_fetch_lower_level.get("row1")
+        row2_lower_level = value_fetch_lower_level.get("row2")
+        params_lower_level = value_fetch_lower_level.get("params")
+        id_val_lower_level = str(node.get("id_by_user")) + "_lower_level"
+        self.task_elements.append(
+            self.value_fetch_class(row1_lower_level, row2_lower_level, params_lower_level, id_val_lower_level))
+
+        value_fetch_checking_distance = node.get("params").get("checking_distance")
+        row1_checking_distance = value_fetch_checking_distance.get("row1")
+        row2_checking_distance = value_fetch_checking_distance.get("row2")
+        params_checking_distance = value_fetch_checking_distance.get("params")
+        id_val_checking_distance = str(node.get("id_by_user")) + "_checking_distance"
+        self.task_elements.append(
+            self.value_fetch_class(row1_checking_distance, row2_checking_distance, params_checking_distance,
+                                   id_val_checking_distance))
 
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
