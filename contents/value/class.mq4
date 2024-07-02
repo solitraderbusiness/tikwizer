@@ -108,28 +108,10 @@ public:
       msymbol = getSymbol(symbol);
       int result;
       string value_type = "Boolean";
-      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text_code_input")
+      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text_code_input" || value_type=="Text")
         {
          result = value;
         }
-      else
-         if(value_type=="Text")
-           {
-            if(StringLen(value) > 0)
-              {
-               if(StringGetChar(value, 0) != '\"')
-                 {
-                  value = '\"' + value;
-                 }
-               if(StringGetChar(value, StringLen(value) - 1) != '\"')
-                 {
-                  value = value + '\"';
-                 }
-              }
-            else
-               value = "";
-            result = value;
-           }
          else
             if(value_type=="Pips")
               {

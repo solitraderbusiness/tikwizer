@@ -201,6 +201,7 @@
 #define ACCOUNT_INFO_STOPOUT_LEVEL 15
 #define ACCOUNT_INFO_MARGIN_CALL_LEVEL 16
 #define ACCOUNT_INFO_ORDERS_TRADES_LIMIT 17
+string str = "hello world"; //
 //This is used to hold onchart event for onchart blocks process
 struct OnChartEventHolder
   {
@@ -983,260 +984,625 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-class MarketPropertiesTimeframe2_left1
 
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Value2cm_r1
   {
+public:
+
+   string               value;
+   string               adjust;
+   //for pips
+   int               pips_mode;
+   string            symbol;
+   //for time (phase 2)
+   //defined by user
+   int               mode_time;
+   int               time_source;
+   string            time_stamp;
+   int               time_candle_id;
+   string            time_market;
+   ENUM_TIMEFRAMES   time_candle_timeframe;
+   int               time_component_year;
+   int               time_component_month;
+   double            time_component_day;
+   double            time_component_hour;
+   double            time_component_minute;
+   int               time_component_second;
+   datetime          time_value;
+   int               mode_time_shift;
+   int               time_shift_years;
+   int               time_shift_months;
+   int               time_shift_weeks;
+   double            time_shift_days;
+   double            time_shift_hours;
+   double            time_shift_minutes;
+   int               time_shift_seconds;
+   bool              time_skip_weekdays;
+   //defined by system
+   datetime          retval;
+   datetime          retval0;
+   datetime          Time[];
+   string            msymbol;
 
 public:
+
    void              init()
+
      {
+      value = ::str;
+      //for pips
+      pips_mode = VALUE_PIPS_AS_IS;
+      symbol = "NULL";
+      //for time (phase 2)
+      //defined by user
+      mode_time = 0;
+      time_source = 0;
+      time_stamp = "00:00";
+      time_candle_id = 1;
+      time_market = NULL;
+      time_candle_timeframe = 0;
+      time_component_year = 0;
+      time_component_month = 0;
+      time_component_day = 0.0;
+      time_component_hour = 12.0;
+      time_component_minute = 0.0;
+      time_component_second = 0;
+      time_value = 0;
+      mode_time_shift = 0;
+      time_shift_years = 0;
+      time_shift_months = 0;
+      time_shift_weeks = 0;
+      time_shift_days = 0.0;
+      time_shift_hours = 0.0;
+      time_shift_minutes = 0.0;
+      time_shift_seconds = 0;
+      time_skip_weekdays = False;
+      //defined by system
+      retval =  0;
+      retval0 =  0;
 
      }
 
    template<typename T>
    T                 calc()
      {
-      ENUM_TIMEFRAMES result = getTimeframe(PERIOD_CURRENT);
-      if(result == PERIOD_CURRENT)
+      msymbol = getSymbol(symbol);
+      string result = "";
+      string value_type = "Text";
+      if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text_code_input" || value_type=="Text")
         {
-         result = ChartPeriod();
+         result = value;
         }
+      else
+         if(value_type=="Pips")
+           {
+
+            if(pips_mode == VALUE_PIPS_AS_IS)
+              {
+               result = value;
+              }
+            else
+               if(pips_mode == VALUE_PIPS_AS_PRICE_FRACTION)
+                 {
+                  double point = SymbolInfoDouble(msymbol,SYMBOL_POINT);
+                  result = (double)value*point*PipValue(msymbol);
+                 }
+           }
+         else
+            if(value_type=="Time")
+              {
+
+               if(time_market == "" || time_market == NULL)
+                  time_market = Symbol();
+
+               if(mode_time == MODE_TIME_NOW)
+                 {
+                  if(time_source == TIME_SERVER)
+                    {
+                     retval = TimeCurrent();
+                    }
+                  else
+                     if(time_source == TIME_LOCAL)
+                       {
+                        retval = TimeLocal() + (TimeCurrent() - TimeLocal());
+                       }
+                     else
+                        if(time_source == TIME_GMT)
+                          {
+                           retval = TimeGMT() + (TimeCurrent() - TimeGMT());
+                          }
+                 }
+               else
+                  if(mode_time == MODE_TIME_TIMESTAMP)
+                    {
+                     retval  = StringToTime(time_stamp);
+                     retval0 = retval;
+                    }
+                  else
+                     if(mode_time==MODE_TIME_COMPONENTS)
+                       {
+                        retval = TimeFromComponents(time_source, time_component_year, time_component_month, time_component_day, time_component_hour, time_component_minute, time_component_second);
+                       }
+                     else
+                        if(mode_time == MODE_TIME_CANDLE_TIME)
+                          {
+                           ArraySetAsSeries(Time,true);
+                           CopyTime(time_market,time_candle_timeframe,time_candle_id,1,Time);
+                           retval = Time[0];
+                          }
+                        else
+                           if(mode_time == MODE_TIME_TIME_VALUE)
+                             {
+                              retval = time_value;
+                             }
+
+               if(mode_time_shift > 0)
+                 {
+                  int sh = 1;
+
+                  if(mode_time_shift == 1)
+                    {
+                     sh = -1;
+                    }
+
+                  if(time_shift_years > 0 || time_shift_months > 0)
+                    {
+                     int year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0, second = 0;
+
+                     if(mode_time == MODE_TIME_CANDLE_TIME) //STest, It sounds component mode is expected. A bug from fxd?
+                       {
+                        year   = time_component_year;
+                        month  = time_component_month;
+                        day    = (int)MathFloor(time_component_day);
+                        hour   = (int)(MathFloor(time_component_hour) + (24 * (time_component_day - MathFloor(time_component_day))));
+                        minute = (int)(MathFloor(time_component_minute) + (60 * (time_component_hour - MathFloor(time_component_hour))));
+                        second = (int)(time_component_second + (60 * (time_component_minute - MathFloor(time_component_minute))));
+                       }
+                     else
+                       {
+                        year   = TimeYear(retval);
+                        month  = TimeMonth(retval);
+                        day    = TimeDay(retval);
+                        hour   = TimeHour(retval);
+                        minute = TimeMinute(retval);
+                        second = TimeSeconds(retval);
+                       }
+
+                     year  = year + time_component_year * sh;
+                     month = month + time_component_month * sh;
+
+                     if(month < 0)
+                       {
+                        month = 12 - month;
+                       }
+                     else
+                        if(month > 12)
+                          {
+                           month = month - 12;
+                          }
+
+                     retval = StringToTime(IntegerToString(year)+"."+IntegerToString(month)+"."+IntegerToString(day)+" "+IntegerToString(hour)+":"+IntegerToString(minute)+":"+IntegerToString(second));
+                    }
+
+                  retval = retval + (sh * ((604800 * time_shift_weeks) + SecondsFromComponents(time_shift_days, time_shift_hours, time_shift_minutes, time_shift_seconds)));
+
+                  if(time_skip_weekdays == true)
+                    {
+                     int weekday = TimeDayOfWeek(retval);
+
+                     if(sh > 0)    // forward
+                       {
+                        if(weekday == 0)
+                          {
+                           retval = retval + 86400;
+                          }
+                        else
+                           if(weekday == 6)
+                             {
+                              retval = retval + 172800;
+                             }
+                       }
+                     else
+                        if(sh < 0) // back
+                          {
+                           if(weekday == 0)
+                             {
+                              retval = retval - 172800;
+                             }
+                           else
+                              if(weekday == 6)
+                                {
+                                 retval = retval - 86400;
+                                }
+                          }
+                    }
+                 }
+
+               result = retval;
+              }
       return result;
      }
   };
-class MarketPropertiesTimeframe2_left2
 
+//Pass
+class Task1 : public Task
   {
 
 public:
-   void              init()
+                     Task1(string name):Task(name)
      {
 
      }
-
-   template<typename T>
-   T                 calc()
+   virtual void               run(int block_id, BlockParent &block)
      {
-      ENUM_TIMEFRAMES result = getTimeframe(PERIOD_CURRENT);
-      if(result == PERIOD_CURRENT)
-        {
-         result = ChartPeriod();
-        }
-      return result;
+      Task::run(block_id, block);
+      block.onResult(ROUTE_1_PASSED);
      }
-  };
-
-
-class MovingAverage2_right1
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               ma_period;
-   int               ma_shift;
-   int               ma_method;
-   int               applied_price;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
+   virtual void      reset(int level)
      {
 
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      ma_period = 20;
-      ma_shift = 0;
-      ma_method = MODE_SMA;
-      applied_price = PRICE_CLOSE;
-      shift = 0;
-
      }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
-
-      return result;
-
-     }
-
-
 
   };
 
-class MovingAverage2_right2
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               ma_period;
-   int               ma_shift;
-   int               ma_method;
-   int               applied_price;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      ma_period = 20;
-      ma_shift = 0;
-      ma_method = MODE_SMA;
-      applied_price = PRICE_CLOSE;
-      shift = 0+10;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-//Condition
+//Comment
 class Task2 : public Task
   {
-
+   //value set by user
+   string            title;
+   string            obj_chart_subwindow;
+   int               obj_corner;
+   int               obj_x;
+   int               obj_y;
+   string            obj_title_font;
+   color             obj_title_font_color;
+   int               obj_title_font_size;
+   string            obj_label_font;
+   color             obj_label_font_color;
+   int               obj_label_font_size;
+   string            obj_font;
+   int               obj_font_color;
+   int               obj_font_size;
+   string            label_1;
+   int               format_number_1;
+   int               format_time_1;
+   string            label_2;
+   int               format_number_2;
+   int               format_time_2;
+   string            label_3;
+   int               format_number_3;
+   int               format_time_3;
+   string            label_4;
+   int               format_number_4;
+   int               format_time_4;
+   string            label_5;
+   int               format_number_5;
+   int               format_time_5;
+   string            label_6;
+   int               format_number_6;
+   int               format_time_6;
+   string            label_7;
+   int               format_number_7;
+   int               format_time_7;
+   string            label_8;
+   int               format_number_8;
+   int               format_time_8;
+   //value set by system
+   bool              initialized;
 public:
                      Task2(string name):Task(name)
      {
-
+      title = "Comment Message";
+      obj_chart_subwindow = "";
+      obj_corner = CORNER_LEFT_UPPER;
+      obj_x = 5;
+      obj_y = 24;
+      obj_title_font = "Georgia";
+      obj_title_font_color = clrGold;
+      obj_title_font_size = 13;
+      obj_label_font = "Vardena";
+      obj_label_font_color = clrDarkGray;
+      obj_label_font_size = 10;
+      obj_font = "Vardena";
+      obj_font_color = clrWhite;
+      obj_font_size = 10;
+      label_1 = "my label:";
+      format_number_1 = EMPTY_VALUE;
+      format_time_1 = EMPTY_VALUE;
+      label_2 = "";
+      format_number_2 = EMPTY_VALUE;
+      format_time_2 = EMPTY_VALUE;
+      label_3 = "";
+      format_number_3 = EMPTY_VALUE;
+      format_time_3 = EMPTY_VALUE;
+      label_4 = "";
+      format_number_4 = EMPTY_VALUE;
+      format_time_4 = EMPTY_VALUE;
+      label_5 = "";
+      format_number_5 = EMPTY_VALUE;
+      format_time_5 = EMPTY_VALUE;
+      label_6 = "";
+      format_number_6 = EMPTY_VALUE;
+      format_time_6 = EMPTY_VALUE;
+      label_7 = "";
+      format_number_7 = EMPTY_VALUE;
+      format_time_7 = EMPTY_VALUE;
+      label_8 = "";
+      format_number_8 = EMPTY_VALUE;
+      format_time_8 = EMPTY_VALUE;
+      /* Static Parameters (initial value) */
+      initialized =  false;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
 
-      MarketPropertiesTimeframe2_left1 marketPropertiesTimeframe2_left1;
-      marketPropertiesTimeframe2_left1.init();
-      double valueMarketPropertiesTimeframe2_left1 = marketPropertiesTimeframe2_left1.calc<double>();
-      MarketPropertiesTimeframe2_left2 marketPropertiesTimeframe2_left2;
-      marketPropertiesTimeframe2_left2.init();
-      double valueMarketPropertiesTimeframe2_left2 = marketPropertiesTimeframe2_left2.calc<double>();
-      MovingAverage2_right1 movingaverage2_right1;
-      movingaverage2_right1.init();
-      double valueMovingAverage2_right1 = movingaverage2_right1.calc();
-      MovingAverage2_right2 movingaverage2_right2;
-      movingaverage2_right2.init();
-      double valueMovingAverage2_right2 = movingaverage2_right2.calc();
 
-      if(valueMarketPropertiesTimeframe2_left1 > valueMovingAverage2_right1 && valueMarketPropertiesTimeframe2_left2 < valueMovingAverage2_right2)
+      double valueX = 0;
+
+
+      if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
         {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
 
-     }
 
-  };
+         long ObjChartID = 0;
+         int ObjAnchor   = ANCHOR_LEFT;
 
-//Check consecutive profits
-class Task3 : public Task
-  {
-   //specified by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-
-   int                ConsecutiveCount;
-
-public:
-                     Task3(string name):Task(name)
-     {
-      //specified by user
-      symbol_mode = SYMBOL_MODE_ANY;
-      symbols_str = "GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
-      group_mode = ORDER_GROUP_MODE_ALL;
-      group_number = 25;
-      int mtype[] = {1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-
-      ConsecutiveCount = (int)4;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      int count = 0;
-      int total          = OrdersHistoryTotal();
-
-      for(int index = total-1; index >= 0; index--)
-        {
-         if(OrderSelect((int)index, SELECT_BY_POS, MODE_HISTORY) && OrderType() < 2)
+         if(obj_corner == CORNER_RIGHT_UPPER || obj_corner == CORNER_RIGHT_LOWER)
            {
-            if(!filterGeneral())
-               continue;
-            if(OrderProfit() <= 0)
+            ObjAnchor = ANCHOR_RIGHT;
+           }
+
+         string namebase = "fxd_cmnt_" + block_id;
+
+         int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
+
+         if(subwindow >= 0)
+           {
+            //-- draw comment title
+            if((string)title != "")
               {
-               break;
+               string nametitle = namebase;
+
+               if(ObjectFind(ObjChartID, nametitle) < 0)
+                 {
+                  if(!ObjectCreate(ObjChartID, nametitle, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                  else
+                    {
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(obj_title_font_size));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, obj_title_font_color);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
+
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
+
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
+                    }
+                 }
+               else
+                 {
+                  obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                 }
+
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
+
+               obj_y = (int)(obj_y + obj_title_font_size / 3);
               }
 
-            count++;
+            //-- draw comment rows
+            for(int i = 1; i <= 8; i++)
+              {
+               string text    = "";
+               string textlbl = "";
+
+               switch(i)
+                 {
+                  case 1:
+                    {
+                     if(label_1 != "")
+                       {
+                        textlbl = label_1;
+                        Value2cm_r1 value2cm_r1;
+                        value2cm_r1.init();
+                        string valueValue2cm_r1 = value2cm_r1.calc<string>();
+                        text    = FormatValueForPrinting(valueValue2cm_r1, format_number_1, format_time_1);
+                       }
+
+                     break;
+                    }
+                  case 2:
+                    {
+                     if(label_2 != "")
+                       {
+                        textlbl = label_2;
+
+                        text    = FormatValueForPrinting("", format_number_2, format_time_2);
+                       }
+
+                     break;
+                    }
+                  case 3:
+                    {
+                     if(label_3 != "")
+                       {
+                        textlbl = label_3;
+
+                        text    = FormatValueForPrinting("", format_number_3, format_time_3);
+                       }
+
+                     break;
+                    }
+                  case 4:
+                    {
+                     if(label_4 != "")
+                       {
+                        textlbl = label_4;
+
+                        text    = FormatValueForPrinting("", format_number_4, format_time_4);
+                       }
+
+                     break;
+                    }
+                  case 5:
+                    {
+                     if(label_5 != "")
+                       {
+                        textlbl = label_5;
+
+                        text    = FormatValueForPrinting("", format_number_5, format_time_5);
+                       }
+
+                     break;
+                    }
+                  case 6:
+                    {
+                     if(label_6 != "")
+                       {
+                        textlbl = label_6;
+
+                        text    = FormatValueForPrinting("", format_number_6, format_time_6);
+                       }
+
+                     break;
+                    }
+                  case 7:
+                    {
+                     if(label_7 != "")
+                       {
+                        textlbl = label_7;
+
+                        text    = FormatValueForPrinting("", format_number_7, format_time_7);
+                       }
+
+                     break;
+                    }
+                  case 8:
+                    {
+                     if(label_8 != "")
+                       {
+                        textlbl = label_8;
+
+                        text    = FormatValueForPrinting("", format_number_8, format_time_8);
+                       }
+
+                     break;
+                    }
+                 }
+
+               string name    = namebase + "_" + (string)i;
+               string namelbl = name + "_l";
+
+               if(textlbl == "")
+                 {
+                  if(!initialized)
+                    {
+                     //-- pre-delete
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                    }
+
+                  continue;
+                 }
+
+               //-- draw initial objects
+               if(ObjectFind(ObjChartID, name) < 0)
+                 {
+                  if(textlbl == "")
+                    {
+                     continue;
+                    }
+
+                  if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, obj_label_font_size);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, obj_label_font_color);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, obj_label_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+
+                  if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, obj_font_size);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, obj_font_color);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, obj_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                 }
+               else
+                 {
+                  if(textlbl == "")
+                    {
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                     continue;
+                    }
+                 }
+
+               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
+
+               //-- update label objects
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
+
+               //-- update value objects
+               int x        = 0;
+               int xsizelbl = (int)ObjectGetInteger(ObjChartID, namelbl, OBJPROP_XSIZE);
+
+               if(xsizelbl == 0)
+                 {
+                  //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
+                  xsizelbl = (int)(StringLen((string)textlbl) * obj_font_size / 1.5 + obj_font_size / 2);
+                 }
+
+               x = obj_x + (xsizelbl + obj_font_size/2);
+
+               ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
+              }
+
+            ChartRedraw();
            }
+
+         initialized = true;
         }
 
-      if(count == ConsecutiveCount)
-        {
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         block.onResult(ROUTE_2_PASSED);
-        }
+      block.onResult(ROUTE_1_PASSED);
      }
    virtual void      reset(int level)
      {
-SYMBOL_BIDLOW
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
+
      }
 
   };
@@ -1391,44 +1757,18 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
+class Block1 : public Block
   {
 public:
-                     Block2()
+                     Block1()
      {
       id = 0;
-      id_by_user = 2;
-      name = "condition_1_cross";
+      id_by_user = 1;
+      name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {1};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 1;
-      id_by_user = 3;
-      name = "check_consecutive_profits";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {0};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1437,7 +1777,33 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task3(name);
+      task = new Task1(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block2 : public Block
+  {
+public:
+                     Block2()
+     {
+      id = 1;
+      id_by_user = 2;
+      name = "comment";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task2(name);
      }
   };
 Block *blocks_init[];
@@ -1508,11 +1874,11 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
+   Block1 *block1 = new Block1();
    Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
 
-   blocks_tick[0] = block2;
-   blocks_tick[1] = block3;
+   blocks_tick[0] = block1;
+   blocks_tick[1] = block2;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -3765,7 +4131,7 @@ void OnTick()
   {
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 1);
+   runBlockTick(-1, -1, 0);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

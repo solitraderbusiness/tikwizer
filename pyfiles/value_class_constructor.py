@@ -29,10 +29,14 @@ def get_class(value_type, input_dic, class_id, constants, variables):
     if value_type == "Text" and input_dic.get("value") == "":
         input_dic["value"] = "\"\""
     else:
-        if value_type == "Text" and not input_dic.get("value").startswith('"'):
-            input_dic["value"] = "\"" + input_dic["value"]
-        if value_type == "Text" and not input_dic.get("value").endswith('"'):
-            input_dic["value"] = input_dic["value"] + "\""
+        mvalue = input_dic.get("value")
+        if value_type == "Text" and not input_dic.get("value").startswith('"') and is_not_const_var(
+                input_dic.get("value"), constants, variables):
+            mvalue = "\"" + mvalue
+        if value_type == "Text" and not input_dic.get("value").endswith('"') and is_not_const_var(
+                input_dic.get("value"), constants, variables):
+            mvalue = mvalue + "\""
+        input_dic["value"] = mvalue
 
     for key in input_dic:
         init_body_dic["init_body"] = init_body_dic.get("init_body").replace(key + "_val",
@@ -73,6 +77,7 @@ def is_not_const_var(value, constants, variables):
             return False
     for variable in variables:
         if variable.get("name") == value:
+            print(variable.get("name"), value)
             return False
     return True
 
@@ -86,9 +91,9 @@ def get_initializer(value_type, var_id):
 
             mtype = get_return_type(value_type)
 
-            initializer_body = initializer_dic.get("initializer")\
-                .replace("_id", str(var_id))\
-                .replace("type", mtype, 1)\
+            initializer_body = initializer_dic.get("initializer") \
+                .replace("_id", str(var_id)) \
+                .replace("type", mtype, 1) \
                 .replace("type_return", mtype)
             return initializer_body
 

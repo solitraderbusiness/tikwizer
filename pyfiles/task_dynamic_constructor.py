@@ -513,7 +513,7 @@ def spread_filter_run_data(node, run_data):
 
 def comment_run_data(node, run_data):
     params = node.get("params")
-    if params.get("label_1") != "" and "value_fetch_1" in params:
+    if params.get("label_1") != "\"\"" and "value_fetch_1" in params:
         value_fetch = params.get("value_fetch_1")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -527,7 +527,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_1", "")
         run_data = run_data.replace("variable_name_1", "\"\"")
 
-    if params.get("label_2") != "" and "value_fetch_2" in params:
+    if params.get("label_2") != "\"\"" and "value_fetch_2" in params:
         value_fetch = params.get("value_fetch_2")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -541,7 +541,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_2", "")
         run_data = run_data.replace("variable_name_2", "\"\"")
 
-    if params.get("label_3") != "" and "value_fetch_3" in params:
+    if params.get("label_3") != "\"\"" and "value_fetch_3" in params:
         value_fetch = params.get("value_fetch_3")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -555,7 +555,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_3", "")
         run_data = run_data.replace("variable_name_3", "\"\"")
 
-    if params.get("label_4") != "" and "value_fetch_4" in params:
+    if params.get("label_4") != "\"\"" and "value_fetch_4" in params:
         value_fetch = params.get("value_fetch_4")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -569,7 +569,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_4", "")
         run_data = run_data.replace("variable_name_4", "\"\"")
 
-    if params.get("label_5") != "" and "value_fetch_5" in params:
+    if params.get("label_5") != "\"\"" and "value_fetch_5" in params:
         value_fetch = params.get("value_fetch_5")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -583,7 +583,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_5", "")
         run_data = run_data.replace("variable_name_5", "\"\"")
 
-    if params.get("label_6") != "" and "value_fetch_6" in params:
+    if params.get("label_6") != "\"\"" and "value_fetch_6" in params:
         value_fetch = params.get("value_fetch_6")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -597,7 +597,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_6", "")
         run_data = run_data.replace("variable_name_6", "\"\"")
 
-    if params.get("label_7") != "" and "value_fetch_7" in params:
+    if params.get("label_7") != "\"\"" and "value_fetch_7" in params:
         value_fetch = params.get("value_fetch_7")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
@@ -611,7 +611,7 @@ def comment_run_data(node, run_data):
         run_data = run_data.replace("initializer_7", "")
         run_data = run_data.replace("variable_name_7", "\"\"")
 
-    if params.get("label_8") != "" and "value_fetch_8" in params:
+    if params.get("label_8") != "\"\"" and "value_fetch_8" in params:
         value_fetch = params.get("value_fetch_8")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")

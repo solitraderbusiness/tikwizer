@@ -983,7 +983,7 @@ class ExpertBuilder:
 
     def comment(self, node):
         params = node.get("params")
-        if params.get("label_1") != "" and "value_fetch_1" in params:
+        if params.get("label_1") != "\"\"" and "value_fetch_1" in params:
             value_fetch = params.get("value_fetch_1")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -991,7 +991,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r1"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_2") != "" and "value_fetch_2" in params:
+        if params.get("label_2") != "\"\"" and "value_fetch_2" in params:
             value_fetch = params.get("value_fetch_2")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -999,7 +999,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r2"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_3") != "" and "value_fetch_3" in params:
+        if params.get("label_3") != "\"\"" and "value_fetch_3" in params:
             value_fetch = params.get("value_fetch_3")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -1007,7 +1007,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r3"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_4") != "" and "value_fetch_4" in params:
+        if params.get("label_4") != "\"\"" and "value_fetch_4" in params:
             value_fetch = params.get("value_fetch_4")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -1015,7 +1015,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r4"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_5") != "" and "value_fetch_5" in params:
+        if params.get("label_5") != "\"\"" and "value_fetch_5" in params:
             value_fetch = params.get("value_fetch_5")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -1023,7 +1023,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r5"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_6") != "" and "value_fetch_6" in params:
+        if params.get("label_6") != "\"\"" and "value_fetch_6" in params:
             value_fetch = params.get("value_fetch_6")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -1031,7 +1031,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r6"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_7") != "" and "value_fetch_7" in params:
+        if params.get("label_7") != "\"\"" and "value_fetch_7" in params:
             value_fetch = params.get("value_fetch_7")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
@@ -1039,7 +1039,7 @@ class ExpertBuilder:
             id_val = str(node.get("id_by_user")) + "cm_r7"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
 
-        if params.get("label_8") != "" and "value_fetch_8" in params:
+        if params.get("label_8") != "\"\"" and "value_fetch_8" in params:
             value_fetch = params.get("value_fetch_8")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
