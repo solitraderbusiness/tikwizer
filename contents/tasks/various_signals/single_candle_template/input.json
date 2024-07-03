@@ -1,0 +1,15 @@
+{
+  "SignalType": "continuous",
+  "CandleType": "both",
+  "CandleID": 1,
+  "symbol": "",
+  "timeframe": "PERIOD_CURRENT",
+  "UpperWickMode": "between",
+  "UpWickFrom": 10.0,
+  "UpWickTo": 20.0,
+  "LowerWickMode": "between",
+  "LoWickFrom": 10.0,
+  "LoWickTo": 20.0,
+  "CandleMinSize": 0.0,
+  "CandleMaxSize": 0.0
+}

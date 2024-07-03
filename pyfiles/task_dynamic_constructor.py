@@ -146,7 +146,9 @@ def run_data_dynamic_fun(node, run_data_static):
     elif task_name == "no_trade_order_nearby":
         run_data = no_trade_order_nearby_run_data(node, run_data_static)
     elif task_name == "check_distance":
-        run_data = check_distance(node, run_data_static)
+        run_data = check_distance_run_data(node, run_data_static)
+    elif task_name == "pips_away_from_open_price":
+        run_data = pips_away_from_open_price_run_data(node, run_data_static)
     return run_data
 
 
@@ -232,7 +234,39 @@ def is_var(value, variables):
     return False
 
 
-def check_distance(node, run_data_static):
+def pips_away_from_open_price_run_data(node, run_data_static):
+    params = node.get("params")
+    if "pips_away_input_in_pips" in params:
+        value_fetch_pips = params.get("pips_away_input_in_pips")
+        row1_pips = value_fetch_pips.get("row1")
+        row2_pips = value_fetch_pips.get("row2")
+        id_val_pips = str(node.get("id_by_user")) + "_pips"
+
+        init_pips = get_value_fetch_init(row1_pips, row2_pips, value_fetch_pips.get("params"), id_val_pips)
+        val_pips = get_value_fetch_val(row1_pips, row2_pips, id_val_pips)
+        run_data_static = run_data_static.replace("initializer_pips", init_pips)
+        run_data_static = run_data_static.replace("variable_name_pips", val_pips)
+    else:
+        run_data_static = run_data_static.replace("initializer_pips", "")
+        run_data_static = run_data_static.replace("variable_name_pips", "\"\"")
+    if "custom_price_fraction" in params:
+        value_fetch_price_fraction = params.get("custom_price_fraction")
+        row1_price_fraction = value_fetch_price_fraction.get("row1")
+        row2_price_fraction = value_fetch_price_fraction.get("row2")
+        id_val_price_fraction = str(node.get("id_by_user")) + "_price_fraction"
+
+        init_price_fraction = get_value_fetch_init(row1_price_fraction, row2_price_fraction, value_fetch_price_fraction.get("params"), id_val_price_fraction)
+        val_price_fraction = get_value_fetch_val(row1_price_fraction, row2_price_fraction, id_val_price_fraction)
+        run_data_static = run_data_static.replace("initializer_price_fraction", init_price_fraction)
+        run_data_static = run_data_static.replace("variable_name_price_fraction", val_price_fraction)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_fraction", "")
+        run_data_static = run_data_static.replace("variable_name_price_fraction", "\"\"")
+
+    return run_data_static
+
+
+def check_distance_run_data(node, run_data_static):
     # upper level
     value_fetch_upper_level = node.get("params").get("upper_level")
     row1_upper_level = value_fetch_upper_level.get("row1")

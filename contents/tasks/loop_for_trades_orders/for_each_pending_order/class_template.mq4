@@ -1,0 +1,165 @@
+//For each Trade
+class Task2 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   string               loop_direction;
+   int               skip_n;
+   int               not_more_than_n;
+   int               every_n;
+   string            second_output;
+public:
+                     Task2(string name):Task(name)
+     {
+      symbol_mode = symbol_mode_val;
+      symbols_str = symbols_str_val;
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = group_mode_val;
+      group_number = group_number_val;
+      int mtype[] = type_val; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+      loop_direction = loop_direction_val;
+      skip_n = skip_n_val;//STest, default must be 0
+      not_more_than_n = not_more_than_n_val;
+      every_n = every_n_val;//STest default must be 1
+      second_output = second_output_val;
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      int trades[];
+      getTrades(trades);
+      int size = ArraySize(trades);
+      if(size==0)
+        {
+         //printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+         return;
+        }
+      if(size>=2)
+         sortTrades(trades);
+      int starti, endi;
+      starti = skip_n;
+      endi = not_more_than_n<=0 ? size : not_more_than_n*every_n+starti;
+      if(starti<=size-1)
+         for(int i = starti ; i < MathMin(endi, size) ; i+=every_n)
+           {
+            if(exit_loop)
+               return;//STest, logical?
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+              {
+               if(!filterGeneral())
+                  continue;
+               //printf("task"+block_id + " passed route 1 ");
+               block.onResult(ROUTE_1_PASSED);
+              }
+           }
+     if(
+         second_output=="always" ||
+         (second_output=="if_empty" && ArraySize(trades)==0) ||
+         (second_output=="if_not_empty" && ArraySize(trades)>0)
+      )
+        {
+         //printf("task"+block_id + " passed route 2 ");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              getTrades(int &trades[])
+     {
+      for(int i=0; i<OrdersTotal(); i++)
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(OrderType() >= 2)
+              {
+               AddToArray(trades, i);
+              }
+           }
+      return trades;
+     }
+
+
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTrades(int &trades[])
+     {
+      if(loop_direction == "oldest_first")
+         return trades;
+      else
+         if(loop_direction == "newest_first")
+           {
+            ReverseList(trades);
+            return trades;
+           }
+         else
+            if(loop_direction == "profitable_first" || loop_direction == "profitable_last")
+              {
+               sortTradesByProfit(trades);
+               return trades;
+              }
+      return trades;
+     }
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
+   void              sortTradesByProfit(int &trades[])
+     {
+      if(ArraySize(trades)<2)
+         return;
+      for(int i=0; i<ArraySize(trades)-1; i++)
+        {
+         for(int j=i+1; j<ArraySize(trades); j++)
+           {
+            double profit1 = 0, profit2 = 0;
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+               profit1 = OrderProfit();
+            if(OrderSelect(trades[j], SELECT_BY_POS, MODE_TRADES))
+               profit2 = OrderProfit();
+            if(loop_direction == "profitable_first" && profit1<profit2)
+              {
+               int swap1 = trades[i];
+               trades[i] = trades[j];
+               trades[j] = swap1;
+              }
+            else
+              {
+               if(loop_direction == "profitable_last" && profit1>profit2)
+                 {
+                  int swap2 = trades[i];
+                  trades[i] = trades[j];
+                  trades[j] = swap2;
+                 }
+              }
+           }
+        }
+     }
+
+  };

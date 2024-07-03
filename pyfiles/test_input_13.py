@@ -4302,3 +4302,756 @@ input_data_38 = {
     "name_by_user": "test 2254",
     "highestIndex": "4"
 }
+
+# test for each pending order
+input_data_39 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,4}",
+                            "type_pending": "{2,3}",
+                            "skip_n": "0",
+                            "every_n": "1",
+                            "not_more_than_n": "0",
+                            "loop_direction": "newest_first",
+                            "second_output": "always"
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "for_each_pending_order",
+                        "blockName": "For each Pending Order"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}
+
+# test for each closed trade
+input_data_40 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "skip_n": "0",
+                            "every_n": "1",
+                            "not_more_than_n": "0",
+                            "loop_direction": "newest_first",
+                            "second_output": "always"
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "for_each_closed_trade",
+                        "blockName": "For each Closed Trade"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}
+
+# test once per trade order
+input_data_41 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "AllowOldOrders": True
+                        },
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "once_per_trade_order",
+                        "blockName": "Once per Trade/Order"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "skip_n": "0",
+                            "every_n": "1",
+                            "not_more_than_n": "0",
+                            "loop_direction": "newest_first",
+                            "second_output": "always"
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "for_each_closed_trade",
+                        "blockName": "For each Closed Trade"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}
+
+# test pips away from open price
+input_data_42 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "AllowOldOrders": True
+                        },
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "once_per_trade_order",
+                        "blockName": "Once per Trade/Order"
+                    },
+                    {
+                        "params": {
+                            "DirectionMode": "trading",
+                            "PipsAwayReferencePrice": 0,
+                            "OpenPriceMode": 0,
+                            "PipsAwayMode": "function",
+                            "PipsAway": 50.0,
+                            "PipsAwayPercent": 150.0,
+                            "pips_away_input_in_pips": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": 25.8,
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "pips_away_from_open_price",
+                        "blockName": "Pips away from open price"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}
+
+# test pips away from open price 2
+input_data_43 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "AllowOldOrders": True
+                        },
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "once_per_trade_order",
+                        "blockName": "Once per Trade/Order"
+                    },
+                    {
+                        "params": {
+                            "DirectionMode": "double",
+                            "PipsAwayReferencePrice": 0,
+                            "OpenPriceMode": 0,
+                            "PipsAwayMode": "functionFraction",
+                            "PipsAway": 50.0,
+                            "PipsAwayPercent": 150.0,
+                            "custom_price_fraction": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": 25.8,
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "pips_away_from_open_price",
+                        "blockName": "Pips away from open price"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}
+
+# test single candle template
+input_data_44 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "edges": [
+                    {
+                        "source": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "sourceHandle": "blue",
+                        "target": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-4e76504d-1adf-4e20-9cb8-0911863ef991blue-a423ac9c-fe6c-4af3-86d6-97290a7c6ebcc"
+                    },
+                    {
+                        "source": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "sourceHandle": "blue",
+                        "target": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "reactflow__edge-f10a11d3-8a96-421a-8185-19fd71316267blue-09bfd295-2812-4e8e-8c36-d20d29d59a77c"
+                    }
+                ],
+                "nodes": [
+                    {
+                        "params": {
+                            "SignalType": "continuous",
+                            "CandleType": "both",
+                            "CandleID": 1,
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT",
+                            "UpperWickMode": "between",
+                            "UpWickFrom": 10.0,
+                            "UpWickTo": 20.0,
+                            "LowerWickMode": "between",
+                            "LoWickFrom": 10.0,
+                            "LoWickTo": 20.0,
+                            "CandleMinSize": 0.0,
+                            "CandleMaxSize": 0.0
+                        },
+                        "id": "4e76504d-1adf-4e20-9cb8-0911863ef991",
+                        "id_by_user": 1,
+                        "category": "various_signals",
+                        "block_name_mql": "single_candle_template",
+                        "blockName": "Single candle template"
+                    },
+                    {
+                        "params": {
+                            "DirectionMode": "double",
+                            "PipsAwayReferencePrice": 0,
+                            "OpenPriceMode": 0,
+                            "PipsAwayMode": "functionFraction",
+                            "PipsAway": 50.0,
+                            "PipsAwayPercent": 150.0,
+                            "custom_price_fraction": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": 25.8,
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "a423ac9c-fe6c-4af3-86d6-97290a7c6ebc",
+                        "id_by_user": 4,
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "pips_away_from_open_price",
+                        "blockName": "Pips away from open price"
+                    },
+                    {
+                        "params": {
+                            "max_times_to_pass": "1",
+                            "symbol": "",
+                            "timeframe": "PERIOD_CURRENT"
+                        },
+                        "id": "f10a11d3-8a96-421a-8185-19fd71316267",
+                        "id_by_user": 5,
+                        "category": "time_filters",
+                        "block_name_mql": "once_per_bar",
+                        "blockName": "Once per bar"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "09bfd295-2812-4e8e-8c36-d20d29d59a77",
+                        "id_by_user": 6,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    }
+                ]
+            },
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "24c457b1-b820-493c-9977-ab60db13cf65",
+    "name_by_user": "TEST 8962",
+    "highestIndex": "7"
+}

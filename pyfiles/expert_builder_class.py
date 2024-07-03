@@ -219,6 +219,9 @@ class ExpertBuilder:
             block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
 
+        # set expert start time
+        self.on_init.append("\n	TimeAtStart(\"set\");\n")
+
         # addBlocks call
         call_add_blocks = self.global_functions.get_call__add_blocks_init()
         self.on_init.append(call_add_blocks)
@@ -640,6 +643,15 @@ class ExpertBuilder:
         ticks_data = self.global_functions.get_fun__ticks_data()
         self.functions.append(ticks_data)
 
+        time_at_start = self.global_functions.get_fun__time_at_start()
+        self.functions.append(time_at_start)
+
+        attr_ticket_previous_sibling = self.global_functions.get_fun__attr_ticket_previous_sibling()
+        self.functions.append(attr_ticket_previous_sibling)
+
+        order_open_price_as_child = self.global_functions.get_fun__order_open_price_as_child()
+        self.functions.append(order_open_price_as_child)
+
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
         self.classes_structs_enums.append(structs_data_chart_event)
@@ -807,6 +819,25 @@ class ExpertBuilder:
                 self.no_trade_order_nearby_run_data(node)
             elif task_name == "check_distance":
                 self.check_distance(node)
+            elif task_name == "pips_away_from_open_price":
+                self.pips_away_from_open_price(node)
+
+    def pips_away_from_open_price(self, node):
+        params = node.get("params")
+        if "pips_away_input_in_pips" in params:
+            value_fetch_pips = params.get("pips_away_input_in_pips")
+            row1_pips = value_fetch_pips.get("row1")
+            row2_pips = value_fetch_pips.get("row2")
+            params_pips = value_fetch_pips.get("params")
+            id_val_pips = str(node.get("id_by_user")) + "_pips"
+            self.task_elements.append(self.value_fetch_class(row1_pips, row2_pips, params_pips, id_val_pips))
+        if "custom_price_fraction" in params:
+            value_fetch_price_fraction = params.get("custom_price_fraction")
+            row1_price_fraction = value_fetch_price_fraction.get("row1")
+            row2_price_fraction = value_fetch_price_fraction.get("row2")
+            params_price_fraction = value_fetch_price_fraction.get("params")
+            id_val_price_fraction = str(node.get("id_by_user")) + "_price_fraction"
+            self.task_elements.append(self.value_fetch_class(row1_price_fraction, row2_price_fraction, params_price_fraction, id_val_price_fraction))
 
     def check_distance(self, node):
         value_fetch_upper_level = node.get("params").get("upper_level")
