@@ -1,5 +1,6 @@
 class Task_id : public Task
   {
+   //defined by user
    string                SignalType;
    string                CandleType;
    int                   CandleID;

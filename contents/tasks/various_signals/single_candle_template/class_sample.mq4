@@ -1,5 +1,6 @@
 class Task5 : public Task
   {
+  //defined by user
    string                SignalType;
    string                CandleType;
    int                   CandleID;
@@ -100,8 +101,7 @@ public:
            }
         }
 
-
-      if(pass)
+      if(pass==true)
         {
          //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
