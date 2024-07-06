@@ -90,7 +90,9 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "SecondStartHour", "SecondEndHour", "ThirdStartHour", "ThirdEndHour", "FourthStartHour",
             "FourthEndHour", "second_output", "ObjSource", "Name", "ModeTakeProfit", "ModeStopLoss",
             "symbol", "Price", "PipsAwayMode", "DirectionMode", "SignalType", "CandleType", "UpperWickMode",
-            "LowerWickMode", "AgeRelativeTo", "RelativeTo", "NewTPmode", "NewSLmode"]
+            "LowerWickMode", "AgeRelativeTo", "RelativeTo", "NewTPmode", "NewSLmode", "AlertTitle", "AlertLabel1",
+            "AlertLabel2", "AlertLabel3", "AlertLabel4", "AlertLabel5", "AlertLabel6", "AlertLabel7", "AlertLabel8",
+            "AlertLabel9", "AlertLabel10"]
 
     for key, value in dic.items():
         if isinstance(value, dict):
