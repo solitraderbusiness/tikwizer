@@ -149,6 +149,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = check_distance_run_data(node, run_data_static)
     elif task_name == "pips_away_from_open_price":
         run_data = pips_away_from_open_price_run_data(node, run_data_static)
+    elif task_name == "modify_stops":
+        run_data = modify_stops_run_data(node, run_data_static)
     return run_data
 
 
@@ -232,6 +234,102 @@ def is_var(value, variables):
         if variable.get("name") == value:
             return True
     return False
+
+
+def modify_stops_run_data(node, run_data_static):
+    params = node.get("params")
+    if "relative_to_dynamic" in params:
+        value_fetch_rtd = params.get("relative_to_dynamic")
+        row1_rtd = value_fetch_rtd.get("row1")
+        row2_rtd = value_fetch_rtd.get("row2")
+        id_val_rtd = str(node.get("id_by_user")) + "_rtd"
+
+        init_rtd = get_value_fetch_init(row1_rtd, row2_rtd, value_fetch_rtd.get("params"), id_val_rtd)
+        val_rtd = get_value_fetch_val(row1_rtd, row2_rtd, id_val_rtd)
+        run_data_static = run_data_static.replace("initializer_rtd", init_rtd)
+        run_data_static = run_data_static.replace("variable_name_rtd", val_rtd)
+    else:
+        run_data_static = run_data_static.replace("initializer_rtd", "")
+        run_data_static = run_data_static.replace("variable_name_rtd", "\"\"")
+    if "new_sl_mode_function" in params:
+        value_fetch_nsmf = params.get("new_sl_mode_function")
+        row1_nsmf = value_fetch_nsmf.get("row1")
+        row2_nsmf = value_fetch_nsmf.get("row2")
+        id_val_nsmf = str(node.get("id_by_user")) + "_nsmf"
+
+        init_nsmf = get_value_fetch_init(row1_nsmf, row2_nsmf, value_fetch_nsmf.get("params"), id_val_nsmf)
+        val_nsmf = get_value_fetch_val(row1_nsmf, row2_nsmf, id_val_nsmf)
+        run_data_static = run_data_static.replace("initializer_nsmf", init_nsmf)
+        run_data_static = run_data_static.replace("variable_name_nsmf", val_nsmf)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmf", "")
+        run_data_static = run_data_static.replace("variable_name_nsmf", "\"\"")
+    if "new_sl_mode_dynamicPips" in params:
+        value_fetch_nsmdp = params.get("new_sl_mode_dynamicPips")
+        row1_nsmdp = value_fetch_nsmdp.get("row1")
+        row2_nsmdp = value_fetch_nsmdp.get("row2")
+        id_val_nsmdp = str(node.get("id_by_user")) + "_nsmdp"
+
+        init_nsmdp = get_value_fetch_init(row1_nsmdp, row2_nsmdp, value_fetch_nsmdp.get("params"), id_val_nsmdp)
+        val_nsmdp = get_value_fetch_val(row1_nsmdp, row2_nsmdp, id_val_nsmdp)
+        run_data_static = run_data_static.replace("initializer_nsmdp", init_nsmdp)
+        run_data_static = run_data_static.replace("variable_name_nsmdp", val_nsmdp)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmdp", "")
+        run_data_static = run_data_static.replace("variable_name_nsmdp", "\"\"")
+    if "new_sl_mode_dynamicDigits" in params:
+        value_fetch_nsmdd = params.get("new_sl_mode_dynamicDigits")
+        row1_nsmdd = value_fetch_nsmdd.get("row1")
+        row2_nsmdd = value_fetch_nsmdd.get("row2")
+        id_val_nsmdd = str(node.get("id_by_user")) + "_nsmdd"
+
+        init_nsmdd = get_value_fetch_init(row1_nsmdd, row2_nsmdd, value_fetch_nsmdd.get("params"), id_val_nsmdd)
+        val_nsmdd = get_value_fetch_val(row1_nsmdd, row2_nsmdd, id_val_nsmdd)
+        run_data_static = run_data_static.replace("initializer_nsmdd", init_nsmdd)
+        run_data_static = run_data_static.replace("variable_name_nsmdd", val_nsmdd)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmdd", "")
+        run_data_static = run_data_static.replace("variable_name_nsmdd", "\"\"")
+    if "new_tp_mode_function" in params:
+        value_fetch_ntmf = params.get("new_tp_mode_function")
+        row1_ntmf = value_fetch_ntmf.get("row1")
+        row2_ntmf = value_fetch_ntmf.get("row2")
+        id_val_ntmf = str(node.get("id_by_user")) + "_ntmf"
+
+        init_ntmf = get_value_fetch_init(row1_ntmf, row2_ntmf, value_fetch_ntmf.get("params"), id_val_ntmf)
+        val_ntmf = get_value_fetch_val(row1_ntmf, row2_ntmf, id_val_ntmf)
+        run_data_static = run_data_static.replace("initializer_ntmf", init_ntmf)
+        run_data_static = run_data_static.replace("variable_name_ntmf", val_ntmf)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmf", "")
+        run_data_static = run_data_static.replace("variable_name_ntmf", "\"\"")
+    if "new_tp_mode_dynamicPips" in params:
+        value_fetch_ntmdp = params.get("new_tp_mode_dynamicPips")
+        row1_ntmdp = value_fetch_ntmdp.get("row1")
+        row2_ntmdp = value_fetch_ntmdp.get("row2")
+        id_val_ntmdp = str(node.get("id_by_user")) + "_ntmdp"
+
+        init_ntmdp = get_value_fetch_init(row1_ntmdp, row2_ntmdp, value_fetch_ntmdp.get("params"), id_val_ntmdp)
+        val_ntmdp = get_value_fetch_val(row1_ntmdp, row2_ntmdp, id_val_ntmdp)
+        run_data_static = run_data_static.replace("initializer_ntmdp", init_ntmdp)
+        run_data_static = run_data_static.replace("variable_name_ntmdp", val_ntmdp)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmdp", "")
+        run_data_static = run_data_static.replace("variable_name_ntmdp", "\"\"")
+    if "new_tp_mode_dynamicDigits" in params:
+        value_fetch_ntmdd = params.get("new_tp_mode_dynamicDigits")
+        row1_ntmdd = value_fetch_ntmdd.get("row1")
+        row2_ntmdd = value_fetch_ntmdd.get("row2")
+        id_val_ntmdd = str(node.get("id_by_user")) + "_ntmdd"
+
+        init_ntmdd = get_value_fetch_init(row1_ntmdd, row2_ntmdd, value_fetch_ntmdd.get("params"), id_val_ntmdd)
+        val_ntmdd = get_value_fetch_val(row1_ntmdd, row2_ntmdd, id_val_ntmdd)
+        run_data_static = run_data_static.replace("initializer_ntmdd", init_ntmdd)
+        run_data_static = run_data_static.replace("variable_name_ntmdd", val_ntmdd)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmdd", "")
+        run_data_static = run_data_static.replace("variable_name_ntmdd", "\"\"")
+    return run_data_static
 
 
 def pips_away_from_open_price_run_data(node, run_data_static):

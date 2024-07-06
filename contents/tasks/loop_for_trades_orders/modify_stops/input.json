@@ -1,0 +1,14 @@
+{
+  "RelativeTo": "openprice",
+  "NewSLmode": "fixed",
+  "NewStopLoss": 50.0,
+  "NewStopLossPercentPrice": 0.55,
+  "NewStopLossPercent": 50.0,
+  "NewStopLossPercentTP": 50.0,
+  "NewTPmode": "fixed",
+  "NewTakeProfit": 50.0,
+  "NewTakeProfitPercentPrice": 0.55,
+  "NewTakeProfitPercent": 50.0,
+  "NewTakeProfitPercentSL": 50.0,
+  "LevelColor": "clrDeepPink"
+}

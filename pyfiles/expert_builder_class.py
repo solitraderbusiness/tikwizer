@@ -821,6 +821,60 @@ class ExpertBuilder:
                 self.check_distance(node)
             elif task_name == "pips_away_from_open_price":
                 self.pips_away_from_open_price(node)
+            elif task_name == "modify_stops":
+                self.modify_stops(node)
+
+    def modify_stops(self, node):
+        params = node.get("params")
+        if "relative_to_dynamic" in params:
+            value_fetch_rtd = params.get("relative_to_dynamic")
+            row1_rtd = value_fetch_rtd.get("row1")
+            row2_rtd = value_fetch_rtd.get("row2")
+            params_rtd = value_fetch_rtd.get("params")
+            id_val_rtd = str(node.get("id_by_user")) + "_rtd"
+            self.task_elements.append(self.value_fetch_class(row1_rtd, row2_rtd, params_rtd, id_val_rtd))
+        if "new_sl_mode_function" in params:
+            value_fetch_nsmf = params.get("new_sl_mode_function")
+            row1_nsf = value_fetch_nsmf.get("row1")
+            row2_nsf = value_fetch_nsmf.get("row2")
+            params_nsf = value_fetch_nsmf.get("params")
+            id_val_nsf = str(node.get("id_by_user")) + "_nsmf"
+            self.task_elements.append(self.value_fetch_class(row1_nsf, row2_nsf, params_nsf, id_val_nsf))
+        if "new_sl_mode_dynamicPips" in params:
+            value_fetch_nsmdp = params.get("new_sl_mode_dynamicPips")
+            row1_nsmdp = value_fetch_nsmdp.get("row1")
+            row2_nsmdp = value_fetch_nsmdp.get("row2")
+            params_nsmdp = value_fetch_nsmdp.get("params")
+            id_val_nsmdp = str(node.get("id_by_user")) + "_nsmdp"
+            self.task_elements.append(self.value_fetch_class(row1_nsmdp, row2_nsmdp, params_nsmdp, id_val_nsmdp))
+        if "new_sl_mode_dynamicDigits" in params:
+            value_fetch_nsmdd = params.get("new_sl_mode_dynamicDigits")
+            row1_nsmdd = value_fetch_nsmdd.get("row1")
+            row2_nsmdd = value_fetch_nsmdd.get("row2")
+            params_nsmdd = value_fetch_nsmdd.get("params")
+            id_val_nsmdd = str(node.get("id_by_user")) + "_nsmdd"
+            self.task_elements.append(self.value_fetch_class(row1_nsmdd, row2_nsmdd, params_nsmdd, id_val_nsmdd))
+        if "new_tp_mode_function" in params:
+            value_fetch_ntmf = params.get("new_tp_mode_function")
+            row1_ntmf = value_fetch_ntmf.get("row1")
+            row2_ntmf = value_fetch_ntmf.get("row2")
+            params_ntmf = value_fetch_ntmf.get("params")
+            id_val_ntmf = str(node.get("id_by_user")) + "_ntmf"
+            self.task_elements.append(self.value_fetch_class(row1_ntmf, row2_ntmf, params_ntmf, id_val_ntmf))
+        if "new_tp_mode_dynamicPips" in params:
+            value_fetch_ntmdp = params.get("new_tp_mode_dynamicPips")
+            row1_ntmdp = value_fetch_ntmdp.get("row1")
+            row2_ntmdp = value_fetch_ntmdp.get("row2")
+            params_ntmdp = value_fetch_ntmdp.get("params")
+            id_val_ntmdp = str(node.get("id_by_user")) + "_ntmdp"
+            self.task_elements.append(self.value_fetch_class(row1_ntmdp, row2_ntmdp, params_ntmdp, id_val_ntmdp))
+        if "new_sl_mode_dynamicDigits" in params:
+            value_fetch_ntmdd = params.get("new_sl_mode_dynamicDigits")
+            row1_ntmdd = value_fetch_ntmdd.get("row1")
+            row2_ntmdd = value_fetch_ntmdd.get("row2")
+            params_ntmdd = value_fetch_ntmdd.get("params")
+            id_val_ntmdd = str(node.get("id_by_user")) + "_ntmdd"
+            self.task_elements.append(self.value_fetch_class(row1_ntmdd, row2_ntmdd, params_ntmdd, id_val_ntmdd))
 
     def pips_away_from_open_price(self, node):
         params = node.get("params")
@@ -837,7 +891,9 @@ class ExpertBuilder:
             row2_price_fraction = value_fetch_price_fraction.get("row2")
             params_price_fraction = value_fetch_price_fraction.get("params")
             id_val_price_fraction = str(node.get("id_by_user")) + "_price_fraction"
-            self.task_elements.append(self.value_fetch_class(row1_price_fraction, row2_price_fraction, params_price_fraction, id_val_price_fraction))
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_fraction, row2_price_fraction, params_price_fraction,
+                                       id_val_price_fraction))
 
     def check_distance(self, node):
         value_fetch_upper_level = node.get("params").get("upper_level")

@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      RelativeTo = (string)RelativeTo_val;\n      NewSLmode = (string)NewSLmode_val;\n      NewStopLoss = (double)NewStopLoss_val;\n      NewStopLossPercentPrice = (double)NewStopLossPercentPrice_val;\n      NewStopLossPercent = (double)NewStopLossPercent_val;\n      NewStopLossPercentTP = (double)NewStopLossPercentTP_val;\n      NewTPmode = (string)NewTPmode_val;\n      NewTakeProfit = (double)NewTakeProfit_val;\n      NewTakeProfitPercentPrice = (double)NewTakeProfitPercentPrice_val;\n      NewTakeProfitPercent = (double)NewTakeProfitPercent_val;\n      NewTakeProfitPercentSL = (double)NewTakeProfitPercentSL_val;\n      LevelColor = (color)LevelColor_val;"
+}
