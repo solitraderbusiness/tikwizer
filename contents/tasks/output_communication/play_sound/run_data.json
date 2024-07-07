@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n\n      string filename = MTsound;\n\n      if(MTsound == \"custom\")\n        {\n         filename = MYsound;\n        }\n      else\n         if(StringSubstr(filename, StringLen(filename)-4) != \".wav\")\n           {\n            filename += \".wav\";\n           }\n\n      bool success = PlaySound(filename);\n\n      if(!success)\n        {\n         Print(\"Play Sound Error: \" + ErrorMessage());\n        }\n\n      block.onResult(ROUTE_1_PASSED);"
+}

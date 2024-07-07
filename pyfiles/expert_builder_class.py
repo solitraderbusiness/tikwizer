@@ -825,6 +825,67 @@ class ExpertBuilder:
                 self.modify_stops(node)
             elif task_name == "alert_message":
                 self.alert_message(node)
+            elif task_name == "phone_notification":
+                self.phone_notification(node)
+
+    def phone_notification(self, node):
+        params = node.get("params")
+        if params.get("Label1") != "\"\"" and "value_1" in params:
+            value_fetch_1 = params.get("value_1")
+            row1_1 = value_fetch_1.get("row1")
+            row2_1 = value_fetch_1.get("row2")
+            params_1 = value_fetch_1.get("params")
+            id_val_1 = str(node.get("id_by_user")) + "_1"
+            self.task_elements.append(self.value_fetch_class(row1_1, row2_1, params_1, id_val_1))
+        if params.get("Label2") != "\"\"" and "value_2" in params:
+            value_fetch_2 = params.get("value_2")
+            row1_2 = value_fetch_2.get("row1")
+            row2_2 = value_fetch_2.get("row2")
+            id_val_2 = str(node.get("id_by_user")) + "_2"
+            params_2 = value_fetch_2.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_2, row2_2, params_2, id_val_2))
+        if params.get("Label3") != "\"\"" and "value_3" in params:
+            value_fetch_3 = params.get("value_3")
+            row1_3 = value_fetch_3.get("row1")
+            row2_3 = value_fetch_3.get("row2")
+            id_val_3 = str(node.get("id_by_user")) + "_3"
+            params_3 = value_fetch_3.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_3, row2_3, params_3, id_val_3))
+        if params.get("Label4") != "\"\"" and "value_4" in params:
+            value_fetch_4 = params.get("value_4")
+            row1_4 = value_fetch_4.get("row1")
+            row2_4 = value_fetch_4.get("row2")
+            id_val_4 = str(node.get("id_by_user")) + "_4"
+            params_4 = value_fetch_4.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_4, row2_4, params_4, id_val_4))
+        if params.get("Label5") != "\"\"" and "value_5" in params:
+            value_fetch_5 = params.get("value_5")
+            row1_5 = value_fetch_5.get("row1")
+            row2_5 = value_fetch_5.get("row2")
+            id_val_5 = str(node.get("id_by_user")) + "_5"
+            params_5 = value_fetch_5.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_5, row2_5, params_5, id_val_5))
+        if params.get("Label6") != "\"\"" and "value_6" in params:
+            value_fetch_6 = params.get("value_6")
+            row1_6 = value_fetch_6.get("row1")
+            row2_6 = value_fetch_6.get("row2")
+            id_val_6 = str(node.get("id_by_user")) + "_6"
+            params_6 = value_fetch_6.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_6, row2_6, params_6, id_val_6))
+        if params.get("Label7") != "\"\"" and "value_7" in params:
+            value_fetch_7 = params.get("value_7")
+            row1_7 = value_fetch_7.get("row1")
+            row2_7 = value_fetch_7.get("row2")
+            id_val_7 = str(node.get("id_by_user")) + "_7"
+            params_7 = value_fetch_7.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_7, row2_7, params_7, id_val_7))
+        if params.get("Label8") != "\"\"" and "value_8" in params:
+            value_fetch_8 = params.get("value_8")
+            row1_8 = value_fetch_8.get("row1")
+            row2_8 = value_fetch_8.get("row2")
+            id_val_8 = str(node.get("id_by_user")) + "_8"
+            params_8 = value_fetch_8.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_8, row2_8, params_8, id_val_8))
 
     def alert_message(self, node):
         params = node.get("params")

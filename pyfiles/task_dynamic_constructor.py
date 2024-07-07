@@ -153,6 +153,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = modify_stops_run_data(node, run_data_static)
     elif task_name == "alert_message":
         run_data = alert_message_run_data(node, run_data_static)
+    elif task_name == "phone_notification":
+        run_data = phone_notification_run_data(node, run_data_static)
     return run_data
 
 
@@ -236,6 +238,123 @@ def is_var(value, variables):
         if variable.get("name") == value:
             return True
     return False
+
+
+def phone_notification_run_data(node, run_data_static):
+    params = node.get("params")
+    if params.get("Label1") != "\"\"" and "value_1" in params:
+        value_fetch_1 = params.get("value_1")
+        row1_1 = value_fetch_1.get("row1")
+        row2_1 = value_fetch_1.get("row2")
+        id_val_1 = str(node.get("id_by_user")) + "_1"
+
+        init_1 = get_value_fetch_init(row1_1, row2_1, value_fetch_1.get("params"), id_val_1)
+        val_1 = get_value_fetch_val(row1_1, row2_1, id_val_1)
+        run_data_static = run_data_static.replace("initializer_1", init_1)
+        run_data_static = run_data_static.replace("variable_name_1", val_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_1", "")
+        run_data_static = run_data_static.replace("variable_name_1", "\"\"")
+
+    if params.get("Label2") != "\"\"" and "value_2" in params:
+        value_fetch_2 = params.get("value_2")
+        row1_2 = value_fetch_2.get("row1")
+        row2_2 = value_fetch_2.get("row2")
+        id_val_2 = str(node.get("id_by_user")) + "_2"
+
+        init_2 = get_value_fetch_init(row1_2, row2_2, value_fetch_2.get("params"), id_val_2)
+        val_2 = get_value_fetch_val(row1_2, row2_2, id_val_2)
+        run_data_static = run_data_static.replace("initializer_2", init_2)
+        run_data_static = run_data_static.replace("variable_name_2", val_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_2", "")
+        run_data_static = run_data_static.replace("variable_name_2", "\"\"")
+
+    if params.get("Label3") != "\"\"" and "value_3" in params:
+        value_fetch_3 = params.get("value_3")
+        row1_3 = value_fetch_3.get("row1")
+        row2_3 = value_fetch_3.get("row2")
+        id_val_3 = str(node.get("id_by_user")) + "_3"
+
+        init_3 = get_value_fetch_init(row1_3, row2_3, value_fetch_3.get("params"), id_val_3)
+        val_3 = get_value_fetch_val(row1_3, row2_3, id_val_3)
+        run_data_static = run_data_static.replace("initializer_3", init_3)
+        run_data_static = run_data_static.replace("variable_name_3", val_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_3", "")
+        run_data_static = run_data_static.replace("variable_name_3", "\"\"")
+
+    if params.get("Label4") != "\"\"" and "value_4" in params:
+        value_fetch_4 = params.get("value_4")
+        row1_4 = value_fetch_4.get("row1")
+        row2_4 = value_fetch_4.get("row2")
+        id_val_4 = str(node.get("id_by_user")) + "_4"
+
+        init_4 = get_value_fetch_init(row1_4, row2_4, value_fetch_4.get("params"), id_val_4)
+        val_4 = get_value_fetch_val(row1_4, row2_4, id_val_4)
+        run_data_static = run_data_static.replace("initializer_4", init_4)
+        run_data_static = run_data_static.replace("variable_name_4", val_4)
+    else:
+        run_data_static = run_data_static.replace("initializer_4", "")
+        run_data_static = run_data_static.replace("variable_name_4", "\"\"")
+
+    if params.get("Label5") != "\"\"" and "value_5" in params:
+        value_fetch_5 = params.get("value_5")
+        row1_5 = value_fetch_5.get("row1")
+        row2_5 = value_fetch_5.get("row2")
+        id_val_5 = str(node.get("id_by_user")) + "_5"
+
+        init_5 = get_value_fetch_init(row1_5, row2_5, value_fetch_5.get("params"), id_val_5)
+        val_5 = get_value_fetch_val(row1_5, row2_5, id_val_5)
+        run_data_static = run_data_static.replace("initializer_5", init_5)
+        run_data_static = run_data_static.replace("variable_name_5", val_5)
+    else:
+        run_data_static = run_data_static.replace("initializer_5", "")
+        run_data_static = run_data_static.replace("variable_name_5", "\"\"")
+
+    if params.get("Label6") != "\"\"" and "value_6" in params:
+        value_fetch_6 = params.get("value_6")
+        row1_6 = value_fetch_6.get("row1")
+        row2_6 = value_fetch_6.get("row2")
+        id_val_6 = str(node.get("id_by_user")) + "_6"
+
+        init_6 = get_value_fetch_init(row1_6, row2_6, value_fetch_6.get("params"), id_val_6)
+        val_6 = get_value_fetch_val(row1_6, row2_6, id_val_6)
+        run_data_static = run_data_static.replace("initializer_6", init_6)
+        run_data_static = run_data_static.replace("variable_name_6", val_6)
+    else:
+        run_data_static = run_data_static.replace("initializer_6", "")
+        run_data_static = run_data_static.replace("variable_name_6", "\"\"")
+
+    if params.get("Label7") != "\"\"" and "value_7" in params:
+        value_fetch_7 = params.get("value_7")
+        row1_7 = value_fetch_7.get("row1")
+        row2_7 = value_fetch_7.get("row2")
+        id_val_7 = str(node.get("id_by_user")) + "_7"
+
+        init_7 = get_value_fetch_init(row1_7, row2_7, value_fetch_7.get("params"), id_val_7)
+        val_7 = get_value_fetch_val(row1_7, row2_7, id_val_7)
+        run_data_static = run_data_static.replace("initializer_7", init_7)
+        run_data_static = run_data_static.replace("variable_name_7", val_7)
+    else:
+        run_data_static = run_data_static.replace("initializer_7", "")
+        run_data_static = run_data_static.replace("variable_name_7", "\"\"")
+
+    if params.get("Label8") != "\"\"" and "value_8" in params:
+        value_fetch_8 = params.get("value_8")
+        row1_8 = value_fetch_8.get("row1")
+        row2_8 = value_fetch_8.get("row2")
+        id_val_8 = str(node.get("id_by_user")) + "_8"
+
+        init_8 = get_value_fetch_init(row1_8, row2_8, value_fetch_8.get("params"), id_val_8)
+        val_8 = get_value_fetch_val(row1_8, row2_8, id_val_8)
+        run_data_static = run_data_static.replace("initializer_8", init_8)
+        run_data_static = run_data_static.replace("variable_name_8", val_8)
+    else:
+        run_data_static = run_data_static.replace("initializer_8", "")
+        run_data_static = run_data_static.replace("variable_name_8", "\"\"")
+
+    return run_data_static
 
 
 def alert_message_run_data(node, run_data_static):
@@ -374,8 +493,8 @@ def alert_message_run_data(node, run_data_static):
 
         init_10 = get_value_fetch_init(row1_10, row2_10, value_fetch_10.get("params"), id_val_10)
         val_10 = get_value_fetch_val(row1_10, row2_10, id_val_10)
-        run_data_static = run_data_static.replace("initializer_10", init_10)
-        run_data_static = run_data_static.replace("variable_name_10", val_10)
+        run_data_static = run_data_static.replace("initializer_ten", init_10)
+        run_data_static = run_data_static.replace("variable_name_ten", val_10)
     else:
         run_data_static = run_data_static.replace("initializer_10", "")
         run_data_static = run_data_static.replace("variable_name_10", "\"\"")

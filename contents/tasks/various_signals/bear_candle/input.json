@@ -1,0 +1,8 @@
+{
+      "SignalType" : "continuous",
+      "CandleID" : 1,
+      "MinBodySize" : 5.0,
+      "MaxBodySize" : 0.0,
+      "Symbol" : "",
+      "Period" : "PERIOD_CURRENT"
+}

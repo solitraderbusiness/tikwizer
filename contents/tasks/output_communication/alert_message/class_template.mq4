@@ -82,8 +82,8 @@ public:
         }
       if(AlertLabel10 != "")
         {
-         initializer_10
-         text += "\n" + AlertLabel10 + ": " + (string)(variable_name_10);
+         initializer_ten
+         text += "\n" + AlertLabel10 + ": " + (string)(variable_name_ten);
         }
 
       text = AlertTitle + "\n" + text;
