@@ -833,47 +833,47 @@ class ExpertBuilder:
     def move(self, node):
         params = node.get("params")
         if "time_1" in params:
-            value_fetch_1 = params.get("time_1")
-            row1_1 = value_fetch_1.get("row1")
-            row2_1 = value_fetch_1.get("row2")
-            params_1 = value_fetch_1.get("params")
-            id_val_1 = str(node.get("id_by_user")) + "_time_1"
-            self.task_elements.append(self.value_fetch_class(row1_1, row2_1, params_1, id_val_1))
+            value_fetch_time_1 = params.get("time_1")
+            row1_time_1 = value_fetch_time_1.get("row1")
+            row2_time_1 = value_fetch_time_1.get("row2")
+            params_time_1 = value_fetch_time_1.get("params")
+            id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
         if "time_2" in params:
-            value_fetch_2 = params.get("time_2")
-            row1_2 = value_fetch_2.get("row1")
-            row2_2 = value_fetch_2.get("row2")
-            id_val_2 = str(node.get("id_by_user")) + "_time_2"
-            params_2 = value_fetch_2.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_2, row2_2, params_2, id_val_2))
+            value_fetch_time_2 = params.get("time_2")
+            row1_time_2 = value_fetch_time_2.get("row1")
+            row2_time_2 = value_fetch_time_2.get("row2")
+            id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
+            params_time_2 = value_fetch_time_2.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
         if "time_3" in params:
-            value_fetch_3 = params.get("time_3")
-            row1_3 = value_fetch_3.get("row1")
-            row2_3 = value_fetch_3.get("row2")
-            id_val_3 = str(node.get("id_by_user")) + "_time_3"
-            params_3 = value_fetch_3.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_3, row2_3, params_3, id_val_3))
+            value_fetch_time_3 = params.get("time_3")
+            row1_time_3 = value_fetch_time_3.get("row1")
+            row2_time_3 = value_fetch_time_3.get("row2")
+            id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
+            params_time_3 = value_fetch_time_3.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
         if "price_1" in params:
-            value_fetch_4 = params.get("price_1")
-            row1_4 = value_fetch_4.get("row1")
-            row2_4 = value_fetch_4.get("row2")
-            id_val_4 = str(node.get("id_by_user")) + "_price_1"
-            params_4 = value_fetch_4.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_4, row2_4, params_4, id_val_4))
+            value_fetch_price_1 = params.get("price_1")
+            row1_price_1 = value_fetch_price_1.get("row1")
+            row2_price_1 = value_fetch_price_1.get("row2")
+            id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+            params_price_1 = value_fetch_price_1.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
         if "price_2" in params:
-            value_fetch_5 = params.get("price_2")
-            row1_5 = value_fetch_5.get("row1")
-            row2_5 = value_fetch_5.get("row2")
-            id_val_5 = str(node.get("id_by_user")) + "_price_2"
-            params_5 = value_fetch_5.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_5, row2_5, params_5, id_val_5))
+            value_fetch_price_2 = params.get("price_2")
+            row1_price_2 = value_fetch_price_2.get("row1")
+            row2_price_2 = value_fetch_price_2.get("row2")
+            id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
+            params_price_2 = value_fetch_price_2.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
         if "price_3" in params:
-            value_fetch_6 = params.get("price_3")
-            row1_6 = value_fetch_6.get("row1")
-            row2_6 = value_fetch_6.get("row2")
-            id_val_6 = str(node.get("id_by_user")) + "_price_3"
-            params_6 = value_fetch_6.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_6, row2_6, params_6, id_val_6))
+            value_fetch_price_3 = params.get("price_3")
+            row1_price_3 = value_fetch_price_3.get("row1")
+            row2_price_3 = value_fetch_price_3.get("row2")
+            id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
+            params_price_3 = value_fetch_price_3.get("params")
+            self.task_elements.append(self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
 
     def phone_notification(self, node):
         params = node.get("params")
