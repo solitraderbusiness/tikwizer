@@ -157,6 +157,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = phone_notification_run_data(node, run_data_static)
     elif task_name == "move":
         run_data = move_run_data(node, run_data_static)
+    elif task_name == "modify_text_description":
+        run_data = modify_text_description_run_data(node, run_data_static)
     return run_data
 
 
@@ -242,6 +244,20 @@ def is_var(value, variables):
     return False
 
 
+def modify_text_description_run_data(node, run_data_static):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id_by_user")) + "_text"
+
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    run_data_static = run_data_static.replace("initializer_text", init)
+    run_data_static = run_data_static.replace("variable_name_text", val)
+
+    return run_data_static
+
+
 def move_run_data(node, run_data_static):
     params = node.get("params")
     if "time_1" in params:
@@ -292,7 +308,8 @@ def move_run_data(node, run_data_static):
         row2_price_1 = value_fetch_price_1.get("row2")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
 
-        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
         val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
         run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
         run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
@@ -306,7 +323,8 @@ def move_run_data(node, run_data_static):
         row2_price_2 = value_fetch_price_2.get("row2")
         id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
 
-        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"), id_val_price_2)
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"),
+                                            id_val_price_2)
         val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
         run_data_static = run_data_static.replace("initializer_price_2", init_price_2)
         run_data_static = run_data_static.replace("variable_name_price_2", val_price_2)
@@ -320,7 +338,8 @@ def move_run_data(node, run_data_static):
         row2_price_3 = value_fetch_price_3.get("row2")
         id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
 
-        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"), id_val_price_3)
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"),
+                                            id_val_price_3)
         val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
         run_data_static = run_data_static.replace("initializer_price_3", init_price_3)
         run_data_static = run_data_static.replace("variable_name_price_3", val_price_3)

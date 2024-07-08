@@ -829,6 +829,16 @@ class ExpertBuilder:
                 self.phone_notification(node)
             elif task_name == "move":
                 self.move(node)
+            elif task_name == "modify_text_description":
+                self.modify_text_description(node)
+
+    def modify_text_description(self, node):
+        value_fetch = node.get("params").get("text")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        params_price_level = value_fetch.get("params")
+        id_val = str(node.get("id_by_user")) + "_text"
+        self.task_elements.append(self.value_fetch_class(row1, row2, params_price_level, id_val))
 
     def move(self, node):
         params = node.get("params")
