@@ -60,7 +60,7 @@ public:
       Task::run(block_id, block);
 
       //STest, trades not sorted by newest
-      for(int i = 0 ; i < OrdersTotal() ; i++)
+      for(int i = OrdersTotal()-1 ; i >=0 ; i--)
         {
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            {

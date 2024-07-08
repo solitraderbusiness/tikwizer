@@ -201,6 +201,9 @@
 #define ACCOUNT_INFO_STOPOUT_LEVEL 15
 #define ACCOUNT_INFO_MARGIN_CALL_LEVEL 16
 #define ACCOUNT_INFO_ORDERS_TRADES_LIMIT 17
+double test; //
+string greetings = "hellow how are your"; //
+int my_int = 20; //
 //This is used to hold onchart event for onchart blocks process
 struct OnChartEventHolder
   {
@@ -987,7 +990,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Value4_price_fraction
+class Value5cm_r1
   {
 public:
 
@@ -1031,7 +1034,7 @@ public:
    void              init()
 
      {
-      value = 25.8;
+      value = "sample text";
       //for pips
       pips_mode = VALUE_PIPS_AS_IS;
       symbol = "NULL";
@@ -1069,8 +1072,8 @@ public:
    T                 calc()
      {
       msymbol = getSymbol(symbol);
-      double result = 0;
-      string value_type = "Numeric";
+      string result = "";
+      string value_type = "Text";
       if(value_type=="Numeric" || value_type=="Boolean" || value_type=="Color" || value_type=="Text_code_input" || value_type=="Text")
         {
          result = value;
@@ -1226,321 +1229,8 @@ public:
      }
   };
 
-//Bear candle
-class Task1 : public Task
-  {
-   string                SignalType;
-   int                   CandleID;
-   double                MinBodySize;
-   double                MaxBodySize;
-   string                symbol;
-   ENUM_TIMEFRAMES       timeframe;
-   //defined by system
-   datetime          bartime;
-   string            msymbol;
-   ENUM_TIMEFRAMES   mtimeframe;
-public:
-                     Task1(string name):Task(name)
-     {
-      SignalType = (string)"continuous";
-      CandleID = (int)1;
-      MinBodySize = (double)5.0;
-      MaxBodySize = (double)0.0;
-      symbol = (string)"";
-      timeframe = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
-      //defined by system
-      bartime =  0;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-      double cOpen  = iOpen(msymbol,mtimeframe,CandleID);
-      double cClose = iClose(msymbol,mtimeframe,CandleID);
-
-      if(SignalType == "continuous" || bartime < iTime(msymbol,mtimeframe,1))
-        {
-         if((cClose < cOpen)
-            && (cOpen-cClose >= toDigits(MinBodySize, msymbol))
-            && (MaxBodySize <= 0 || cOpen-cClose <= toDigits(MaxBodySize, msymbol)))
-           {
-            if(SignalType != "continuous")
-              {
-               bartime = iTime(msymbol,mtimeframe,1);
-              }
-
-            block.onResult(ROUTE_1_PASSED);
-            return;
-           }
-        }
-
-      block.onResult(ROUTE_2_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Pips away from open price
-class Task4 : public Task
-  {
-   string                DirectionMode;
-   int                   PipsAwayReferencePrice;
-   int                   OpenPriceMode;
-   string                PipsAwayMode;
-   double                PipsAway;
-   double                PipsAwayPercent;
-
-public:
-                     Task4(string name):Task(name)
-     {
-      DirectionMode = (string)"double";
-      PipsAwayReferencePrice = (int)0;
-      OpenPriceMode = (int)0;
-      PipsAwayMode = (string)"functionFraction";
-      PipsAway = (double)50.0;
-      PipsAwayPercent = (double)150.0;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      if(exit_loop)
-         return;
-
-      //LoopedResume(); //STest, commented
-
-      string symbol      = OrderSymbol();
-      int digits         = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
-      double price       = 0;
-      double digits_away = 0;
-      bool next          = false;
-      bool success       = false;
-
-      // the OpenPrice. In case of children trades, their OpenPrice is the same as the OpenPrice of the parent trade.
-      // So, if I want their individual OpenPrice, I can get the ClosePrice of their previous sibling.
-      double op     = OrderOpenPrice();
-      ulong ticket0 = 0;
-
-      if(OpenPriceMode == 0)
-        {
-         ulong parent = attrTicketParent(OrderTicket());
-         ticket0    = OrderTicket();
-
-         success = OrderSelect((int)parent, SELECT_BY_TICKET, MODE_TRADES) && OrderType() < 2;
-
-         op = OrderOpenPrice();
-
-         success = OrderSelect((int)ticket0, SELECT_BY_TICKET, MODE_TRADES) && OrderType() < 2; // select the trade that was selected
-        }
-      else
-         if(OpenPriceMode == 1)
-           {
-            op = OrderOpenPriceAsChild();
-           }
-
-      if(PipsAwayMode == "fixed")
-        {
-         digits_away = toDigits(PipsAway, symbol);
-        }
-      else
-         if(PipsAwayMode == "percentSL")
-           {
-            double sl = NormalizeDouble(MathAbs(OrderStopLoss()-op), digits);
-            digits_away  = sl *(PipsAwayPercent/100);
-           }
-         else
-            if(PipsAwayMode == "percentTP")
-              {
-               double tp = NormalizeDouble(MathAbs(OrderTakeProfit()-op), digits);
-               digits_away  = tp *(PipsAwayPercent/100);
-              }
-            else
-               if(PipsAwayMode == "function")
-                 {
-
-                  digits_away = toDigits("", symbol);
-                 }
-               else
-                  if(PipsAwayMode == "functionFraction")
-                    {
-                     Value4_price_fraction value4_price_fraction;
-                     value4_price_fraction.init();
-                     double valueValue4_price_fraction = value4_price_fraction.calc<double>();
-                     digits_away = valueValue4_price_fraction;
-                    }
-
-      if(IsOrderTypeBuy())
-        {
-         if(PipsAwayReferencePrice == 0)
-            price = SymbolAsk(symbol);
-         else
-            if(PipsAwayReferencePrice == 1)
-               price = SymbolBid(symbol);
-            else
-               if(PipsAwayReferencePrice == 2)
-                  price = (SymbolAsk(symbol) + SymbolBid(symbol)) / 2;
-
-         if(
-            (DirectionMode == "single" && digits_away >= 0 && NormalizeDouble(price-op, digits) >= digits_away)
-            || (DirectionMode == "single" && digits_away < 0 && NormalizeDouble(price-op, digits) <= digits_away)
-            || (DirectionMode == "double" && MathAbs(NormalizeDouble(price-op, digits)) >= MathAbs(digits_away))
-            || (DirectionMode == "trading" && digits_away >= 0 && NormalizeDouble(price-op, digits) >= digits_away)
-            || (DirectionMode == "trading" && digits_away < 0 && NormalizeDouble(price-op, digits) <= digits_away)
-         )
-           {
-            next = true;
-           }
-        }
-      else
-        {
-         if(PipsAwayReferencePrice == 0)
-            price = SymbolBid(symbol);
-         else
-            if(PipsAwayReferencePrice == 1)
-               price = SymbolAsk(symbol);
-            else
-               if(PipsAwayReferencePrice == 2)
-                  price = (SymbolAsk(symbol) + SymbolBid(symbol)) / 2;
-
-         if(
-            (DirectionMode == "single" && digits_away >= 0 && NormalizeDouble(price-op, digits) >= digits_away)
-            || (DirectionMode == "single" && digits_away < 0 && NormalizeDouble(price-op, digits) <= digits_away)
-            || (DirectionMode == "double" && MathAbs(NormalizeDouble(op-price, digits)) >= MathAbs(digits_away))
-            || (DirectionMode == "trading" && digits_away >= 0 && NormalizeDouble(op-price, digits) >= digits_away)
-            || (DirectionMode == "trading" && digits_away < 0 && NormalizeDouble(op-price, digits) <= digits_away)
-         )
-           {
-            next = true;
-           }
-        }
-
-
-      if(next)
-        {
-         //printf("task"+block_id + " passed route 1 ");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2 ");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Once per bar
-class Task5 : public Task
-  {
-   string                   symbol;
-   ENUM_TIMEFRAMES       timeframe;
-   int                max_times_to_pass;
-   // System parameters Parameters
-   string            tokens[];
-   int               passes[];
-   datetime          old_values[];
-public:
-                     Task5(string name):Task(name)
-     {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      max_times_to_pass = 1;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      string msymbol = getSymbol(symbol);
-      int mtimeframe = getTimeframe(timeframe);
-
-      bool next    = false;
-      string token = msymbol + IntegerToString(mtimeframe);
-      int index    = ArraySearch(tokens, token);
-
-      if(index == -1)
-        {
-         index = ArraySize(tokens);
-
-         ArrayResize(tokens, index + 1);
-         ArrayResize(old_values, index + 1);
-         ArrayResize(passes, index + 1);
-
-         tokens[index] = token;
-         passes[index] = 0;
-         old_values[index] = 0;
-        }
-
-      if(max_times_to_pass > 0)
-        {
-
-         datetime new_value = iTime(msymbol, mtimeframe, 1);
-
-         if(new_value == 0)
-           {
-            Print("Failed to get the time from candle 1 on symbol ", msymbol, " and timeframe ", EnumToString((ENUM_TIMEFRAMES)mtimeframe), ". The history data needs to be fixed.");
-           }
-
-         if(new_value > old_values[index])
-           {
-            passes[index]++;
-
-            if(passes[index] >= max_times_to_pass)
-              {
-               old_values[index]  = new_value;
-               passes[index] = 0;
-              }
-
-            next = true;
-           }
-        }
-
-      if(next)
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   template<typename T>
-   int               ArraySearch(T &array[], T value)
-     {
-      int index = -1;
-      int size  = ArraySize(array);
-
-      for(int i = 0; i < size; i++)
-        {
-         if(array[i] == value)
-           {
-            index = i;
-            break;
-           }
-        }
-
-      return index;
-     }
-
-  };
-
-//Buy now
-class Task6 : public Task
+//Buy pending order
+class Task2 : public Task
   {
    //values set by user
    string            symbol;
@@ -1583,26 +1273,26 @@ class Task6 : public Task
    double            martingale_reset_on_n_profits;
    int               type[];
 public:
-                     Task6(string name):Task(name)
+                     Task2(string name):Task(name)
      {
       symbol = "";
       group = 11;
-      order_type = ORDER_BUY;
+      order_type = ORDER_BUY_PENDING;
       money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
       how_much_volume = 0.1;
       volume_upper_limit = 0;
       open_at_price = OPEN_AT_ASK;
-      price_offset = 25;
+      price_offset = 20;
       price_offset_as_pip = True;
 
       slippage = 4;
-      stoploss = 20;
+      stoploss = ::test;
       takeprofit = 20;
       take_profit_mode = TPSL_MODE_FIXED_PIPS;
       stop_loss_mode = TPSL_MODE_FIXED_PIPS;
       comment = "";
       expiration = 0;
-      arrow_color = clrMaroon;
+      arrow_color = clrDarkBlue;
 
       //martingale
       look_up_on = LOOK_UP_RUNNING_ONLY;
@@ -1619,6 +1309,8 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+      stoploss = ::test;
+
 
       msymbol = getSymbol(symbol);
 
@@ -1948,6 +1640,913 @@ private:
       magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
   };
+
+//Minutes filter
+class Task3 : public Task
+  {
+   int                 server_or_local_time;
+   int                 FirstStartMinute;
+   int                 FirstEndMinute;
+   bool                SecondMinutesBlock;
+   int                 SecondStartMinute;
+   int                 SecondEndMinute;
+   bool                ThirdMinutesBlock;
+   int                 ThirdStartMinute;
+   int                 ThirdEndMinute;
+   bool                FourthMinutesBlock;
+   int                 FourthStartMinute;
+   int                 FourthEndMinute;
+public:
+                     Task3(string name):Task(name)
+     {
+      server_or_local_time = TIME_SERVER;
+      FirstStartMinute = 5;
+      FirstEndMinute = ::test;
+      SecondMinutesBlock = false;
+      SecondStartMinute = 20;
+      SecondEndMinute = 25;
+      ThirdMinutesBlock = false;
+      ThirdStartMinute = 30;
+      ThirdEndMinute = 35;
+      FourthMinutesBlock = false;
+      FourthStartMinute = 50;
+      FourthEndMinute = 55;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      FirstEndMinute = ::test;
+
+
+      // get the current minute
+      MqlDateTime time;
+
+      if(server_or_local_time == TIME_SERVER)
+         TimeCurrent(time);
+      else
+         if(server_or_local_time == TIME_LOCAL)
+            TimeLocal(time);
+         else
+            if(server_or_local_time == TIME_GMT)
+               TimeGMT(time);
+            else
+               TimeCurrent(time);
+
+      int minute = time.min;
+
+      // fix the end minute
+      if(FirstEndMinute <= 0)
+         FirstEndMinute += 60;
+      if(SecondEndMinute <= 0)
+         SecondEndMinute += 60;
+      if(ThirdEndMinute <= 0)
+         ThirdEndMinute += 60;
+      if(FourthEndMinute <= 0)
+         FourthEndMinute += 60;
+
+      // check and pass
+      if(
+         (minute >= FirstStartMinute && minute < FirstEndMinute)
+         ||
+         (FirstStartMinute > FirstEndMinute && (minute >= FirstStartMinute || minute < FirstEndMinute))
+         ||
+         (SecondMinutesBlock && minute >= SecondStartMinute && minute < SecondEndMinute)
+         ||
+         (SecondMinutesBlock && SecondStartMinute > SecondEndMinute && (minute >= SecondStartMinute || minute < SecondEndMinute))
+         ||
+         (ThirdMinutesBlock  && minute >= ThirdStartMinute  && minute < ThirdEndMinute)
+         ||
+         (ThirdMinutesBlock  && ThirdStartMinute > ThirdEndMinute && (minute >= ThirdStartMinute || minute < ThirdEndMinute))
+         ||
+         (FourthMinutesBlock && minute >= FourthStartMinute && minute < FourthEndMinute)
+         ||
+         (FourthMinutesBlock && FourthStartMinute > FourthEndMinute && (minute >= FourthStartMinute || minute < FourthEndMinute))
+      )
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Check Profit (unrealized)
+class Task4 : public Task
+  {
+   //specified by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+
+   string            profit_mode_each;
+   double            profit_amount_each;
+   string            profit_mode;
+   double            profit_amount;
+public:
+                     Task4(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      profit_mode_each = PROFIT_MODE_NO_MATTER;
+      profit_amount_each = 0.0;
+      profit_mode = PROFIT_MODE_PIPS_SUM;
+      profit_amount = ::my_int;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      profit_amount = ::my_int;
+
+
+      double avgPrice    = 0;
+      double avgLoad     = 0;
+      double avgLots     = 0;
+      double profitMoney = 0;
+      double profitPips  = 0;
+      double pipsSum     = 0;
+      int tradesCount    = 0;
+
+      for(int index = OrdersTotal()-1; index >= 0; index--)
+        {
+         if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(filterGeneral())
+              {
+               double OrderOpenPrice = OrderOpenPrice();//STest, this should be replaced with another value which is more exact
+               double tradeProfit    = NormalizeDouble(OrderProfit() + OrderSwap() + OrderCommission(), 2);
+
+               // Filter out individual trades
+               if(profit_mode_each == PROFIT_MODE_MONEY)
+                 {
+                  if(tradeProfit >= profit_amount_each)
+                    {
+                    }
+                  else
+                    {
+                     continue;
+                    }
+                 }
+               else
+                  if(profit_mode_each == PROFIT_MODE_PIPS)
+                    {
+                     double individual_profit = toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
+
+                     if(OrderType() == 1)
+                       {
+                        individual_profit = -1 * individual_profit;
+                       }
+
+                     if(individual_profit >= profit_amount_each)
+                       {
+
+                       }
+                     else
+                       {
+                        continue;
+                       }
+                    }
+
+               profitMoney += tradeProfit;
+
+               if(profit_mode == PROFIT_MODE_PIPS || profit_mode == PROFIT_MODE_PIPS_SUM)
+                 {
+                  if(IsOrderTypeBuy())
+                    {
+                     pipsSum += toPips(OrderClosePrice() - OrderOpenPrice, OrderSymbol());
+                     avgLoad += OrderOpenPrice * OrderLots();
+                     avgLots += OrderLots();
+                    }
+                  else
+                    {
+                     pipsSum += toPips(OrderOpenPrice - OrderClosePrice(), OrderSymbol());
+                     avgLoad -= OrderOpenPrice * OrderLots();
+                     avgLots -= OrderLots();
+                    }
+                 }
+
+               tradesCount += 1;
+              }
+           }
+        }
+
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(profit_mode == PROFIT_MODE_PIPS)
+        {
+         avgPrice = 0;
+
+         if(avgLots != 0)
+           {
+            avgPrice = (avgLoad / avgLots);
+           }
+
+         if(avgPrice != 0)
+           {
+            if(avgLots > 0)
+              {
+               profitPips = SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_BID) - avgPrice;
+              }
+            else
+              {
+               profitPips = avgPrice - SymbolInfoDouble(getSymbol(OrderSymbol()), SYMBOL_ASK);
+              }
+
+            profitPips = toPips(profitPips, getSymbol(OrderSymbol()));
+           }
+        }
+
+      //+------------------------------------------------------------------+
+      //|                                                                  |
+      //+------------------------------------------------------------------+
+      if(
+         (profit_mode == PROFIT_MODE_MONEY    && (profitMoney > profit_amount))
+         || (profit_mode == PROFIT_MODE_PIPS     && (profitPips > profit_amount))
+         || (profit_mode == PROFIT_MODE_PIPS_SUM && (pipsSum > profit_amount))
+      )
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+  };
+
+//Comment
+class Task5 : public Task
+  {
+   //value set by user
+   string            title;
+   string            obj_chart_subwindow;
+   int               obj_corner;
+   int               obj_x;
+   int               obj_y;
+   string            obj_title_font;
+   color             obj_title_font_color;
+   int               obj_title_font_size;
+   string            obj_label_font;
+   color             obj_label_font_color;
+   int               obj_label_font_size;
+   string            obj_font;
+   int               obj_font_color;
+   int               obj_font_size;
+   string            label_1;
+   int               format_number_1;
+   int               format_time_1;
+   string            label_2;
+   int               format_number_2;
+   int               format_time_2;
+   string            label_3;
+   int               format_number_3;
+   int               format_time_3;
+   string            label_4;
+   int               format_number_4;
+   int               format_time_4;
+   string            label_5;
+   int               format_number_5;
+   int               format_time_5;
+   string            label_6;
+   int               format_number_6;
+   int               format_time_6;
+   string            label_7;
+   int               format_number_7;
+   int               format_time_7;
+   string            label_8;
+   int               format_number_8;
+   int               format_time_8;
+   //value set by system
+   bool              initialized;
+public:
+                     Task5(string name):Task(name)
+     {
+      title = "Comment Message";
+      obj_chart_subwindow = "";
+      obj_corner = CORNER_LEFT_UPPER;
+      obj_x = 5;
+      obj_y = 24;
+      obj_title_font = "Georgia";
+      obj_title_font_color = clrGold;
+      obj_title_font_size = 13;
+      obj_label_font = "Vardena";
+      obj_label_font_color = clrDarkGray;
+      obj_label_font_size = 10;
+      obj_font = "Vardena";
+      obj_font_color = clrWhite;
+      obj_font_size = 10;
+      label_1 = ::greetings;
+      format_number_1 = EMPTY_VALUE;
+      format_time_1 = EMPTY_VALUE;
+      label_2 = "";
+      format_number_2 = EMPTY_VALUE;
+      format_time_2 = EMPTY_VALUE;
+      label_3 = "";
+      format_number_3 = EMPTY_VALUE;
+      format_time_3 = EMPTY_VALUE;
+      label_4 = "";
+      format_number_4 = EMPTY_VALUE;
+      format_time_4 = EMPTY_VALUE;
+      label_5 = "";
+      format_number_5 = EMPTY_VALUE;
+      format_time_5 = EMPTY_VALUE;
+      label_6 = "";
+      format_number_6 = EMPTY_VALUE;
+      format_time_6 = EMPTY_VALUE;
+      label_7 = "";
+      format_number_7 = EMPTY_VALUE;
+      format_time_7 = EMPTY_VALUE;
+      label_8 = "";
+      format_number_8 = EMPTY_VALUE;
+      format_time_8 = EMPTY_VALUE;
+      /* Static Parameters (initial value) */
+      initialized =  false;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      label_1 = ::greetings;
+
+
+
+      double valueX = 0;
+
+
+      if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
+        {
+
+
+         long ObjChartID = 0;
+         int ObjAnchor   = ANCHOR_LEFT;
+
+         if(obj_corner == CORNER_RIGHT_UPPER || obj_corner == CORNER_RIGHT_LOWER)
+           {
+            ObjAnchor = ANCHOR_RIGHT;
+           }
+
+         string namebase = "fxd_cmnt_" + block_id;
+
+         int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
+
+         if(subwindow >= 0)
+           {
+            //-- draw comment title
+            if((string)title != "")
+              {
+               string nametitle = namebase;
+
+               if(ObjectFind(ObjChartID, nametitle) < 0)
+                 {
+                  if(!ObjectCreate(ObjChartID, nametitle, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                  else
+                    {
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_FONTSIZE, (int)(obj_title_font_size));
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_COLOR, obj_title_font_color);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTABLE, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_ANCHOR, ObjAnchor);
+
+                     ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
+
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
+                    }
+                 }
+               else
+                 {
+                  obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
+                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                 }
+
+               ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
+
+               obj_y = (int)(obj_y + obj_title_font_size / 3);
+              }
+
+            //-- draw comment rows
+            for(int i = 1; i <= 8; i++)
+              {
+               string text    = "";
+               string textlbl = "";
+
+               switch(i)
+                 {
+                  case 1:
+                    {
+                     if(label_1 != "")
+                       {
+                        textlbl = label_1;
+                        Value5cm_r1 value5cm_r1;
+                        value5cm_r1.init();
+                        string valueValue5cm_r1 = value5cm_r1.calc<string>();
+                        text    = FormatValueForPrinting(valueValue5cm_r1, format_number_1, format_time_1);
+                       }
+
+                     break;
+                    }
+                  case 2:
+                    {
+                     if(label_2 != "")
+                       {
+                        textlbl = label_2;
+
+                        text    = FormatValueForPrinting("", format_number_2, format_time_2);
+                       }
+
+                     break;
+                    }
+                  case 3:
+                    {
+                     if(label_3 != "")
+                       {
+                        textlbl = label_3;
+
+                        text    = FormatValueForPrinting("", format_number_3, format_time_3);
+                       }
+
+                     break;
+                    }
+                  case 4:
+                    {
+                     if(label_4 != "")
+                       {
+                        textlbl = label_4;
+
+                        text    = FormatValueForPrinting("", format_number_4, format_time_4);
+                       }
+
+                     break;
+                    }
+                  case 5:
+                    {
+                     if(label_5 != "")
+                       {
+                        textlbl = label_5;
+
+                        text    = FormatValueForPrinting("", format_number_5, format_time_5);
+                       }
+
+                     break;
+                    }
+                  case 6:
+                    {
+                     if(label_6 != "")
+                       {
+                        textlbl = label_6;
+
+                        text    = FormatValueForPrinting("", format_number_6, format_time_6);
+                       }
+
+                     break;
+                    }
+                  case 7:
+                    {
+                     if(label_7 != "")
+                       {
+                        textlbl = label_7;
+
+                        text    = FormatValueForPrinting("", format_number_7, format_time_7);
+                       }
+
+                     break;
+                    }
+                  case 8:
+                    {
+                     if(label_8 != "")
+                       {
+                        textlbl = label_8;
+
+                        text    = FormatValueForPrinting("", format_number_8, format_time_8);
+                       }
+
+                     break;
+                    }
+                 }
+
+               string name    = namebase + "_" + (string)i;
+               string namelbl = name + "_l";
+
+               if(textlbl == "")
+                 {
+                  if(!initialized)
+                    {
+                     //-- pre-delete
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                    }
+
+                  continue;
+                 }
+
+               //-- draw initial objects
+               if(ObjectFind(ObjChartID, name) < 0)
+                 {
+                  if(textlbl == "")
+                    {
+                     continue;
+                    }
+
+                  if(ObjectCreate(ObjChartID, namelbl, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_FONTSIZE, obj_label_font_size);
+                     ObjectSetInteger(ObjChartID, namelbl, OBJPROP_COLOR, obj_label_font_color);
+                     ObjectSetString(ObjChartID, namelbl, OBJPROP_FONT, obj_label_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+
+                  if(ObjectCreate(ObjChartID, name, OBJ_LABEL, subwindow, 0, 0, 0, 0))
+                    {
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_CORNER, obj_corner);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_ANCHOR, ObjAnchor);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_BACK, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTABLE, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_SELECTED, 0);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_HIDDEN, 1);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_FONTSIZE, obj_font_size);
+                     ObjectSetInteger(ObjChartID, name, OBJPROP_COLOR, obj_font_color);
+                     ObjectSetString(ObjChartID, name, OBJPROP_FONT, obj_font);
+                    }
+                  else
+                    {
+                     Print(__FUNCTION__, ": failed to create text object! Error code = ", GetLastError());
+                    }
+                 }
+               else
+                 {
+                  if(textlbl == "")
+                    {
+                     ObjectDelete(ObjChartID, namelbl);
+                     ObjectDelete(ObjChartID, name);
+                     continue;
+                    }
+                 }
+
+               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
+
+               //-- update label objects
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
+
+               //-- update value objects
+               int x        = 0;
+               int xsizelbl = (int)ObjectGetInteger(ObjChartID, namelbl, OBJPROP_XSIZE);
+
+               if(xsizelbl == 0)
+                 {
+                  //-- when the object is newly created, it returns 0 for XSIZE and YSIZE, so here we will trick it somehow
+                  xsizelbl = (int)(StringLen((string)textlbl) * obj_font_size / 1.5 + obj_font_size / 2);
+                 }
+
+               x = obj_x + (xsizelbl + obj_font_size/2);
+
+               ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
+              }
+
+            ChartRedraw();
+           }
+
+         initialized = true;
+        }
+
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Counter: Pass "n" times
+class Task6 : public Task
+  {
+   int                TimesToPass;
+   int                CounterID;
+public:
+                     Task6(string name):Task(name)
+     {
+      TimesToPass = 3;
+      CounterID = ::test;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      CounterID = ::test;
+
+
+      int passes = Counter(CounterID, "increment");
+
+      if(passes < TimesToPass)
+        {
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         block.onResult(ROUTE_2_PASSED);
+        }
+
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   int               Counter(int id, string cmd = "", int set_passes = 0)
+     {
+      static int idx[]; // index list
+      static int pl[];  // passes list
+      int size    = 0;
+      int passes  = 0;
+      int cnt_idx = ArraySearch(idx, id);
+
+      if(cnt_idx == -1)
+        {
+         // Counter not found
+         size = ArraySize(idx);
+
+         ArrayResize(idx, size + 1);
+         ArrayResize(pl, size + 1);
+
+         idx[size] = id;
+         pl[size]  = 0;
+         cnt_idx   = size;
+        }
+
+      passes = pl[cnt_idx];
+
+      if(cmd != "")
+        {
+         if(cmd == "increment")
+           {
+            pl[cnt_idx] = pl[cnt_idx] + 1;
+           }
+         else
+            if(cmd == "reset")
+              {
+               pl[cnt_idx] = 0;
+              }
+        }
+
+      return passes;
+     }
+
+   template<typename T>
+   int               ArraySearch(T &array[], T value)
+     {
+      int index = -1;
+      int size  = ArraySize(array);
+
+      for(int i = 0; i < size; i++)
+        {
+         if(array[i] == value)
+           {
+            index = i;
+            break;
+           }
+        }
+
+      return index;
+     }
+
+  };
+
+//Close trades
+class Task7 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   double            older_than;//in minutes
+   color             arrow_color;
+   double            slippage;
+
+   int               retryCount;
+   string            msymbol;
+public:
+                     Task7(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = ::greetings;
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+      older_than = 0.3;//in minutes
+      arrow_color = clrDarkGoldenrod;
+      slippage = 4;
+      //specified by system
+      retryCount = 0;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      symbols_str = ::greetings;
+
+
+      //STest, trades not sorted by newest
+      for(int i = OrdersTotal()-1 ; i >=0 ; i--)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(!filterGeneral())
+               continue;
+            if(!filterAge(older_than))
+               continue;
+            bool result = OrderClose(OrderTicket(),OrderLots(),OrderClosePrice(),slippage,arrow_color);
+            if(!result)  //STest, if fatal error, skip retry, otherwise retry.
+              {
+               int err = GetLastError();
+              }
+            else
+              {
+               OnTrade();
+              }
+           }
+        }
+      retryCount++;
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+
+   bool              filterAge(double mins)
+     {
+      datetime openTime = OrderOpenTime();
+      return TimeCurrent() - OrderOpenTime() >= mins*60;
+     }
+  };
+
+//Break even point (each trade)
+class Task8 : public Task
+  {
+   //defined by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   int               on_profit_mode;
+   double            pips_on_profit;
+   int               bep_offset_mode;
+   double            bep_offset;
+public:
+                     Task8(string name):Task(name)
+     {
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {0,1}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+
+      on_profit_mode = ON_PROFIT_MODE_FIXED_VALUE;
+      pips_on_profit = ::my_int;
+      bep_offset_mode = BEP_OFFSET_MODE_NONE;
+      bep_offset = 10;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+      pips_on_profit = ::my_int;
+
+
+      for(int i = 0 ; i < OrdersTotal() ; i++)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(!filterGeneral())
+               continue;
+            //This check is beyond user defined filter.
+            int orderType = OrderType();
+            if(orderType!=OP_BUY && orderType!=OP_SELL)
+               continue;
+
+            double distance = 0;
+
+            if(on_profit_mode == ON_PROFIT_MODE_FIXED_VALUE)
+              {
+               distance = toDigits(pips_on_profit, OrderSymbol());
+              }
+            else
+               if(on_profit_mode == ON_PROFIT_MODE_PERCENT_OF_CURRENT_SL)
+                 {
+                  distance = MathAbs(OrderOpenPrice()-OrderStopLoss())*pips_on_profit/100;
+                 }
+               else
+                  if(on_profit_mode == ON_PROFIT_MODE_PERCENT_OF_CURRENT_TP)
+                    {
+                     distance = MathAbs(OrderOpenPrice()-OrderTakeProfit())*pips_on_profit/100;
+                    }
+            bool con1 = orderType == OP_BUY && (SymbolInfoDouble(OrderSymbol(),SYMBOL_ASK)-OrderOpenPrice() > distance) && (OrderStopLoss() < OrderOpenPrice());
+            bool con2 = orderType == OP_SELL && (OrderOpenPrice()-SymbolInfoDouble(OrderSymbol(),SYMBOL_BID) > distance) && ((OrderStopLoss() > OrderOpenPrice()) || OrderStopLoss() == 0);
+            if(con1 || con2)
+              {
+               double be_offset = 0;
+
+               if(bep_offset_mode == BEP_OFFSET_MODE_PIPS_OFFSET)
+                 {
+                  be_offset = toDigits(bep_offset,OrderSymbol());
+                  if(orderType == OP_SELL)
+                     be_offset *=-1;
+                 }
+               double new_slPrice = OrderOpenPrice()+be_offset;
+               bool result = OrderModify(OrderTicket(), OrderOpenPrice(), new_slPrice, OrderTakeProfit(), 0, clrNONE);
+               if(result)
+                  OnTrade();
+              }
+           }
+        }
+      //printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -2099,19 +2698,19 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block1 : public Block
+class Block2 : public Block
   {
 public:
-                     Block1()
+                     Block2()
      {
       id = 0;
-      id_by_user = 1;
-      name = "bear_candle";
+      id_by_user = 2;
+      name = "buy_sell";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
-      int mnexts_false[] = {};
+      int mnexts_true[] = {2, 5};
+      int mnexts_false[] = {1};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
@@ -2119,7 +2718,33 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task2(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block3 : public Block
+  {
+public:
+                     Block3()
+     {
+      id = 1;
+      id_by_user = 3;
+      name = "minutes_filter";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
+      int mprevs_false[] = {0};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
      }
   };
 //+------------------------------------------------------------------+
@@ -2130,14 +2755,14 @@ class Block4 : public Block
 public:
                      Block4()
      {
-      id = 1;
+      id = 2;
       id_by_user = 4;
-      name = "pips_away_from_open_price";
+      name = "check_profit_unrealized";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
+      int mnexts_true[] = {6};
+      int mnexts_false[] = {4};
       int mprevs_true[] = {0};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
@@ -2156,15 +2781,15 @@ class Block5 : public Block
 public:
                      Block5()
      {
-      id = 2;
+      id = 3;
       id_by_user = 5;
-      name = "once_per_bar";
+      name = "comment";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {3};
+      int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {};
+      int mprevs_true[] = {5};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -2182,9 +2807,61 @@ class Block6 : public Block
 public:
                      Block6()
      {
-      id = 3;
+      id = 4;
       id_by_user = 6;
-      name = "buy_sell";
+      name = "counter_pass_n_times";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
+      int mprevs_false[] = {2};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task6(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block7 : public Block
+  {
+public:
+                     Block7()
+     {
+      id = 5;
+      id_by_user = 7;
+      name = "close_trades";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {3};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task7(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block8 : public Block
+  {
+public:
+                     Block8()
+     {
+      id = 6;
+      id_by_user = 8;
+      name = "break_even_point_each_trade";
       enabled = True;
       event = EVENT_ON_TICK;
 
@@ -2197,7 +2874,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task6(name);
+      task = new Task8(name);
      }
   };
 Block *blocks_init[];
@@ -2267,16 +2944,22 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 4);
-   Block1 *block1 = new Block1();
+   ArrayResize(blocks_tick, 7);
+   Block2 *block2 = new Block2();
+   Block3 *block3 = new Block3();
    Block4 *block4 = new Block4();
    Block5 *block5 = new Block5();
    Block6 *block6 = new Block6();
+   Block7 *block7 = new Block7();
+   Block8 *block8 = new Block8();
 
-   blocks_tick[0] = block1;
-   blocks_tick[1] = block4;
-   blocks_tick[2] = block5;
-   blocks_tick[3] = block6;
+   blocks_tick[0] = block2;
+   blocks_tick[1] = block3;
+   blocks_tick[2] = block4;
+   blocks_tick[3] = block5;
+   blocks_tick[4] = block6;
+   blocks_tick[5] = block7;
+   blocks_tick[6] = block8;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4690,7 +5373,6 @@ void OnTick()
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
    runBlockTick(-1, -1, 0);
-   runBlockTick(-1, -1, 2);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

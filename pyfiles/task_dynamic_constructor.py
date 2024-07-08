@@ -155,6 +155,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = alert_message_run_data(node, run_data_static)
     elif task_name == "phone_notification":
         run_data = phone_notification_run_data(node, run_data_static)
+    elif task_name == "move":
+        run_data = move_run_data(node, run_data_static)
     return run_data
 
 
@@ -238,6 +240,95 @@ def is_var(value, variables):
         if variable.get("name") == value:
             return True
     return False
+
+
+def move_run_data(node, run_data_static):
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+
+    if "time_2" in params:
+        value_fetch_time_2 = params.get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        run_data_static = run_data_static.replace("initializer_time_2", init_time_2)
+        run_data_static = run_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_2", "")
+        run_data_static = run_data_static.replace("variable_name_time_2", "\"\"")
+
+    if "time_3" in params:
+        value_fetch_time_3 = params.get("time_3")
+        row1_time_3 = value_fetch_time_3.get("row1")
+        row2_time_3 = value_fetch_time_3.get("row2")
+        id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
+
+        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, value_fetch_time_3.get("params"), id_val_time_3)
+        val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
+        run_data_static = run_data_static.replace("initializer_time_3", init_time_3)
+        run_data_static = run_data_static.replace("variable_name_time_3", val_time_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_3", "")
+        run_data_static = run_data_static.replace("variable_name_time_3", "\"\"")
+
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+
+    if "price_2" in params:
+        value_fetch_price_2 = params.get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"), id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        run_data_static = run_data_static.replace("initializer_price_2", init_price_2)
+        run_data_static = run_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_2", "")
+        run_data_static = run_data_static.replace("variable_name_price_2", "\"\"")
+
+    if "price_3" in params:
+        value_fetch_price_3 = params.get("price_3")
+        row1_price_3 = value_fetch_price_3.get("row1")
+        row2_price_3 = value_fetch_price_3.get("row2")
+        id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
+
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"), id_val_price_3)
+        val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
+        run_data_static = run_data_static.replace("initializer_price_3", init_price_3)
+        run_data_static = run_data_static.replace("variable_name_price_3", val_price_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_3", "")
+        run_data_static = run_data_static.replace("variable_name_price_3", "\"\"")
+
+    return run_data_static
 
 
 def phone_notification_run_data(node, run_data_static):
