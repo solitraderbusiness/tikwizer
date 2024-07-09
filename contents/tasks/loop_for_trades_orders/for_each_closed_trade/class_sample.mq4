@@ -55,7 +55,7 @@ public:
            {
             if(exit_loop)
                return;//STest, logical?
-            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_TRADES))
+            if(OrderSelect(trades[i], SELECT_BY_POS, MODE_HISTORY))
               {
                if(!filterGeneral())
                   continue;

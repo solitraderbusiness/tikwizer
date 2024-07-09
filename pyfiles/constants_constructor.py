@@ -18,6 +18,11 @@ constants = [
     "#define RESET_LEVEL_TICK 1",
     "#define RESET_LEVEL_BAR 2",
     "#define RESET_LEVEL_CUSTOM 3",
+    "#define ADD_LEVEL_SA",
+    "#define JOB_LEVEL_BEGIN",
+    "#define JOB_LEVEL_RESET",
+    "#define ADD_LEVEL_A",
+    "#define ADD_LEVEL_D",
 
     # ######################### Time filter ############################
     "#define TIME_MODE_TEXT 1",
