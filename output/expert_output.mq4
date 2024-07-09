@@ -15,6 +15,14 @@
 #define RESET_LEVEL_TICK 1
 #define RESET_LEVEL_BAR 2
 #define RESET_LEVEL_CUSTOM 3
+#define ADD_LEVEL_OS 1
+#define ADD_LEVEL_EA 2
+#define JOB_LEVEL_BEGIN 3
+#define JOB_LEVEL_END 4
+#define REMOVE_LEVEL_EA 5
+#define REMOVE_LEVEL_GRID 6
+#define EDIT_LEVEL_IPS 7
+#define EDIT_LEVEL_APP 8
 #define TIME_MODE_TEXT 1
 #define TIME_MODE_COMPONENT 2
 #define TIME_MODE_RELATIVE 3
@@ -4082,11 +4090,17 @@ bool load_object(int index, long chart_id,int sub_window, int obj_type)
 //|                                                                  |
 //+------------------------------------------------------------------+
 long loaded_object_chart_id(long chart_id=-1) {static long memory=-1; if(chart_id>-1) {memory=chart_id;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 string loaded_object_name(string name="") {static string memory=""; if(name!="") {memory=name;} return(memory);}
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
 int loaded_object_subwindow(int sub_window=-2) {static int memory=-2; if(sub_window>-2) {memory=sub_window;} return(memory);}
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int loaded_object_type(int type=-2) {static int memory=-2; if(type>-2) {memory=type;} return(memory);}
 template<typename T>
 bool array_ensure_value(T &array[], T value)
