@@ -7290,515 +7290,817 @@ input_data_60 = {
 
 # test filterOnTrade
 input_data_61 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [
-          {
-            "params": {
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
-            "id_by_user": 1,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_created",
-            "blockName": "Trade created"
-          },
-          {
-            "params": {
-              "stops_mode": "some",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}"
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "17068b1a-6fea-481a-8da5-33a9d3fed695",
-            "id_by_user": 2,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_stops_modified",
-            "blockName": "Trade stops modified"
-          },
-          {
-            "params": {
-              "sl_only": "no",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}"
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
-            "id_by_user": 3,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_sl_modified",
-            "blockName": "Trade SL modified"
-          },
-          {
-            "params": {
-              "tp_only": "no",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}"
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11"
+                        },
+                        "id": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
+                        "id_by_user": 1,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_created",
+                        "blockName": "Trade created"
+                    },
+                    {
+                        "params": {
+                            "stops_mode": "some",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}"
+                        },
+                        "id": "17068b1a-6fea-481a-8da5-33a9d3fed695",
+                        "id_by_user": 2,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_stops_modified",
+                        "blockName": "Trade stops modified"
+                    },
+                    {
+                        "params": {
+                            "sl_only": "no",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}"
+                        },
+                        "id": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
+                        "id_by_user": 3,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_sl_modified",
+                        "blockName": "Trade SL modified"
+                    },
+                    {
+                        "params": {
+                            "tp_only": "no",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}"
+                        },
+                        "id": "222bfff0-4970-4e48-b0e1-a727e5307331",
+                        "id_by_user": 4,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_tp_modified",
+                        "blockName": "Trade TP modified"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{0,1}",
+                            "close_mode": "",
+                            "close_partial_mode": "0"
+                        },
+                        "id": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
+                        "id_by_user": 5,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_closed",
+                        "blockName": "Trade closed"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}"
+                        },
+                        "id": "fae88f24-cfbf-4270-b692-1417860daa09",
+                        "id_by_user": 6,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_created",
+                        "blockName": "Order created"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}"
+                        },
+                        "id": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+                        "id_by_user": 7,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_moved",
+                        "blockName": "Order moved"
+                    },
+                    {
+                        "params": {
+                            "stops_mode": "some",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}"
+                        },
+                        "id": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+                        "id_by_user": 8,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_stops_modified",
+                        "blockName": "Order stops modified"
+                    },
+                    {
+                        "params": {
+                            "sl_only": "no",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}"
+                        },
+                        "id": "7d4f471c-0a19-45c7-abff-20425115e936",
+                        "id_by_user": 9,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_sl_modified",
+                        "blockName": "Order SL modified"
+                    },
+                    {
+                        "params": {
+                            "tp_only": "no",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}"
+                        },
+                        "id": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+                        "id_by_user": 10,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_tp_modified",
+                        "blockName": "Order TP modified"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
+                        "id_by_user": 11,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+                        "sourceHandle": "blue",
+                        "target": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "f9583837-cd9c-4f02-89df-a0bb7a1ffa8f"
+                    },
+                    {
+                        "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+                        "sourceHandle": "blue",
+                        "target": "fae88f24-cfbf-4270-b692-1417860daa09",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "66412148-eb76-41f7-9797-fe1d4334faea"
+                    },
+                    {
+                        "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+                        "sourceHandle": "blue",
+                        "target": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "a130e7ad-4f4d-46e3-a8fa-f5a2724d930f"
+                    },
+                    {
+                        "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+                        "sourceHandle": "blue",
+                        "target": "17068b1a-6fea-481a-8da5-33a9d3fed695",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "3e37bdcd-25d7-4bc9-bb75-bcf48ffacd3d"
+                    },
+                    {
+                        "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+                        "sourceHandle": "blue",
+                        "target": "7d4f471c-0a19-45c7-abff-20425115e936",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "8f6982f7-784e-4451-9e4e-21c90cebe21b"
+                    },
+                    {
+                        "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+                        "sourceHandle": "blue",
+                        "target": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "2070011f-58d7-4082-9a80-573c51447a72"
+                    },
+                    {
+                        "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+                        "sourceHandle": "blue",
+                        "target": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "c642e1bc-7794-4220-a99b-e11418b47819"
+                    },
+                    {
+                        "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+                        "sourceHandle": "blue",
+                        "target": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "3028f6c1-655c-4a7e-8ea7-1f3651be4716"
+                    },
+                    {
+                        "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+                        "sourceHandle": "blue",
+                        "target": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "6c850ddd-edbe-47f5-8fe8-f4f7c99e3e55"
+                    },
+                    {
+                        "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+                        "sourceHandle": "blue",
+                        "target": "222bfff0-4970-4e48-b0e1-a727e5307331",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "4aac991f-1a0a-4e9f-ad0d-aa25f221cae0"
+                    }
+                ]
             },
-            "id": "222bfff0-4970-4e48-b0e1-a727e5307331",
-            "id_by_user": 4,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_tp_modified",
-            "blockName": "Trade TP modified"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{0,1}",
-              "close_mode": "",
-              "close_partial_mode": "0"
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
-            "id_by_user": 5,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_closed",
-            "blockName": "Trade closed"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}"
-            },
-            "id": "fae88f24-cfbf-4270-b692-1417860daa09",
-            "id_by_user": 6,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_created",
-            "blockName": "Order created"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}"
-            },
-            "id": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
-            "id_by_user": 7,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_moved",
-            "blockName": "Order moved"
-          },
-          {
-            "params": {
-              "stops_mode": "some",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}"
-            },
-            "id": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
-            "id_by_user": 8,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_stops_modified",
-            "blockName": "Order stops modified"
-          },
-          {
-            "params": {
-              "sl_only": "no",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}"
-            },
-            "id": "7d4f471c-0a19-45c7-abff-20425115e936",
-            "id_by_user": 9,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_sl_modified",
-            "blockName": "Order SL modified"
-          },
-          {
-            "params": {
-              "tp_only": "no",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}"
-            },
-            "id": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
-            "id_by_user": 10,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_tp_modified",
-            "blockName": "Order TP modified"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}",
-              "close_mode": ""
-            },
-            "id": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
-            "id_by_user": 11,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_deleted",
-            "blockName": "Order deleted"
-          }
-        ],
-        "edges": [
-          {
-            "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
-            "sourceHandle": "blue",
-            "target": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "f9583837-cd9c-4f02-89df-a0bb7a1ffa8f"
-          },
-          {
-            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
-            "sourceHandle": "blue",
-            "target": "fae88f24-cfbf-4270-b692-1417860daa09",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "66412148-eb76-41f7-9797-fe1d4334faea"
-          },
-          {
-            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
-            "sourceHandle": "blue",
-            "target": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "a130e7ad-4f4d-46e3-a8fa-f5a2724d930f"
-          },
-          {
-            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
-            "sourceHandle": "blue",
-            "target": "17068b1a-6fea-481a-8da5-33a9d3fed695",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "3e37bdcd-25d7-4bc9-bb75-bcf48ffacd3d"
-          },
-          {
-            "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
-            "sourceHandle": "blue",
-            "target": "7d4f471c-0a19-45c7-abff-20425115e936",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "8f6982f7-784e-4451-9e4e-21c90cebe21b"
-          },
-          {
-            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
-            "sourceHandle": "blue",
-            "target": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "2070011f-58d7-4082-9a80-573c51447a72"
-          },
-          {
-            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
-            "sourceHandle": "blue",
-            "target": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "c642e1bc-7794-4220-a99b-e11418b47819"
-          },
-          {
-            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
-            "sourceHandle": "blue",
-            "target": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "3028f6c1-655c-4a7e-8ea7-1f3651be4716"
-          },
-          {
-            "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
-            "sourceHandle": "blue",
-            "target": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "6c850ddd-edbe-47f5-8fe8-f4f7c99e3e55"
-          },
-          {
-            "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
-            "sourceHandle": "blue",
-            "target": "222bfff0-4970-4e48-b0e1-a727e5307331",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "4aac991f-1a0a-4e9f-ad0d-aa25f221cae0"
-          }
-        ]
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "053748b1-96ec-4cb4-906c-3dc4a5597262",
-  "name_by_user": "test 8745",
-  "highestIndex": "12"
+    "selected_name": "053748b1-96ec-4cb4-906c-3dc4a5597262",
+    "name_by_user": "test 8745",
+    "highestIndex": "12"
 }
 
 # test order deleted
 input_data_62 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "id_by_user": 2,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}",
-              "close_mode": ""
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "06d2520e-ca9d-4878-92e1-42eed63387e1",
-            "id_by_user": 3,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_deleted",
-            "blockName": "Order deleted"
-          }
-        ],
-        "edges": [
-          {
-            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "sourceHandle": "blue",
-            "target": "06d2520e-ca9d-4878-92e1-42eed63387e1",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "f8e7098d-49b9-409c-9451-b4b06334da0e"
-          }
-        ]
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "id_by_user": 2,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "06d2520e-ca9d-4878-92e1-42eed63387e1",
+                        "id_by_user": 3,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "sourceHandle": "blue",
+                        "target": "06d2520e-ca9d-4878-92e1-42eed63387e1",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "f8e7098d-49b9-409c-9451-b4b06334da0e"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
-  "name_by_user": "test 8965",
-  "highestIndex": "4"
+    "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+    "name_by_user": "test 8965",
+    "highestIndex": "4"
 }
 
 # test order moved
 input_data_63 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "id_by_user": 2,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_ALL",
-              "symbol_mode": "SYMBOL_MODE_ANY",
-              "type": "{2,4}",
-              "type_pending": "{2,3}"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "d02e099f-b60a-4fec-8e39-bab99092f962",
-            "id_by_user": 3,
-            "blockName": "Order moved",
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_moved"
-          }
-        ],
-        "edges": [
-          {
-            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "sourceHandle": "blue",
-            "target": "d02e099f-b60a-4fec-8e39-bab99092f962",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "cdaf71d9-8ff5-462b-b465-f700aecef24b"
-          }
-        ]
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "id_by_user": 2,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_ALL",
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "type": "{2,4}",
+                            "type_pending": "{2,3}"
+                        },
+                        "id": "d02e099f-b60a-4fec-8e39-bab99092f962",
+                        "id_by_user": 3,
+                        "blockName": "Order moved",
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_moved"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "sourceHandle": "blue",
+                        "target": "d02e099f-b60a-4fec-8e39-bab99092f962",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "cdaf71d9-8ff5-462b-b465-f700aecef24b"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
-  "name_by_user": "test 8965",
-  "highestIndex": "4"
+    "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+    "name_by_user": "test 8965",
+    "highestIndex": "4"
 }
 
 # test trade tp modified
 input_data_64 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_trade": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "id_by_user": 2,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "tp_only": "no",
-              "group_mode": "ORDER_GROUP_MODE_ALL",
-              "symbol_mode": "SYMBOL_MODE_ANY",
-              "type": "{1}"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "041297ac-99aa-430e-8852-9c6bef16b21a",
-            "id_by_user": 3,
-            "blockName": "Trade TP modified",
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "trade_tp_modified"
-          }
-        ],
-        "edges": [
-          {
-            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
-            "sourceHandle": "blue",
-            "target": "041297ac-99aa-430e-8852-9c6bef16b21a",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "f65287fc-6a17-4a63-b860-ad2382714039"
-          }
-        ]
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "id_by_user": 2,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "tp_only": "no",
+                            "group_mode": "ORDER_GROUP_MODE_ALL",
+                            "symbol_mode": "SYMBOL_MODE_ANY",
+                            "type": "{1}"
+                        },
+                        "id": "041297ac-99aa-430e-8852-9c6bef16b21a",
+                        "id_by_user": 3,
+                        "blockName": "Trade TP modified",
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "trade_tp_modified"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+                        "sourceHandle": "blue",
+                        "target": "041297ac-99aa-430e-8852-9c6bef16b21a",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "f65287fc-6a17-4a63-b860-ad2382714039"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
-  "name_by_user": "test 8965",
-  "highestIndex": "4"
+    "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+    "name_by_user": "test 8965",
+    "highestIndex": "4"
+}
+
+# test volume profile multi instance test
+input_data_65 = {
+    "data": {
+        "events": {
+            "on_tick": {
+                "nodes": [
+                    {
+                        "id": "361e37db-e957-40fd-b072-3122dfc3e04t",
+                        "id_by_user": 0,
+                        "blockName": "Volume profile",
+                        "category": "volume_profile",
+                        "block_name_mql": "volume_profile",
+                        "params": {
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "RangeMinutes": 1440,
+                            "ModeStep": 100,
+                            "HgPointScale": "POINT_SCALE_20",
+                            "VolumeType": "VOLUME_TICK",
+                            "DataSource": "VP_SOURCE_M1",
+
+                            "HgBarStyle": "VP_BAR_STYLE_LINE",
+                            "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+                            "HgColor": "clrYellow",
+                            "HgColor2": "clrOrange",
+                            "HgLineWidth": 2,
+
+                            "ModeColor": "clrBlue",
+                            "MaxColor": "clrNONE",
+                            "MedianColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeLineWidth": 1,
+                            "StatLineStyle": "STYLE_DOT",
+
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelStyle": "STYLE_SOLID",
+
+                            "Id": "+vpr"
+                        }
+                    },
+                    {
+                        "id": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
+                        "id_by_user": 1,
+                        "blockName": "Volume profile",
+                        "category": "volume_profile",
+                        "block_name_mql": "volume_profile",
+                        "params": {
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "RangeMinutes": 1440,
+                            "ModeStep": 100,
+                            "HgPointScale": "POINT_SCALE_20",
+                            "VolumeType": "VOLUME_TICK",
+                            "DataSource": "VP_SOURCE_M1",
+
+                            "HgBarStyle": "VP_BAR_STYLE_LINE",
+                            "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+                            "HgColor": "clrYellow",
+                            "HgColor2": "clrOrange",
+                            "HgLineWidth": 2,
+
+                            "ModeColor": "clrBlue",
+                            "MaxColor": "clrNONE",
+                            "MedianColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeLineWidth": 1,
+                            "StatLineStyle": "STYLE_DOT",
+
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelStyle": "STYLE_SOLID",
+
+                            "Id": "+vpr"
+                        }
+                    }
+                ],
+                "edges": [
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "3c61eca7-54f1-40c3-9af2-2888f042d5dt",
+                        "sourceHandle": "blue",
+                        "target": "361e37db-e957-40fd-b072-3122dfc3e04t",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-5196a96e-8e8d-4405-a5f2-ced6d7a748d0blue-31a6b06c-eb77-474e-8ab0-e49b1be123baa"
+                    }
+                ]
+
+            },
+            "on_chart": {
+                "nodes": [
+
+                ],
+                "edges": [
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "5196a96e-8e8d-4405-a5f2-ced6d7a748d0",
+                        "sourceHandle": "blue",
+                        "target": "31a6b06c-eb77-474e-8ab0-e49b1be123ba",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-5196a96e-8e8d-4405-a5f2-ced6d7a748d0blue-31a6b06c-eb77-474e-8ab0-e49b1be123baa"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "5196a96e-8e8d-4405-a5f2-ced6d7a748d0",
+                        "sourceHandle": "red",
+                        "target": "976f8167-8ed7-43da-b339-b3025599dba6",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-5196a96e-8e8d-4405-a5f2-ced6d7a748d0red-976f8167-8ed7-43da-b339-b3025599dba6a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "31a6b06c-eb77-474e-8ab0-e49b1be123ba",
+                        "sourceHandle": "blue",
+                        "target": "f2ad1905-cdf8-4498-a2c0-bab4aafecb1f",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-31a6b06c-eb77-474e-8ab0-e49b1be123bablue-f2ad1905-cdf8-4498-a2c0-bab4aafecb1fa"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "5196a96e-8e8d-4405-a5f2-ced6d7a748d0",
+                        "sourceHandle": "blue",
+                        "target": "d4df2d49-399f-4e47-b65a-262b1b5975dc",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-5196a96e-8e8d-4405-a5f2-ced6d7a748d0blue-d4df2d49-399f-4e47-b65a-262b1b5975dca"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "527db3b2-a921-4451-87e3-a8e559bb84bb",
+                        "sourceHandle": "blue",
+                        "target": "ed37d0ca-5431-46d4-99b8-17f6d4e64e64",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-527db3b2-a921-4451-87e3-a8e559bb84bbblue-ed37d0ca-5431-46d4-99b8-17f6d4e64e64a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "527db3b2-a921-4451-87e3-a8e559bb84bb",
+                        "sourceHandle": "red",
+                        "target": "671a757d-f060-449d-a12f-4dd66eac8901",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-527db3b2-a921-4451-87e3-a8e559bb84bbred-671a757d-f060-449d-a12f-4dd66eac8901a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "28bc69af-2bfd-4459-a941-336d45b34172",
+                        "sourceHandle": "blue",
+                        "target": "50fe37fb-4728-492d-9ae2-d41215ef12c8",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-28bc69af-2bfd-4459-a941-336d45b34172blue-50fe37fb-4728-492d-9ae2-d41215ef12c8a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "28bc69af-2bfd-4459-a941-336d45b34172",
+                        "sourceHandle": "blue",
+                        "target": "02443f26-1c88-427b-8876-b367e9a0e204",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-28bc69af-2bfd-4459-a941-336d45b34172blue-02443f26-1c88-427b-8876-b367e9a0e204a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "28bc69af-2bfd-4459-a941-336d45b34172",
+                        "sourceHandle": "red",
+                        "target": "391a1ba2-bead-4da8-8949-53591705f44f",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-28bc69af-2bfd-4459-a941-336d45b34172red-391a1ba2-bead-4da8-8949-53591705f44fa",
+                        "selected": False
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "5d3a9bbc-fb09-454e-bede-d2dc897a3406",
+                        "sourceHandle": "blue",
+                        "target": "4720d019-aa53-49a4-a8a8-9f94d45bebc6",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-5d3a9bbc-fb09-454e-bede-d2dc897a3406blue-4720d019-aa53-49a4-a8a8-9f94d45bebc6a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "a06ea8eb-7b44-4be6-bce4-a0df16fa61f4",
+                        "sourceHandle": "blue",
+                        "target": "907e1754-7cd6-4c2e-9836-e2b58ae74978",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-a06ea8eb-7b44-4be6-bce4-a0df16fa61f4blue-907e1754-7cd6-4c2e-9836-e2b58ae74978a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "a06ea8eb-7b44-4be6-bce4-a0df16fa61f4",
+                        "sourceHandle": "blue",
+                        "target": "9058a665-2cc5-4bcc-ae3c-b8b86d1b8650",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-a06ea8eb-7b44-4be6-bce4-a0df16fa61f4blue-9058a665-2cc5-4bcc-ae3c-b8b86d1b8650a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "a06ea8eb-7b44-4be6-bce4-a0df16fa61f4",
+                        "sourceHandle": "red",
+                        "target": "3a0a92ab-8e6c-47e7-b30a-176ede61954e",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-a06ea8eb-7b44-4be6-bce4-a0df16fa61f4red-3a0a92ab-8e6c-47e7-b30a-176ede61954ea"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "d0e8fa53-dc6b-4560-8464-b21378335000",
+                        "sourceHandle": "blue",
+                        "target": "edee43ad-08e7-429b-a656-c7cf7e74bae0",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-d0e8fa53-dc6b-4560-8464-b21378335000blue-edee43ad-08e7-429b-a656-c7cf7e74bae0a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "d0e8fa53-dc6b-4560-8464-b21378335000",
+                        "sourceHandle": "red",
+                        "target": "1fcba91a-40c0-4c8b-b482-884e4d982882",
+                        "targetHandle": "a",
+                        "id": "reactflow__edge-d0e8fa53-dc6b-4560-8464-b21378335000red-1fcba91a-40c0-4c8b-b482-884e4d982882a"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "361e37db-e957-40fd-b072-3122dfc3e04c",
+                        "sourceHandle": "blue",
+                        "target": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-361e37db-e957-40fd-b072-3122dfc3e04cblue-3c61eca7-54f1-40c3-9af2-2888f042d5d2black"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "361e37db-e957-40fd-b072-3122dfc3e04c",
+                        "sourceHandle": "blue",
+                        "target": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-361e37db-e957-40fd-b072-3122dfc3e04cblue-3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1black"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1",
+                        "sourceHandle": "blue",
+                        "target": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-3e3dd2ce-0aa8-44f4-92ed-7466a1722ae1blue-12a55fe9-a550-446c-bb39-e7f9f8bb0001black"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "3c61eca7-54f1-40c3-9af2-2888f042d5d2",
+                        "sourceHandle": "blue",
+                        "target": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-3c61eca7-54f1-40c3-9af2-2888f042d5d2blue-60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13black"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "12a55fe9-a550-446c-bb39-e7f9f8bb0001",
+                        "sourceHandle": "blue",
+                        "target": "ddeb3db1-4333-4b54-b3d9-e3e4c27baaec",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-12a55fe9-a550-446c-bb39-e7f9f8bb0001blue-ddeb3db1-4333-4b54-b3d9-e3e4c27baaecblack"
+                    },
+                    {
+                        "type": "deleteEdgeBTN",
+                        "source": "60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13",
+                        "sourceHandle": "blue",
+                        "target": "cee1dff9-6c44-4b35-94a2-57d9d8f48a09",
+                        "targetHandle": "black",
+                        "id": "reactflow__edge-60960b74-5cf5-4dfd-9cbf-c4c9c4f64d13blue-cee1dff9-6c44-4b35-94a2-57d9d8f48a09black"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [
+
+                ],
+                "edges": [
+
+                ]
+            },
+            "on_timer": {
+                "nodes": [],
+                "edges": []
+            },
+            "on_init": {
+                "nodes": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "edges": []
+            }
+        },
+        "constants": [
+            {
+                "id": 5,
+                "type": "double",
+                "name": "my_var",
+                "value": "20.0",
+                "description": "this is my var"
+            }
+        ],
+        "variables": [
+            {
+                "id": 0,
+                "type": "string",
+                "name": "mvariable",
+                "value": "test value",
+                "description": ""
+            }
+        ]}
 }
