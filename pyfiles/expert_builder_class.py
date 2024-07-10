@@ -601,6 +601,9 @@ class ExpertBuilder:
         is_symbol_accepted = self.global_functions.get_fun__is_symbol_accepted()
         self.functions.append(is_symbol_accepted)
 
+        is_symbol_accepted_on_trade = self.global_functions.get_fun__is_symbol_accepted_on_trade()
+        self.functions.append(is_symbol_accepted_on_trade)
+
         seconds_from_components = self.global_functions.get_fun__seconds_from_components()
         self.functions.append(seconds_from_components)
 
@@ -869,21 +872,24 @@ class ExpertBuilder:
             row2_price_1 = value_fetch_price_1.get("row2")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
             params_price_1 = value_fetch_price_1.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
         if "price_2" in params:
             value_fetch_price_2 = params.get("price_2")
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
             params_price_2 = value_fetch_price_2.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
         if "price_3" in params:
             value_fetch_price_3 = params.get("price_3")
             row1_price_3 = value_fetch_price_3.get("row1")
             row2_price_3 = value_fetch_price_3.get("row2")
             id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
             params_price_3 = value_fetch_price_3.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
 
     def phone_notification(self, node):
         params = node.get("params")

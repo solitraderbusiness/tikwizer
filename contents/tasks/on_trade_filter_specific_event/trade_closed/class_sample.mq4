@@ -19,7 +19,7 @@ public:
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
       int mtype[] = {0, 1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       close_mode = "";
       close_partial_mode = 0;
@@ -33,7 +33,7 @@ public:
       if(
          (e_Reason() == "close" || e_Reason() == "decrement")
          && e_attrType() < 2
-         && filterGeneral()
+         && filterOnTrade()
       )
         {
          string closedBy = e_ReasonDetail();
@@ -70,13 +70,14 @@ public:
      {
 
      }
-   bool              filterGeneral()
+   bool              filterOnTrade()
      {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      bool con1 = is_symbol_accepted_on_trade(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, e_attrType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(e_attrMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(e_attrMagicNumber());
       return con1 && con2 && con3 && con4;
      }
+
 
   };

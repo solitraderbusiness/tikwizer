@@ -7287,3 +7287,518 @@ input_data_60 = {
     "name_by_user": "TEST 8962",
     "highestIndex": "7"
 }
+
+# test filterOnTrade
+input_data_61 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11"
+            },
+            "id": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
+            "id_by_user": 1,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_created",
+            "blockName": "Trade created"
+          },
+          {
+            "params": {
+              "stops_mode": "some",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}"
+            },
+            "id": "17068b1a-6fea-481a-8da5-33a9d3fed695",
+            "id_by_user": 2,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_stops_modified",
+            "blockName": "Trade stops modified"
+          },
+          {
+            "params": {
+              "sl_only": "no",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}"
+            },
+            "id": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
+            "id_by_user": 3,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_sl_modified",
+            "blockName": "Trade SL modified"
+          },
+          {
+            "params": {
+              "tp_only": "no",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}"
+            },
+            "id": "222bfff0-4970-4e48-b0e1-a727e5307331",
+            "id_by_user": 4,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_tp_modified",
+            "blockName": "Trade TP modified"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}",
+              "close_mode": "",
+              "close_partial_mode": "0"
+            },
+            "id": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
+            "id_by_user": 5,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_closed",
+            "blockName": "Trade closed"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "fae88f24-cfbf-4270-b692-1417860daa09",
+            "id_by_user": 6,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_created",
+            "blockName": "Order created"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+            "id_by_user": 7,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_moved",
+            "blockName": "Order moved"
+          },
+          {
+            "params": {
+              "stops_mode": "some",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+            "id_by_user": 8,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_stops_modified",
+            "blockName": "Order stops modified"
+          },
+          {
+            "params": {
+              "sl_only": "no",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "7d4f471c-0a19-45c7-abff-20425115e936",
+            "id_by_user": 9,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_sl_modified",
+            "blockName": "Order SL modified"
+          },
+          {
+            "params": {
+              "tp_only": "no",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+            "id_by_user": 10,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_tp_modified",
+            "blockName": "Order TP modified"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "close_mode": ""
+            },
+            "id": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
+            "id_by_user": 11,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_deleted",
+            "blockName": "Order deleted"
+          }
+        ],
+        "edges": [
+          {
+            "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+            "sourceHandle": "blue",
+            "target": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "f9583837-cd9c-4f02-89df-a0bb7a1ffa8f"
+          },
+          {
+            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+            "sourceHandle": "blue",
+            "target": "fae88f24-cfbf-4270-b692-1417860daa09",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "66412148-eb76-41f7-9797-fe1d4334faea"
+          },
+          {
+            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+            "sourceHandle": "blue",
+            "target": "ba37f74e-f1f0-48c8-9faa-8da4a0d923c2",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "a130e7ad-4f4d-46e3-a8fa-f5a2724d930f"
+          },
+          {
+            "source": "9831d5c0-c3f6-40c9-952f-cb697969eb9a",
+            "sourceHandle": "blue",
+            "target": "17068b1a-6fea-481a-8da5-33a9d3fed695",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "3e37bdcd-25d7-4bc9-bb75-bcf48ffacd3d"
+          },
+          {
+            "source": "1ebd038e-d8ce-4c6c-bbea-af9b34b85e75",
+            "sourceHandle": "blue",
+            "target": "7d4f471c-0a19-45c7-abff-20425115e936",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "8f6982f7-784e-4451-9e4e-21c90cebe21b"
+          },
+          {
+            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+            "sourceHandle": "blue",
+            "target": "1c4e4a30-d783-49e6-adcb-2cbd32c6840d",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "2070011f-58d7-4082-9a80-573c51447a72"
+          },
+          {
+            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+            "sourceHandle": "blue",
+            "target": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "c642e1bc-7794-4220-a99b-e11418b47819"
+          },
+          {
+            "source": "7d4f471c-0a19-45c7-abff-20425115e936",
+            "sourceHandle": "blue",
+            "target": "01058afb-1112-4fe6-9fdb-221a94cbfae6",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "3028f6c1-655c-4a7e-8ea7-1f3651be4716"
+          },
+          {
+            "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+            "sourceHandle": "blue",
+            "target": "c430c1bc-6ba9-4746-9c48-4d543d3b2b0b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "6c850ddd-edbe-47f5-8fe8-f4f7c99e3e55"
+          },
+          {
+            "source": "9eb57507-8165-40ea-9d56-b8e0c0196d27",
+            "sourceHandle": "blue",
+            "target": "222bfff0-4970-4e48-b0e1-a727e5307331",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "4aac991f-1a0a-4e9f-ad0d-aa25f221cae0"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "053748b1-96ec-4cb4-906c-3dc4a5597262",
+  "name_by_user": "test 8745",
+  "highestIndex": "12"
+}
+
+# test order deleted
+input_data_62 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "close_mode": ""
+            },
+            "id": "06d2520e-ca9d-4878-92e1-42eed63387e1",
+            "id_by_user": 3,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_deleted",
+            "blockName": "Order deleted"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "sourceHandle": "blue",
+            "target": "06d2520e-ca9d-4878-92e1-42eed63387e1",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "f8e7098d-49b9-409c-9451-b4b06334da0e"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+  "name_by_user": "test 8965",
+  "highestIndex": "4"
+}
+
+# test order moved
+input_data_63 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{2,4}",
+              "type_pending": "{2,3}"
+            },
+            "id": "d02e099f-b60a-4fec-8e39-bab99092f962",
+            "id_by_user": 3,
+            "blockName": "Order moved",
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_moved"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "sourceHandle": "blue",
+            "target": "d02e099f-b60a-4fec-8e39-bab99092f962",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "cdaf71d9-8ff5-462b-b465-f700aecef24b"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+  "name_by_user": "test 8965",
+  "highestIndex": "4"
+}
+
+# test trade tp modified
+input_data_64 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "tp_only": "no",
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{1}"
+            },
+            "id": "041297ac-99aa-430e-8852-9c6bef16b21a",
+            "id_by_user": 3,
+            "blockName": "Trade TP modified",
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "trade_tp_modified"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ab7a8734-4a4c-47be-8c92-aeced5269d4d",
+            "sourceHandle": "blue",
+            "target": "041297ac-99aa-430e-8852-9c6bef16b21a",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "f65287fc-6a17-4a63-b860-ad2382714039"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "235dbeac-62cb-402a-acbf-97c9297ea151",
+  "name_by_user": "test 8965",
+  "highestIndex": "4"
+}
