@@ -8104,3 +8104,184 @@ input_data_65 = {
             }
         ]}
 }
+
+# test alert message
+input_data_66 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "market-properties",
+                "row2": "highest_price_candles_period",
+                "params": {
+                  "range_start": "0",
+                  "range_end": "10",
+                  "what_to_get": "GET_PRICE",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": ""
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+            "id_by_user": 1,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          },
+          {
+            "params": {},
+            "id": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "AlertTitle": "Alert Message",
+              "AlertLabel1": "",
+              "AlertLabel2": "",
+              "AlertLabel3": "",
+              "AlertLabel4": "",
+              "AlertLabel5": "",
+              "AlertLabel6": "",
+              "AlertLabel7": "",
+              "AlertLabel8": "",
+              "AlertLabel9": "",
+              "AlertLabel10": "",
+              "AlsoSendNotification": "true",
+              "value_1": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "value_2": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_3": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_4": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_5": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_6": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_7": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_8": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_9": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              },
+              "value_10": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {}
+              }
+            },
+            "id": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
+            "id_by_user": 3,
+            "blockName": "Alert message",
+            "category": "output_communication",
+            "block_name_mql": "alert_message"
+          }
+        ],
+        "edges": [
+          {
+            "source": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
+            "sourceHandle": "blue",
+            "target": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "dc6f808d-b1e3-476e-a65b-9a1d7b192cb7"
+          },
+          {
+            "source": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+            "sourceHandle": "blue",
+            "target": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "0926b324-e463-4d5c-a430-4741da478539"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+  "name_by_user": "tr4est 568/",
+  "highestIndex": "4"
+}

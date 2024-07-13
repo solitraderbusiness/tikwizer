@@ -606,8 +606,8 @@ def alert_message_run_data(node, run_data_static):
         run_data_static = run_data_static.replace("initializer_ten", init_10)
         run_data_static = run_data_static.replace("variable_name_ten", val_10)
     else:
-        run_data_static = run_data_static.replace("initializer_10", "")
-        run_data_static = run_data_static.replace("variable_name_10", "\"\"")
+        run_data_static = run_data_static.replace("initializer_ten", "")
+        run_data_static = run_data_static.replace("variable_name_ten", "\"\"")
 
     return run_data_static
 
