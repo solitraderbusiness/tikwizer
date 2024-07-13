@@ -1070,8 +1070,8 @@ class ExpertBuilder:
             params_ntmdp = value_fetch_ntmdp.get("params")
             id_val_ntmdp = str(node.get("id_by_user")) + "_ntmdp"
             self.task_elements.append(self.value_fetch_class(row1_ntmdp, row2_ntmdp, params_ntmdp, id_val_ntmdp))
-        if "new_sl_mode_dynamicDigits" in params:
-            value_fetch_ntmdd = params.get("new_sl_mode_dynamicDigits")
+        if "new_tp_mode_dynamicDigits" in params:
+            value_fetch_ntmdd = params.get("new_tp_mode_dynamicDigits")
             row1_ntmdd = value_fetch_ntmdd.get("row1")
             row2_ntmdd = value_fetch_ntmdd.get("row2")
             params_ntmdd = value_fetch_ntmdd.get("params")
