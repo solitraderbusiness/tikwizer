@@ -592,6 +592,9 @@ class ExpertBuilder:
         is_order_type_stop = self.global_functions.get_fun__is_order_type_stop()
         self.functions.append(is_order_type_stop)
 
+        is_order_type_limit = self.global_functions.get_fun__is_order_type_limit()
+        self.functions.append(is_order_type_limit)
+
         get_symbol = self.global_functions.get_fun__get_symbol()
         self.functions.append(get_symbol)
 

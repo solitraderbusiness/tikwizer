@@ -451,6 +451,11 @@ def get_fun__is_order_type_stop():
     return result
 
 
+def get_fun__is_order_type_limit():
+    result = "  bool IsOrderTypeLimit()\n  {\n   int type = OrderType();\n\n   return (type == OP_BUYLIMIT || type == OP_SELLLIMIT);\n  }\n  "
+    return result
+
+
 def get_fun__get_symbol():
     result = "string getSymbol(string symbol)\n  {\n   return (symbol==NULL || symbol==\"\") && overriding_symbol != \"\" ? overriding_symbol : (symbol==NULL || symbol==\"\") ? Symbol() : symbol;\n  }"
     return result

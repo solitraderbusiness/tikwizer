@@ -8285,3 +8285,180 @@ input_data_66 = {
   "name_by_user": "tr4est 568/",
   "highestIndex": "4"
 }
+
+# test check type
+input_data_67 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "operator": {
+                "label": "+"
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              },
+              "adjust": "",
+              "variable": ""
+            },
+            "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+            "id_by_user": 6,
+            "category": "condition_formula",
+            "block_name_mql": "formula",
+            "blockName": "Formula"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
+            "id_by_user": 7,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "CheckBuyOrSell": "buy",
+              "CheckLimitOrStop": "limit"
+            },
+            "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
+            "id_by_user": 8,
+            "blockName": "check type",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "check_type"
+          }
+        ],
+        "edges": [
+          {
+            "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+            "sourceHandle": "blue",
+            "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
+          },
+          {
+            "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+            "sourceHandle": "blue",
+            "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "close_mode": ""
+            },
+            "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+            "id_by_user": 4,
+            "category": "on_trade_filter_specific_event",
+            "block_name_mql": "order_deleted",
+            "blockName": "Order deleted"
+          },
+          {
+            "params": {},
+            "id": "48426fda-9104-4c26-990f-c14e68934d36",
+            "id_by_user": 5,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ],
+        "edges": [
+          {
+            "source": "48426fda-9104-4c26-990f-c14e68934d36",
+            "sourceHandle": "blue",
+            "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
+          }
+        ]
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+  "name_by_user": "tr4est 568/",
+  "highestIndex": "9"
+}
