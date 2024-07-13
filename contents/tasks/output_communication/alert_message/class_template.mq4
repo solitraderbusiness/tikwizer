@@ -11,7 +11,7 @@ class Task_id : public Task
    string               AlertLabel8;
    string               AlertLabel9;
    string               AlertLabel10;
-   string               AlsoSendNotification;
+   bool               AlsoSendNotification;
 public:
                      Task_id(string name):Task(name)
      {

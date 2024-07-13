@@ -1,3 +1,3 @@
 {
-	"field_data" : "   string                AlertTitle;\n   string                AlertLabel1;\n   string                AlertLabel2;\n   string                AlertLabel3;\n   string                AlertLabel4;\n   string               AlertLabel5;\n   string               AlertLabel6;\n   string               AlertLabel7;\n   string               AlertLabel8;\n   string               AlertLabel9;\n   string               AlertLabel10;\n   string               AlsoSendNotification;"
+	"field_data" : "   string                AlertTitle;\n   string                AlertLabel1;\n   string                AlertLabel2;\n   string                AlertLabel3;\n   string                AlertLabel4;\n   string               AlertLabel5;\n   string               AlertLabel6;\n   string               AlertLabel7;\n   string               AlertLabel8;\n   string               AlertLabel9;\n   string               AlertLabel10;\n   bool               AlsoSendNotification;"
 }
