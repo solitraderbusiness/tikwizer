@@ -283,8 +283,10 @@ constants = [
     "#define ACCOUNT_INFO_MARGIN_CALL_LEVEL 16",
     "#define ACCOUNT_INFO_ORDERS_TRADES_LIMIT 17",
 
-    # #####################  ##########################
-
+    # ##################### on timer ##########################
+    "bool ONTIMER_TAKEN      = false;",
+    "bool ONTIMER_TAKEN_IN_MILLISECONDS = false;",
+    "double ONTIMER_TAKEN_TIME = 0;",
     # #####################  ##########################
 
 ]

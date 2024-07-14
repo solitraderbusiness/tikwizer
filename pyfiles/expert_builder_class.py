@@ -262,6 +262,8 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_timer()
         self.on_init.append(call_add_blocks)
 
+        self.on_timer.append("   static datetime t0 = 0;\n   datetime t = 0;\n   bool ok = false;\n\n   if(ONTIMER_TAKEN)\n     {\n      if(ONTIMER_TAKEN_TIME > 0)\n        {\n         if(ONTIMER_TAKEN_IN_MILLISECONDS == true)\n           {\n            t = GetTickCount();\n           }\n         else\n           {\n            t = TimeLocal();\n           }\n         if((t - t0) >= ONTIMER_TAKEN_TIME)\n           {\n            t0 = t;\n            ok = true;\n           }\n        }\n\n      if(ok == false)\n        {\n         return;\n        }\n     }\n")
+
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_timer()
         self.on_timer.append(call_reset_blocks)
@@ -657,6 +659,9 @@ class ExpertBuilder:
 
         order_open_price_as_child = self.global_functions.get_fun__order_open_price_as_child()
         self.functions.append(order_open_price_as_child)
+
+        on_timer_set = self.global_functions.get_fun__on_timer_set()
+        self.functions.append(on_timer_set)
 
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"

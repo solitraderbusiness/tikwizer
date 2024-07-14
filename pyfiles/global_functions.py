@@ -554,3 +554,8 @@ def get_fun__order_open_price_as_child():
 def get_fun__is_symbol_accepted_on_trade():
     result = "bool is_symbol_accepted_on_trade(int symbol_mode, string &symbols[])\n  {\n   if(symbol_mode == SYMBOL_MODE_ANY)\n     {\n      return true;\n     }\n   else\n      if(ArraySize(symbols)==0)\n        {\n         bool case_1 = e_attrSymbol() == getSymbol(\"\");\n         bool case_2 = e_attrSymbol() == Symbol() && getSymbol(\"\")==\"\";\n         return case_1 || case_2;\n        }\n      else\n        {\n         for(int i=ArraySize(symbols)-1; i>=0; i--)\n           {\n            string smb = StringTrimRight(symbols[i]);\n            smb = StringTrimLeft(smb);\n            if(smb==e_attrSymbol())\n              {\n               return true;\n              }\n           }\n        }\n   return false;\n  }"
     return result
+
+
+def get_fun__on_timer_set():
+    result = "bool OnTimerSet(double seconds)\n  {\n   if(ONTIMER_TAKEN)\n     {\n      if(seconds<=0)\n        {\n         ONTIMER_TAKEN_IN_MILLISECONDS = false;\n         ONTIMER_TAKEN_TIME = 0;\n        }\n      else\n         if(seconds < 1)\n           {\n            ONTIMER_TAKEN_IN_MILLISECONDS = true;\n            ONTIMER_TAKEN_TIME = seconds*1000;\n           }\n         else\n           {\n            ONTIMER_TAKEN_IN_MILLISECONDS = false;\n            ONTIMER_TAKEN_TIME = seconds;\n           }\n\n      return true;\n     }\n\n   if(seconds<=0)\n     {\n      EventKillTimer();\n     }\n   else\n      if(seconds < 1)\n        {\n         return (EventSetMillisecondTimer((int)(seconds*1000)));\n        }\n      else\n        {\n         return (EventSetTimer((int)seconds));\n        }\n\n   return true;\n  }\n"
+    return result

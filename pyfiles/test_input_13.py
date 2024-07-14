@@ -8107,358 +8107,679 @@ input_data_65 = {
 
 # test alert message
 input_data_66 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {
-              "operator": {
-                "label": ">",
-                "cross_width": 1
-              },
-              "left": {
-                "row1": "market-properties",
-                "row2": "highest_price_candles_period",
-                "params": {
-                  "range_start": "0",
-                  "range_end": "10",
-                  "what_to_get": "GET_PRICE",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": ""
-                }
-              },
-              "right": {
-                "row1": "indicator",
-                "row2": "ma",
-                "params": {
-                  "ma_period": "20",
-                  "ma_shift": "0",
-                  "ma_method": "MODE_SMA",
-                  "applied_price": "PRICE_CLOSE",
-                  "adjust": "",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "shift": "0"
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "201930a6-fc5f-4d0a-afb6-223217a962cc",
-            "id_by_user": 1,
-            "blockName": "Condition",
-            "category": "condition_formula",
-            "block_name_mql": "condition"
-          },
-          {
-            "params": {},
-            "id": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
-            "id_by_user": 2,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "AlertTitle": "Alert Message",
-              "AlertLabel1": "",
-              "AlertLabel2": "",
-              "AlertLabel3": "",
-              "AlertLabel4": "",
-              "AlertLabel5": "",
-              "AlertLabel6": "",
-              "AlertLabel7": "",
-              "AlertLabel8": "",
-              "AlertLabel9": "",
-              "AlertLabel10": "",
-              "AlsoSendNotification": "true",
-              "value_1": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {
-                  "value": "1",
-                  "adjust": ""
-                }
-              },
-              "value_2": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_3": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_4": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_5": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_6": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_7": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_8": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_9": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              },
-              "value_10": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {}
-              }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
-            "id_by_user": 3,
-            "blockName": "Alert message",
-            "category": "output_communication",
-            "block_name_mql": "alert_message"
-          }
-        ],
-        "edges": [
-          {
-            "source": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
-            "sourceHandle": "blue",
-            "target": "201930a6-fc5f-4d0a-afb6-223217a962cc",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "dc6f808d-b1e3-476e-a65b-9a1d7b192cb7"
-          },
-          {
-            "source": "201930a6-fc5f-4d0a-afb6-223217a962cc",
-            "sourceHandle": "blue",
-            "target": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "0926b324-e463-4d5c-a430-4741da478539"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "highest_price_candles_period",
+                                "params": {
+                                    "range_start": "0",
+                                    "range_end": "10",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+                        "id_by_user": 1,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {},
+                        "id": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
+                        "id_by_user": 2,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "AlertTitle": "Alert Message",
+                            "AlertLabel1": "",
+                            "AlertLabel2": "",
+                            "AlertLabel3": "",
+                            "AlertLabel4": "",
+                            "AlertLabel5": "",
+                            "AlertLabel6": "",
+                            "AlertLabel7": "",
+                            "AlertLabel8": "",
+                            "AlertLabel9": "",
+                            "AlertLabel10": "",
+                            "AlsoSendNotification": "true",
+                            "value_1": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_2": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_3": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_4": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_5": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_6": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_7": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_8": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_9": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            },
+                            "value_10": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {}
+                            }
+                        },
+                        "id": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
+                        "id_by_user": 3,
+                        "blockName": "Alert message",
+                        "category": "output_communication",
+                        "block_name_mql": "alert_message"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "82a8af4b-9929-4117-b93b-6dc4f1a27402",
+                        "sourceHandle": "blue",
+                        "target": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "dc6f808d-b1e3-476e-a65b-9a1d7b192cb7"
+                    },
+                    {
+                        "source": "201930a6-fc5f-4d0a-afb6-223217a962cc",
+                        "sourceHandle": "blue",
+                        "target": "b5930828-5ac3-4423-85dd-7e60bb197a2d",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0926b324-e463-4d5c-a430-4741da478539"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
-  "name_by_user": "tr4est 568/",
-  "highestIndex": "4"
+    "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+    "name_by_user": "tr4est 568/",
+    "highestIndex": "4"
 }
 
 # test check type
 input_data_67 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {
-              "operator": {
-                "label": "+"
-              },
-              "left": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {
-                  "value": "1",
-                  "adjust": ""
-                }
-              },
-              "right": {
-                "row1": "value",
-                "row2": "Numeric",
-                "params": {
-                  "value": "1",
-                  "adjust": ""
-                }
-              },
-              "adjust": "",
-              "variable": ""
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
-            "id_by_user": 6,
-            "category": "condition_formula",
-            "block_name_mql": "formula",
-            "blockName": "Formula"
-          },
-          {
-            "params": {
-              "operator": {
-                "label": ">",
-                "cross_width": 1
-              },
-              "left": {
-                "row1": "indicator",
-                "row2": "ma",
-                "params": {
-                  "value": "1",
-                  "ma_period": "5",
-                  "ma_shift": "0",
-                  "ma_method": "MODE_SMA",
-                  "applied_price": "PRICE_CLOSE",
-                  "adjust": "",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "shift": "0"
-                }
-              },
-              "right": {
-                "row1": "indicator",
-                "row2": "ma",
-                "params": {
-                  "value": "1",
-                  "ma_period": "20",
-                  "ma_shift": "0",
-                  "ma_method": "MODE_SMA",
-                  "applied_price": "PRICE_CLOSE",
-                  "adjust": "",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "shift": "0"
-                }
-              }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
-            "id_by_user": 7,
-            "category": "condition_formula",
-            "block_name_mql": "condition",
-            "blockName": "Condition"
-          },
-          {
-            "params": {
-              "CheckBuyOrSell": "buy",
-              "CheckLimitOrStop": "limit"
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "id_by_user": 6,
+                        "category": "condition_formula",
+                        "block_name_mql": "formula",
+                        "blockName": "Formula"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "value": "1",
+                                    "ma_period": "5",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "value": "1",
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "id_by_user": 7,
+                        "category": "condition_formula",
+                        "block_name_mql": "condition",
+                        "blockName": "Condition"
+                    },
+                    {
+                        "params": {
+                            "CheckBuyOrSell": "buy",
+                            "CheckLimitOrStop": "limit"
+                        },
+                        "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "id_by_user": 8,
+                        "blockName": "check type",
+                        "category": "loop_for_trades_orders",
+                        "block_name_mql": "check_type"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
+                    },
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
+                    }
+                ]
             },
-            "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
-            "id_by_user": 8,
-            "blockName": "check type",
-            "category": "loop_for_trades_orders",
-            "block_name_mql": "check_type"
-          }
-        ],
-        "edges": [
-          {
-            "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
-            "sourceHandle": "blue",
-            "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
-          },
-          {
-            "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
-            "sourceHandle": "blue",
-            "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "type": "{2,3,4,5}",
-              "type_pending": "{2,3,4,5}",
-              "close_mode": ""
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "id_by_user": 4,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    },
+                    {
+                        "params": {},
+                        "id": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "id_by_user": 5,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "sourceHandle": "blue",
+                        "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
+                    }
+                ]
             },
-            "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
-            "id_by_user": 4,
-            "category": "on_trade_filter_specific_event",
-            "block_name_mql": "order_deleted",
-            "blockName": "Order deleted"
-          },
-          {
-            "params": {},
-            "id": "48426fda-9104-4c26-990f-c14e68934d36",
-            "id_by_user": 5,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          }
-        ],
-        "edges": [
-          {
-            "source": "48426fda-9104-4c26-990f-c14e68934d36",
-            "sourceHandle": "blue",
-            "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
-          }
-        ]
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
-  "name_by_user": "tr4est 568/",
-  "highestIndex": "9"
+    "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+    "name_by_user": "tr4est 568/",
+    "highestIndex": "9"
+}
+
+# test change timer period
+input_data_68 = {
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "id_by_user": 6,
+                        "category": "condition_formula",
+                        "block_name_mql": "formula",
+                        "blockName": "Formula"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "value": "1",
+                                    "ma_period": "5",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "value": "1",
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "id_by_user": 7,
+                        "category": "condition_formula",
+                        "block_name_mql": "condition",
+                        "blockName": "Condition"
+                    },
+                    {
+                        "params": {
+                            "SetHours": 0.0,
+                            "SetMinutes": 1.0,
+                            "SetSeconds": 0.0
+                        },
+                        "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "id_by_user": 8,
+                        "blockName": "Change timer period",
+                        "category": "on_timer_filter_specific_event",
+                        "block_name_mql": "change_timer_period"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
+                    },
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "id_by_user": 4,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    },
+                    {
+                        "params": {},
+                        "id": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "id_by_user": 5,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "sourceHandle": "blue",
+                        "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+    "name_by_user": "tr4est 568/",
+    "highestIndex": "9"
+}
+
+# test stop timer
+input_data_69 = {
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "id_by_user": 6,
+                        "category": "condition_formula",
+                        "block_name_mql": "formula",
+                        "blockName": "Formula"
+                    },
+                    {
+                        "params": {},
+                        "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "id_by_user": 7,
+                        "category": "on_timer_filter_specific_event",
+                        "block_name_mql": "stop_timer",
+                        "blockName": "Stop timer"
+                    },
+                    {
+                        "params": {
+                            "SetHours": 0.0,
+                            "SetMinutes": 1.0,
+                            "SetSeconds": 0.0
+                        },
+                        "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "id_by_user": 8,
+                        "blockName": "Change timer period",
+                        "category": "on_timer_filter_specific_event",
+                        "block_name_mql": "change_timer_period"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
+                    },
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "id_by_user": 4,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    },
+                    {
+                        "params": {},
+                        "id": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "id_by_user": 5,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "sourceHandle": "blue",
+                        "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+    "name_by_user": "tr4est 568/",
+    "highestIndex": "9"
 }

@@ -209,6 +209,9 @@
 #define ACCOUNT_INFO_STOPOUT_LEVEL 15
 #define ACCOUNT_INFO_MARGIN_CALL_LEVEL 16
 #define ACCOUNT_INFO_ORDERS_TRADES_LIMIT 17
+bool ONTIMER_TAKEN      = false;
+bool ONTIMER_TAKEN_IN_MILLISECONDS = false;
+double ONTIMER_TAKEN_TIME = 0;
 //This is used to hold onchart event for onchart blocks process
 struct OnChartEventHolder
   {
@@ -1476,212 +1479,6 @@ public:
      }
   };
 
-
-class MovingAverage7_left
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               ma_period;
-   int               ma_shift;
-   int               ma_method;
-   int               applied_price;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      ma_period = 5;
-      ma_shift = 0;
-      ma_method = MODE_SMA;
-      applied_price = PRICE_CLOSE;
-      shift = 0;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-
-class MovingAverage7_right
-
-  {
-
-   string            symbol;
-   int               timeframe;
-   int               ma_period;
-   int               ma_shift;
-   int               ma_method;
-   int               applied_price;
-   int               shift;
-
-
-
-public:
-
-   void              init()
-
-     {
-
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      ma_period = 20;
-      ma_shift = 0;
-      ma_method = MODE_SMA;
-      applied_price = PRICE_CLOSE;
-      shift = 0;
-
-     }
-
-
-
-   double            calc()
-
-     {
-
-      string symbol =  getSymbol(this.symbol);
-      int timeframe = getTimeframe(this.timeframe);
-      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
-
-      return result;
-
-     }
-
-
-
-  };
-//Formula
-class Task6 : public Task
-  {
-
-public:
-                     Task6(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      Value6_left value6_left;
-      value6_left.init();
-      double valueValue6_left = value6_left.calc<double>();
-      Value6_right value6_right;
-      value6_right.init();
-      double valueValue6_right = value6_right.calc<double>();
-      string undefined_var_0 = (valueValue6_left + valueValue6_right);
-
-      //printf("task"+block_id + " passed route 1");
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Condition
-class Task7 : public Task
-  {
-
-public:
-                     Task7(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      MovingAverage7_left movingaverage7_left;
-      movingaverage7_left.init();
-      double valueMovingAverage7_left = movingaverage7_left.calc();
-      MovingAverage7_right movingaverage7_right;
-      movingaverage7_right.init();
-      double valueMovingAverage7_right = movingaverage7_right.calc();
-
-      if(valueMovingAverage7_left > valueMovingAverage7_right)
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//check type
-class Task8 : public Task
-  {
-   string                CheckBuyOrSell;
-   string                CheckLimitOrStop;
-public:
-                     Task8(string name):Task(name)
-     {
-      CheckBuyOrSell = (string)"buy";
-      CheckLimitOrStop = (string)"limit";
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      if(exit_loop)
-        {
-         return;
-        }
-
-      //LoopedResume();
-
-      if((CheckBuyOrSell == "both" || (CheckBuyOrSell == "buy" && IsOrderTypeBuy()) || (CheckBuyOrSell == "sell" && IsOrderTypeSell()))
-         && (CheckLimitOrStop == "both" || (CheckLimitOrStop == "limit" && IsOrderTypeLimit()) || (CheckLimitOrStop == "stop" && IsOrderTypeStop())))
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
 //Order deleted
 class Task4 : public Task
   {
@@ -1702,7 +1499,7 @@ public:
 
       group_mode = ORDER_GROUP_MODE_NUMBER;
       group_number = 11;
-      int mtype[] = {4,2,3,5}; //0 for buy and 1 for sell
+      int mtype[] = {2,3,5,4}; //0 for buy and 1 for sell
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       close_mode = "";
@@ -1753,6 +1550,98 @@ public:
      {
       Task::run(block_id, block);
       block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Formula
+class Task6 : public Task
+  {
+
+public:
+                     Task6(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      Value6_left value6_left;
+      value6_left.init();
+      double valueValue6_left = value6_left.calc<double>();
+      Value6_right value6_right;
+      value6_right.init();
+      double valueValue6_right = value6_right.calc<double>();
+      string undefined_var_0 = (valueValue6_left + valueValue6_right);
+
+      //printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Stop timer
+class Task7 : public Task
+  {
+
+public:
+                     Task7(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      EventSetTimer(0);
+      //printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Change timer period
+class Task8 : public Task
+  {
+   double                SetHours;
+   double                SetMinutes;
+   double                SetSeconds;
+public:
+                     Task8(string name):Task(name)
+     {
+      SetHours = (double)0.0;
+      SetMinutes = (double)1.0;
+      SetSeconds = (double)0.0;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      double time = (3600*SetHours) + (60*SetMinutes) + (SetSeconds);
+      bool success = OnTimerSet(time);
+      if(success == true)
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
      }
    virtual void      reset(int level)
      {
@@ -1911,84 +1800,6 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block6 : public Block
-  {
-public:
-                     Block6()
-     {
-      id = 0;
-      id_by_user = 6;
-      name = "formula";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {1, 2};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task6(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block7 : public Block
-  {
-public:
-                     Block7()
-     {
-      id = 1;
-      id_by_user = 7;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task7(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block8 : public Block
-  {
-public:
-                     Block8()
-     {
-      id = 2;
-      id_by_user = 8;
-      name = "check_type";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task8(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
@@ -2036,6 +1847,84 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task5(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block6 : public Block
+  {
+public:
+                     Block6()
+     {
+      id = 0;
+      id_by_user = 6;
+      name = "formula";
+      enabled = True;
+      event = EVENT_ON_TIMER;
+
+      int mnexts_true[] = {1, 2};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task6(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block7 : public Block
+  {
+public:
+                     Block7()
+     {
+      id = 1;
+      id_by_user = 7;
+      name = "stop_timer";
+      enabled = True;
+      event = EVENT_ON_TIMER;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task7(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block8 : public Block
+  {
+public:
+                     Block8()
+     {
+      id = 2;
+      id_by_user = 8;
+      name = "change_timer_period";
+      enabled = True;
+      event = EVENT_ON_TIMER;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task8(name);
      }
   };
 Block *blocks_init[];
@@ -2105,14 +1994,8 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 3);
-   Block6 *block6 = new Block6();
-   Block7 *block7 = new Block7();
-   Block8 *block8 = new Block8();
+   ArrayResize(blocks_tick, 0);
 
-   blocks_tick[0] = block6;
-   blocks_tick[1] = block7;
-   blocks_tick[2] = block8;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -2190,8 +2073,14 @@ void runBlockTimer(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTimer()
   {
-   ArrayResize(blocks_timer, 0);
+   ArrayResize(blocks_timer, 3);
+   Block6 *block6 = new Block6();
+   Block7 *block7 = new Block7();
+   Block8 *block8 = new Block8();
 
+   blocks_timer[0] = block6;
+   blocks_timer[1] = block7;
+   blocks_timer[2] = block8;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4540,6 +4429,49 @@ double OrderOpenPriceAsChild()
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+bool OnTimerSet(double seconds)
+  {
+   if(ONTIMER_TAKEN)
+     {
+      if(seconds<=0)
+        {
+         ONTIMER_TAKEN_IN_MILLISECONDS = false;
+         ONTIMER_TAKEN_TIME = 0;
+        }
+      else
+         if(seconds < 1)
+           {
+            ONTIMER_TAKEN_IN_MILLISECONDS = true;
+            ONTIMER_TAKEN_TIME = seconds*1000;
+           }
+         else
+           {
+            ONTIMER_TAKEN_IN_MILLISECONDS = false;
+            ONTIMER_TAKEN_TIME = seconds;
+           }
+
+      return true;
+     }
+
+   if(seconds<=0)
+     {
+      EventKillTimer();
+     }
+   else
+      if(seconds < 1)
+        {
+         return (EventSetMillisecondTimer((int)(seconds*1000)));
+        }
+      else
+        {
+         return (EventSetTimer((int)seconds));
+        }
+
+   return true;
+  }
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 int OnInit()
   {
    addBlocksTick();
@@ -4559,7 +4491,36 @@ int OnInit()
 //+------------------------------------------------------------------+
 void OnTimer()
   {
+   static datetime t0 = 0;
+   datetime t = 0;
+   bool ok = false;
+
+   if(ONTIMER_TAKEN)
+     {
+      if(ONTIMER_TAKEN_TIME > 0)
+        {
+         if(ONTIMER_TAKEN_IN_MILLISECONDS == true)
+           {
+            t = GetTickCount();
+           }
+         else
+           {
+            t = TimeLocal();
+           }
+         if((t - t0) >= ONTIMER_TAKEN_TIME)
+           {
+            t0 = t;
+            ok = true;
+           }
+        }
+
+      if(ok == false)
+        {
+         return;
+        }
+     }
    resetBlocksTimer(RESET_LEVEL_DEFAULT);
+   runBlockTimer(-1, -1, 0);
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4568,7 +4529,6 @@ void OnTick()
   {
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      SetHours = (double)SetHours_val;\n      SetMinutes = (double)SetMinutes_val;\n      SetSeconds = (double)SetSeconds_val;"
+}
