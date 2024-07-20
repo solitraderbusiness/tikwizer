@@ -111,15 +111,15 @@ public:
             ObjAnchor = ANCHOR_RIGHT;
            }
 
-         string namebase = "fxd_cmnt_" + block_id;
+         string namebase = "mexpert_cmnt_" + block_id;
 
          int subwindow = WindowFindVisible(ObjChartID, obj_chart_subwindow);
 
          if(subwindow >= 0)
            {
             //-- draw comment title
-            if((string)title != "")
-              {
+//            if((string)title != "")
+//              {
                string nametitle = namebase;
 
                if(ObjectFind(ObjChartID, nametitle) < 0)
@@ -154,7 +154,7 @@ public:
                ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
 
                obj_y = (int)(obj_y + obj_title_font_size / 3);
-              }
+//              }
 
             //-- draw comment rows
             for(int i = 1; i <= 8; i++)
