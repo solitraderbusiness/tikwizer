@@ -48,7 +48,7 @@ def get_task_child(node, constants, variables):
     reset_data = reset_data_dynamic_fun(reset_data_static)
 
     function_data_static = function_data_static_fun(path_task_id)
-    function_data = function_data_dynamic_fun(node, function_data_static)
+    function_data = function_data_dynamic_fun(node, function_data_static, constants, variables)
 
     # class template to class final
     task = class_template \
@@ -184,11 +184,13 @@ def function_data_static_fun(path_task_id):
     return ""
 
 
-def function_data_dynamic_fun(node, function_data_static):
+def function_data_dynamic_fun(node, function_data_static, constants, variables):
     task_name = node.get("block_name_mql")
     function_data = function_data_static
     if task_name == "buy_sell":
         function_data = buy_sell_function_data(node, function_data_static)
+    elif task_name == "volume_profile":
+        function_data = replace_input_values(function_data, node.get("params"), constants, variables)
 
     return function_data
 
@@ -199,6 +201,8 @@ def function_data_dynamic_fun(node, function_data_static):
 # time block's run method is called.
 def add_var_reference_if_any(data, params, variables):
     if "operator" and "variable" in params:  # This is Formula, don't do anything
+        return data
+    if "max_part_1" in params:  # This is Volume profile, don't do anything
         return data
     fix_star = "Task::run(block_id, block);"
     for key, value in params.items():

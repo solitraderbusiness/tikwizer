@@ -3,49 +3,50 @@ class Task_id : public Task
   {
    /* Calculation */
    ENUM_VP_RANGE_MODE RangeMode;    // Range mode
-   int               RangeMinutes;                                       // Range minutes
-   int               ModeStep;                                            // Mode step (points)
-   ENUM_POINT_SCALE  HgPointScale;                // Point scale
-   ENUM_APPLIED_VOLUME VolumeType;                  // Volume type
-   ENUM_VP_SOURCE    DataSource;                      // Data source
+   int               RangeMinutes;  // Range minutes
+   int               ModeStep;      // Mode step (points)
+   ENUM_POINT_SCALE  HgPointScale;
+   int               numberOfBars;  // Point scale
+   ENUM_APPLIED_VOLUME VolumeType;  // Volume type
+   ENUM_VP_SOURCE    DataSource;    // Data source
 
    /* Histogram */
-   ENUM_VP_BAR_STYLE HgBarStyle;              // Bar style
+   ENUM_VP_BAR_STYLE HgBarStyle;    // Bar style
    ENUM_VP_HG_POSITION HgPosition;  // Histogram position
-   color             HgColor;                                // Color 1
-   color             HgColor2;                               // Color 2
-   int               HgLineWidth;                                           // Line width
+   color             HgColor;       // Color 1
+   color             HgColor2;      // Color 2
+   int               HgLineWidth;   // Line width
 
    /* Levels */
-   color             ModeColor;                                     // Mode color
-   color             MaxColor;                                      // Maximum color
-   color             MedianColor;                                   // Median color
-   color             VwapColor;                                     // VWAP color
-   int               ModeLineWidth;                                         // Mode line width
-   ENUM_LINE_STYLE   StatLineStyle;                     // Median & VWAP line style
+   color             ModeColor;     // Mode color
+   color             MaxColor;      // Maximum color
+   color             MedianColor;   // Median color
+   color             VwapColor;     // VWAP color
+   int               ModeLineWidth; // Mode line width
+   ENUM_LINE_STYLE   StatLineStyle; // Median & VWAP line style
 
    //+------------------------------------------------------------------+
    //|                                                                  |
    //+------------------------------------------------------------------+
-   color             ModeLevelColor;                                  // Mode level line color (None=disable)
-   int               ModeLevelWidth;                                   // Mode level line width
-   ENUM_LINE_STYLE   ModeLevelStyle;                  // Mode level line style
+   color             ModeLevelColor; // Mode level line color (None=disable)
+   int               ModeLevelWidth; // Mode level line width
+   ENUM_LINE_STYLE   ModeLevelStyle; // Mode level line style
 
    /* Service */
-   string            Id;                                            // Identifier
-   bool              ShowHorizon;                                  // Show data horizon
-   double            Zoom;                                          // Zoom (0=auto)
-   int               WaitMilliseconds;                               // Wait milliseconds
-   color             TimeFromColor;                               // Left border line color
-   ENUM_LINE_STYLE   TimeFromStyle;               // Left border line style
-   color             TimeToColor;                                  // Right border line color
-   ENUM_LINE_STYLE   TimeToStyle;                 // Right border line style
-   double            HgWidthPercent;                               // Histogram width, % of chart
+   string            Id;             // Identifier
+   bool              ShowHorizon;    // Show data horizon
+   double            Zoom;           // Zoom (0=auto)
+   int               WaitMilliseconds;// Wait milliseconds
+   color             TimeFromColor;  // Left border line color
+   ENUM_LINE_STYLE   TimeFromStyle;  // Left border line style
+   color             TimeToColor;    // Right border line color
+   ENUM_LINE_STYLE   TimeToStyle;    // Right border line style
+   double            HgWidthPercent; // Histogram width, % of chart
 
 
+   //////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////
    string            _prefix;
    string            _tfn;
    string            _ttn;
@@ -103,6 +104,19 @@ class Task_id : public Task
    bool              _updateOnTick;
    ENUM_TIMEFRAMES   _dataPeriod;
 
+   int               timeFromCandleId;
+   int               timeToCandleId;
+
+   int               how_many_regions;
+   int               region_1_factor;
+   int               region_2_factor;
+   int               region_3_factor;
+   int               region_4_factor;
+   int               region_5_factor;
+
+   double            volumes[];
+   double            prices[];
+
 
    datetime          timeFrom_last;
    datetime          timeTo_last;
@@ -112,11 +126,12 @@ class Task_id : public Task
 public:
                      Task_id(string name):Task(name)
      {
-     /* Calculations */
+      /* Calculations */
       RangeMode = RangeMode_val;              // Range mode
       RangeMinutes = RangeMinutes_val;        // Range minutes
       ModeStep =    ModeStep_val;             // Mode step (points)
-      HgPointScale = HgPointScale_val;        // Point scale
+      HgPointScale = POINT_SCALE_100;        // Point scale
+      numberOfBars = numberOfBars_val;
       VolumeType = VolumeType_val;            // Volume type
       DataSource = DataSource_val;            // Data source
 
@@ -135,24 +150,22 @@ public:
       ModeLineWidth = ModeLineWidth_val;      // Mode line width
       StatLineStyle = StatLineStyle_val;      // Median & VWAP line style
 
-
       ModeLevelColor = ModeLevelColor_val;    // Mode level line color (None=disable)
-      ModeLevelWidth = 1;                     // Mode level line width
+      ModeLevelWidth = ModeLevelWidth_val;                     // Mode level line width
       ModeLevelStyle = ModeLevelStyle_val;    // Mode level line style
 
       /* Service */
       Id =       Id_val;                      // Identifier
-      ShowHorizon = true;                     // Show data horizon
+      ShowHorizon = ShowHorizon_val;                     // Show data horizon
       Zoom =     0;                           // Zoom (0=auto)
       WaitMilliseconds = 500;                 // Wait milliseconds
-      TimeFromColor = Blue;                   // Left border line color
-      TimeFromStyle = STYLE_DASH;             // Left border line style
-      TimeToColor = Red;                      // Right border line color
-      TimeToStyle = STYLE_DASH;               // Right border line style
-      HgWidthPercent = 15;                    // Histogram width, % of chart
+      TimeFromColor = TimeFromColor_val;                   // Left border line color
+      TimeFromStyle = TimeFromStyle_val;             // Left border line style
+      TimeToColor = TimeToColor_val;                      // Right border line color
+      TimeToStyle = TimeToStyle_val;               // Right border line style
+      HgWidthPercent = HgWidthPercent_val;                    // Histogram width, % of chart
 
-
-      //////////////////////////////////////////
+      /* miscellaneous */
 
       shouldUpdate = true;
 
@@ -179,7 +192,6 @@ public:
       _ttn = Id + "-to";
       _hgPoint = _Point * HgPointScale;
       _modeStep = ModeStep / HgPointScale;
-
 
       _hgBarStyle = HgBarStyle;
       _hgPointDigits = GetPointDigits(_hgPoint);
@@ -218,21 +230,146 @@ public:
 
       _dataPeriod = GetDataPeriod(DataSource);
 
+      /* Boundaries and multipliers */
+
+      timeFromCandleId = timeFromCandleId_val;
+      timeToCandleId = timeToCandleId_val;
+
+      how_many_regions = how_many_regions_val; //max is 5
+      region_1_factor = region_1_factor_val;
+      region_2_factor = region_2_factor_val;
+      region_3_factor = region_3_factor_val;
+      region_4_factor = region_4_factor_val;
+      region_5_factor = region_5_factor_val;
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
 
       Task::run(block_id, block);
 
-
       if(UpdateAutoColors() || checkVLineDragged())
          Update();
+
+      calcValues();
 
       //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
 
 
      }
+   virtual void      reset(int level)
+     {
+
+     }
+
+
+   void              calcValues()
+     {
+
+      how_many_regions = 3;
+      region_1_factor = 2;
+      region_2_factor = 3;
+      region_3_factor = 1;
+      region_4_factor = 1;
+
+
+      int max1=0, min1=0, multiply1=0;
+      int max2=0, min2=0, multiply2=0;
+      int max3=0, min3=0, multiply3=0;
+      int max4=0, min4=0, multiply4=0;
+      int max5=0, min5=0, multiply5=0;
+
+      // Assuming 'volumes' is your list of double values
+      double m;
+
+      double partSize = ArraySize(volumes) /(double) how_many_regions;
+      int startIndex = 0;
+
+      for(int i = 0; i < how_many_regions; i++)
+        {
+         int maxPart = startIndex;
+         int minPart = startIndex;
+         int xIndex = -1;
+
+         for(int j = startIndex + 1; j < startIndex + partSize; j++)
+           {
+            if(volumes[j] > volumes[maxPart])
+               maxPart = j;
+            if(volumes[j] < volumes[minPart])
+               minPart = j;
+
+            m = i==0 ? region_1_factor : i==1 ? region_2_factor : i==2 ? region_3_factor : i==3 ? region_4_factor : i==4 ? region_5_factor : 0;
+            double ratioup = volumes[j-1]==0 && volumes[j]==0 ? 0 : volumes[j-1]==0 && volumes[j]!=0 ? EMPTY_VALUE : volumes[j]/volumes[j-1];
+            double ratiodn = volumes[j]==0 && volumes[j-1]==0 ? 0 : volumes[j]==0 && volumes[j-1]!=0 ? EMPTY_VALUE : volumes[j-1]/volumes[j];
+            double ratio = ratioup>ratiodn ? ratioup : ratiodn;
+            int    index = ratioup>ratiodn ? j : j-1;
+            if(ratio >= m)
+              {
+               if(xIndex==-1)
+                 {
+                  xIndex = index;
+                 }
+               else
+                 {
+                  double ratioup_x = volumes[xIndex-1]==0 && volumes[xIndex]==0 ? 0 : volumes[xIndex-1]==0 && volumes[xIndex]!=0 ? EMPTY_VALUE : volumes[xIndex]/volumes[xIndex-1];
+                  double ratiodn_x = volumes[xIndex]==0 && volumes[xIndex-1]==0 ? 0 : volumes[xIndex]==0 && volumes[xIndex-1]!=0 ? EMPTY_VALUE : volumes[xIndex-1]/volumes[xIndex];
+                  double ratio_x = ratioup_x>ratiodn_x ? ratioup_x : ratiodn_x;
+
+                  if(ratio>ratio_x)
+                    {
+                     xIndex = index;
+                    }
+                 }
+
+              }
+
+           }
+
+         // Save max, min, and x values for this part (you can use appropriate variables)
+         //Print(" Part ", i + 1, ": Max =", maxPart, ", Min =", minPart, ", x Index =", xIndex);
+         Print(" Part ", i + 1, ": Max =", prices[maxPart], ", Min =",prices[minPart], ", x Index =", prices[xIndex]);
+
+         if(i==0)  //part 1
+           {
+            max_part_1_val = maxPart;
+            min_part_1_val = minPart;
+            mtp_part_1_val = xIndex;
+           }
+         else
+            if(i==1)  //part 2
+              {
+               max_part_2_val = maxPart;
+               min_part_2_val = minPart;
+               mtp_part_2_val = xIndex;
+              }
+            else
+               if(i==2)  //part 3
+                 {
+                  max_part_3_val = maxPart;
+                  min_part_3_val = minPart;
+                  mtp_part_3_val = xIndex;
+                 }
+               else
+                  if(i==3)  //part 4
+                    {
+                     max_part_4_val = maxPart;
+                     min_part_4_val = minPart;
+                     mtp_part_4_val = xIndex;
+                    }
+                  else
+                     if(i==4)  //part 5
+                       {
+                        max_part_5_val = maxPart;
+                        min_part_5_val = minPart;
+                        mtp_part_5_val = xIndex;
+                       }
+
+
+         startIndex = MathRound(startIndex+partSize);
+        }
+     }
+
 
    //Check if lines dragged,
    bool              checkVLineDragged()
@@ -292,12 +429,24 @@ public:
 
          if((timeFrom == 0) || (timeTo == 0))
            {
-            datetime timeLeft = GetBarTime(WindowFirstVisibleBar());
-            datetime timeRight = GetBarTime(WindowFirstVisibleBar() - WindowBarsPerChart());
-            ulong timeRange = timeRight - timeLeft;
+            //            datetime timeLeft = GetBarTime(WindowFirstVisibleBar());
+            //            datetime timeRight = GetBarTime(WindowFirstVisibleBar() - WindowBarsPerChart());
+            //
 
-            timeFrom = (datetime)(timeLeft + timeRange / 3);
-            timeTo = (datetime)(timeLeft + timeRange * 2 / 3);
+            datetime timeLeft  = iTime(Symbol(), 0, timeFromCandleId);
+            datetime timeRight = iTime(Symbol(), 0, timeToCandleId);
+
+
+
+
+            ulong timeRange = timeRight - timeLeft;
+            //
+            //            timeFrom = (datetime)(timeLeft + timeRange / 3);
+            //            timeTo = (datetime)(timeLeft + timeRange * 2 / 3);
+
+            timeFrom = (datetime)(timeLeft);
+            timeTo = (datetime)(timeRight);
+
 
             DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
             DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
@@ -380,7 +529,6 @@ public:
       _updateOnTick = barTo < 0;
 
       int modes[];
-      double volumes[];
       double lowPrice;
 
       int count = GetHg(timeFrom, timeTo - 1, _hgPoint, _dataPeriod, VolumeType, lowPrice, volumes);
@@ -388,12 +536,11 @@ public:
       if(count <= 0)
          return(true);
 
-      ArrayCopy(vols,volumes,0,0,WHOLE_ARRAY);//Sajjad
 
       int modeCount = _showModes ? HgModes(volumes, _modeStep, modes) : -1;
-      int maxPos = _showMax ? ArrayMax(volumes) : -1;
+      int maxPos    = _showMax ? ArrayMax(volumes) : -1;
       int medianPos = _showMedian ? ArrayMedian(volumes) : -1;
-      int vwapPos = _showVwap ? HgVwap(volumes, lowPrice, _hgPoint) : -1;
+      int vwapPos   = _showVwap ? HgVwap(volumes, lowPrice, _hgPoint) : -1;
 
       string prefix = _prefix + (string)((int)RangeMode) + " ";
       double hgWidthBars = ((HgPosition == VP_HG_POSITION_LEFT_INSIDE) || (HgPosition == VP_HG_POSITION_RIGHT_INSIDE))
@@ -751,8 +898,30 @@ public:
       int lowIndex = ROUND_PRICE(low, point);
       int highIndex = ROUND_PRICE(high, point);
       int hgSize = highIndex - lowIndex + 1;
+
+
+
+      double ratio = hgSize/(double)numberOfBars;
+      if(ratio!=1)
+        {
+         HgPointScale = HgPointScale*ratio;
+         _hgPoint = _Point * HgPointScale;
+         _modeStep = ModeStep / HgPointScale;
+         _hgPointDigits = GetPointDigits(_hgPoint);
+         Update();
+         return;
+        }
+
+
+
+
+
+
+
+
       ArrayResize(volumes, hgSize);
       ArrayInitialize(volumes, 0);
+      ArrayResize(prices, hgSize);
 
       int pri, oi, hi, li, ci;
       double dv, v;
@@ -1092,6 +1261,7 @@ public:
          string priceString = DoubleToString(price, _hgPointDigits);
          string name = prefix + priceString;
          volume = volumes[i];
+         prices[i] = price;
          double mvolume = ArraySize(volumes) <= 100 ? volume : -1;
          if(isOutline)
            {
@@ -1198,9 +1368,7 @@ public:
       return(true);
      }
 
-   virtual void      reset(int level)
-     {
 
-     }
+
 
   };

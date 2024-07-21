@@ -3,7 +3,7 @@ from . import path_root
 from . import adjust
 
 path = path_root.get()
-path_sub = "/contents/tasks/volume_profile/volume_profile/"
+path_sub = "/contents/tasks/various_signals/volume_profile/"
 
 
 def get_classes():
