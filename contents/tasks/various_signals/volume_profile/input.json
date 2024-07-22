@@ -20,6 +20,7 @@
   "ModeLevelColor": "clrNONE",
   "ModeLevelWidth": 1,
   "ModeLevelStyle": "STYLE_SOLID",
+  "RegionDividerColor": "clrLightGray",
   "ShowHorizon": true,
   "TimeFromColor": "Blue",
   "TimeFromStyle": "STYLE_DASH",

@@ -24,13 +24,10 @@ class Task0 : public Task
    color             VwapColor;     // VWAP color
    int               ModeLineWidth; // Mode line width
    ENUM_LINE_STYLE   StatLineStyle; // Median & VWAP line style
-
-   //+------------------------------------------------------------------+
-   //|                                                                  |
-   //+------------------------------------------------------------------+
    color             ModeLevelColor; // Mode level line color (None=disable)
    int               ModeLevelWidth; // Mode level line width
    ENUM_LINE_STYLE   ModeLevelStyle; // Mode level line style
+   color             RegionDividerColor; //Region divider lines color
 
    /* Service */
    string            Id;             // Identifier
@@ -150,10 +147,10 @@ public:
       ModeLineWidth = 1;      // Mode line width
       StatLineStyle = STYLE_DOT;      // Median & VWAP line style
 
-
       ModeLevelColor = clrNONE;    // Mode level line color (None=disable)
       ModeLevelWidth = 1;                     // Mode level line width
       ModeLevelStyle = STYLE_SOLID;    // Mode level line style
+      RegionDividerColor = clrLightGray;   // Region divider lines color
 
       /* Service */
       Id =       "+vpr_0";                      // Identifier
@@ -250,9 +247,11 @@ public:
       Task::run(block_id, block);
 
       if(UpdateAutoColors() || checkVLineDragged())
+        {
          Update();
-
-      calcValues();
+         calcValues();
+         drawRegions();
+        }
 
       //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
@@ -368,6 +367,29 @@ public:
 
 
          startIndex = MathRound(startIndex+partSize);
+        }
+     }
+
+   void              drawRegions()
+     {
+      int timeframe = Period();
+      int hi = iHighest(NULL, timeframe, MODE_HIGH, timeFromCandleId-timeToCandleId, timeToCandleId);
+      int li = iLowest(NULL, timeframe, MODE_LOW, timeFromCandleId-timeToCandleId, timeToCandleId);
+      double eachArea = (High[hi]-Low[li])/how_many_regions;
+
+      for(int i=0; i<=how_many_regions; i++)
+        {
+         double level = NormalizeDouble(Low[li] + i*eachArea, _Digits);
+         string name = Id+"_region_dividers_"+(i+1);
+         if(!ObjectCreate(0, name,OBJ_TREND, 0,Time[timeToCandleId],level,Time[timeFromCandleId],level))
+           {
+            Print(__FUNCTION__, ": failed to create a trend line! Error code = ",GetLastError());
+            return(false);
+           }
+         ObjectSetInteger(0,name,OBJPROP_COLOR,RegionDividerColor);
+         ObjectSetInteger(0,name,OBJPROP_SELECTABLE,true);
+         ObjectSetInteger(0,name,OBJPROP_RAY,false);
+         ObjectSetInteger(0,name,OBJPROP_BACK,false);
         }
      }
 
