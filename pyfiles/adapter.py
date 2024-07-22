@@ -40,26 +40,26 @@ def sort_data(d):
 # This function creates generator specific input like order_type in buy_sell
 def create_specific_input(nodes):
     for node in nodes:
-        block_name = node.get("blockName")
+        block_name_mql = node.get("block_name_mql")
         params = node.get("params")
-        if block_name == "Buy now":
+        if block_name_mql == "buy_now":
             params["order_type"] = "ORDER_BUY"
-        elif block_name == "Sell now":
+        elif block_name_mql == "sell_now":
             params["order_type"] = "ORDER_SELL"
-        elif block_name == "Buy pending order":
+        elif block_name_mql == "buy_pending_order":
             params["order_type"] = "ORDER_BUY_PENDING"
-        elif block_name == "Sell pending order":
+        elif block_name_mql == "sell_pending_order":
             params["order_type"] = "ORDER_SELL_PENDING"
-        elif block_name == "Volume Profile":
+        elif block_name_mql == "volume_profile":
             params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
             trick_volume_profile_data_flaw(params)
-        elif block_name in ["If trade", "If trade/order", "If pending order"]:
+        elif block_name_mql in ["if_trade", "if_tradeorder", "if_pending_order"]:
             params["count_limit"] = 0
             params["operator"] = ">"
-        elif block_name in ["No trade", "No trade/order", "No pending order"]:
+        elif block_name_mql in ["no_trade", "no_tradeorder", "no_pending_order"]:
             params["count_limit"] = 0
             params["operator"] = "=="
-        elif block_name == "Formula":
+        elif block_name_mql == "formula":
             if not params.get("variable").strip():
                 params["variable"] = "string undefined_var_" + str(node.get("id"))
 
@@ -267,27 +267,27 @@ def get_proper_event_name(key):
 
 def correct_block_names_mql(nodes):
     for node in nodes:
-        block_name = node.get("blockName")
-        if block_name == "Condition":
+        block_name_mql = node.get("block_name_mql")
+        if block_name_mql == "condition":
             operator = node.get("params").get("operator").get("label")
             if operator == "×>" or operator == "×<":
                 node["block_name_mql"] = "condition_1_cross"
             else:
                 node["block_name_mql"] = "condition_1_normal"
-        elif block_name in ["Buy now", "Sell now", "Buy pending order", "Sell pending order"]:
+        elif block_name_mql in ["buy_now", "sell_now", "buy_pending_order", "sell_pending_order"]:
             node["block_name_mql"] = "buy_sell"
-        elif block_name in ["Check trades count", "Check pending orders count", "If trade", "If trade/order",
-                            "If pending order", "No trade", "No trade/order", "No pending order"]:
+        elif block_name_mql in ["check_trades_count", "check_pending_orders_count", "if_trade", "if_tradeorder",
+                                "if_pending_order", "no_trade", "no_tradeorder", "no_pending_order"]:
             node["block_name_mql"] = "check_trades_orders_count"
-        elif block_name in ["No trade nearby", "No pending order nearby"]:
+        elif block_name_mql in ["no_trade_nearby", "no_pending_order_nearby"]:
             node["block_name_mql"] = "no_trade_order_nearby"
-        elif block_name == "Turn ON blocks":
+        elif block_name_mql == "turn_on_blocks":
             node["block_name_mql"] = "blocks_on_off"
             node.get("params")["what"] = "BLOCK_STATE_ENABLE"
-        elif block_name == "Turn OFF blocks":
+        elif block_name_mql == "turn_off_blocks":
             node["block_name_mql"] = "blocks_on_off"
             node.get("params")["what"] = "BLOCK_STATE_DISABLE"
-        elif block_name == "Toggle blocks":
+        elif block_name_mql == "toggle_blocks":
             node["block_name_mql"] = "blocks_on_off"
             node.get("params")["what"] = "BLOCK_STATE_TOGGLE"
 
