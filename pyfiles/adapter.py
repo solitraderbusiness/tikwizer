@@ -50,8 +50,9 @@ def create_specific_input(nodes):
             params["order_type"] = "ORDER_BUY_PENDING"
         elif block_name == "Sell pending order":
             params["order_type"] = "ORDER_SELL_PENDING"
-        elif block_name == "Volume profile":
+        elif block_name == "Volume Profile":
             params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
+            trick_volume_profile_data_flaw(params)
         elif block_name in ["If trade", "If trade/order", "If pending order"]:
             params["count_limit"] = 0
             params["operator"] = ">"
@@ -61,6 +62,13 @@ def create_specific_input(nodes):
         elif block_name == "Formula":
             if not params.get("variable").strip():
                 params["variable"] = "string undefined_var_" + str(node.get("id"))
+
+
+def trick_volume_profile_data_flaw(params):
+    for key, val in params.items():
+        if "_part_" in key and isinstance(val, str):
+            if not val.strip():
+                params[key] = "double " + key + "_sudo"
 
 
 def add_extra_double_quotation_vars_consts(constants, variables):
