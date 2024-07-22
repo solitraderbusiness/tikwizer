@@ -1724,6 +1724,7 @@ public:
 
       if(UpdateAutoColors() || checkVLineDragged())
         {
+         preRun();
          Update();
          calcValues();
          drawRegions();
@@ -1739,6 +1740,11 @@ public:
 
      }
 
+   void              preRun()
+     {
+      if(how_many_regions>5)
+         how_many_regions = 5;
+     }
 
    void              calcValues()
      {
