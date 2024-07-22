@@ -9472,3 +9472,130 @@ input_data_71 = {
   "highestIndex": "4"
 }
 
+# test volume profile fetched from site 2
+input_data_72 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "50",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_LINE",
+              "HgPosition": "VP_HG_POSITION_WINDOW_LEFT",
+              "HgColor": "clrYellow",
+              "HgColor2": "clrOrange",
+              "HgLineWidth": "2",
+              "ModeColor": "clrBlue",
+              "MaxColor": "clrNONE",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "1",
+              "StatLineStyle": "STYLE_DOT",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrTomato",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrBlue",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrRed",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFromCandleId": "400",
+              "timeToCandleId": "100",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "x",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "e077e501-426e-4d2c-bb9d-651e0481228f",
+            "id_by_user": 13,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          }
+        ],
+        "edges": [
+          {
+            "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+            "sourceHandle": "blue",
+            "target": "e077e501-426e-4d2c-bb9d-651e0481228f",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "786e771f-e16a-409b-9749-6cc6aba9e88e"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "x",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "d79f4a5b-da52-4713-94ec-3263749ea95f",
+  "name_by_user": "test 8217",
+  "highestIndex": "14"
+}
+
