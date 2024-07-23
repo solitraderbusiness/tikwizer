@@ -935,7 +935,7 @@ double CustomPoint(string symbol)
    last_symbol = symbol;
    last_i      = i;
 
-//-- unserialize rules from FXD_POINT_FORMAT_RULES
+//-- unserialize rules from POINT_FORMAT_RULES
    string rules[];
    StringExplode(",", POINT_FORMAT_RULES, rules);
 

@@ -97,11 +97,11 @@ public:
 
 
       double valueX = 0;
+      double obj_y_dynamic = obj_y;
 
 
       if(!MQLInfoInteger(MQL_TESTER) || MQLInfoInteger(MQL_VISUAL_MODE))
         {
-
 
          long ObjChartID = 0;
          int ObjAnchor   = ANCHOR_LEFT;
@@ -118,8 +118,8 @@ public:
          if(subwindow >= 0)
            {
             //-- draw comment title
-//            if((string)title != "")
-//              {
+            if((string)title != "")
+              {
                string nametitle = namebase;
 
                if(ObjectFind(ObjChartID, nametitle) < 0)
@@ -142,19 +142,19 @@ public:
                      ObjectSetString(ObjChartID, nametitle, OBJPROP_FONT, obj_title_font);
 
                      ObjectSetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE, obj_x);
-                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y);
+                     ObjectSetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE, obj_y_dynamic);
                     }
                  }
                else
                  {
                   obj_x = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_XDISTANCE);
-                  obj_y = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
+                  obj_y_dynamic = (int)ObjectGetInteger(ObjChartID, nametitle, OBJPROP_YDISTANCE);
                  }
 
                ObjectSetString(ObjChartID, nametitle, OBJPROP_TEXT, (string)title);
 
-               obj_y = (int)(obj_y + obj_title_font_size / 3);
-//              }
+               obj_y_dynamic = (int)(obj_y_dynamic + obj_title_font_size / 3);
+              }
 
             //-- draw comment rows
             for(int i = 1; i <= 8; i++)
@@ -321,11 +321,11 @@ public:
                     }
                  }
 
-               obj_y  = (int)(obj_y + obj_font_size + obj_font_size/2);
+               obj_y_dynamic  = (int)(obj_y_dynamic + obj_font_size + obj_font_size/2);
 
                //-- update label objects
                ObjectSetInteger(ObjChartID, namelbl, OBJPROP_XDISTANCE, obj_x);
-               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetInteger(ObjChartID, namelbl, OBJPROP_YDISTANCE, obj_y_dynamic);
                ObjectSetString(ObjChartID, namelbl, OBJPROP_TEXT, (string)textlbl);
 
                //-- update value objects
@@ -341,7 +341,7 @@ public:
                x = obj_x + (xsizelbl + obj_font_size/2);
 
                ObjectSetInteger(ObjChartID, name, OBJPROP_XDISTANCE, x);
-               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y);
+               ObjectSetInteger(ObjChartID, name, OBJPROP_YDISTANCE, obj_y_dynamic);
                ObjectSetString(ObjChartID, name, OBJPROP_TEXT, (string)text);
               }
 
