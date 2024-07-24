@@ -341,37 +341,37 @@ public:
 
          if(i==0)  //part 1
            {
-            max_part_1_val = maxPart;
-            min_part_1_val = minPart;
-            mtp_part_1_val = xIndex;
+            max_part_1_val = prices[maxPart];
+            min_part_1_val = prices[minPart];
+            mtp_part_1_val = prices[xIndex];
            }
          else
             if(i==1)  //part 2
               {
-               max_part_2_val = maxPart;
-               min_part_2_val = minPart;
-               mtp_part_2_val = xIndex;
+               max_part_2_val = prices[maxPart];
+               min_part_2_val = prices[minPart];
+               mtp_part_2_val = prices[xIndex];
               }
             else
                if(i==2)  //part 3
                  {
-                  max_part_3_val = maxPart;
-                  min_part_3_val = minPart;
-                  mtp_part_3_val = xIndex;
+                  max_part_3_val = prices[maxPart];
+                  min_part_3_val = prices[minPart];
+                  mtp_part_3_val = prices[xIndex];
                  }
                else
                   if(i==3)  //part 4
                     {
-                     max_part_4_val = maxPart;
-                     min_part_4_val = minPart;
-                     mtp_part_4_val = xIndex;
+                     max_part_4_val = prices[maxPart];
+                     min_part_4_val = prices[minPart];
+                     mtp_part_4_val = prices[xIndex];
                     }
                   else
                      if(i==4)  //part 5
                        {
-                        max_part_5_val = maxPart;
-                        min_part_5_val = minPart;
-                        mtp_part_5_val = xIndex;
+                        max_part_5_val = prices[maxPart];
+                        min_part_5_val = prices[minPart];
+                        mtp_part_5_val = prices[xIndex];
                        }
 
 

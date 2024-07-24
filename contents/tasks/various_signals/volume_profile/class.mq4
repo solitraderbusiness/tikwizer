@@ -337,37 +337,37 @@ public:
 
          if(i==0)  //part 1
            {
-            my_var = maxPart;
-            my_var = minPart;
-            my_var = xIndex;
+            my_var = prices[maxPart];
+            my_var = prices[minPart];
+            my_var = prices[xIndex];
            }
          else
             if(i==1)  //part 2
               {
-               my_var = maxPart;
-               my_var = minPart;
-               my_var = xIndex;
+               my_var = prices[maxPart];
+               my_var = prices[minPart];
+               my_var = prices[xIndex];
               }
             else
                if(i==2)  //part 3
                  {
-                  my_var = maxPart;
-                  my_var = minPart;
-                  my_var = xIndex;
+                  my_var = prices[maxPart];
+                  my_var = prices[minPart];
+                  my_var = prices[xIndex];
                  }
                else
                   if(i==3)  //part 4
                     {
-                     my_var = maxPart;
-                     my_var = minPart;
-                     my_var = xIndex;
+                     my_var = prices[maxPart];
+                     my_var = prices[minPart];
+                     my_var = prices[xIndex];
                     }
                   else
                      if(i==4)  //part 5
                        {
-                        my_var = maxPart;
-                        my_var = minPart;
-                        my_var = xIndex;
+                        my_var = prices[maxPart];
+                        my_var = prices[minPart];
+                        my_var = prices[xIndex];
                        }
 
 
