@@ -1,0 +1,3 @@
+{
+	"init_body" : "      ZigZagDepth = (int)ZigZagDepth_val;\n      ZigZagDeviation = (int)ZigZagDeviation_val;\n      ZigZagBackstep = (int)ZigZagBackstep_val;\n      ModeZigZag = (int)ModeZigZag_val;\n      ZigZagReverseID = (int)ZigZagReverseID_val;\n      symbol = (string)symbol_val;\n      timeframe = (ENUM_TIMEFRAMES)timeframe_val;\n      shift = (int)shift_val;"
+}

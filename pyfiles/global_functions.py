@@ -559,3 +559,8 @@ def get_fun__is_symbol_accepted_on_trade():
 def get_fun__on_timer_set():
     result = "bool OnTimerSet(double seconds)\n  {\n   if(ONTIMER_TAKEN)\n     {\n      if(seconds<=0)\n        {\n         ONTIMER_TAKEN_IN_MILLISECONDS = false;\n         ONTIMER_TAKEN_TIME = 0;\n        }\n      else\n         if(seconds < 1)\n           {\n            ONTIMER_TAKEN_IN_MILLISECONDS = true;\n            ONTIMER_TAKEN_TIME = seconds*1000;\n           }\n         else\n           {\n            ONTIMER_TAKEN_IN_MILLISECONDS = false;\n            ONTIMER_TAKEN_TIME = seconds;\n           }\n\n      return true;\n     }\n\n   if(seconds<=0)\n     {\n      EventKillTimer();\n     }\n   else\n      if(seconds < 1)\n        {\n         return (EventSetMillisecondTimer((int)(seconds*1000)));\n        }\n      else\n        {\n         return (EventSetTimer((int)seconds));\n        }\n\n   return true;\n  }\n"
     return result
+
+
+def get_fun__izigzag():
+    result = "double iZigZag(\n   string symbol = NULL,\n   ENUM_TIMEFRAMES timeframe = 0,\n   int InpDepth = 12,\n   int InpDeviation = 5,\n   int InpBackstep = 3,\n   int mode = 0,\n   int shift = 0\n)\n  {\n   int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);\n\n   double value = iCustom(\n                     symbol,\n                     timeframe,\n                     \"ZigZag\",\n                     InpDepth,\n                     InpDeviation,\n                     InpBackstep,\n                     mode,\n                     shift\n                  );\n\n   return NormalizeDouble(value, 10);\n  }\n"
+    return result

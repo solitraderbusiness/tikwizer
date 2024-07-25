@@ -1,0 +1,9 @@
+{
+  "initializer": "   ZigZag_id zigZag_id;\n   zigZag_id.init();\n   double valueZigZag_id = zigZag_id.calc();",
+  "initializer_split": [
+    "   ZigZag_id zigZag_id;\n",
+    "   zigZag_id.init();\n",
+    "   double valueZigZag_id = zigZag_id.calc();\n"
+  ],
+  "variable_name": "valueZigZag_id"
+}

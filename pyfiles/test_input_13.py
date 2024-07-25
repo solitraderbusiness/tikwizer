@@ -9237,365 +9237,541 @@ input_data_70 = {
 
 # test volume profile fetched from site
 input_data_71 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "title": "Comment Message",
-              "obj_chart_subwindow": "",
-              "obj_corner": "CORNER_LEFT_UPPER",
-              "obj_x": "5",
-              "obj_y": "24",
-              "obj_title_font": "Georgia",
-              "obj_title_font_color": "clrGold",
-              "obj_title_font_size": "13",
-              "obj_label_font": "Vardena",
-              "obj_label_font_color": "clrDarkGray",
-              "obj_label_font_size": "10",
-              "obj_font": "Vardena",
-              "obj_font_color": "clrWhite",
-              "obj_font_size": "10",
-              "label_1": "",
-              "format_number_1": "EMPTY_VALUE",
-              "format_time_1": "EMPTY_VALUE",
-              "label_2": "",
-              "format_number_2": "EMPTY_VALUE",
-              "format_time_2": "EMPTY_VALUE",
-              "label_3": "",
-              "format_number_3": "EMPTY_VALUE",
-              "format_time_3": "EMPTY_VALUE",
-              "label_4": "",
-              "format_number_4": "EMPTY_VALUE",
-              "format_time_4": "EMPTY_VALUE",
-              "label_5": "",
-              "format_number_5": "EMPTY_VALUE",
-              "format_time_5": "EMPTY_VALUE",
-              "label_6": "",
-              "format_number_6": "EMPTY_VALUE",
-              "format_time_6": "EMPTY_VALUE",
-              "label_7": "",
-              "format_number_7": "EMPTY_VALUE",
-              "format_time_7": "EMPTY_VALUE",
-              "label_8": "",
-              "format_number_8": "EMPTY_VALUE",
-              "format_time_8": "EMPTY_VALUE",
-              "value_fetch_1": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_2": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_3": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_4": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_5": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_6": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_7": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              },
-              "value_fetch_8": {
-                "row1": "value",
-                "row2": "Text",
-                "params": {
-                  "value": "sample text",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "b43c07cd-475e-4927-abd2-b2f1d38f3913",
-            "id_by_user": 2,
-            "blockName": "Comment",
-            "category": "output_communication",
-            "block_name_mql": "comment"
-          },
-          {
-            "params": {
-              "RangeMinutes": "2440",
-              "ModeStep": "3",
-              "numberOfBars": "50",
-              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
-              "VolumeType": "VOLUME_TICK",
-              "DataSource": "VP_SOURCE_M1",
-              "HgLineWidth": "2",
-              "HgBarStyle": "VP_BAR_STYLE_LINE",
-              "HgColor": "clrYellow",
-              "HgColor2": "clrOrange",
-              "ModeLineWidth": "1",
-              "ModeLevelWidth": "1",
-              "MaxColor": "clrNONE",
-              "VwapColor": "clrNONE",
-              "ModeColor": "clrBlue",
-              "StatLineStyle": "STYLE_DOT",
-              "ModeLevelColor": "clrNONE",
-              "ModeLevelStyle": "STYLE_SOLID",
-              "MedianColor": "clrNONE",
-              "Id": "+vpr",
-              "HgWidthPercent": "15",
-              "ShowHorizon": "true",
-              "TimeFromColor": "clrBlue",
-              "TimeFromStyle": "STYLE_DASH",
-              "TimeToColor": "clrRed",
-              "TimeToStyle": "STYLE_DASH",
-              "timeFromCandleId": "400",
-              "timeToCandleId": "100",
-              "how_many_regions": "3",
-              "region_1_factor": "2",
-              "region_2_factor": "3",
-              "region_3_factor": "1",
-              "region_4_factor": "1",
-              "region_5_factor": "1",
-              "max_part_1": "",
-              "min_part_1": "",
-              "mtp_part_1": "",
-              "max_part_5": "",
-              "min_part_5": "",
-              "mtp_part_5": "",
-              "max_part_4": "",
-              "min_part_4": "",
-              "mtp_part_4": "",
-              "max_part_3": "",
-              "min_part_3": "",
-              "mtp_part_3": "",
-              "max_part_2": "",
-              "min_part_2": "",
-              "mtp_part_2": ""
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "27e0f204-0ffd-4209-a051-2a67fb928b5a",
-            "id_by_user": 3,
-            "category": "various_signals",
-            "block_name_mql": "volume_profile",
-            "blockName": "Volume Profile"
-          }
-        ],
-        "edges": [
-          {
-            "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
-            "sourceHandle": "blue",
-            "target": "b43c07cd-475e-4927-abd2-b2f1d38f3913",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "5563c42e-af29-4aca-b995-878304f9760c"
-          },
-          {
-            "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
-            "sourceHandle": "blue",
-            "target": "27e0f204-0ffd-4209-a051-2a67fb928b5a",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "42033ebd-627c-4304-8ee0-b56631620c8b"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "title": "Comment Message",
+                            "obj_chart_subwindow": "",
+                            "obj_corner": "CORNER_LEFT_UPPER",
+                            "obj_x": "5",
+                            "obj_y": "24",
+                            "obj_title_font": "Georgia",
+                            "obj_title_font_color": "clrGold",
+                            "obj_title_font_size": "13",
+                            "obj_label_font": "Vardena",
+                            "obj_label_font_color": "clrDarkGray",
+                            "obj_label_font_size": "10",
+                            "obj_font": "Vardena",
+                            "obj_font_color": "clrWhite",
+                            "obj_font_size": "10",
+                            "label_1": "",
+                            "format_number_1": "EMPTY_VALUE",
+                            "format_time_1": "EMPTY_VALUE",
+                            "label_2": "",
+                            "format_number_2": "EMPTY_VALUE",
+                            "format_time_2": "EMPTY_VALUE",
+                            "label_3": "",
+                            "format_number_3": "EMPTY_VALUE",
+                            "format_time_3": "EMPTY_VALUE",
+                            "label_4": "",
+                            "format_number_4": "EMPTY_VALUE",
+                            "format_time_4": "EMPTY_VALUE",
+                            "label_5": "",
+                            "format_number_5": "EMPTY_VALUE",
+                            "format_time_5": "EMPTY_VALUE",
+                            "label_6": "",
+                            "format_number_6": "EMPTY_VALUE",
+                            "format_time_6": "EMPTY_VALUE",
+                            "label_7": "",
+                            "format_number_7": "EMPTY_VALUE",
+                            "format_time_7": "EMPTY_VALUE",
+                            "label_8": "",
+                            "format_number_8": "EMPTY_VALUE",
+                            "format_time_8": "EMPTY_VALUE",
+                            "value_fetch_1": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_2": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_3": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_4": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_5": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_6": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_7": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            },
+                            "value_fetch_8": {
+                                "row1": "value",
+                                "row2": "Text",
+                                "params": {
+                                    "value": "sample text",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "b43c07cd-475e-4927-abd2-b2f1d38f3913",
+                        "id_by_user": 2,
+                        "blockName": "Comment",
+                        "category": "output_communication",
+                        "block_name_mql": "comment"
+                    },
+                    {
+                        "params": {
+                            "RangeMinutes": "2440",
+                            "ModeStep": "3",
+                            "numberOfBars": "50",
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "VolumeType": "VOLUME_TICK",
+                            "DataSource": "VP_SOURCE_M1",
+                            "HgLineWidth": "2",
+                            "HgBarStyle": "VP_BAR_STYLE_LINE",
+                            "HgColor": "clrYellow",
+                            "HgColor2": "clrOrange",
+                            "ModeLineWidth": "1",
+                            "ModeLevelWidth": "1",
+                            "MaxColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeColor": "clrBlue",
+                            "StatLineStyle": "STYLE_DOT",
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelStyle": "STYLE_SOLID",
+                            "MedianColor": "clrNONE",
+                            "Id": "+vpr",
+                            "HgWidthPercent": "15",
+                            "ShowHorizon": "true",
+                            "TimeFromColor": "clrBlue",
+                            "TimeFromStyle": "STYLE_DASH",
+                            "TimeToColor": "clrRed",
+                            "TimeToStyle": "STYLE_DASH",
+                            "timeFromCandleId": "400",
+                            "timeToCandleId": "100",
+                            "how_many_regions": "3",
+                            "region_1_factor": "2",
+                            "region_2_factor": "3",
+                            "region_3_factor": "1",
+                            "region_4_factor": "1",
+                            "region_5_factor": "1",
+                            "max_part_1": "",
+                            "min_part_1": "",
+                            "mtp_part_1": "",
+                            "max_part_5": "",
+                            "min_part_5": "",
+                            "mtp_part_5": "",
+                            "max_part_4": "",
+                            "min_part_4": "",
+                            "mtp_part_4": "",
+                            "max_part_3": "",
+                            "min_part_3": "",
+                            "mtp_part_3": "",
+                            "max_part_2": "",
+                            "min_part_2": "",
+                            "mtp_part_2": ""
+                        },
+                        "id": "27e0f204-0ffd-4209-a051-2a67fb928b5a",
+                        "id_by_user": 3,
+                        "category": "various_signals",
+                        "block_name_mql": "volume_profile",
+                        "blockName": "Volume Profile"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+                        "sourceHandle": "blue",
+                        "target": "b43c07cd-475e-4927-abd2-b2f1d38f3913",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "5563c42e-af29-4aca-b995-878304f9760c"
+                    },
+                    {
+                        "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+                        "sourceHandle": "blue",
+                        "target": "27e0f204-0ffd-4209-a051-2a67fb928b5a",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "42033ebd-627c-4304-8ee0-b56631620c8b"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "d79f4a5b-da52-4713-94ec-3263749ea95f",
-  "name_by_user": "test 8217",
-  "highestIndex": "4"
+    "selected_name": "d79f4a5b-da52-4713-94ec-3263749ea95f",
+    "name_by_user": "test 8217",
+    "highestIndex": "4"
 }
 
 # test volume profile fetched from site 2
 input_data_72 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
-              "RangeMinutes": "2440",
-              "ModeStep": "3",
-              "numberOfBars": "50",
-              "DataSource": "VP_SOURCE_M1",
-              "VolumeType": "VOLUME_TICK",
-              "HgBarStyle": "VP_BAR_STYLE_LINE",
-              "HgPosition": "VP_HG_POSITION_WINDOW_LEFT",
-              "HgColor": "clrYellow",
-              "HgColor2": "clrOrange",
-              "HgLineWidth": "2",
-              "ModeColor": "clrBlue",
-              "MaxColor": "clrNONE",
-              "MedianColor": "clrNONE",
-              "VwapColor": "clrNONE",
-              "ModeLineWidth": "1",
-              "StatLineStyle": "STYLE_DOT",
-              "ModeLevelColor": "clrNONE",
-              "ModeLevelWidth": "1",
-              "ModeLevelStyle": "STYLE_SOLID",
-              "RegionDividerColor": "clrTomato",
-              "Id": "+vpr",
-              "ShowHorizon": "true",
-              "TimeFromColor": "clrBlue",
-              "TimeFromStyle": "STYLE_DASH",
-              "TimeToColor": "clrRed",
-              "TimeToStyle": "STYLE_DASH",
-              "HgWidthPercent": "15",
-              "timeFromCandleId": "400",
-              "timeToCandleId": "100",
-              "how_many_regions": "3",
-              "region_1_factor": "2",
-              "region_2_factor": "3",
-              "region_3_factor": "1",
-              "region_4_factor": "1",
-              "region_5_factor": "1",
-              "max_part_1": "",
-              "min_part_1": "x",
-              "mtp_part_1": "",
-              "max_part_2": "",
-              "min_part_2": "",
-              "mtp_part_2": "",
-              "max_part_3": "",
-              "min_part_3": "",
-              "mtp_part_3": "",
-              "max_part_4": "",
-              "min_part_4": "",
-              "mtp_part_4": "",
-              "max_part_5": "",
-              "min_part_5": "",
-              "mtp_part_5": ""
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "e077e501-426e-4d2c-bb9d-651e0481228f",
-            "id_by_user": 13,
-            "blockName": "Volume Profile",
-            "category": "various_signals",
-            "block_name_mql": "volume_profile"
-          }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "RangeMinutes": "2440",
+                            "ModeStep": "3",
+                            "numberOfBars": "50",
+                            "DataSource": "VP_SOURCE_M1",
+                            "VolumeType": "VOLUME_TICK",
+                            "HgBarStyle": "VP_BAR_STYLE_LINE",
+                            "HgPosition": "VP_HG_POSITION_WINDOW_LEFT",
+                            "HgColor": "clrYellow",
+                            "HgColor2": "clrOrange",
+                            "HgLineWidth": "2",
+                            "ModeColor": "clrBlue",
+                            "MaxColor": "clrNONE",
+                            "MedianColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeLineWidth": "1",
+                            "StatLineStyle": "STYLE_DOT",
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelWidth": "1",
+                            "ModeLevelStyle": "STYLE_SOLID",
+                            "RegionDividerColor": "clrTomato",
+                            "Id": "+vpr",
+                            "ShowHorizon": "true",
+                            "TimeFromColor": "clrBlue",
+                            "TimeFromStyle": "STYLE_DASH",
+                            "TimeToColor": "clrRed",
+                            "TimeToStyle": "STYLE_DASH",
+                            "HgWidthPercent": "15",
+                            "timeFromCandleId": "400",
+                            "timeToCandleId": "100",
+                            "how_many_regions": "3",
+                            "region_1_factor": "2",
+                            "region_2_factor": "3",
+                            "region_3_factor": "1",
+                            "region_4_factor": "1",
+                            "region_5_factor": "1",
+                            "max_part_1": "",
+                            "min_part_1": "x",
+                            "mtp_part_1": "",
+                            "max_part_2": "",
+                            "min_part_2": "",
+                            "mtp_part_2": "",
+                            "max_part_3": "",
+                            "min_part_3": "",
+                            "mtp_part_3": "",
+                            "max_part_4": "",
+                            "min_part_4": "",
+                            "mtp_part_4": "",
+                            "max_part_5": "",
+                            "min_part_5": "",
+                            "mtp_part_5": ""
+                        },
+                        "id": "e077e501-426e-4d2c-bb9d-651e0481228f",
+                        "id_by_user": 13,
+                        "blockName": "Volume Profile",
+                        "category": "various_signals",
+                        "block_name_mql": "volume_profile"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
+                        "sourceHandle": "blue",
+                        "target": "e077e501-426e-4d2c-bb9d-651e0481228f",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "786e771f-e16a-409b-9749-6cc6aba9e88e"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "bd4ea9ce-3733-4791-91b0-3b7ee1e32a11",
-            "sourceHandle": "blue",
-            "target": "e077e501-426e-4d2c-bb9d-651e0481228f",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "786e771f-e16a-409b-9749-6cc6aba9e88e"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+        "constants": []
     },
-    "variables": [
-      {
-        "type": "double",
-        "name": "x",
-        "value": "",
-        "description": ""
-      }
-    ],
-    "constants": []
-  },
-  "selected_name": "d79f4a5b-da52-4713-94ec-3263749ea95f",
-  "name_by_user": "test 8217",
-  "highestIndex": "14"
+    "selected_name": "d79f4a5b-da52-4713-94ec-3263749ea95f",
+    "name_by_user": "test 8217",
+    "highestIndex": "14"
 }
 
+# test zigzag
+input_data_73 = {
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [
+                    {
+                        "params": {
+                            "operator": {
+                                "label": "+"
+                            },
+                            "left": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "value",
+                                "row2": "Numeric",
+                                "params": {
+                                    "value": "1",
+                                    "adjust": ""
+                                }
+                            },
+                            "adjust": "",
+                            "variable": ""
+                        },
+                        "id": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "id_by_user": 6,
+                        "category": "condition_formula",
+                        "block_name_mql": "formula",
+                        "blockName": "Formula"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "indicator",
+                                "row2": "zigzag",
+                                "params": {
+                                    "symbol": "NULL",
+                                    "timeframe": 0,
+                                    "ZigZagDepth": 12,
+                                    "ZigZagDeviation": 5,
+                                    "ZigZagBackstep": 3,
+                                    "ModeZigZag": 0,
+                                    "ZigZagReverseID": 0,
+                                    "shift": 0
+                                }
+                            },
+                            "right": {
+                                "row1": "indicator",
+                                "row2": "ma",
+                                "params": {
+                                    "value": "1",
+                                    "ma_period": "20",
+                                    "ma_shift": "0",
+                                    "ma_method": "MODE_SMA",
+                                    "applied_price": "PRICE_CLOSE",
+                                    "adjust": "",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "id_by_user": 7,
+                        "category": "condition_formula",
+                        "block_name_mql": "condition",
+                        "blockName": "Condition"
+                    },
+                    {
+                        "params": {
+                            "SetHours": 0.0,
+                            "SetMinutes": 1.0,
+                            "SetSeconds": 0.0
+                        },
+                        "id": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "id_by_user": 8,
+                        "blockName": "Change timer period",
+                        "category": "on_timer_filter_specific_event",
+                        "block_name_mql": "change_timer_period"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "faa14997-2380-42fa-840a-f7709d9e33a3",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "61836d7e-ce1a-4074-b3f1-6ed6324f10b3"
+                    },
+                    {
+                        "source": "545a4088-459a-4af2-9d8b-d3bc4f1a1124",
+                        "sourceHandle": "blue",
+                        "target": "958c62bf-d05d-411a-bdd6-239529dd6685",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0a96492b-4f0f-4a91-809f-5523c34f2892"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "type": "{2,3,4,5}",
+                            "type_pending": "{2,3,4,5}",
+                            "close_mode": ""
+                        },
+                        "id": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "id_by_user": 4,
+                        "category": "on_trade_filter_specific_event",
+                        "block_name_mql": "order_deleted",
+                        "blockName": "Order deleted"
+                    },
+                    {
+                        "params": {},
+                        "id": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "id_by_user": 5,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "48426fda-9104-4c26-990f-c14e68934d36",
+                        "sourceHandle": "blue",
+                        "target": "6e7195ac-6d30-4cd0-a386-4c1a9413e046",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "e400a2d9-7f8f-4c70-9bcb-c34b1ffefe0a"
+                    }
+                ]
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "190c98cd-2424-4b19-bfbb-3bd5b3f23849",
+    "name_by_user": "tr4est 568/",
+    "highestIndex": "9"
+}

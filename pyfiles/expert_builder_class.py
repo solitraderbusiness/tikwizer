@@ -663,6 +663,9 @@ class ExpertBuilder:
         on_timer_set = self.global_functions.get_fun__on_timer_set()
         self.functions.append(on_timer_set)
 
+        izigzag = self.global_functions.get_fun__izigzag()
+        self.functions.append(izigzag)
+
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
         self.classes_structs_enums.append(structs_data_chart_event)
