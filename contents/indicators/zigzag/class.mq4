@@ -1,13 +1,27 @@
-
-class ZigZag_id
+class ZigZag7_left
   {
 public: /* Input Parameters */
-   field_body
+   int               ZigZagDepth;
+   int               ZigZagDeviation;
+   int               ZigZagBackstep;
+   int               ModeZigZag;
+   int               ZigZagReverseID;
+   string            symbol;
+   ENUM_TIMEFRAMES   timeframe;
+   int               shift;
+
 
 public:
    void              init()
      {
-    init_body
+      ZigZagDepth = (int)12;
+      ZigZagDeviation = (int)5;
+      ZigZagBackstep = (int)3;
+      ModeZigZag = (int)0;
+      ZigZagReverseID = (int)0;
+      symbol = (string)"NULL";
+      timeframe = (ENUM_TIMEFRAMES)0;
+      shift = (int)0;
      }
 
    double            calc()
@@ -141,12 +155,11 @@ public:
             last = value;
            }
         }
-      fun_body //trick to comply with indicator template
+      //trick to comply with indicator template
       return result;
      }
 
   };
-
 
 //+------------------------------------------------------------------+
 //|                                                                  |
