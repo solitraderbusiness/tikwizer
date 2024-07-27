@@ -13,8 +13,8 @@ def refactor(data_raw):
         # Add indexes (overwrite ids) for later access
         event = events[key]
         overwrite_ids(event["nodes"], event["edges"])
-        correct_block_names_mql(event["nodes"])
         create_specific_input(event["nodes"])
+        correct_block_names_mql(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(key, event["nodes"], event["edges"])
         # Set input items that are not present in user input form front end
