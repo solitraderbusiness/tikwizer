@@ -642,7 +642,7 @@ bool TradeSelectByIndex(
    string group_mode,
    string group,
    string msymbol,
-   int type[]
+   int &type[]
 )
   {
    if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))
@@ -666,7 +666,7 @@ bool HistoryTradeSelectByIndex(
    string group_mode,
    string group,
    string msymbol,
-   int type[]
+   int &type[]
 )
   {
    if(OrderSelect((int)index, SELECT_BY_POS, MODE_HISTORY) && OrderType() < 2)
@@ -681,7 +681,7 @@ bool HistoryTradeSelectByIndex(
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool              filterGeneral(string symbol, int type[], int group_mode, int group_number)
+bool              filterGeneral(string symbol, int &type[], int group_mode, int group_number)
   {
    bool con1 = (symbol==NULL && OrderSymbol()==Symbol()) || symbol==OrderSymbol();
    bool con2 = sameOrderType(type, OrderType());

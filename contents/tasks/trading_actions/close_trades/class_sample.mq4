@@ -110,7 +110,7 @@ int getGroupNumber(int magic)
   }
 
 //This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
+bool sameOrderType(int &type[], int orderType)
   {
    for(int i=0; i<ArraySize(type); i++)
       if(orderType==type[i])

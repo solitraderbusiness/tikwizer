@@ -316,7 +316,7 @@ def get_fun__get_group_number():
 
 
 def get_fun__same_order_type():
-    result = "//This just checks if order is buy or sell\nbool sameOrderType (int type[], int orderType){\n   for (int i=0; i<ArraySize(type); i++)\n      if (orderType==type[i])\n         return true;\n   return false;\n}"
+    result = "//This just checks if order is buy or sell\nbool sameOrderType (int &type[], int orderType){\n   for (int i=0; i<ArraySize(type); i++)\n      if (orderType==type[i])\n         return true;\n   return false;\n}"
     return result
 
 
@@ -366,17 +366,17 @@ def get_fun__get_bet_trades_info():
 
 
 def get_fun__trade_select_by_index():
-    result = "bool TradeSelectByIndex(\n   int index,\n   string group_mode,\n   string group,\n   string msymbol,\n   int type[]\n)\n  {\n   if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))\n     {\n      string symbols[];\n      AddToArray(symbols, msymbol);\n      bool x = filterGeneral(symbols, SYMBOL_MODE_SPECIFIED, type, group_mode, group);\n      return x;\n     }\n\n   return false;\n  }\n"
+    result = "bool TradeSelectByIndex(\n   int index,\n   string group_mode,\n   string group,\n   string msymbol,\n   int &type[]\n)\n  {\n   if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))\n     {\n      string symbols[];\n      AddToArray(symbols, msymbol);\n      bool x = filterGeneral(symbols, SYMBOL_MODE_SPECIFIED, type, group_mode, group);\n      return x;\n     }\n\n   return false;\n  }\n"
     return result
 
 
 def get_fun__history_trade_select_by_index():
-    result = "bool HistoryTradeSelectByIndex(\n   int index,\n   string group_mode,\n   string group,\n   string msymbol,\n   int type[]\n)\n  {\n   if(OrderSelect((int)index, SELECT_BY_POS, MODE_HISTORY) && OrderType() < 2)\n     {\n      string symbols[];\n      AddToArray(symbols, msymbol);\n      bool x = filterGeneral(symbols, SYMBOL_MODE_SPECIFIED, type, group_mode, group);\n      return x;\n     }\n\n   return false;\n  }"
+    result = "bool HistoryTradeSelectByIndex(\n   int index,\n   string group_mode,\n   string group,\n   string msymbol,\n   int &type[]\n)\n  {\n   if(OrderSelect((int)index, SELECT_BY_POS, MODE_HISTORY) && OrderType() < 2)\n     {\n      string symbols[];\n      AddToArray(symbols, msymbol);\n      bool x = filterGeneral(symbols, SYMBOL_MODE_SPECIFIED, type, group_mode, group);\n      return x;\n     }\n\n   return false;\n  }"
     return result
 
 
 def get_fun__filter_general():
-    result = "   bool              filterGeneral(string symbols[], int symbol_mode, int type[], int group_mode, int group_number)\n     {\n      bool con1 = is_symbol_accepted(symbol_mode, symbols);\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());\n      return con1 && con2 && con3 && con4;\n     }"
+    result = "   bool              filterGeneral(string &symbols[], int symbol_mode, int &type[], int group_mode, int group_number)\n     {\n      bool con1 = is_symbol_accepted(symbol_mode, symbols);\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());\n      return con1 && con2 && con3 && con4;\n     }"
 
     return result
 

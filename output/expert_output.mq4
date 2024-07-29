@@ -3,6 +3,8 @@
 //|                                      Copyright 2018, CompanyName |
 //|                                       http://www.companyname.net |
 //+------------------------------------------------------------------+
+#property strict
+
 #define EVENT_ON_INIT   1
 #define EVENT_ON_TIMER  2
 #define EVENT_ON_TICK   3
@@ -3227,7 +3229,7 @@ int getGroupNumber(int magic)
   {
    return (int)(magic/100000);
   }//This just checks if order is buy or sell
-bool sameOrderType(int type[], int orderType)
+bool sameOrderType(int &type[], int orderType)
   {
    for(int i=0; i<ArraySize(type); i++)
       if(orderType==type[i])
@@ -4140,7 +4142,7 @@ bool TradeSelectByIndex(
    string group_mode,
    string group,
    string msymbol,
-   int type[]
+   int &type[]
 )
   {
    if(OrderSelect(index, SELECT_BY_POS, MODE_TRADES))
@@ -4161,7 +4163,7 @@ bool HistoryTradeSelectByIndex(
    string group_mode,
    string group,
    string msymbol,
-   int type[]
+   int &type[]
 )
   {
    if(OrderSelect((int)index, SELECT_BY_POS, MODE_HISTORY) && OrderType() < 2)
@@ -4177,7 +4179,7 @@ bool HistoryTradeSelectByIndex(
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool              filterGeneral(string symbols[], int symbol_mode, int type[], int group_mode, int group_number)
+bool              filterGeneral(string &symbols[], int symbol_mode, int &type[], int group_mode, int group_number)
   {
    bool con1 = is_symbol_accepted(symbol_mode, symbols);
    bool con2 = sameOrderType(type, OrderType());
