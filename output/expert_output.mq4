@@ -1,9 +1,8 @@
 //+------------------------------------------------------------------+
-//|                                                      ProjectName |
-//|                                      Copyright 2018, CompanyName |
-//|                                       http://www.companyname.net |
+//|                                                                  |
+//|                   Copyright 2023-2024, tikwizer.com              |
+//|                                                                  |
 //+------------------------------------------------------------------+
-#property strict
 
 #define EVENT_ON_INIT   1
 #define EVENT_ON_TIMER  2

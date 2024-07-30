@@ -110,7 +110,7 @@ class ExpertBuilder:
         return self.build()
 
     def add_header(self):
-        self.header += "#property strict\n\n"
+        self.header += "//+------------------------------------------------------------------+\n//|                                                                  |\n//|                   Copyright 2023-2024, tikwizer.com              |\n//|                                                                  |\n//+------------------------------------------------------------------+\n\n"
 
     def add_blueprints(self):
         # Add block_parent and task class blueprint
