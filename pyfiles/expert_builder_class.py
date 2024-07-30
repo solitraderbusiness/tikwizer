@@ -1310,6 +1310,48 @@ class ExpertBuilder:
             params_oacp = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "oacp"
             self.task_elements.append(self.value_fetch_class(row1, row2, params_oacp, id_val))
+        if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
+            value_fetch = params.get("take_profit_price_level")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_tppl = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_tppl"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_tppl, id_val))
+        if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PIPS":
+            value_fetch = params.get("take_profit_pips")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_tpp = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_tpp"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_tpp, id_val))
+        if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
+            value_fetch = params.get("take_profit_price_fraction")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_tppf = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_tppf"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_tppf, id_val))
+        if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
+            value_fetch = params.get("stop_loss_price_level")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_slpl = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_slpl"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_slpl, id_val))
+        if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PIPS":
+            value_fetch = params.get("stop_loss_pips")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_slp = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_slp"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_slp, id_val))
+        if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
+            value_fetch = params.get("stop_loss_price_fraction")
+            row1 = value_fetch.get("row1")
+            row2 = value_fetch.get("row2")
+            params_slpf = value_fetch.get("params")
+            id_val = str(node.get("id_by_user")) + "_slpf"
+            self.task_elements.append(self.value_fetch_class(row1, row2, params_slpf, id_val))
 
     def comment(self, node):
         params = node.get("params")

@@ -286,7 +286,7 @@ private:
 
    ////////////////////////////////////////////////////////////
 
-   void              calc_tp_buy()
+    void              calc_tp_buy()
      {
       switch(take_profit_mode)
         {
@@ -296,6 +296,25 @@ private:
             break;
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            Value1_left value1_cpl;
+            value1_cpl.init();
+            double valueValue1_cpl = value1_cpl.calc<double>();
+            tpPrice = valueValue1_cpl;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            Value1_left value1_cp;
+            value1_cp.init();
+            double valueValue1_cp = value1_cp.calc<double>();
+            double digits = toDigits(valueValue1_cp, msymbol);
+            tpPrice = price + digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            Value1_left value1_cpf;
+            value1_cpf.init();
+            double valueValue1_cpf = value1_cpf.calc<double>();
+            tpPrice = price + valueValue1_cpf;
             break;
         }
      }
@@ -311,6 +330,25 @@ private:
          case TPSL_MODE_NO_SL:
             slPrice = 0;
             break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            Value1_left value1_cpl;
+            value1_cpl.init();
+            double valueValue1_cpl = value1_cpl.calc<double>();
+            slPrice = valueValue1_cpl;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            Value1_left value1_cp;
+            value1_cp.init();
+            double valueValue1_cp = value1_cp.calc<double>();
+            double digits = toDigits(valueValue1_cp, msymbol);
+            slPrice = price - digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            Value1_left value1_cpf;
+            value1_cpf.init();
+            double valueValue1_cpf = value1_cpf.calc<double>();
+            slPrice = price - valueValue1_cpf;
+            break;
         }
      }
 
@@ -325,6 +363,25 @@ private:
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
             break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            Value1_left value1_cpl;
+            value1_cpl.init();
+            double valueValue1_cpl = value1_cpl.calc<double>();
+            tpPrice = valueValue1_cpl;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            Value1_left value1_cp;
+            value1_cp.init();
+            double valueValue1_cp = value1_cp.calc<double>();
+            double digits = toDigits(valueValue1_cp, msymbol);
+            tpPrice = price - digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            Value1_left value1_cpf;
+            value1_cpf.init();
+            double valueValue1_cpf = value1_cpf.calc<double>();
+            tpPrice = price - valueValue1_cpf;
+            break;
         }
      }
 
@@ -338,6 +395,25 @@ private:
             break;
          case TPSL_MODE_NO_SL:
             slPrice = 0;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            Value1_left value1_cpl;
+            value1_cpl.init();
+            double valueValue1_cpl = value1_cpl.calc<double>();
+            slPrice = valueValue1_cpl;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            Value1_left value1_cp;
+            value1_cp.init();
+            double valueValue1_cp = value1_cp.calc<double>();
+            double digits = toDigits(valueValue1_cp, msymbol);
+            slPrice = price + digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            Value1_left value1_cpf;
+            value1_cpf.init();
+            double valueValue1_cpf = value1_cpf.calc<double>();
+            slPrice = price + valueValue1_cpf;
             break;
         }
      }

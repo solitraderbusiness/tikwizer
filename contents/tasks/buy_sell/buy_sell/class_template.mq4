@@ -241,7 +241,7 @@ private:
 
    ////////////////////////////////////////////////////////////
 
-   void              calc_tp_buy()
+    void              calc_tp_buy()
      {
       switch(take_profit_mode)
         {
@@ -251,6 +251,19 @@ private:
             break;
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            initializer_tmcpl_tb
+            tpPrice = variable_name_tmcpl_tb;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            initializer_tmcp_tb
+            double digits = toDigits(variable_name_tmcp_tb, msymbol);
+            tpPrice = price + digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            initializer_tmcpf_tb
+            tpPrice = price + variable_name_tmcpf_tb;
             break;
         }
      }
@@ -266,6 +279,19 @@ private:
          case TPSL_MODE_NO_SL:
             slPrice = 0;
             break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            initializer_tmcpl_sb
+            slPrice = variable_name_tmcpl_sb;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            initializer_tmcpl_sb
+            double digits = toDigits(variable_name_tmcpl_sb, msymbol);
+            slPrice = price - digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            initializer_tmcpf_sb
+            slPrice = price - variable_name_tmcpf_sb;
+            break;
         }
      }
 
@@ -280,6 +306,19 @@ private:
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
             break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            initializer_tmcpl_ts
+            tpPrice = variable_name_tmcpl_ts;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            initializer_tmcp_ts
+            double digits = toDigits(variable_name_tmcp_ts, msymbol);
+            tpPrice = price - digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            initializer_tmcpf_ts
+            tpPrice = price - variable_name_tmcpf_ts;
+            break;
         }
      }
 
@@ -293,6 +332,19 @@ private:
             break;
          case TPSL_MODE_NO_SL:
             slPrice = 0;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_LEVEL:
+            initializer_tmcpl_ss
+            slPrice = variable_name_tmcpl_ss;
+            break;
+         case TPSL_MODE_CUSTOM_PIPS:
+            initializer_tmcp_ss
+            double digits = toDigits(variable_name_tmcp_ss, msymbol);
+            slPrice = price + digits;
+            break;
+         case TPSL_MODE_CUSTOM_PRICE_FRACTION:
+            initializer_tmcpf_ss
+            slPrice = price + variable_name_tmcpf_ss;
             break;
         }
      }
