@@ -284,8 +284,8 @@ private:
             slPrice = variable_name_tmcpl_sb;
             break;
          case TPSL_MODE_CUSTOM_PIPS:
-            initializer_tmcpl_sb
-            double digits = toDigits(variable_name_tmcpl_sb, msymbol);
+            initializer_tmcp_sb
+            double digits = toDigits(variable_name_tmcp_sb, msymbol);
             slPrice = price - digits;
             break;
          case TPSL_MODE_CUSTOM_PRICE_FRACTION:

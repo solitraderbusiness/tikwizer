@@ -1316,101 +1316,125 @@ def buy_sell_function_data(node, function_data_static):
         function_data_static = function_data_static.replace("initializer_oacp", "")
         function_data_static = function_data_static.replace("variable_name_oacp", "\"\"")
 
+    extra_post_fix_present = "_tmcpl_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ts"
+    extra_post_fix_absent = "_tmcpl_tb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ts"
     if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
         value_fetch = params.get("take_profit_price_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_tppl"
 
-        extra_post_fix = "_tmcpl_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ts"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcpl_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ts"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
+    extra_post_fix_present = "_tmcp_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ts"
+    extra_post_fix_absent = "_tmcp_tb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ts"
     if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PIPS":
         value_fetch = params.get("take_profit_pips")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_tpp"
 
-        extra_post_fix = "_tmcp_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ts"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name_"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcp_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ts"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
+    extra_post_fix_present = "_tmcpf_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ts"
+    extra_post_fix_absent = "_tmcpf_tb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ts"
     if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
         value_fetch = params.get("take_profit_price_fraction")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
         id_val = str(node.get("id_by_user")) + "_tppf"
 
-        extra_post_fix = "_tmcpf_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ts"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcpf_tb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ts"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
+    extra_post_fix_present = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
+    extra_post_fix_absent = "_tmcpl_sb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
     if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
         value_fetch = params.get("stop_loss_price_level")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id_by_user")) + "slpl"
+        id_val = str(node.get("id_by_user")) + "_slpl"
 
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
+    extra_post_fix_present = "_tmcp_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ss"
+    extra_post_fix_absent = "_tmcp_sb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcp_ss"
     if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PIPS":
         value_fetch = params.get("stop_loss_pips")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id_by_user")) + "slp"
+        id_val = str(node.get("id_by_user")) + "_slp"
 
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
+    extra_post_fix_present = "_tmcpf_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ss"
+    extra_post_fix_absent = "_tmcpf_sb" if params.get("order_type") not in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpf_ss"
     if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
         value_fetch = params.get("stop_loss_price_fraction")
         row1 = value_fetch.get("row1")
         row2 = value_fetch.get("row2")
-        id_val = str(node.get("id_by_user")) + "slpf"
+        id_val = str(node.get("id_by_user")) + "_slpf"
 
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
         init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
         val = get_value_fetch_val(row1, row2, id_val)
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, init)
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
     else:
-        extra_post_fix = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY", "ORDER_BUY_PENDING"] else "_tmcpl_ss"
-        function_data_static = function_data_static.replace("initializer"+extra_post_fix, "")
-        function_data_static = function_data_static.replace("variable_name"+extra_post_fix, "\"\"")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer"+extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name"+extra_post_fix_absent, "EMPTY")
 
     return function_data_static
 
