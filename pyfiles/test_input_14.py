@@ -628,3 +628,233 @@ input_data_5 = {
   "name_by_user": "",
   "highestIndex": "6"
 }
+
+# test buy sell custom tp sl
+input_data_6 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "6278d6d3-1684-412d-abae-83676fc8cef4",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_CUSTOM_PRICE_LEVEL",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "takeprofit": "20",
+              "TPSL_MODE_CUSTOM_PRICE_LEVEL": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "20"
+                }
+              }
+            },
+            "id": "0148f1f4-86cc-4bf3-8b01-f8dad77c6aef",
+            "id_by_user": 4,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          }
+        ],
+        "edges": [
+          {
+            "source": "6278d6d3-1684-412d-abae-83676fc8cef4",
+            "sourceHandle": "blue",
+            "target": "0148f1f4-86cc-4bf3-8b01-f8dad77c6aef",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "aab880d8-3373-46a3-847a-a854d5a0c935"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "z",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "enum",
+        "name": "my_enum",
+        "value": "{hello}",
+        "description": ""
+      },
+      {
+        "type": "my_enum",
+        "name": "chetori",
+        "value": "hello",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "a79a3586-967f-4e69-89d7-dfd97031fd21",
+  "name_by_user": "",
+  "highestIndex": "5"
+}
+
+# test buy sell custom tp sl 2
+input_data_7 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "6278d6d3-1684-412d-abae-83676fc8cef4",
+            "id_by_user": 3,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_CUSTOM_PRICE_LEVEL",
+              "take_profit_mode": "TPSL_MODE_CUSTOM_PRICE_FRACTION",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "TPSL_MODE_CUSTOM_PRICE_LEVEL": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "20"
+                }
+              },
+              "TPSL_MODE_CUSTOM_PRICE_FRACTION": {
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "0148f1f4-86cc-4bf3-8b01-f8dad77c6aef",
+            "id_by_user": 4,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          }
+        ],
+        "edges": [
+          {
+            "source": "6278d6d3-1684-412d-abae-83676fc8cef4",
+            "sourceHandle": "blue",
+            "target": "0148f1f4-86cc-4bf3-8b01-f8dad77c6aef",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "aab880d8-3373-46a3-847a-a854d5a0c935"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "double",
+        "name": "z",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "enum",
+        "name": "my_enum",
+        "value": "{hello}",
+        "description": ""
+      },
+      {
+        "type": "my_enum",
+        "name": "chetori",
+        "value": "hello",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "a79a3586-967f-4e69-89d7-dfd97031fd21",
+  "name_by_user": "",
+  "highestIndex": "5"
+}
