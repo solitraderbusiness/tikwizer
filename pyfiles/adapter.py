@@ -8,6 +8,7 @@ def refactor(data_raw):
     data = data_raw.get("data")
     data = sort_data(data)  # STest, this sorts the whole data which can consume more time, I just want to sort params
     correct_enabled(data)
+    data["constants"] = enum_check(data.get("constants"), data.get("variables"))
     events = data["events"]
     for key in events:
         # Add indexes (overwrite ids) for later access
@@ -35,6 +36,17 @@ def sort_data(d):
         return [sort_data(v) for v in d]
     else:
         return d
+
+
+# This function moves enums to variables if defined in constants
+def enum_check(constants, variables):
+    for d in constants:
+        if d.get("type").strip() == "enum":
+            # Add to variables list
+            variables.append(d)
+
+    constants = [d for d in constants if d.get("type").strip() != "enum"]
+    return constants
 
 
 # This function creates generator specific input like order_type in buy_sell
