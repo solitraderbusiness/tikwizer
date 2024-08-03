@@ -27,18 +27,19 @@ public:
       //specified by user
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 25;
-      int mtype[] = {1,2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
       count_limit = 0;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      int mtype[] = {0,2,4,3,1,5}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)
