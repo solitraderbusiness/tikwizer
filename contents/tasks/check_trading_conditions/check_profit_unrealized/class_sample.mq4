@@ -27,13 +27,9 @@ public:
       //specified by user
       symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = "";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 25;
-      int mtype[] = {1,2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       each_profit_mode = PROFIT_MODE_NO_MATTER;
       each_profit_amount = 0.0;
@@ -43,6 +39,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       double avgPrice    = 0;
       double avgLoad     = 0;

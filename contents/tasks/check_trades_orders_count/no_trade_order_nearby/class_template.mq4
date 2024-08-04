@@ -20,13 +20,9 @@ public:
       //specified by user
       symbol_mode = symbol_mode_val;
       symbols_str = symbols_str_val;
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = group_mode_val;
       group_number = group_number_val;
-      int mtype[] = type_val; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       mode_base_price = mode_base_price_val;
       mode_range = mode_range_val;
@@ -39,6 +35,11 @@ public:
      {
       Task::run(block_id, block);
 
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = type_val; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int next               = true;
       double price           = 0;

@@ -18,13 +18,9 @@ public:
      {
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_NUMBER;
       group_number = 11;
-      int mtype[] = {0,1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
       loop_direction = "newest_first";
       skip_n = 0;//STest, default must be 0
       not_more_than_n = 0;
@@ -35,6 +31,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int trades[];
       getTrades(trades);

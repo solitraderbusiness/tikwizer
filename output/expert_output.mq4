@@ -215,7 +215,9 @@ bool ONTIMER_TAKEN_IN_MILLISECONDS = false;
 double ONTIMER_TAKEN_TIME = 0;
 int my_number = 410; //
 string my_symbols_2 = "XAUUSD,GBPJPY"; //
+enum testenum {hello}; //
 extern string my_symbols = "EURUSD"; //
+extern testenum my_test = hello; //
 //This is used to hold onchart event for onchart blocks process
 struct OnChartEventHolder
   {
@@ -998,7 +1000,222 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
+class Candle8_t1
 
+  {
+
+public:
+
+   string            symbol;
+   int               timeframe;
+   int               find_method;
+   int               price_mode;
+   string            timestr;
+   int               shift;
+
+   string            msymbol;
+   int               mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      find_method = FIND_BY_ID;
+      price_mode = CANDLE_CLOSE;
+      timestr = "2023.4.26 13:40:30";
+      shift = 0;
+     }
+
+
+
+   double            calc()
+
+     {
+      msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
+
+      int index = get_index();
+      double value = get_value(index);
+      return value;
+     }
+
+private:
+   int               get_index()
+     {
+      int index = -1;
+      if(find_method==FIND_BY_DATE)
+        {
+         datetime date = StrToTime(timestr);
+         index = iBarShift(msymbol, mtimeframe, date, false);
+        }
+      else
+         if(find_method==FIND_BY_ID)
+           {
+            index = shift;
+           }
+      return index;
+     }
+
+   double            get_value(int index)
+     {
+      double val, valPips;
+      double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
+      switch(price_mode)
+        {
+         case CANDLE_OPEN:
+            return iOpen(msymbol, mtimeframe, index);
+         case CANDLE_HIGH:
+            return iHigh(msymbol, mtimeframe, index);
+         case CANDLE_LOW:
+            return iLow(msymbol, mtimeframe, index);;
+         case CANDLE_CLOSE:
+            return iClose(msymbol, mtimeframe, index);;
+         case CANDLE_MEDIAN:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
+         case CANDLE_HLC3:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
+         case CANDLE_AVERAGE:
+            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
+         case CANDLE_GAP_TO_PREV:
+            //STest, is this calc right?
+            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
+            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
+            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
+            return gap;
+
+         case CANDLE_TOTAL_SIZE:
+            val = length(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BODY_SIZE:
+            val = body(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_TOP_WICK:
+            val = wickup(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BOTTOM_WICK:
+            val = wickdn(index);
+            valPips = val/point/10;
+            return valPips;
+
+         //STest, effect of bull here compared to code above
+         case BULL_CANDLE_TOTAL_SIZE:
+            val = isGreen(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BODY_SIZE:
+            val = isGreen(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_TOP_WICK:
+            val = isGreen(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BOTTOM_WICK:
+            val = isGreen(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+
+         //STest, effect of bear here compared to code above
+         case BEAR_CANDLE_TOTAL_SIZE:
+            val = isRed(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BODY_SIZE:
+            val = isRed(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_TOP_WICK:
+            val = isRed(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BOTTOM_WICK:
+            val = isRed(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+        }
+      return -1;
+     }
+
+
+
+
+   double            length(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
+     }
+   double            body(int i)
+     {
+      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickup(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickdn(int i)
+     {
+      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
+     }
+   bool              isGreen(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
+     }
+   bool              isRed(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
+     }
+   bool              isDoji(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
+     }
+
+  };
+
+
+class ACCELERATOR_OSCILLATOR8_t2
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      shift = 0;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iAC(symbol,timeframe,shift);
+
+      return result;
+
+     }
+
+
+
+  };
 //Pass
 class Task1 : public Task
   {
@@ -1018,146 +1235,6 @@ public:
 
      }
 
-  };
-
-//Check trades count
-class Task2 : public Task
-  {
-   //specified by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
-public:
-                     Task2(string name):Task(name)
-     {
-      //specified by user
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = "";
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 11;
-      count_limit = 3;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-      ArrayResize(type, 0, 0);
-      int mtype[] = {0,1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
-        {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(filterGeneral())
-               count++;
-           }
-        }
-
-      bool result = count > count_limit;
-      if(result)
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
-  };
-
-//If trade/order
-class Task3 : public Task
-  {
-   //specified by user
-   int               symbol_mode;
-   string            symbols_str;
-   string            symbols[];
-   int               group_mode;
-   int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   int               count_limit;
-public:
-                     Task3(string name):Task(name)
-     {
-      //specified by user
-      symbol_mode = SYMBOL_MODE_SPECIFIED;
-      symbols_str = ::my_symbols_2;
-      group_mode = ORDER_GROUP_MODE_NUMBER;
-      group_number = 11;
-      count_limit = 0;
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      symbols_str = ::my_symbols_2;
-
-
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-      ArrayResize(type, 0, 0);
-      int mtype[] = {0,4,2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
-
-      int count_total = OrdersTotal();
-      int count = 0;
-      for(int i = 0 ; i < count_total ; i++)
-        {
-         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           {
-            if(filterGeneral())
-               count++;
-           }
-        }
-
-      bool result = count > count_limit;
-      if(result)
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-   bool              filterGeneral()
-     {
-      bool con1 = is_symbol_accepted(symbol_mode, symbols);
-      bool con2 = sameOrderType(type, OrderType());
-      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
-      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-      return con1 && con2 && con3 && con4;
-     }
   };
 
 //Loop (pass "n" times)
@@ -1188,6 +1265,329 @@ public:
 
      }
 
+  };
+
+//No trade
+class Task6 : public Task
+  {
+   //specified by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   int               count_limit;
+public:
+                     Task6(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      count_limit = 0;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      int count_total = OrdersTotal();
+      int count = 0;
+      for(int i = 0 ; i < count_total ; i++)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(filterGeneral())
+               count++;
+           }
+        }
+
+      bool result = count == count_limit;
+      if(result)
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+  };
+
+//No pending order
+class Task7 : public Task
+  {
+   //specified by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+   int               count_limit;
+public:
+                     Task7(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      count_limit = 0;
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {5,4,2,3}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      int count_total = OrdersTotal();
+      int count = 0;
+      for(int i = 0 ; i < count_total ; i++)
+        {
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(filterGeneral())
+               count++;
+           }
+        }
+
+      bool result = count == count_limit;
+      if(result)
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
+  };
+
+//No pending order nearby
+class Task8 : public Task
+  {
+   //specified by user
+   int               symbol_mode;
+   string            symbols_str;
+   string            symbols[];
+   int               group_mode;
+   int               group_number;
+   int               type[]; //0 for buy and 1 for sell
+
+   string            mode_base_price;
+   string            mode_range;
+   double            range_pips;
+   double            range_fraction;
+   int               range_position;
+
+public:
+                     Task8(string name):Task(name)
+     {
+      //specified by user
+      symbol_mode = SYMBOL_MODE_SPECIFIED;
+      symbols_str = "";
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+
+      group_mode = ORDER_GROUP_MODE_NUMBER;
+      group_number = 11;
+      int mtype[] = {5,4,2,3}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      mode_base_price = "current";
+      mode_range = "pips";
+      range_pips = 10;
+      range_fraction = 0.001;
+      range_position = 0;
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {5,4,2,3}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
+      int next               = true;
+      double price           = 0;
+      bool use_current_price = (mode_base_price == "current");
+
+      // prepare the time filters
+      Candle8_t1 candle8_t1;
+      candle8_t1.init();
+      double valueCandle8_t1 = candle8_t1.calc();
+      datetime t1 = valueCandle8_t1;
+      ACCELERATOR_OSCILLATOR8_t2 accelerator_oscillator8_t2;
+      accelerator_oscillator8_t2.init();
+      double valueACCELERATOR_OSCILLATOR8_t2 = accelerator_oscillator8_t2.calc();
+      datetime t2 = valueACCELERATOR_OSCILLATOR8_t2;
+
+      if(t1 >= TimeCurrent())
+         t1 = 0;
+
+      if(!use_current_price)
+        {
+
+         price = "";
+        }
+
+      for(int i = OrdersTotal()-1; i >= 0; i--)
+        {
+
+         if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+           {
+            if(filterGeneral())
+              {
+               // filter by time
+               if((t1 < t2 && OrderOpenTime() < t1) || OrderOpenTime() > t2)
+                 {
+                  continue;
+                 }
+
+               // what is the distance?
+               double distance = range_fraction;
+
+               if(mode_range == "pips")
+                 {
+                  distance = toDigits(range_pips, OrderSymbol());
+                 }
+
+               // checking the position
+               if(MathMod(OrderType(), 2)==0)  // buy?
+                 {
+                  if(use_current_price)
+                    {
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_ASK);
+                    }
+
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+               else
+                 {
+                  if(use_current_price)
+                    {
+                     price = SymbolInfoDouble(OrderSymbol(), SYMBOL_BID);
+                    }
+
+                  switch(range_position)
+                    {
+                     case 0:
+                        if(price <= (OrderOpenPrice() + distance/2) && price >= (OrderOpenPrice() - distance/2))
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 1:
+                        if(price <= OrderOpenPrice() && price >= OrderOpenPrice() - distance)
+                          {
+                           next = false;
+                          }
+                        break;
+                     case 2:
+                        if(price <= OrderOpenPrice() + distance && price >= OrderOpenPrice())
+                          {
+                           next = false;
+                          }
+                        break;
+                    }
+                 }
+
+               if(next == false)
+                 {
+                  break;
+                 }
+              }
+           }
+        }
+
+      if(next)
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+   bool              filterGeneral()
+     {
+      bool con1 = is_symbol_accepted(symbol_mode, symbols);
+      bool con2 = sameOrderType(type, OrderType());
+      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
+      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
+      return con1 && con2 && con3 && con4;
+     }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -1351,9 +1751,9 @@ public:
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1, 2};
+      int mnexts_true[] = {2, 3, 4};
       int mnexts_false[] = {};
-      int mprevs_true[] = {3};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
@@ -1366,64 +1766,12 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
-  {
-public:
-                     Block2()
-     {
-      id = 1;
-      id_by_user = 2;
-      name = "check_trades_orders_count";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 2;
-      id_by_user = 3;
-      name = "check_trades_orders_count";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block4 : public Block
   {
 public:
                      Block4()
      {
-      id = 3;
+      id = 1;
       id_by_user = 4;
       name = "loop_pass_n_times";
       enabled = True;
@@ -1439,6 +1787,84 @@ public:
       populatePrevsFalse(mprevs_false);
 
       task = new Task4(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block6 : public Block
+  {
+public:
+                     Block6()
+     {
+      id = 2;
+      id_by_user = 6;
+      name = "check_trades_orders_count";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task6(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block7 : public Block
+  {
+public:
+                     Block7()
+     {
+      id = 3;
+      id_by_user = 7;
+      name = "check_trades_orders_count";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task7(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block8 : public Block
+  {
+public:
+                     Block8()
+     {
+      id = 4;
+      id_by_user = 8;
+      name = "no_trade_order_nearby";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {0};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task8(name);
      }
   };
 Block *blocks_init[];
@@ -1508,16 +1934,18 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 4);
+   ArrayResize(blocks_tick, 5);
    Block1 *block1 = new Block1();
-   Block2 *block2 = new Block2();
-   Block3 *block3 = new Block3();
    Block4 *block4 = new Block4();
+   Block6 *block6 = new Block6();
+   Block7 *block7 = new Block7();
+   Block8 *block8 = new Block8();
 
    blocks_tick[0] = block1;
-   blocks_tick[1] = block2;
-   blocks_tick[2] = block3;
-   blocks_tick[3] = block4;
+   blocks_tick[1] = block4;
+   blocks_tick[2] = block6;
+   blocks_tick[3] = block7;
+   blocks_tick[4] = block8;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4068,7 +4496,7 @@ void OnTick()
   {
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 3);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

@@ -645,3 +645,199 @@ input_data_6 = {
   "name_by_user": "tesdt 5687",
   "highestIndex": "5"
 }
+
+# test symbol type change in nearby
+input_data_7 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "17d87d68-57c5-4eef-93e2-65034b36961c",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "n": "my_number"
+            },
+            "id": "da0f5cdb-2dea-4ab2-b3ff-0bb089d3c2e5",
+            "id_by_user": 4,
+            "blockName": "Loop (pass \"n\" times)",
+            "category": "counters",
+            "block_name_mql": "loop_pass_n_times"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{0,1}"
+            },
+            "id": "cd4c8b58-fb79-4f31-ac46-1dc9ba4b56c5",
+            "id_by_user": 6,
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_trade",
+            "blockName": "No trade"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}"
+            },
+            "id": "027f6b8f-1c1b-4076-ae15-50b293e5f165",
+            "id_by_user": 7,
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_pending_order",
+            "blockName": "No pending order"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "type": "{2,3,4,5}",
+              "type_pending": "{2,3,4,5}",
+              "mode_base_price": "current",
+              "mode_range": "pips",
+              "range_position": "0",
+              "time_1": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              },
+              "time_2": {
+                "row1": "indicator",
+                "row2": "accelerator_oscillator",
+                "params": {
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "range_pips": "10"
+            },
+            "id": "dee7db18-bb8a-4e47-8523-a5dea0199817",
+            "id_by_user": 8,
+            "blockName": "No pending order nearby",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_pending_order_nearby"
+          }
+        ],
+        "edges": [
+          {
+            "source": "da0f5cdb-2dea-4ab2-b3ff-0bb089d3c2e5",
+            "sourceHandle": "blue",
+            "target": "17d87d68-57c5-4eef-93e2-65034b36961c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "59a5771d-6411-44c7-ad32-e13d118c2858"
+          },
+          {
+            "source": "17d87d68-57c5-4eef-93e2-65034b36961c",
+            "sourceHandle": "blue",
+            "target": "027f6b8f-1c1b-4076-ae15-50b293e5f165",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "e709dada-4452-43ad-bec8-54011f3b587b"
+          },
+          {
+            "source": "17d87d68-57c5-4eef-93e2-65034b36961c",
+            "sourceHandle": "blue",
+            "target": "cd4c8b58-fb79-4f31-ac46-1dc9ba4b56c5",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "a74886b1-98b6-4a80-98c4-238fee04d0db"
+          },
+          {
+            "source": "17d87d68-57c5-4eef-93e2-65034b36961c",
+            "sourceHandle": "blue",
+            "target": "dee7db18-bb8a-4e47-8523-a5dea0199817",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "35a64f1a-cd4b-4b6b-936a-ea35ae05bd6e"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "type": "int",
+        "name": "my_number",
+        "value": "410",
+        "description": ""
+      },
+      {
+        "type": "string",
+        "name": "my_symbols_2",
+        "value": "XAUUSD,GBPJPY",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "type": "string",
+        "name": "my_symbols",
+        "value": "EURUSD",
+        "description": ""
+      },
+      {
+        "type": "enum",
+        "name": "testenum",
+        "value": "{hello}",
+        "description": ""
+      },
+      {
+        "type": "testenum",
+        "name": "my_test",
+        "value": "hello",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "72f59944-525b-446c-9f6f-4d3074f77117",
+  "name_by_user": "tesdt 5687",
+  "highestIndex": "9"
+}

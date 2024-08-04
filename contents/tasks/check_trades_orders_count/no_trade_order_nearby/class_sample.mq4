@@ -20,13 +20,9 @@ public:
       //specified by user
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = ",EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {1,2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       mode_base_price = "current";
       mode_range = "pips";
@@ -39,6 +35,11 @@ public:
      {
       Task::run(block_id, block);
 
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int next               = true;
       double price           = 0;
