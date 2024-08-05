@@ -18,7 +18,7 @@ class Task0 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
    int               count_limit;
 
 public:
@@ -37,7 +37,7 @@ public:
 
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
-      int mtype[] = {0,2,4,3,1,5}; //0 for buy and 1 for sell
+      int mtype[] = {0,2,4,3,1,5};
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int count_total = OrdersTotal();

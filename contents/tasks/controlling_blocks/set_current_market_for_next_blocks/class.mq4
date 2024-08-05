@@ -7,13 +7,14 @@ public:
                      Task0(string name):Task(name)
      {
       symbols_str = "GBPUSD, EURUSD";
-      
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
 
       int size = ArraySize(symbols);
       if(size==0)

@@ -17,7 +17,7 @@ public:
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
 
    int               trailing_distance_mode;
    double            t_distance_pips;
@@ -28,13 +28,9 @@ public:
      {
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "EURUSD,BTCUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {2, 3, 4, 5}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
 
       trailing_distance_mode = TRAILING_DISTANCE_MODE_FIXED;
       t_distance_pips = 10.0;
@@ -43,6 +39,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0};
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       for(int m = OrdersTotal()-1 ; m >= 0 ; m--)
         {
@@ -115,6 +117,7 @@ public:
                  }
 
                bool result = OrderModify(OrderTicket(), new_op, new_sl, new_tp, 0, clrBlack);
+               OrderSelect(OrderTicket(),SELECT_BY_TICKET);
                if (result)
                   OnTrade();
               }

@@ -16,7 +16,7 @@ class Task0 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
    int               on_profit_mode;
    double            pips_on_profit;
    int               bep_offset_mode;
@@ -27,13 +27,9 @@ public:
      {
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "EURUSD,BTCUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.
 
       on_profit_mode = ON_PROFIT_MODE_FIXED_VALUE;
       pips_on_profit = 20;
@@ -43,6 +39,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0};
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       for(int i = 0 ; i < OrdersTotal() ; i++)
         {
@@ -85,6 +87,7 @@ public:
                  }
                double new_slPrice = OrderOpenPrice()+be_offset;
                bool result = OrderModify(OrderTicket(), OrderOpenPrice(), new_slPrice, OrderTakeProfit(), 0, clrNONE);
+               OrderSelect(OrderTicket(),SELECT_BY_TICKET);
                if (result)
                   OnTrade();
               }

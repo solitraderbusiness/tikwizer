@@ -1,3 +1,3 @@
 {
-	"field_data" : "   //specified by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[]; //0 for buy and 1 for sell\n\n   double                ProfitAmount;\n   bool                  OncePerTrade;\n   //specified by system\n   ulong             memory[];"
+	"field_data" : "   //specified by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[]; \n\n   double                ProfitAmount;\n   bool                  OncePerTrade;\n   //specified by system\n   ulong             memory[];"
 }

@@ -13,13 +13,9 @@ public:
      {
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = ",EURUSD,GBPUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 15;
-      int mtype[] = {0, 1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       close_mode = "";
       close_partial_mode = 0;
@@ -27,6 +23,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0};
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       bool next = false;
 

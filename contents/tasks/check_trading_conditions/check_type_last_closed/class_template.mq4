@@ -31,9 +31,6 @@ public:
 
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
-      ArrayResize(type, 0, 0);
-      int mtype[] = type_val; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int total         = 0;
       int total_tr      = 0;

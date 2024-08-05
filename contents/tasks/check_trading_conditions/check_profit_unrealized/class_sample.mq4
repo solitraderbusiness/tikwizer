@@ -14,7 +14,7 @@ class Task5 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
 
    string            profit_mode_each;
    double            profit_amount_each;
@@ -43,7 +43,7 @@ public:
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
       ArrayResize(type, 0, 0);
-      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      int mtype[] = {1,0};
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       double avgPrice    = 0;

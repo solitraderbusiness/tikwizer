@@ -7,8 +7,8 @@ class Task2 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
-   string               loop_direction;
+   int               type[];
+   string            loop_direction;
    int               skip_n;
    int               not_more_than_n;
    int               every_n;
@@ -35,7 +35,7 @@ public:
       ushort u_sep=StringGetCharacter(",",0);
       StringSplit(symbols_str, u_sep, symbols);
       ArrayResize(type, 0, 0);
-      int mtype[] = {1,0}; //0 for buy and 1 for sell
+      int mtype[] = {1,0};
       ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int trades[];
