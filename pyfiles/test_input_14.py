@@ -3456,3 +3456,245 @@ input_data_11 = {
   "name_by_user": "order select test",
   "highestIndex": "8"
 }
+
+# test if order select addition to odermodify blocks work
+input_data_12 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{0,1}"
+            },
+            "id": "97a5f958-178a-416c-87bd-ca1799aaacae",
+            "id_by_user": 7,
+            "blockName": "No trade",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_trade"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_NO_SL",
+              "take_profit_mode": "TPSL_MODE_NO_TP",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1"
+            },
+            "id": "1b545d9a-7093-4ad3-9038-c4ec9bfc894b",
+            "id_by_user": 8,
+            "blockName": "Sell now",
+            "category": "buy_sell",
+            "block_name_mql": "sell_now"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{0,1}",
+              "loop_direction": "newest_first",
+              "skip_n": "0",
+              "every_n": "1",
+              "not_more_than_n": "0",
+              "second_output": "always"
+            },
+            "id": "d940fa1f-adcd-4923-930a-74559fbf5eb3",
+            "id_by_user": 9,
+            "blockName": "For each Trade",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "for_each_trade"
+          },
+          {
+            "params": {
+              "RelativeTo": "openprice",
+              "NewSLmode": "fixed",
+              "NewTPmode": "nochange",
+              "LevelColor": "clrDeepPink",
+              "NewStopLoss": "50"
+            },
+            "id": "e9c7555a-342c-49b2-86fd-71d4a4940360",
+            "id_by_user": 10,
+            "blockName": "modify stops",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "modify_stops"
+          },
+          {
+            "params": {
+              "title": "Comment Message",
+              "obj_chart_subwindow": "",
+              "obj_corner": "CORNER_LEFT_UPPER",
+              "obj_x": "5",
+              "obj_y": "24",
+              "obj_title_font": "Georgia",
+              "obj_title_font_color": "clrGold",
+              "obj_title_font_size": "13",
+              "obj_label_font": "Vardena",
+              "obj_label_font_color": "clrDarkGray",
+              "obj_label_font_size": "10",
+              "obj_font": "Vardena",
+              "obj_font_color": "clrIvory",
+              "obj_font_size": "10",
+              "label_1": "stoploss: ",
+              "format_number_1": "EMPTY_VALUE",
+              "format_time_1": "EMPTY_VALUE",
+              "label_2": "",
+              "format_number_2": "EMPTY_VALUE",
+              "format_time_2": "EMPTY_VALUE",
+              "label_3": "",
+              "format_number_3": "EMPTY_VALUE",
+              "format_time_3": "EMPTY_VALUE",
+              "label_4": "",
+              "format_number_4": "EMPTY_VALUE",
+              "format_time_4": "EMPTY_VALUE",
+              "label_5": "",
+              "format_number_5": "EMPTY_VALUE",
+              "format_time_5": "EMPTY_VALUE",
+              "label_6": "",
+              "format_number_6": "EMPTY_VALUE",
+              "format_time_6": "EMPTY_VALUE",
+              "label_7": "",
+              "format_number_7": "EMPTY_VALUE",
+              "format_time_7": "EMPTY_VALUE",
+              "label_8": "",
+              "format_number_8": "EMPTY_VALUE",
+              "format_time_8": "EMPTY_VALUE",
+              "value_fetch_1": {
+                "row1": "trade-order-in-loop",
+                "row2": "IN_LOOP_TRADE_ORDER_STOPLOSS",
+                "params": {
+                  "ModeStopLoss": "level",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_2": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_3": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_4": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_5": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_6": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_7": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              },
+              "value_fetch_8": {
+                "row2": "Text",
+                "params": {
+                  "value": "sample text",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "6770af99-47b4-46ad-ac43-a5f53c3d83fa",
+            "id_by_user": 11,
+            "blockName": "Comment",
+            "category": "output_communication",
+            "block_name_mql": "comment"
+          }
+        ],
+        "edges": [
+          {
+            "source": "97a5f958-178a-416c-87bd-ca1799aaacae",
+            "sourceHandle": "blue",
+            "target": "1b545d9a-7093-4ad3-9038-c4ec9bfc894b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "d553bc94-4682-449f-9457-4b74e326fb57"
+          },
+          {
+            "source": "1b545d9a-7093-4ad3-9038-c4ec9bfc894b",
+            "sourceHandle": "blue",
+            "target": "d940fa1f-adcd-4923-930a-74559fbf5eb3",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "dcdd976c-c076-4ae0-83dd-8a695b14e4d7"
+          },
+          {
+            "source": "d940fa1f-adcd-4923-930a-74559fbf5eb3",
+            "sourceHandle": "blue",
+            "target": "e9c7555a-342c-49b2-86fd-71d4a4940360",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "91753ca4-14bd-4388-8b76-7fa6769dc61a"
+          },
+          {
+            "source": "d940fa1f-adcd-4923-930a-74559fbf5eb3",
+            "sourceHandle": "blue",
+            "target": "6770af99-47b4-46ad-ac43-a5f53c3d83fa",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "b160a827-a456-44ab-8ae4-d3cabbd77001"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "e7319aea-d1da-464b-842b-21155467123d",
+  "name_by_user": "order select test",
+  "highestIndex": "12"
+}
