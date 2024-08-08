@@ -1,3 +1,3 @@
 {
-	"constructor_data" : "symbol_mode = symbol_mode_val;\n      symbols_str = symbols_str_val;\n      ushort u_sep=StringGetCharacter(\",\",0);\n      StringSplit(symbols_str, u_sep, symbols);\n\n      group_mode = group_mode_val;\n      group_number = group_number_val;\n      int mtype[] = type_val; //0 for buy and 1 for sell\n      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);//This way of initialization is due to the fact MQL4 doesn't support a direct way of initializing an array field.\n\n      trailing_distance_mode = trailing_distance_mode_val;\n      t_distance_pips = t_distance_pips_val;\n      t_step_pips = t_step_pips_val;"
+	"constructor_data" : "      symbol_mode = symbol_mode_val;\n      symbols_str = symbols_str_val;\n\n      group_mode = group_mode_val;\n      group_number = group_number_val;\n\n      trailing_distance_mode = trailing_distance_mode_val;\n      t_distance_pips = t_distance_pips_val;\n      t_step_pips = t_step_pips_val;"
 }

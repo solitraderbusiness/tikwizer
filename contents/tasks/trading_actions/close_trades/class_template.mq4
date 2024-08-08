@@ -8,7 +8,7 @@ public:
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
    double            older_than;//in minutes
    color             arrow_color;
    double            slippage;
@@ -21,13 +21,9 @@ public:
       //specified by user
       symbol_mode = symbol_mode_val;
       symbols_str = symbols_str_val;
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = group_mode_val;
       group_number = group_number_val;
-      int mtype[] = type_val; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
       older_than = older_than_val;//in minutes
       arrow_color = arrow_color_val;
       slippage = slippage_val;
@@ -39,6 +35,12 @@ public:
    virtual void      run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = type_val;
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       //STest, trades not sorted by newest
       for(int i = OrdersTotal()-1 ; i >=0 ; i--)

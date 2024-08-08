@@ -7,7 +7,7 @@ class Task_id : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
    int               count_limit;
 
 public:
@@ -16,18 +16,20 @@ public:
       //specified by user
       symbol_mode = symbol_mode_val;
       symbols_str = symbols_str_val;
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
-
       group_mode = group_mode_val;
       group_number = group_number_val;
-      int mtype[] = type_val; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
       count_limit = count_limit_val;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = type_val;
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
+
       int count_total = OrdersTotal();
       int count = 0;
       for(int i = 0 ; i < count_total ; i++)

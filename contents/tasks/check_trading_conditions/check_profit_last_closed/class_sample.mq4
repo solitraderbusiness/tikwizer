@@ -6,7 +6,7 @@ class Task3 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
 
    double                ProfitAmount;
    bool                  OncePerTrade;
@@ -18,13 +18,9 @@ public:
       //specified by user
       symbol_mode = SYMBOL_MODE_SPECIFIED;
       symbols_str = "";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 25;
-      int mtype[] = {1,2}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       ProfitAmount = (double)0.0;
       OncePerTrade = (bool)false;
@@ -32,6 +28,12 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0};
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       double last_profit = 0;
       int total          = OrdersHistoryTotal();

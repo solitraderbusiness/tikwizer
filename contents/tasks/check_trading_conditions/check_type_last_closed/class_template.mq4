@@ -18,8 +18,6 @@ public:
       //specified by user
       symbol_mode = symbol_mode_val;
       symbols_str = symbols_str_val;
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = group_mode_val;
       group_number = group_number_val;
@@ -30,6 +28,9 @@ public:
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
 
       int total         = 0;
       int total_tr      = 0;

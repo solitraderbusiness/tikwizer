@@ -157,6 +157,7 @@ public:
          SL = NormalizeDouble(SL, digits);
          TP = NormalizeDouble(TP, digits);
          success = OrderModify(OrderTicket(), OrderOpenPrice(), SL, TP, OrderExpiration(), LevelColor);
+         OrderSelect(OrderTicket(),SELECT_BY_TICKET);
         }
 
       if(success)

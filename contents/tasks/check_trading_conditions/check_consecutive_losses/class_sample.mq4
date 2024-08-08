@@ -6,7 +6,7 @@ class Task3 : public Task
    string            symbols[];
    int               group_mode;
    int               group_number;
-   int               type[]; //0 for buy and 1 for sell
+   int               type[];
 
    int                ConsecutiveCount;
 
@@ -16,19 +16,21 @@ public:
       //specified by user
       symbol_mode = SYMBOL_MODE_ANY;
       symbols_str = "EURUSD";
-      ushort u_sep=StringGetCharacter(",",0);
-      StringSplit(symbols_str, u_sep, symbols);
 
       group_mode = ORDER_GROUP_MODE_ALL;
       group_number = 18;
-      int mtype[] = {1}; //0 for buy and 1 for sell
-      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       ConsecutiveCount = (int)3;
      }
    virtual void               run(int block_id, BlockParent &block)
      {
       Task::run(block_id, block);
+
+      ushort u_sep=StringGetCharacter(",",0);
+      StringSplit(symbols_str, u_sep, symbols);
+      ArrayResize(type, 0, 0);
+      int mtype[] = {1,0};
+      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);
 
       int count = 0;
       int total          = OrdersHistoryTotal();
