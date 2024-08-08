@@ -143,11 +143,11 @@ public:
 
      }
 private:
-   //does needed calculations
    void              calc()
      {
       fitGroup();
       buildMagic();
+      calc_entry_price();//Should be called first
       if(order_type==ORDER_BUY)
         {
          cmd = OP_BUY;
@@ -160,7 +160,7 @@ private:
          else
             if(order_type==ORDER_BUY_PENDING)
               {
-               if(price_offset>=0)
+               if(price > SymbolInfoDouble(msymbol, SYMBOL_ASK))
                   cmd = OP_BUYSTOP;
                else
                   cmd = OP_BUYLIMIT;
@@ -168,13 +168,13 @@ private:
             else
                if(order_type==ORDER_SELL_PENDING)
                  {
-                  if(price_offset>=0)
+                  if(price < SymbolInfoDouble(msymbol, SYMBOL_BID))
                      cmd = OP_SELLSTOP;
                   else
                      cmd = OP_SELLLIMIT;
                  }
 
-      calc_entry_price();
+
       if(cmd==OP_BUY || cmd==OP_BUYLIMIT ||cmd==OP_BUYSTOP)
         {
          calc_tp_buy();
@@ -199,12 +199,12 @@ private:
 
    void              calc_entry_price()
      {
-      if(cmd==OP_BUY)
+      if(order_type==ORDER_BUY)
         {
          price = SymbolInfoDouble(msymbol, SYMBOL_ASK);
         }
       else
-         if(cmd==OP_SELL)
+         if(order_type==ORDER_SELL)
            {
             price = SymbolInfoDouble(msymbol, SYMBOL_BID);
            }
@@ -233,10 +233,11 @@ private:
       if(price_offset_as_pip)
          offset = price_offset *  MarketInfo(msymbol, MODE_POINT) * 10;
 
-      if(cmd==OP_SELLLIMIT || cmd==OP_SELLSTOP)
+      if(order_type == ORDER_SELL_PENDING)
          price -= offset;
-      else if (cmd==OP_BUYLIMIT || cmd==OP_BUYSTOP)
-         price += offset;
+      else
+         if(order_type == ORDER_BUY_PENDING)
+            price += offset;
      }
 
    ////////////////////////////////////////////////////////////

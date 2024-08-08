@@ -1,4 +1,5 @@
 # This module adapts client data to mql generator
+import operator
 
 from . import path_root
 import json
@@ -310,7 +311,7 @@ def get_nexts_true(node, edges):
         if edge.get("source") == node.get("id"):
             if edge.get("sourceHandle") == "blue":
                 result.append(edge.get("target"))
-    return result
+    return sorted(result)
 
 
 def get_nexts_false(node, edges):
@@ -319,7 +320,7 @@ def get_nexts_false(node, edges):
         if edge.get("source") == node.get("id"):
             if edge.get("sourceHandle") == "red":
                 result.append(edge.get("target"))
-    return result
+    return sorted(result)
 
 
 def get_prevs_true(node, edges):
@@ -328,7 +329,7 @@ def get_prevs_true(node, edges):
         if edge.get("target") == node.get("id"):
             if edge.get("sourceHandle") == "blue":
                 result.append(edge.get("source"))
-    return result
+    return sorted(result)
 
 
 def get_prevs_false(node, edges):
@@ -337,4 +338,4 @@ def get_prevs_false(node, edges):
         if edge.get("target") == node.get("id"):
             if edge.get("sourceHandle") == "red":
                 result.append(edge.get("source"))
-    return result
+    return sorted(result)

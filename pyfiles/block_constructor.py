@@ -41,7 +41,8 @@ def get_block_child(input_dic, class_id):
 
     for key in input_dic:
         if isinstance(input_dic.get(key), collections.abc.Sequence) and not isinstance(input_dic.get(key), str):
-            items = str(set(input_dic.get(key))) if set(input_dic.get(key)) else "{}"
+            items = "{" + ",".join(map(str, sorted(input_dic.get(key)))) + "}"
+            # items = str(set(input_dic.get(key))) if set(input_dic.get(key)) else "{}"
             class_template = class_template.replace(key + "_val", items)
         else:
             class_template = class_template.replace(key + "_val", str(input_dic.get(key)))
