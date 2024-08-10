@@ -1,5 +1,5 @@
-//Volume profile
-class Task0 : public Task
+//Volume Profile
+class Task2 : public Task
   {
    /* Calculation */
    ENUM_VP_RANGE_MODE RangeMode;    // Range mode
@@ -24,6 +24,10 @@ class Task0 : public Task
    color             VwapColor;     // VWAP color
    int               ModeLineWidth; // Mode line width
    ENUM_LINE_STYLE   StatLineStyle; // Median & VWAP line style
+
+   //+------------------------------------------------------------------+
+   //|                                                                  |
+   //+------------------------------------------------------------------+
    color             ModeLevelColor; // Mode level line color (None=disable)
    int               ModeLevelWidth; // Mode level line width
    ENUM_LINE_STYLE   ModeLevelStyle; // Mode level line style
@@ -101,15 +105,15 @@ class Task0 : public Task
    bool              _updateOnTick;
    ENUM_TIMEFRAMES   _dataPeriod;
 
-   int               timeFromCandleId;
-   int               timeToCandleId;
+   datetime               timeFrom_date;
+   datetime               timeTo_date;
 
-   int            how_many_regions;
-   double            region_1_factor;
-   double            region_2_factor;
-   double            region_3_factor;
-   double            region_4_factor;
-   double            region_5_factor;
+   int               how_many_regions;
+   int               region_1_factor;
+   int               region_2_factor;
+   int               region_3_factor;
+   int               region_4_factor;
+   int               region_5_factor;
 
    double            volumes[];
    double            prices[];
@@ -121,47 +125,47 @@ class Task0 : public Task
 
 
 public:
-                     Task0(string name):Task(name)
+                     Task2(string name):Task(name)
      {
       /* Calculations */
       RangeMode = VP_RANGE_MODE_BETWEEN_LINES;              // Range mode
       RangeMinutes = 2440;        // Range minutes
-      ModeStep =    300;             // Mode step (points)
+      ModeStep =    3;             // Mode step (points)
       HgPointScale = POINT_SCALE_100;        // Point scale
-      numberOfBars = 50;
+      numberOfBars = 30;
       VolumeType = VOLUME_TICK;            // Volume type
       DataSource = VP_SOURCE_M1;            // Data source
 
       /* Histogram */
-      HgBarStyle = VP_BAR_STYLE_LINE;            // Bar style
+      HgBarStyle = VP_BAR_STYLE_BAR;            // Bar style
       HgPosition = VP_HG_POSITION_LEFT_INSIDE;            // Histogram position
-      HgColor =   clrYellow;                // Color 1
-      HgColor2 =  clrOrange;               // Color 2
+      HgColor =   clrNavy;                // Color 1
+      HgColor2 =  clrSteelBlue;               // Color 2
       HgLineWidth = 2;          // Line width
 
       /* Levels */
-      ModeColor = clrBlue;              // Mode color
-      MaxColor =  clrNONE;               // Maximum color
+      ModeColor = clrMediumBlue;              // Mode color
+      MaxColor =  clrRed;               // Maximum color
       MedianColor = clrNONE;          // Median color
       VwapColor = clrNONE;              // VWAP color
-      ModeLineWidth = 1;      // Mode line width
-      StatLineStyle = STYLE_DOT;      // Median & VWAP line style
+      ModeLineWidth = 2;      // Mode line width
+      StatLineStyle = STYLE_SOLID;      // Median & VWAP line style
 
       ModeLevelColor = clrNONE;    // Mode level line color (None=disable)
       ModeLevelWidth = 1;                     // Mode level line width
       ModeLevelStyle = STYLE_SOLID;    // Mode level line style
-      RegionDividerColor = clrLightGray;   // Region divider lines color
+      RegionDividerColor = clrDarkBlue;   // Region divider lines color
 
       /* Service */
-      Id =       "+vpr_0";                      // Identifier
-      ShowHorizon = true;                     // Show data horizon
+      Id =       "+vpr_2";                      // Identifier
+      ShowHorizon = true;          // Show data horizon
       Zoom =     0;                           // Zoom (0=auto)
       WaitMilliseconds = 500;                 // Wait milliseconds
-      TimeFromColor = Blue;                   // Left border line color
-      TimeFromStyle = STYLE_DASH;             // Left border line style
-      TimeToColor = Red;                      // Right border line color
-      TimeToStyle = STYLE_DASH;               // Right border line style
-      HgWidthPercent = 15;                    // Histogram width, % of chart
+      TimeFromColor = clrDarkGreen;      // Left border line color
+      TimeFromStyle = STYLE_DASH;      // Left border line style
+      TimeToColor = clrDarkGreen;          // Right border line color
+      TimeToStyle = STYLE_DASH;          // Right border line style
+      HgWidthPercent = 15;    // Histogram width, % of chart
 
       /* miscellaneous */
 
@@ -230,8 +234,8 @@ public:
 
       /* Boundaries and multipliers */
 
-      timeFromCandleId = 400;
-      timeToCandleId = 100;
+      timeFrom_date = D'2024.07.12 11:30:27';
+      timeTo_date = D'2024.07.12 19:30:27';
 
       how_many_regions = 3; //max is 5
       region_1_factor = 2;
@@ -245,8 +249,14 @@ public:
      {
 
       Task::run(block_id, block);
+      bool update = UpdateAutoColors() || checkVLineDragged();
+      if(!update)
+        {
+         drawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
+         update = UpdateAutoColors() || checkVLineDragged();
+        }
 
-      if(UpdateAutoColors() || checkVLineDragged())
+      if(update)
         {
          preRun();
          Update();
@@ -264,10 +274,11 @@ public:
 
      }
 
-   void preRun(){
-      if (how_many_regions>5)
+   void              preRun()
+     {
+      if(how_many_regions>5)
          how_many_regions = 5;
-   }
+     }
 
    void              calcValues()
      {
@@ -337,37 +348,37 @@ public:
 
          if(i==0)  //part 1
            {
-            my_var = prices[maxPart];
-            my_var = prices[minPart];
-            my_var = prices[xIndex];
+            double max_part_1_sudo = prices[maxPart];
+            double min_part_1_sudo = prices[minPart];
+            double mtp_part_1_sudo = prices[xIndex];
            }
          else
             if(i==1)  //part 2
               {
-               my_var = prices[maxPart];
-               my_var = prices[minPart];
-               my_var = prices[xIndex];
+               double max_part_2_sudo = prices[maxPart];
+               double min_part_2_sudo = prices[minPart];
+               double mtp_part_2_sudo = prices[xIndex];
               }
             else
                if(i==2)  //part 3
                  {
-                  my_var = prices[maxPart];
-                  my_var = prices[minPart];
-                  my_var = prices[xIndex];
+                  double max_part_3_sudo = prices[maxPart];
+                  double min_part_3_sudo = prices[minPart];
+                  double mtp_part_3_sudo = prices[xIndex];
                  }
                else
                   if(i==3)  //part 4
                     {
-                     my_var = prices[maxPart];
-                     my_var = prices[minPart];
-                     my_var = prices[xIndex];
+                     double max_part_4_sudo = prices[maxPart];
+                     double min_part_4_sudo = prices[minPart];
+                     double mtp_part_4_sudo = prices[xIndex];
                     }
                   else
                      if(i==4)  //part 5
                        {
-                        my_var = prices[maxPart];
-                        my_var = prices[minPart];
-                        my_var = prices[xIndex];
+                        double max_part_5_sudo = prices[maxPart];
+                        double min_part_5_sudo = prices[minPart];
+                        double mtp_part_5_sudo = prices[xIndex];
                        }
 
 
@@ -377,7 +388,24 @@ public:
 
    void              drawRegions()
      {
+      //delete objects first so we are able to redraw
+      for(int j=0; j<=how_many_regions; j++)
+        {
+         string name_to_delete = Id+"_region_dividers_"+(j+1);
+         ObjectDelete(0, name_to_delete);
+        }
+
       int timeframe = Period();
+      int timeFromCandleId = iBarShift(NULL, 0, timeFrom_date);
+      int timeToCandleId = iBarShift(NULL, 0, timeTo_date);
+
+      if(timeToCandleId > timeFromCandleId)
+        {
+         int temp = timeFromCandleId;
+         timeFromCandleId = timeToCandleId;
+         timeToCandleId = temp;
+        }
+
       int hi = iHighest(NULL, timeframe, MODE_HIGH, timeFromCandleId-timeToCandleId, timeToCandleId);
       int li = iLowest(NULL, timeframe, MODE_LOW, timeFromCandleId-timeToCandleId, timeToCandleId);
       double eachArea = (High[hi]-Low[li])/how_many_regions;
@@ -399,6 +427,7 @@ public:
      }
 
 
+
    //Check if lines dragged,
    bool              checkVLineDragged()
      {
@@ -411,9 +440,17 @@ public:
          timeTo = GetObjectTime1(_ttn);
 
          if(timeFrom==0 || timeFrom != timeFrom_last)
+           {
+            timeFrom_date = timeFrom;
+            timeTo_date = timeTo;
             return true;
+           }
          if(timeTo==0 || timeTo != timeTo_last)
+           {
+            timeFrom_date = timeFrom;
+            timeTo_date = timeTo;
             return true;
+           }
         }
       else
          if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
@@ -421,7 +458,11 @@ public:
 
             timeTo = GetObjectTime1(_ttn);
             if(timeTo==0 || timeTo != timeTo_last)
+              {
+               timeFrom_date = timeFrom;
+               timeTo_date = timeTo;
                return true;
+              }
            }
          else
             if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
@@ -430,9 +471,17 @@ public:
                timeTo = GetBarTime(-1, PERIOD_M1);
 
                if(timeFrom==0 || timeFrom != timeFrom_last)
+                 {
+                  timeFrom_date = timeFrom;
+                  timeTo_date = timeTo;
                   return true;
+                 }
                if(timeTo==0 || timeTo != timeTo_last)
+                 {
+                  timeFrom_date = timeFrom;
+                  timeTo_date = timeTo;
                   return true;
+                 }
               }
             else
               {
@@ -440,6 +489,95 @@ public:
               }
      }
 
+
+
+   void              drawBoundaries()
+     {
+      ObjectDelete(0, _tfn);
+      ObjectDelete(0, _ttn);
+
+      datetime timeFrom, timeTo;
+
+      if(RangeMode == VP_RANGE_MODE_BETWEEN_LINES)
+        {
+         timeFrom = GetObjectTime1(_tfn);
+         timeTo = GetObjectTime1(_ttn);
+         Print(timeFrom, " ", timeTo);
+         if((timeFrom == 0) || (timeTo == 0))
+           {
+            ulong timeRange = timeTo_date - timeFrom_date;
+
+            timeFrom = timeFrom_date;
+            timeTo = timeTo_date;
+
+
+            DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
+            DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
+           }
+
+         ObjectEnable(0, _tfn);
+         ObjectEnable(0, _ttn);
+
+         if(timeFrom > timeTo)
+            Swap(timeFrom, timeTo);
+         timeFrom_last = timeFrom;
+         timeTo_last = timeTo;
+        }
+      else
+         if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
+           {
+
+            timeTo = GetObjectTime1(_ttn);
+            int bar;
+
+            if(timeTo == 0)
+              {
+
+               int leftBar = WindowFirstVisibleBar();
+               int rightBar = WindowFirstVisibleBar() - WindowBarsPerChart();
+               int barRange = leftBar - rightBar;
+
+               bar = MathMax(0, leftBar - barRange / 3);
+               timeTo = GetBarTime(bar);
+              }
+            else
+              {
+               bar = iBarShift(_Symbol, _Period, timeTo);
+              }
+
+            bar += RangeMinutes / (PeriodSeconds(_Period) / 60);
+            timeFrom = GetBarTime(bar);
+
+            DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
+
+            if(ObjectFind(0, _ttn) == -1)
+              {
+               DrawVLine(_ttn, timeTo, TimeToColor, 1, TimeToStyle, false);
+              }
+
+            ObjectDisable(0, _tfn);
+            ObjectEnable(0, _ttn);
+
+            timeFrom_last = timeFrom;
+            timeTo_last = timeTo;
+           }
+         else
+            if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
+              {
+               timeFrom = GetBarTime(RangeMinutes - 1, PERIOD_M1);
+               timeTo = GetBarTime(-1, PERIOD_M1);
+
+               ObjectDelete(0, _tfn);
+               ObjectDelete(0, _ttn);
+
+               timeFrom_last = timeFrom;
+               timeTo_last = timeTo;
+              }
+            else
+              {
+               return(true);
+              }
+     }
 
 
 
@@ -461,19 +599,13 @@ public:
             //            datetime timeRight = GetBarTime(WindowFirstVisibleBar() - WindowBarsPerChart());
             //
 
-            datetime timeLeft  = iTime(Symbol(), 0, timeFromCandleId);
-            datetime timeRight = iTime(Symbol(), 0, timeToCandleId);
-
-
-
-
-            ulong timeRange = timeRight - timeLeft;
+            ulong timeRange = timeTo_date - timeFrom_date;
             //
             //            timeFrom = (datetime)(timeLeft + timeRange / 3);
             //            timeTo = (datetime)(timeLeft + timeRange * 2 / 3);
 
-            timeFrom = (datetime)(timeLeft);
-            timeTo = (datetime)(timeRight);
+            timeFrom = timeFrom_date;
+            timeTo = timeTo_date;
 
 
             DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
@@ -930,8 +1062,10 @@ public:
 
 
       double ratio = hgSize/(double)numberOfBars;
-      if(ratio!=1)
+      static int numberOfBars_temp = 0;
+      if(ratio!=1 && numberOfBars!=numberOfBars_temp)
         {
+         numberOfBars_temp = numberOfBars;
          HgPointScale = HgPointScale*ratio;
          _hgPoint = _Point * HgPointScale;
          _modeStep = ModeStep / HgPointScale;
@@ -939,6 +1073,7 @@ public:
          Update();
          return;
         }
+      numberOfBars_temp = numberOfBars;
 
 
 
@@ -1396,4 +1531,4 @@ public:
       return(true);
      }
 
-  };
+};

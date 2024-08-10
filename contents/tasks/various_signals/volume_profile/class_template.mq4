@@ -105,8 +105,8 @@ class Task_id : public Task
    bool              _updateOnTick;
    ENUM_TIMEFRAMES   _dataPeriod;
 
-   int               timeFromCandleId;
-   int               timeToCandleId;
+   datetime               timeFrom_date;
+   datetime               timeTo_date;
 
    int               how_many_regions;
    int               region_1_factor;
@@ -234,8 +234,8 @@ public:
 
       /* Boundaries and multipliers */
 
-      timeFromCandleId = timeFromCandleId_val;
-      timeToCandleId = timeToCandleId_val;
+      timeFrom_date = timeFrom_date_val;
+      timeTo_date = timeTo_date_val;
 
       how_many_regions = how_many_regions_val; //max is 5
       region_1_factor = region_1_factor_val;
@@ -249,8 +249,14 @@ public:
      {
 
       Task::run(block_id, block);
+      bool update = UpdateAutoColors() || checkVLineDragged();
+      if(!update)
+        {
+         drawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
+         update = UpdateAutoColors() || checkVLineDragged();
+        }
 
-      if(UpdateAutoColors() || checkVLineDragged())
+      if(update)
         {
          preRun();
          Update();
@@ -379,9 +385,26 @@ public:
         }
      }
 
-   void              drawRegions()
+  void              drawRegions()
      {
+      //delete objects first so we are able to redraw
+      for(int j=0; j<=how_many_regions; j++)
+        {
+         string name_to_delete = Id+"_region_dividers_"+(j+1);
+         ObjectDelete(0, name_to_delete);
+        }
+
       int timeframe = Period();
+      int timeFromCandleId = iBarShift(NULL, 0, timeFrom_date);
+      int timeToCandleId = iBarShift(NULL, 0, timeTo_date);
+
+      if(timeToCandleId > timeFromCandleId)
+        {
+         int temp = timeFromCandleId;
+         timeFromCandleId = timeToCandleId;
+         timeToCandleId = temp;
+        }
+
       int hi = iHighest(NULL, timeframe, MODE_HIGH, timeFromCandleId-timeToCandleId, timeToCandleId);
       int li = iLowest(NULL, timeframe, MODE_LOW, timeFromCandleId-timeToCandleId, timeToCandleId);
       double eachArea = (High[hi]-Low[li])/how_many_regions;
@@ -404,7 +427,7 @@ public:
 
 
 
-   //Check if lines dragged,
+  //Check if lines dragged,
    bool              checkVLineDragged()
      {
       double timeFrom;
@@ -416,9 +439,17 @@ public:
          timeTo = GetObjectTime1(_ttn);
 
          if(timeFrom==0 || timeFrom != timeFrom_last)
+           {
+            timeFrom_date = timeFrom;
+            timeTo_date = timeTo;
             return true;
+           }
          if(timeTo==0 || timeTo != timeTo_last)
+           {
+            timeFrom_date = timeFrom;
+            timeTo_date = timeTo;
             return true;
+           }
         }
       else
          if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
@@ -426,7 +457,11 @@ public:
 
             timeTo = GetObjectTime1(_ttn);
             if(timeTo==0 || timeTo != timeTo_last)
+              {
+               timeFrom_date = timeFrom;
+               timeTo_date = timeTo;
                return true;
+              }
            }
          else
             if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
@@ -435,9 +470,17 @@ public:
                timeTo = GetBarTime(-1, PERIOD_M1);
 
                if(timeFrom==0 || timeFrom != timeFrom_last)
+                 {
+                  timeFrom_date = timeFrom;
+                  timeTo_date = timeTo;
                   return true;
+                 }
                if(timeTo==0 || timeTo != timeTo_last)
+                 {
+                  timeFrom_date = timeFrom;
+                  timeTo_date = timeTo;
                   return true;
+                 }
               }
             else
               {
@@ -445,6 +488,95 @@ public:
               }
      }
 
+
+
+   void              drawBoundaries()
+     {
+      ObjectDelete(0, _tfn);
+      ObjectDelete(0, _ttn);
+
+      datetime timeFrom, timeTo;
+
+      if(RangeMode == VP_RANGE_MODE_BETWEEN_LINES)
+        {
+         timeFrom = GetObjectTime1(_tfn);
+         timeTo = GetObjectTime1(_ttn);
+         Print(timeFrom, " ", timeTo);
+         if((timeFrom == 0) || (timeTo == 0))
+           {
+            ulong timeRange = timeTo_date - timeFrom_date;
+
+            timeFrom = timeFrom_date;
+            timeTo = timeTo_date;
+
+
+            DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
+            DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
+           }
+
+         ObjectEnable(0, _tfn);
+         ObjectEnable(0, _ttn);
+
+         if(timeFrom > timeTo)
+            Swap(timeFrom, timeTo);
+         timeFrom_last = timeFrom;
+         timeTo_last = timeTo;
+        }
+      else
+         if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
+           {
+
+            timeTo = GetObjectTime1(_ttn);
+            int bar;
+
+            if(timeTo == 0)
+              {
+
+               int leftBar = WindowFirstVisibleBar();
+               int rightBar = WindowFirstVisibleBar() - WindowBarsPerChart();
+               int barRange = leftBar - rightBar;
+
+               bar = MathMax(0, leftBar - barRange / 3);
+               timeTo = GetBarTime(bar);
+              }
+            else
+              {
+               bar = iBarShift(_Symbol, _Period, timeTo);
+              }
+
+            bar += RangeMinutes / (PeriodSeconds(_Period) / 60);
+            timeFrom = GetBarTime(bar);
+
+            DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
+
+            if(ObjectFind(0, _ttn) == -1)
+              {
+               DrawVLine(_ttn, timeTo, TimeToColor, 1, TimeToStyle, false);
+              }
+
+            ObjectDisable(0, _tfn);
+            ObjectEnable(0, _ttn);
+
+            timeFrom_last = timeFrom;
+            timeTo_last = timeTo;
+           }
+         else
+            if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
+              {
+               timeFrom = GetBarTime(RangeMinutes - 1, PERIOD_M1);
+               timeTo = GetBarTime(-1, PERIOD_M1);
+
+               ObjectDelete(0, _tfn);
+               ObjectDelete(0, _ttn);
+
+               timeFrom_last = timeFrom;
+               timeTo_last = timeTo;
+              }
+            else
+              {
+               return(true);
+              }
+     }
 
 
 
@@ -466,19 +598,13 @@ public:
             //            datetime timeRight = GetBarTime(WindowFirstVisibleBar() - WindowBarsPerChart());
             //
 
-            datetime timeLeft  = iTime(Symbol(), 0, timeFromCandleId);
-            datetime timeRight = iTime(Symbol(), 0, timeToCandleId);
-
-
-
-
-            ulong timeRange = timeRight - timeLeft;
+            ulong timeRange = timeTo_date - timeFrom_date;
             //
             //            timeFrom = (datetime)(timeLeft + timeRange / 3);
             //            timeTo = (datetime)(timeLeft + timeRange * 2 / 3);
 
-            timeFrom = (datetime)(timeLeft);
-            timeTo = (datetime)(timeRight);
+            timeFrom = timeFrom_date;
+            timeTo = timeTo_date;
 
 
             DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
@@ -935,8 +1061,10 @@ public:
 
 
       double ratio = hgSize/(double)numberOfBars;
-      if(ratio!=1)
+      static int numberOfBars_temp = 0;
+      if(ratio!=1 && numberOfBars!=numberOfBars_temp)
         {
+         numberOfBars_temp = numberOfBars;
          HgPointScale = HgPointScale*ratio;
          _hgPoint = _Point * HgPointScale;
          _modeStep = ModeStep / HgPointScale;
@@ -944,6 +1072,7 @@ public:
          Update();
          return;
         }
+      numberOfBars_temp = numberOfBars;
 
 
 
@@ -1400,8 +1529,6 @@ public:
       _prevBackgroundColor = newBgColor;
       return(true);
      }
-
-
 
 
   };

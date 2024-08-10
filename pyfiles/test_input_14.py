@@ -858,3 +858,431 @@ input_data_7 = {
     "name_by_user": "",
     "highestIndex": "5"
 }
+
+# test volume profile stackoverflow fix
+input_data_8 = {
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "8967b46f-4afb-4d16-8b1d-c577d70f87da",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "ModeLevelWidth": "1",
+                            "ModeLineWidth": "2",
+                            "VwapColor": "clrNONE",
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelStyle": "STYLE_SOLID",
+                            "MedianColor": "clrNONE",
+                            "ModeColor": "clrMediumBlue",
+                            "MaxColor": "clrRed",
+                            "StatLineStyle": "STYLE_SOLID",
+                            "RegionDividerColor": "clrDarkBlue",
+                            "RangeMinutes": "2440",
+                            "ModeStep": "3",
+                            "numberOfBars": "30",
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "VolumeType": "VOLUME_TICK",
+                            "DataSource": "VP_SOURCE_M1",
+                            "HgLineWidth": "2",
+                            "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+                            "HgBarStyle": "VP_BAR_STYLE_BAR",
+                            "HgColor": "clrNavy",
+                            "HgColor2": "clrSteelBlue",
+                            "Id": "+vpr",
+                            "HgWidthPercent": "15",
+                            "ShowHorizon": "true",
+                            "TimeFromStyle": "STYLE_DASH",
+                            "TimeToStyle": "STYLE_DASH",
+                            "TimeToColor": "clrDarkGreen",
+                            "TimeFromColor": "clrDarkGreen",
+                            "how_many_regions": "3",
+                            "region_1_factor": "2",
+                            "region_2_factor": "3",
+                            "region_3_factor": "1",
+                            "region_4_factor": "1",
+                            "region_5_factor": "1",
+                            "timeFrom_date": "D'2024.07.12 11:30:27'",
+                            "timeTo_date": "D'2024.07.12 19:30:27'",
+                            "max_part_1": "",
+                            "min_part_1": "",
+                            "mtp_part_1": "",
+                            "max_part_5": "",
+                            "min_part_5": "",
+                            "mtp_part_5": "",
+                            "max_part_4": "",
+                            "min_part_4": "",
+                            "mtp_part_4": "",
+                            "max_part_3": "",
+                            "min_part_3": "",
+                            "mtp_part_3": "",
+                            "max_part_2": "",
+                            "min_part_2": "",
+                            "mtp_part_2": ""
+                        },
+                        "id": "5d0c183b-57b4-4aab-b425-69ed31f40c31",
+                        "id_by_user": 2,
+                        "category": "various_signals",
+                        "block_name_mql": "volume_profile",
+                        "blockName": "Volume Profile"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "8967b46f-4afb-4d16-8b1d-c577d70f87da",
+                        "sourceHandle": "blue",
+                        "target": "5d0c183b-57b4-4aab-b425-69ed31f40c31",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "21b9d52d-6d4a-4c39-9971-1d18a9c3653f"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
+    },
+    "selected_name": "be1765c3-6cf7-4e2f-b254-ceae698bf72d",
+    "name_by_user": "fwsafcds",
+    "highestIndex": "3"
+}
+
+# test volume profile
+input_data_9 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "cf2acff2-a2bb-40fb-a637-c459885d611b",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_date": "D'2024.07.12 11:30:27'",
+              "timeTo_date": "D'2024.07.12 19:30:27'",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "c6d503d6-e7e2-45c6-9f31-bbc2afcbb187",
+            "id_by_user": 2,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          }
+        ],
+        "edges": [
+          {
+            "source": "cf2acff2-a2bb-40fb-a637-c459885d611b",
+            "sourceHandle": "blue",
+            "target": "c6d503d6-e7e2-45c6-9f31-bbc2afcbb187",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "19e51291-8d7b-4b1d-8327-88db0d5280dc"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "d25b5f01-06db-4746-ac28-f4d29e64912a",
+  "name_by_user": "testsdfd",
+  "highestIndex": "3"
+}
+
+# test volume profile multiple instances
+input_data_10 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "cf2acff2-a2bb-40fb-a637-c459885d611b",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_date": "11:00",
+              "timeTo_date": "19:00",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "c6d503d6-e7e2-45c6-9f31-bbc2afcbb187",
+            "id_by_user": 2,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          },
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_date": "01:00",
+              "timeTo_date": "10:00",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "43d2d415-a825-4571-8128-966502767568",
+            "id_by_user": 3,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          }
+        ],
+        "edges": [
+          {
+            "source": "cf2acff2-a2bb-40fb-a637-c459885d611b",
+            "sourceHandle": "blue",
+            "target": "c6d503d6-e7e2-45c6-9f31-bbc2afcbb187",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "19e51291-8d7b-4b1d-8327-88db0d5280dc"
+          },
+          {
+            "source": "cf2acff2-a2bb-40fb-a637-c459885d611b",
+            "sourceHandle": "blue",
+            "target": "43d2d415-a825-4571-8128-966502767568",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "c2153b76-11e4-47ab-8e91-63d22367380d"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "d25b5f01-06db-4746-ac28-f4d29e64912a",
+  "name_by_user": "testsdfd",
+  "highestIndex": "4"
+}
