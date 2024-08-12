@@ -1,4 +1,4 @@
-
+//Volume Profile
 class Task_id : public Task
   {
    /* Calculation */
@@ -98,13 +98,14 @@ class Task_id : public Task
    int               _firstVisibleBar;
    int               _lastVisibleBar;
 
-   MillisecondTimer  *_updateTimer;
-
    bool              _isTimeframeEnabled;
 
    bool              _updateOnTick;
    ENUM_TIMEFRAMES   _dataPeriod;
 
+
+   string               timeFrom_str;
+   string               timeTo_str;
    datetime               timeFrom_date;
    datetime               timeTo_date;
 
@@ -228,14 +229,12 @@ public:
 
       _zoom = MathAbs(Zoom);
 
-      _updateTimer = new MillisecondTimer(WaitMilliseconds, false);
-
       _dataPeriod = GetDataPeriod(DataSource);
 
       /* Boundaries and multipliers */
 
-      timeFrom_date = timeFrom_date_val;
-      timeTo_date = timeTo_date_val;
+      timeFrom_str = timeFrom_str_val;
+      timeTo_str = timeTo_str_val;
 
       how_many_regions = how_many_regions_val; //max is 5
       region_1_factor = region_1_factor_val;
@@ -244,15 +243,28 @@ public:
       region_4_factor = region_4_factor_val;
       region_5_factor = region_5_factor_val;
 
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
 
       Task::run(block_id, block);
+
+
+      static string timeFrom_str_holder = "";
+      static string timeTo_str_holder = "";
+      if(timeFrom_str != timeFrom_str_holder || timeTo_str != timeTo_str_holder)
+        {
+         timeFrom_date = StrToTime(timeFrom_str);
+         timeTo_date = StrToTime(timeTo_str);
+         timeFrom_str_holder = timeFrom_str;
+         timeTo_str_holder = timeTo_str;
+        }
+
       bool update = UpdateAutoColors() || checkVLineDragged();
       if(!update)
         {
-         drawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
+         redrawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
          update = UpdateAutoColors() || checkVLineDragged();
         }
 
@@ -266,18 +278,17 @@ public:
 
       //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
-
-
      }
    virtual void      reset(int level)
      {
 
      }
 
-   void preRun(){
-      if (how_many_regions>5)
+   void              preRun()
+     {
+      if(how_many_regions>5)
          how_many_regions = 5;
-   }
+     }
 
    void              calcValues()
      {
@@ -347,37 +358,37 @@ public:
 
          if(i==0)  //part 1
            {
-            max_part_1_val = prices[maxPart];
-            min_part_1_val = prices[minPart];
-            mtp_part_1_val = prices[xIndex];
+            double max_part_1_sudo = prices[maxPart];
+            double min_part_1_sudo = prices[minPart];
+            double mtp_part_1_sudo = prices[xIndex];
            }
          else
             if(i==1)  //part 2
               {
-               max_part_2_val = prices[maxPart];
-               min_part_2_val = prices[minPart];
-               mtp_part_2_val = prices[xIndex];
+               double max_part_2_sudo = prices[maxPart];
+               double min_part_2_sudo = prices[minPart];
+               double mtp_part_2_sudo = prices[xIndex];
               }
             else
                if(i==2)  //part 3
                  {
-                  max_part_3_val = prices[maxPart];
-                  min_part_3_val = prices[minPart];
-                  mtp_part_3_val = prices[xIndex];
+                  double max_part_3_sudo = prices[maxPart];
+                  double min_part_3_sudo = prices[minPart];
+                  double mtp_part_3_sudo = prices[xIndex];
                  }
                else
                   if(i==3)  //part 4
                     {
-                     max_part_4_val = prices[maxPart];
-                     min_part_4_val = prices[minPart];
-                     mtp_part_4_val = prices[xIndex];
+                     double max_part_4_sudo = prices[maxPart];
+                     double min_part_4_sudo = prices[minPart];
+                     double mtp_part_4_sudo = prices[xIndex];
                     }
                   else
                      if(i==4)  //part 5
                        {
-                        max_part_5_val = prices[maxPart];
-                        min_part_5_val = prices[minPart];
-                        mtp_part_5_val = prices[xIndex];
+                        double max_part_5_sudo = prices[maxPart];
+                        double min_part_5_sudo = prices[minPart];
+                        double mtp_part_5_sudo = prices[xIndex];
                        }
 
 
@@ -385,7 +396,7 @@ public:
         }
      }
 
-  void              drawRegions()
+   void              drawRegions()
      {
       //delete objects first so we are able to redraw
       for(int j=0; j<=how_many_regions; j++)
@@ -427,7 +438,7 @@ public:
 
 
 
-  //Check if lines dragged,
+   //Check if lines dragged,
    bool              checkVLineDragged()
      {
       double timeFrom;
@@ -490,8 +501,14 @@ public:
 
 
 
-   void              drawBoundaries()
+   void              redrawBoundaries()
      {
+      datetime d1 = GetObjectTime1(_tfn);
+      datetime d2 = GetObjectTime1(_ttn);
+      bool already_update = (d1 == timeFrom_date || d1 == timeTo_date) && (d2 == timeFrom_date || d2 == timeTo_date);
+      if(already_update)
+         return;
+
       ObjectDelete(0, _tfn);
       ObjectDelete(0, _ttn);
 
@@ -499,16 +516,15 @@ public:
 
       if(RangeMode == VP_RANGE_MODE_BETWEEN_LINES)
         {
-         timeFrom = GetObjectTime1(_tfn);
-         timeTo = GetObjectTime1(_ttn);
-         Print(timeFrom, " ", timeTo);
+         //timeFrom = GetObjectTime1(_tfn);
+         //timeTo = GetObjectTime1(_ttn);
+
          if((timeFrom == 0) || (timeTo == 0))
            {
             ulong timeRange = timeTo_date - timeFrom_date;
 
             timeFrom = timeFrom_date;
             timeTo = timeTo_date;
-
 
             DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
             DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
@@ -519,14 +535,14 @@ public:
 
          if(timeFrom > timeTo)
             Swap(timeFrom, timeTo);
-         timeFrom_last = timeFrom;
-         timeTo_last = timeTo;
+         //timeFrom_last = timeFrom;
+         //timeTo_last = timeTo;
         }
       else
          if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
            {
 
-            timeTo = GetObjectTime1(_ttn);
+            //timeTo = GetObjectTime1(_ttn);
             int bar;
 
             if(timeTo == 0)
@@ -557,8 +573,8 @@ public:
             ObjectDisable(0, _tfn);
             ObjectEnable(0, _ttn);
 
-            timeFrom_last = timeFrom;
-            timeTo_last = timeTo;
+            //timeFrom_last = timeFrom;
+            //timeTo_last = timeTo;
            }
          else
             if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
@@ -569,8 +585,8 @@ public:
                ObjectDelete(0, _tfn);
                ObjectDelete(0, _ttn);
 
-               timeFrom_last = timeFrom;
-               timeTo_last = timeTo;
+               //timeFrom_last = timeFrom;
+               //timeTo_last = timeTo;
               }
             else
               {
@@ -1061,10 +1077,10 @@ public:
 
 
       double ratio = hgSize/(double)numberOfBars;
-      static int numberOfBars_temp = 0;
-      if(ratio!=1 && numberOfBars!=numberOfBars_temp)
+      static int hgSize_temp = 0;
+      if(ratio!=1 && hgSize!=hgSize_temp)
         {
-         numberOfBars_temp = numberOfBars;
+         hgSize_temp = hgSize;
          HgPointScale = HgPointScale*ratio;
          _hgPoint = _Point * HgPointScale;
          _modeStep = ModeStep / HgPointScale;
@@ -1072,7 +1088,7 @@ public:
          Update();
          return;
         }
-      numberOfBars_temp = numberOfBars;
+      hgSize_temp = hgSize;
 
 
 
@@ -1277,7 +1293,6 @@ public:
      {
       if(ObjectFind(0, name) >= 0)
          ObjectDelete(0, name);
-
       ObjectCreate(0, name, OBJ_VLINE, 0, time1, 0);
       ObjectSetInteger(0, name, OBJPROP_COLOR, lineColor);
       ObjectSetInteger(0, name, OBJPROP_BACK, back);

@@ -98,13 +98,14 @@ class Task2 : public Task
    int               _firstVisibleBar;
    int               _lastVisibleBar;
 
-   MillisecondTimer  *_updateTimer;
-
    bool              _isTimeframeEnabled;
 
    bool              _updateOnTick;
    ENUM_TIMEFRAMES   _dataPeriod;
 
+
+   string               timeFrom_str;
+   string               timeTo_str;
    datetime               timeFrom_date;
    datetime               timeTo_date;
 
@@ -132,7 +133,7 @@ public:
       RangeMinutes = 2440;        // Range minutes
       ModeStep =    3;             // Mode step (points)
       HgPointScale = POINT_SCALE_100;        // Point scale
-      numberOfBars = 30;
+      numberOfBars = 50;
       VolumeType = VOLUME_TICK;            // Volume type
       DataSource = VP_SOURCE_M1;            // Data source
 
@@ -228,14 +229,13 @@ public:
 
       _zoom = MathAbs(Zoom);
 
-      _updateTimer = new MillisecondTimer(WaitMilliseconds, false);
 
       _dataPeriod = GetDataPeriod(DataSource);
 
       /* Boundaries and multipliers */
 
-      timeFrom_date = D'2024.07.12 11:30:27';
-      timeTo_date = D'2024.07.12 19:30:27';
+      timeFrom_str = "1:30";
+      timeTo_str = "9:30";
 
       how_many_regions = 3; //max is 5
       region_1_factor = 2;
@@ -249,10 +249,28 @@ public:
      {
 
       Task::run(block_id, block);
+      printf(count);
+      if(count==100)
+        {
+         timeFrom_str = "2024.7.15 11:30";
+         timeTo_str   = "2024.7.15 22:00";
+        }
+
+      //Print(TimeToStr(timeFrom_date), " ", TimeToStr(timeTo_date));
+      static string timeFrom_str_holder = "";
+      static string timeTo_str_holder = "";
+      if(timeFrom_str != timeFrom_str_holder || timeTo_str != timeTo_str_holder)
+        {
+         timeFrom_date = StrToTime(timeFrom_str);
+         timeTo_date = StrToTime(timeTo_str);
+         timeFrom_str_holder = timeFrom_str;
+         timeTo_str_holder = timeTo_str;
+        }
+
       bool update = UpdateAutoColors() || checkVLineDragged();
       if(!update)
         {
-         drawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
+         redrawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
          update = UpdateAutoColors() || checkVLineDragged();
         }
 
@@ -491,8 +509,14 @@ public:
 
 
 
-   void              drawBoundaries()
+   void              redrawBoundaries()
      {
+      datetime d1 = GetObjectTime1(_tfn);
+      datetime d2 = GetObjectTime1(_ttn);
+      bool already_update = (d1 == timeFrom_date || d1 == timeTo_date) && (d2 == timeFrom_date || d2 == timeTo_date);
+      if(already_update)
+         return;
+
       ObjectDelete(0, _tfn);
       ObjectDelete(0, _ttn);
 
@@ -500,16 +524,16 @@ public:
 
       if(RangeMode == VP_RANGE_MODE_BETWEEN_LINES)
         {
-         timeFrom = GetObjectTime1(_tfn);
-         timeTo = GetObjectTime1(_ttn);
-         Print(timeFrom, " ", timeTo);
+         //timeFrom = GetObjectTime1(_tfn);
+         //timeTo = GetObjectTime1(_ttn);
+         //Print(timeFrom, " ", timeTo);
          if((timeFrom == 0) || (timeTo == 0))
            {
             ulong timeRange = timeTo_date - timeFrom_date;
 
             timeFrom = timeFrom_date;
             timeTo = timeTo_date;
-
+            Print(TimeToStr(timeFrom), " ", TimeToStr(timeTo));
 
             DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
             DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
@@ -520,14 +544,14 @@ public:
 
          if(timeFrom > timeTo)
             Swap(timeFrom, timeTo);
-         timeFrom_last = timeFrom;
-         timeTo_last = timeTo;
+         //timeFrom_last = timeFrom;
+         //timeTo_last = timeTo;
         }
       else
          if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
            {
 
-            timeTo = GetObjectTime1(_ttn);
+            //timeTo = GetObjectTime1(_ttn);
             int bar;
 
             if(timeTo == 0)
@@ -558,8 +582,8 @@ public:
             ObjectDisable(0, _tfn);
             ObjectEnable(0, _ttn);
 
-            timeFrom_last = timeFrom;
-            timeTo_last = timeTo;
+            //timeFrom_last = timeFrom;
+            //timeTo_last = timeTo;
            }
          else
             if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
@@ -570,8 +594,8 @@ public:
                ObjectDelete(0, _tfn);
                ObjectDelete(0, _ttn);
 
-               timeFrom_last = timeFrom;
-               timeTo_last = timeTo;
+               //timeFrom_last = timeFrom;
+               //timeTo_last = timeTo;
               }
             else
               {
@@ -1062,10 +1086,10 @@ public:
 
 
       double ratio = hgSize/(double)numberOfBars;
-      static int numberOfBars_temp = 0;
-      if(ratio!=1 && numberOfBars!=numberOfBars_temp)
+      static int hgSize_temp = 0;
+      if(ratio!=1 && hgSize!=hgSize_temp)
         {
-         numberOfBars_temp = numberOfBars;
+         hgSize_temp = hgSize;
          HgPointScale = HgPointScale*ratio;
          _hgPoint = _Point * HgPointScale;
          _modeStep = ModeStep / HgPointScale;
@@ -1073,7 +1097,7 @@ public:
          Update();
          return;
         }
-      numberOfBars_temp = numberOfBars;
+      hgSize_temp = hgSize;
 
 
 
@@ -1278,7 +1302,7 @@ public:
      {
       if(ObjectFind(0, name) >= 0)
          ObjectDelete(0, name);
-
+      Print(name, " ", time1);
       ObjectCreate(0, name, OBJ_VLINE, 0, time1, 0);
       ObjectSetInteger(0, name, OBJPROP_COLOR, lineColor);
       ObjectSetInteger(0, name, OBJPROP_BACK, back);
@@ -1531,4 +1555,5 @@ public:
       return(true);
      }
 
-};
+
+  };

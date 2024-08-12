@@ -792,12 +792,8 @@ class ExpertBuilder:
                 case "volume_profile":
                     if self.volume_profile_done:
                         continue
-                    classes_data = self.volume_profile_items.get_classes()
-                    self.classes_structs_enums.append(classes_data)
                     enums_data = self.volume_profile_items.get_enums()
                     self.classes_structs_enums.append(enums_data)
-                    vars_data = self.volume_profile_items.get_vars()
-                    self.vars_system.append(vars_data)
                     self.volume_profile_done = True
 
     # Elements that are assigned to a specific instance of a specific task type

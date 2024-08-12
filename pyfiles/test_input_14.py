@@ -1033,8 +1033,8 @@ input_data_9 = {
               "TimeToColor": "clrDarkGreen",
               "TimeToStyle": "STYLE_DASH",
               "HgWidthPercent": "15",
-              "timeFrom_date": "D'2024.07.12 11:30:27'",
-              "timeTo_date": "D'2024.07.12 19:30:27'",
+              "timeFrom_str": "11:30:27",
+              "timeTo_str": "19:30:27",
               "how_many_regions": "3",
               "region_1_factor": "2",
               "region_2_factor": "3",
@@ -1285,4 +1285,549 @@ input_data_10 = {
   "selected_name": "d25b5f01-06db-4746-ac28-f4d29e64912a",
   "name_by_user": "testsdfd",
   "highestIndex": "4"
+}
+
+# test volume profile, some fields changed
+input_data_11 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "70",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_str": "01:00",
+              "timeTo_str": "10:00",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "id_by_user": 1,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          },
+          {
+            "params": {},
+            "id": "160ccd38-caa1-4743-84bc-28e2441aa7d5",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          }
+        ],
+        "edges": [
+          {
+            "source": "160ccd38-caa1-4743-84bc-28e2441aa7d5",
+            "sourceHandle": "blue",
+            "target": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "4d559fe3-f380-414f-891e-2061661c912b"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "f7af62dd-8976-43a5-a6f8-ffd8c6d79615",
+  "name_by_user": "test",
+  "highestIndex": "3"
+}
+
+# test volume profile real scenario: update every day on 11 to 15
+input_data_12 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_str": "15:00",
+              "timeTo_str": "11:00",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "id_by_user": 1,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": "==",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_CANDLE_TIME",
+                  "mode_time_shift": "0",
+                  "time_candle_id": "1",
+                  "time_market": "",
+                  "time_candle_timeframe": "PERIOD_CURRENT"
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_TIMESTAMP",
+                  "mode_time_shift": "0",
+                  "time_stamp": "15:00"
+                }
+              }
+            },
+            "id": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "e62ad514-4274-442e-9166-fd985b4982bc",
+            "id_by_user": 4,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          }
+        ],
+        "edges": [
+          {
+            "source": "e62ad514-4274-442e-9166-fd985b4982bc",
+            "sourceHandle": "blue",
+            "target": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "25672cdf-8ceb-413e-b077-4ad3a2b7225b"
+          },
+          {
+            "source": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "sourceHandle": "blue",
+            "target": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "85feaab7-ff6f-4911-a3e2-76e781b08621"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "f7af62dd-8976-43a5-a6f8-ffd8c6d79615",
+  "name_by_user": "test",
+  "highestIndex": "5"
+}
+
+# test volume profile real scenario: update every day on 11 to 15 NO 2
+input_data_13 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_str": "time_from",
+              "timeTo_str": "time_to",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": ""
+            },
+            "id": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "id_by_user": 1,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": "==",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_CANDLE_TIME",
+                  "mode_time_shift": "0",
+                  "time_candle_id": "1",
+                  "time_market": "",
+                  "time_candle_timeframe": "PERIOD_CURRENT"
+                }
+              },
+              "right": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_TIMESTAMP",
+                  "mode_time_shift": "0",
+                  "time_stamp": "15:00"
+                }
+              }
+            },
+            "id": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          },
+          {
+            "params": {
+              "max_times_to_pass": "1",
+              "symbol": "",
+              "timeframe": "PERIOD_CURRENT"
+            },
+            "id": "e62ad514-4274-442e-9166-fd985b4982bc",
+            "id_by_user": 4,
+            "category": "time_filters",
+            "block_name_mql": "once_per_bar",
+            "blockName": "Once per bar"
+          },
+          {
+            "params": {
+              "variable1": {
+                "variable_name": "time_from",
+                "value_fetch": {
+                  "row1": "value",
+                  "row2": "Time",
+                  "params": {
+                    "mode_time": "MODE_TIME_CANDLE_TIME",
+                    "mode_time_shift": "0",
+                    "time_candle_id": "16",
+                    "time_market": "",
+                    "time_candle_timeframe": "PERIOD_CURRENT"
+                  }
+                }
+              },
+              "variable2": {
+                "variable_name": "time_to",
+                "value_fetch": {
+                  "row1": "value",
+                  "row2": "Time",
+                  "params": {
+                    "mode_time": "MODE_TIME_CANDLE_TIME",
+                    "mode_time_shift": "0",
+                    "time_candle_id": "1",
+                    "time_market": "",
+                    "time_candle_timeframe": "PERIOD_CURRENT"
+                  }
+                }
+              },
+              "variable3": {
+                "variable_name": "",
+                "value_fetch": {
+                  "row2": "Numeric",
+                  "params": {
+                    "value": "1",
+                    "adjust": ""
+                  }
+                }
+              },
+              "variable4": {
+                "variable_name": "",
+                "value_fetch": {
+                  "row2": "Numeric",
+                  "params": {
+                    "value": "1",
+                    "adjust": ""
+                  }
+                }
+              },
+              "variable5": {
+                "variable_name": "",
+                "value_fetch": {
+                  "row2": "Numeric",
+                  "params": {
+                    "value": "1",
+                    "adjust": ""
+                  }
+                }
+              }
+            },
+            "variable1": {},
+            "variable2": {},
+            "variable3": {},
+            "variable4": {},
+            "variable5": {},
+            "id": "20acfc25-ac54-4242-b087-d9c6cb51aa86",
+            "id_by_user": 5,
+            "blockName": "Modify Variables",
+            "category": "variables",
+            "block_name_mql": "modify_variables"
+          }
+        ],
+        "edges": [
+          {
+            "source": "e62ad514-4274-442e-9166-fd985b4982bc",
+            "sourceHandle": "blue",
+            "target": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "25672cdf-8ceb-413e-b077-4ad3a2b7225b"
+          },
+          {
+            "source": "43e7d535-8c26-4c55-9a41-c4b8669b1f48",
+            "sourceHandle": "blue",
+            "target": "20acfc25-ac54-4242-b087-d9c6cb51aa86",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "ef7e62b7-26ed-46d3-ab95-47ce7d82b923"
+          },
+          {
+            "source": "20acfc25-ac54-4242-b087-d9c6cb51aa86",
+            "sourceHandle": "blue",
+            "target": "f86fff9a-494e-430a-8977-c12ddd184a6b",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "d5bb673d-76c6-4cd0-b9e4-d6b4d17e4199"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "699f2042-9372-478f-ad03-26d904ac989d",
+        "type": "string",
+        "name": "time_from",
+        "value": "2024.8.6 11:00",
+        "description": ""
+      },
+      {
+        "id": "369ad19f-7e07-4f58-97af-32280b443dde",
+        "type": "string",
+        "name": "time_to",
+        "value": "2024.8.6 15:00",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "f7af62dd-8976-43a5-a6f8-ffd8c6d79615",
+  "name_by_user": "test",
+  "highestIndex": "6"
 }
