@@ -1,5 +1,6 @@
 {
-  "Id": "+vpr",
+  "Id_user": "+vpr",
+  "draw_each_time": true,
   "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
   "RangeMinutes": 2440,
   "ModeStep": 300,

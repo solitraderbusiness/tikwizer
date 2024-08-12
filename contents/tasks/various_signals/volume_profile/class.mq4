@@ -1,6 +1,7 @@
 //Volume Profile
-class Task2 : public Task
+class Task5 : public Task
   {
+   bool             draw_each_time;
    /* Calculation */
    ENUM_VP_RANGE_MODE RangeMode;    // Range mode
    int               RangeMinutes;  // Range minutes
@@ -34,6 +35,7 @@ class Task2 : public Task
    color             RegionDividerColor; //Region divider lines color
 
    /* Service */
+   string            Id_user;
    string            Id;             // Identifier
    bool              ShowHorizon;    // Show data horizon
    double            Zoom;           // Zoom (0=auto)
@@ -124,16 +126,16 @@ class Task2 : public Task
    datetime          timeTo_last;
 
 
-
 public:
-                     Task2(string name):Task(name)
+                     Task5(string name):Task(name)
      {
+      draw_each_time = true;
       /* Calculations */
       RangeMode = VP_RANGE_MODE_BETWEEN_LINES;              // Range mode
       RangeMinutes = 2440;        // Range minutes
       ModeStep =    3;             // Mode step (points)
       HgPointScale = POINT_SCALE_100;        // Point scale
-      numberOfBars = 50;
+      numberOfBars = 80;
       VolumeType = VOLUME_TICK;            // Volume type
       DataSource = VP_SOURCE_M1;            // Data source
 
@@ -158,7 +160,7 @@ public:
       RegionDividerColor = clrDarkBlue;   // Region divider lines color
 
       /* Service */
-      Id =       "+vpr_2";                      // Identifier
+      Id_user =       "+vpr_5";                      // Identifier
       ShowHorizon = true;          // Show data horizon
       Zoom =     0;                           // Zoom (0=auto)
       WaitMilliseconds = 500;                 // Wait milliseconds
@@ -229,13 +231,12 @@ public:
 
       _zoom = MathAbs(Zoom);
 
-
       _dataPeriod = GetDataPeriod(DataSource);
 
       /* Boundaries and multipliers */
 
-      timeFrom_str = "1:30";
-      timeTo_str = "9:30";
+      timeFrom_str = "01:00";
+      timeTo_str = "10:00";
 
       how_many_regions = 3; //max is 5
       region_1_factor = 2;
@@ -244,39 +245,89 @@ public:
       region_4_factor = 1;
       region_5_factor = 1;
 
+
      }
    virtual void               run(int block_id, BlockParent &block)
      {
-
       Task::run(block_id, block);
-      printf(count);
-      if(count==100)
+
+      static int counter = 1;
+      if(draw_each_time)
         {
-         timeFrom_str = "2024.7.15 11:30";
-         timeTo_str   = "2024.7.15 22:00";
+         Id = Id_user + counter;
+         counter++;
+        }
+      else
+        {
+         Id = Id_user;
         }
 
-      //Print(TimeToStr(timeFrom_date), " ", TimeToStr(timeTo_date));
+      checkNoOfRegions();
+
+      //check if update needed
+      bool time_str_changed = false;
+      bool time_date_changed = false;//time date changes while time str is fixed (at day change when time str specifies only hours like "10:00")
+      bool vlines_dragged = false;
+
+
+      //1_ check if time str changed (by referencing to global vars
       static string timeFrom_str_holder = "";
       static string timeTo_str_holder = "";
+
       if(timeFrom_str != timeFrom_str_holder || timeTo_str != timeTo_str_holder)
         {
-         timeFrom_date = StrToTime(timeFrom_str);
-         timeTo_date = StrToTime(timeTo_str);
          timeFrom_str_holder = timeFrom_str;
          timeTo_str_holder = timeTo_str;
+
+         timeFrom_date = StrToTime(timeFrom_str);
+         timeTo_date = StrToTime(timeTo_str);
+         time_str_changed = true;
         }
 
-      bool update = UpdateAutoColors() || checkVLineDragged();
-      if(!update)
+      //2_ check if with same time str, time date changed (day change when time str is like "10:00")
+      if(!time_str_changed)
         {
-         redrawBoundaries();//This redraw each time helps checkVLineDragged() detect boundaries change.
-         update = UpdateAutoColors() || checkVLineDragged();
+         datetime timeFrom_date_temp = StrToTime(timeFrom_str);
+         datetime timeTo_date_temp = StrToTime(timeTo_str);
+
+         if(timeFrom_date != timeFrom_date_temp || timeTo_date != timeTo_date_temp)
+           {
+            //only dates get updated, time str not changed. just day changed.
+            timeFrom_date = timeFrom_date_temp;
+            timeTo_date = timeTo_date_temp;
+
+            time_date_changed = true;
+           }
         }
 
-      if(update)
+      //3_ check if any drag happened
+      if(!time_str_changed && !time_date_changed)
         {
-         preRun();
+         vlines_dragged = checkVLineDragged();
+         if(vlines_dragged)
+           {
+            datetime d1 = GetObjectTime1(_tfn);
+            datetime d2 = GetObjectTime1(_ttn);
+
+            timeFrom_date = d1;
+            timeTo_date = d2;
+            timeFrom_str = TimeToStr(d1);
+            timeTo_str = TimeToStr(d2);
+            timeFrom_str_holder = timeFrom_str;
+            timeTo_str_holder = timeTo_str;
+           }
+        }
+
+
+      //Checks done, update objects
+
+      //first redraw boundaries if needed
+      if(time_str_changed || time_date_changed)
+         redrawBoundaries();
+
+      //finally update all other parts
+      if(time_str_changed || time_date_changed || vlines_dragged)
+        {
          Update();
          calcValues();
          drawRegions();
@@ -284,15 +335,13 @@ public:
 
       //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);
-
-
      }
    virtual void      reset(int level)
      {
 
      }
 
-   void              preRun()
+   void              checkNoOfRegions()
      {
       if(how_many_regions>5)
          how_many_regions = 5;
@@ -456,7 +505,7 @@ public:
         {
          timeFrom = GetObjectTime1(_tfn);
          timeTo = GetObjectTime1(_ttn);
-
+         Print(timeTo, " ", timeTo_last);
          if(timeFrom==0 || timeFrom != timeFrom_last)
            {
             timeFrom_date = timeFrom;
@@ -511,41 +560,31 @@ public:
 
    void              redrawBoundaries()
      {
-      datetime d1 = GetObjectTime1(_tfn);
-      datetime d2 = GetObjectTime1(_ttn);
-      bool already_update = (d1 == timeFrom_date || d1 == timeTo_date) && (d2 == timeFrom_date || d2 == timeTo_date);
-      if(already_update)
-         return;
 
       ObjectDelete(0, _tfn);
       ObjectDelete(0, _ttn);
 
-      datetime timeFrom, timeTo;
+
+      datetime timeFrom;
+      datetime timeTo;
 
       if(RangeMode == VP_RANGE_MODE_BETWEEN_LINES)
         {
-         //timeFrom = GetObjectTime1(_tfn);
-         //timeTo = GetObjectTime1(_ttn);
-         //Print(timeFrom, " ", timeTo);
-         if((timeFrom == 0) || (timeTo == 0))
-           {
-            ulong timeRange = timeTo_date - timeFrom_date;
 
-            timeFrom = timeFrom_date;
-            timeTo = timeTo_date;
-            Print(TimeToStr(timeFrom), " ", TimeToStr(timeTo));
 
-            DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
-            DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
-           }
+         ulong timeRange = timeTo_date - timeFrom_date;
+
+         timeFrom = timeFrom_date;
+         timeTo = timeTo_date;
+
+         DrawVLine(_tfn, timeFrom, TimeFromColor, 1, TimeFromStyle, false);
+         DrawVLine(_ttn, timeTo, Crimson, 1, TimeToStyle, false);
 
          ObjectEnable(0, _tfn);
          ObjectEnable(0, _ttn);
 
          if(timeFrom > timeTo)
             Swap(timeFrom, timeTo);
-         //timeFrom_last = timeFrom;
-         //timeTo_last = timeTo;
         }
       else
          if(RangeMode == VP_RANGE_MODE_MINUTES_TO_LINE)
@@ -554,20 +593,12 @@ public:
             //timeTo = GetObjectTime1(_ttn);
             int bar;
 
-            if(timeTo == 0)
-              {
+            int leftBar = WindowFirstVisibleBar();
+            int rightBar = WindowFirstVisibleBar() - WindowBarsPerChart();
+            int barRange = leftBar - rightBar;
 
-               int leftBar = WindowFirstVisibleBar();
-               int rightBar = WindowFirstVisibleBar() - WindowBarsPerChart();
-               int barRange = leftBar - rightBar;
-
-               bar = MathMax(0, leftBar - barRange / 3);
-               timeTo = GetBarTime(bar);
-              }
-            else
-              {
-               bar = iBarShift(_Symbol, _Period, timeTo);
-              }
+            bar = MathMax(0, leftBar - barRange / 3);
+            timeTo = GetBarTime(bar);
 
             bar += RangeMinutes / (PeriodSeconds(_Period) / 60);
             timeFrom = GetBarTime(bar);
@@ -581,9 +612,6 @@ public:
 
             ObjectDisable(0, _tfn);
             ObjectEnable(0, _ttn);
-
-            //timeFrom_last = timeFrom;
-            //timeTo_last = timeTo;
            }
          else
             if(RangeMode == VP_RANGE_MODE_LAST_MINUTES)
@@ -593,13 +621,6 @@ public:
 
                ObjectDelete(0, _tfn);
                ObjectDelete(0, _ttn);
-
-               //timeFrom_last = timeFrom;
-               //timeTo_last = timeTo;
-              }
-            else
-              {
-               return(true);
               }
      }
 
@@ -608,7 +629,8 @@ public:
    bool              Update()
      {
 
-      ObjectsDeleteAll(0, _prefix);
+      if(!draw_each_time)
+         ObjectsDeleteAll(0, _prefix);
 
       datetime timeFrom, timeTo;
 
@@ -1302,7 +1324,6 @@ public:
      {
       if(ObjectFind(0, name) >= 0)
          ObjectDelete(0, name);
-      Print(name, " ", time1);
       ObjectCreate(0, name, OBJ_VLINE, 0, time1, 0);
       ObjectSetInteger(0, name, OBJPROP_COLOR, lineColor);
       ObjectSetInteger(0, name, OBJPROP_BACK, back);

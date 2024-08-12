@@ -64,7 +64,7 @@ def create_specific_input(nodes):
         elif block_name_mql == "sell_pending_order":
             params["order_type"] = "ORDER_SELL_PENDING"
         elif block_name_mql == "volume_profile":
-            params["Id"] = params.get("Id") + "_" + str(node.get("id_by_user"))
+            params["Id_user"] = params.get("Id_user") + "_" + str(node.get("id_by_user"))
             trick_volume_profile_data_flaw(params)
         elif block_name_mql in ["if_trade", "if_tradeorder", "if_pending_order"]:
             params["count_limit"] = 0
@@ -115,7 +115,7 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "AlertLabel2", "AlertLabel3", "AlertLabel4", "AlertLabel5", "AlertLabel6", "AlertLabel7", "AlertLabel8",
             "AlertLabel9", "AlertLabel10", "Title", "Label1", "Label2", "Label3", "Label4", "Label5", "Label6",
             "Label7", "Label8", "MYsound", "MTsound", "PromptCaption", "PromptText", "CheckBuyOrSell",
-            "CheckLimitOrStop", "timeFrom_str", "timeTo_str"]
+            "CheckLimitOrStop", "timeFrom_str", "timeTo_str", "Id_user"]
 
     for key, value in dic.items():
         if isinstance(value, dict):
