@@ -1,7 +1,7 @@
 //Volume Profile
 class Task5 : public Task
   {
-   bool             draw_each_time;
+   bool             redraw_each_time;
    /* Calculation */
    ENUM_VP_RANGE_MODE RangeMode;    // Range mode
    int               RangeMinutes;  // Range minutes
@@ -129,7 +129,7 @@ class Task5 : public Task
 public:
                      Task5(string name):Task(name)
      {
-      draw_each_time = true;
+      redraw_each_time = true;
       /* Calculations */
       RangeMode = VP_RANGE_MODE_BETWEEN_LINES;              // Range mode
       RangeMinutes = 2440;        // Range minutes
@@ -252,7 +252,7 @@ public:
       Task::run(block_id, block);
 
       static int counter = 1;
-      if(draw_each_time)
+      if(!redraw_each_time)
         {
          Id = Id_user + counter;
          counter++;
@@ -629,7 +629,7 @@ public:
    bool              Update()
      {
 
-      if(!draw_each_time)
+      if(redraw_each_time)
          ObjectsDeleteAll(0, _prefix);
 
       datetime timeFrom, timeTo;
