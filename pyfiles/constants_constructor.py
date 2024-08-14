@@ -70,6 +70,9 @@ constants = [
     "#define  BEAR_CANDLE_TOP_WICK  19",
     "#define  BEAR_CANDLE_BOTTOM_WICK  20",
 
+    "#define CANDLE_TICK_VOLUME 21",
+    "#define CANDLE_TIME 22",
+
     # find methods
     "#define  FIND_BY_ID  1",
     "#define  FIND_BY_DATE  2",

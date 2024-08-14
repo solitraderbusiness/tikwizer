@@ -3623,3 +3623,100 @@ input_data_25 = {
   "name_by_user": "test vp",
   "highestIndex": "3"
 }
+
+# test candle new items: time and tick volume
+input_data_26 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "25ceb8ad-a3fd-459e-b2b0-95256fc20484",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                },
+                "row1": "candle"
+              },
+              "right": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "97e2fb73-a0df-4981-be12-47c7a3a958c0",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ],
+        "edges": [
+          {
+            "source": "25ceb8ad-a3fd-459e-b2b0-95256fc20484",
+            "sourceHandle": "blue",
+            "target": "97e2fb73-a0df-4981-be12-47c7a3a958c0",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "dc2e9b64-98ba-4416-a4ee-1c6f49fa09a2"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "dc467dcf-acce-46bc-bcf8-afc370150ff0",
+  "name_by_user": "test vp",
+  "highestIndex": "4"
+}

@@ -166,6 +166,12 @@ private:
             val = isRed(index) ? wickdn(index) : 0;
             valPips = val/point/10;
             return valPips;
+         case CANDLE_TICK_VOLUME:
+            val = iVolume(msymbol, mtimeframe, index);
+            return val;
+         case CANDLE_TIME:
+            val = iTime(msymbol, mtimeframe, index);
+            return val;
         }
       return -1;
      }
