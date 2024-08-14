@@ -347,7 +347,7 @@ public:
          how_many_regions = 5;
      }
 
-   void              calcValues()
+  void              calcValues()
      {
 
       how_many_regions = 3;
@@ -413,35 +413,43 @@ public:
          //Print(" Part ", i + 1, ": Max =", maxPart, ", Min =", minPart, ", x Index =", xIndex);
          Print(" Part ", i + 1, ": Max =", prices[maxPart], ", Min =",prices[minPart], ", x Index =", prices[xIndex]);
 
-         if(i==0)  //part 1
+         int index_start = iBarShift(NULL, 0, timeFrom_date, false);
+         int index_end   = iBarShift(NULL, 0, timeTo_date, false);
+
+         if(index_start < index_end)
+            Swap(index_start, index_end);
+
+         bool reverse_order = Close[index_start] > Close[index_end];
+
+         if(i == reverse_order ? 4 : 0)  //part 1
            {
             double max_part_1_sudo = prices[maxPart];
             double min_part_1_sudo = prices[minPart];
             double mtp_part_1_sudo = prices[xIndex];
            }
          else
-            if(i==1)  //part 2
+            if(i == reverse_order ? 3 : 1)  //part 2
               {
                double max_part_2_sudo = prices[maxPart];
                double min_part_2_sudo = prices[minPart];
                double mtp_part_2_sudo = prices[xIndex];
               }
             else
-               if(i==2)  //part 3
+               if(i == reverse_order ? 2 : 2)  //part 3
                  {
                   double max_part_3_sudo = prices[maxPart];
                   double min_part_3_sudo = prices[minPart];
                   double mtp_part_3_sudo = prices[xIndex];
                  }
                else
-                  if(i==3)  //part 4
+                  if(i == reverse_order ? 1 : 3)  //part 4
                     {
                      double max_part_4_sudo = prices[maxPart];
                      double min_part_4_sudo = prices[minPart];
                      double mtp_part_4_sudo = prices[xIndex];
                     }
                   else
-                     if(i==4)  //part 5
+                     if(i == reverse_order ? 0 : 4)  //part 5
                        {
                         double max_part_5_sudo = prices[maxPart];
                         double min_part_5_sudo = prices[minPart];
@@ -452,6 +460,7 @@ public:
          startIndex = MathRound(startIndex+partSize);
         }
      }
+
 
    void              drawRegions()
      {
@@ -505,7 +514,6 @@ public:
         {
          timeFrom = GetObjectTime1(_tfn);
          timeTo = GetObjectTime1(_ttn);
-         Print(timeTo, " ", timeTo_last);
          if(timeFrom==0 || timeFrom != timeFrom_last)
            {
             timeFrom_date = timeFrom;
@@ -627,7 +635,7 @@ public:
 
 
    bool              Update()
-     {
+     {Print(time_str_changed, " ", time_date_changed, " ", vlines_dragged);
 
       if(redraw_each_time)
          ObjectsDeleteAll(0, _prefix);
