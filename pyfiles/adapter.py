@@ -65,7 +65,7 @@ def create_specific_input(nodes):
             params["order_type"] = "ORDER_SELL_PENDING"
         elif block_name_mql == "volume_profile":
             params["Id_user"] = params.get("Id_user") + "_" + str(node.get("id_by_user"))
-            trick_volume_profile_data_flaw(params)
+            # trick_volume_profile_data_flaw(params)
         elif block_name_mql in ["if_trade", "if_tradeorder", "if_pending_order"]:
             params["count_limit"] = 0
             params["operator"] = ">"

@@ -349,7 +349,8 @@ public:
          how_many_regions = 5;
      }
 
-  void              calcValues()
+
+   void              calcValues()
      {
 
       how_many_regions = 3;
@@ -411,9 +412,7 @@ public:
 
            }
 
-         // Save max, min, and x values for this part (you can use appropriate variables)
-         //Print(" Part ", i + 1, ": Max =", maxPart, ", Min =", minPart, ", x Index =", xIndex);
-         Print(" Part ", i + 1, ": Max =", prices[maxPart], ", Min =",prices[minPart], ", x Index =", prices[xIndex]);
+
 
          int index_start = iBarShift(NULL, 0, timeFrom_date, false);
          int index_end   = iBarShift(NULL, 0, timeTo_date, false);
@@ -421,47 +420,99 @@ public:
          if(index_start < index_end)
             Swap(index_start, index_end);
 
-         bool reverse_order = Close[index_start] > Close[index_end];
+         bool reverse_order = Close[index_start] < Close[index_end];
 
-         if(i == reverse_order ? 4 : 0)  //part 1
+         // Save max, min, and x values for this part (you can use appropriate variables)
+         //Print(" Part ", i + 1, ": Max =", maxPart, ", Min =", minPart, ", x Index =", xIndex);
+         Print(" Part ", reverse_order ? (how_many_regions-i) : i + 1, ": Max =", prices[maxPart], ", Min =",prices[minPart], ", x Index =", prices[xIndex]);
+
+
+         if(i == 0)  //part 1
            {
-            double max_part_1_sudo = prices[maxPart];
-            double min_part_1_sudo = prices[minPart];
-            double mtp_part_1_sudo = prices[xIndex];
-           }
-         else
-            if(i == reverse_order ? 3 : 1)  //part 2
+            if(reverse_order)
               {
-               double max_part_2_sudo = prices[maxPart];
-               double min_part_2_sudo = prices[minPart];
-               double mtp_part_2_sudo = prices[xIndex];
+               double max_part_5_sudo_5 = prices[maxPart];
+               double min_part_5_sudo_5 = prices[minPart];
+               double mtp_part_5_sudo_5 = prices[xIndex];
               }
             else
-               if(i == reverse_order ? 2 : 2)  //part 3
+              {
+               double max_part_1_sudo_1 = prices[maxPart];
+               double min_part_1_sudo_1 = prices[minPart];
+               double mtp_part_1_sudo_1 = prices[xIndex];
+              }
+           }
+         else
+            if(i == 1)  //part 2
+              {
+               if(reverse_order)
                  {
-                  double max_part_3_sudo = prices[maxPart];
-                  double min_part_3_sudo = prices[minPart];
-                  double mtp_part_3_sudo = prices[xIndex];
+                  double max_part_4_sudo_4 = prices[maxPart];
+                  double min_part_4_sudo_4 = prices[minPart];
+                  double mtp_part_4_sudo_4 = prices[xIndex];
                  }
                else
-                  if(i == reverse_order ? 1 : 3)  //part 4
+                 {
+                  double max_part_2_sudo_2 = prices[maxPart];
+                  double min_part_2_sudo_2 = prices[minPart];
+                  double mtp_part_2_sudo_2 = prices[xIndex];
+                 }
+              }
+            else
+               if(i == 2)  //part 3
+                 {
+                  if(reverse_order)
                     {
-                     double max_part_4_sudo = prices[maxPart];
-                     double min_part_4_sudo = prices[minPart];
-                     double mtp_part_4_sudo = prices[xIndex];
+                     double max_part_3_sudo_3 = prices[maxPart];
+                     double min_part_3_sudo_3 = prices[minPart];
+                     double mtp_part_3_sudo_3 = prices[xIndex];
                     }
                   else
-                     if(i == reverse_order ? 0 : 4)  //part 5
+                    {
+                     double max_part_3_sudo_33 = prices[maxPart];
+                     double min_part_3_sudo_33 = prices[minPart];
+                     double mtp_part_3_sudo_33 = prices[xIndex];
+                    }
+                 }
+               else
+                  if(i == 3)  //part 4
+                    {
+                     if(reverse_order)
                        {
-                        double max_part_5_sudo = prices[maxPart];
-                        double min_part_5_sudo = prices[minPart];
-                        double mtp_part_5_sudo = prices[xIndex];
+                        double max_part_2_sudo_22 = prices[maxPart];
+                        double min_part_2_sudo_22 = prices[minPart];
+                        double mtp_part_2_sudo_22 = prices[xIndex];
+                       }
+                     else
+                       {
+                        double max_part_4_sudo_44 = prices[maxPart];
+                        double min_part_4_sudo_44 = prices[minPart];
+                        double mtp_part_4_sudo_44 = prices[xIndex];
+                       }
+                    }
+                  else
+                     if(i == 4)  //part 5
+                       {
+                        if(reverse_order)
+                          {
+                           double max_part_1_sudo_11 = prices[maxPart];
+                           double min_part_1_sudo_11 = prices[minPart];
+                           double mtp_part_1_sudo_11 = prices[xIndex];
+                          }
+                        else
+                          {
+                           double max_part_5_sudo_55 = prices[maxPart];
+                           double min_part_5_sudo_55 = prices[minPart];
+                           double mtp_part_5_sudo_55 = prices[xIndex];
+                          }
                        }
 
 
          startIndex = MathRound(startIndex+partSize);
         }
      }
+
+
 
 
    void              drawRegions()
