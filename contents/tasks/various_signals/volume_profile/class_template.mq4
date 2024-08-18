@@ -353,21 +353,12 @@ public:
    void              calcValues()
      {
 
-      how_many_regions = 3;
-      region_1_factor = 2;
-      region_2_factor = 3;
-      region_3_factor = 1;
-      region_4_factor = 1;
-
-
-      int max1=0, min1=0, multiply1=0;
-      int max2=0, min2=0, multiply2=0;
-      int max3=0, min3=0, multiply3=0;
-      int max4=0, min4=0, multiply4=0;
-      int max5=0, min5=0, multiply5=0;
-
-      // Assuming 'volumes' is your list of double values
-      double m;
+      double maxs[], mins[], mltps[], ups[], dns[];
+      ArrayResize(maxs, how_many_regions, 0);
+      ArrayResize(mins, how_many_regions, 0);
+      ArrayResize(mltps, how_many_regions, 0);
+      ArrayResize(ups, how_many_regions, 0);
+      ArrayResize(dns, how_many_regions, 0);
 
       double partSize = ArraySize(volumes) /(double) how_many_regions;
       int startIndex = 0;
@@ -385,7 +376,7 @@ public:
             if(volumes[j] < volumes[minPart])
                minPart = j;
 
-            m = i==0 ? region_1_factor : i==1 ? region_2_factor : i==2 ? region_3_factor : i==3 ? region_4_factor : i==4 ? region_5_factor : 0;
+            double m = i==0 ? region_1_factor : i==1 ? region_2_factor : i==2 ? region_3_factor : i==3 ? region_4_factor : i==4 ? region_5_factor : 0;
             double ratioup = volumes[j-1]==0 && volumes[j]==0 ? 0 : volumes[j-1]==0 && volumes[j]!=0 ? EMPTY_VALUE : volumes[j]/volumes[j-1];
             double ratiodn = volumes[j]==0 && volumes[j-1]==0 ? 0 : volumes[j]==0 && volumes[j-1]!=0 ? EMPTY_VALUE : volumes[j-1]/volumes[j];
             double ratio = ratioup>ratiodn ? ratioup : ratiodn;
@@ -409,108 +400,69 @@ public:
                  }
 
               }
-
            }
 
-
-
-         int index_start = iBarShift(NULL, 0, timeFrom_date, false);
-         int index_end   = iBarShift(NULL, 0, timeTo_date, false);
-
-         if(index_start < index_end)
-            Swap(index_start, index_end);
-
-         bool reverse_order = Close[index_start] < Close[index_end];
-
-         // Save max, min, and x values for this part (you can use appropriate variables)
-         //Print(" Part ", i + 1, ": Max =", maxPart, ", Min =", minPart, ", x Index =", xIndex);
-         Print(" Part ", reverse_order ? (how_many_regions-i) : i + 1, ": Max =", prices[maxPart], ", Min =",prices[minPart], ", x Index =", prices[xIndex]);
-
-
-         if(i == 0)  //part 1
-           {
-            if(reverse_order)
-              {
-               double max_part_5_sudo_5 = prices[maxPart];
-               double min_part_5_sudo_5 = prices[minPart];
-               double mtp_part_5_sudo_5 = prices[xIndex];
-              }
-            else
-              {
-               double max_part_1_sudo_1 = prices[maxPart];
-               double min_part_1_sudo_1 = prices[minPart];
-               double mtp_part_1_sudo_1 = prices[xIndex];
-              }
-           }
-         else
-            if(i == 1)  //part 2
-              {
-               if(reverse_order)
-                 {
-                  double max_part_4_sudo_4 = prices[maxPart];
-                  double min_part_4_sudo_4 = prices[minPart];
-                  double mtp_part_4_sudo_4 = prices[xIndex];
-                 }
-               else
-                 {
-                  double max_part_2_sudo_2 = prices[maxPart];
-                  double min_part_2_sudo_2 = prices[minPart];
-                  double mtp_part_2_sudo_2 = prices[xIndex];
-                 }
-              }
-            else
-               if(i == 2)  //part 3
-                 {
-                  if(reverse_order)
-                    {
-                     double max_part_3_sudo_3 = prices[maxPart];
-                     double min_part_3_sudo_3 = prices[minPart];
-                     double mtp_part_3_sudo_3 = prices[xIndex];
-                    }
-                  else
-                    {
-                     double max_part_3_sudo_33 = prices[maxPart];
-                     double min_part_3_sudo_33 = prices[minPart];
-                     double mtp_part_3_sudo_33 = prices[xIndex];
-                    }
-                 }
-               else
-                  if(i == 3)  //part 4
-                    {
-                     if(reverse_order)
-                       {
-                        double max_part_2_sudo_22 = prices[maxPart];
-                        double min_part_2_sudo_22 = prices[minPart];
-                        double mtp_part_2_sudo_22 = prices[xIndex];
-                       }
-                     else
-                       {
-                        double max_part_4_sudo_44 = prices[maxPart];
-                        double min_part_4_sudo_44 = prices[minPart];
-                        double mtp_part_4_sudo_44 = prices[xIndex];
-                       }
-                    }
-                  else
-                     if(i == 4)  //part 5
-                       {
-                        if(reverse_order)
-                          {
-                           double max_part_1_sudo_11 = prices[maxPart];
-                           double min_part_1_sudo_11 = prices[minPart];
-                           double mtp_part_1_sudo_11 = prices[xIndex];
-                          }
-                        else
-                          {
-                           double max_part_5_sudo_55 = prices[maxPart];
-                           double min_part_5_sudo_55 = prices[minPart];
-                           double mtp_part_5_sudo_55 = prices[xIndex];
-                          }
-                       }
-
+         maxs[i] = prices[maxPart];
+         mins[i] = prices[minPart];
+         mltps[i] = prices[xIndex];
+         dns[i] = prices[startIndex];
+         ups[i] = prices[(int)(startIndex + partSize -1)];
 
          startIndex = MathRound(startIndex+partSize);
         }
+
+      int index_start = iBarShift(NULL, 0, timeFrom_date, false);
+      int index_end   = iBarShift(NULL, 0, timeTo_date, false);
+
+      if(index_start < index_end)
+         Swap(index_start, index_end);
+
+      bool reverse = Close[index_start] > Close[index_end+1];
+
+      for(int k = 0; k < how_many_regions; k++)
+        {
+         double max = reverse ? maxs[k] : maxs[how_many_regions-1-k];
+         double min = reverse ? mins[k] : mins[how_many_regions-1-k];
+         double mltp = reverse ? mltps[k] : mltps[how_many_regions-1-k];
+         double up = reverse ? ups[k] : ups[how_many_regions-1-k];
+         double dn = reverse ? dns[k] : dns[how_many_regions-1-k];
+         //Print(" Part ", reverse ? (how_many_regions-k) : k + 1, ": Max =", max, ", Min =",min, ", x Index =", mltp);
+         switch(k)
+           {
+            case 0:
+               double max_1 = max;
+               double min_1 = min;
+               double mltp_1 = mltp;
+               Print(" Part 1 ", ": Max =", max, ", Min =",min, ", x Index =", mltp, ", up =", up, ", dn =", dn);
+               break;
+            case 1:
+               double max_2 = max;
+               double min_2 = min;
+               double mltp_2 = mltp;
+               Print(" Part 2 ", ": Max =", max, ", Min =",min, ", x Index =", mltp, ", up =", up, ", dn =", dn);
+               break;
+            case 2:
+               double max_3 = max;
+               double min_3 = min;
+               double mltp_3 = mltp;
+               Print(" Part 3 ", ": Max =", max, ", Min =",min, ", x Index =", mltp, ", up =", up, ", dn =", dn);
+               break;
+            case 3:
+               double max_4 = max;
+               double min_4 = min;
+               double mltp_4 = mltp;
+               Print(" Part 4 ", ": Max =", max, ", Min =",min, ", x Index =", mltp, ", up =", up, ", dn =", dn);
+               break;
+            case 4:
+               double max_5 = max;
+               double min_5 = min;
+               double mltp_5 = mltp;
+               Print(" Part 5 ", ": Max =", max, ", Min =",min, ", x Index =", mltp, ", up =", up, ", dn =", dn);
+               break;
+           }
+        }
      }
+
 
 
 
@@ -535,8 +487,8 @@ public:
          timeToCandleId = temp;
         }
 
-      int hi = iHighest(NULL, timeframe, MODE_HIGH, timeFromCandleId-timeToCandleId, timeToCandleId);
-      int li = iLowest(NULL, timeframe, MODE_LOW, timeFromCandleId-timeToCandleId, timeToCandleId);
+      int hi = iHighest(NULL, timeframe, MODE_HIGH, timeFromCandleId-timeToCandleId, timeToCandleId+1);
+      int li = iLowest(NULL, timeframe, MODE_LOW, timeFromCandleId-timeToCandleId, timeToCandleId+1);
       double eachArea = (High[hi]-Low[li])/how_many_regions;
 
       for(int i=0; i<=how_many_regions; i++)
@@ -1169,7 +1121,8 @@ public:
 
       double ratio = hgSize/(double)numberOfBars;
       static int hgSize_temp = 0;
-      if(ratio!=1 && hgSize!=hgSize_temp)
+      bool conBreak = hgSize_temp!=0 && ((hgSize>numberOfBars && hgSize_temp<numberOfBars) || (hgSize<numberOfBars && hgSize_temp>numberOfBars));
+      if(hgSize != hgSize_temp && !conBreak)
         {
          hgSize_temp = hgSize;
          HgPointScale = HgPointScale*ratio;

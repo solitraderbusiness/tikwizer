@@ -1455,69 +1455,39 @@ def buy_sell_function_data(node, function_data_static):
 def volume_profile_function_data(node, function_data_static):
     params = node.get("params")
     if "max_part_1" in params and params.get("max_part_1").strip():
-        function_data_static = function_data_static.replace("double max_part_1_sudo_11", "::" + params.get("max_part_1"))
-        function_data_static = function_data_static.replace("double max_part_1_sudo_1",
-                                                            "::" + params.get("max_part_1"))
+        function_data_static = function_data_static.replace("double max_1", "::" + params.get("max_part_1"))
     if "min_part_1" in params and params.get("min_part_1").strip():
-        function_data_static = function_data_static.replace("double min_part_1_sudo_11", "::" + params.get("min_part_1"))
-        function_data_static = function_data_static.replace("double min_part_1_sudo_1",
-                                                            "::" + params.get("min_part_1"))
+        function_data_static = function_data_static.replace("double min_1", "::" + params.get("min_part_1"))
     if "mtp_part_1" in params and params.get("mtp_part_1").strip():
-        function_data_static = function_data_static.replace("double mtp_part_1_sudo_11", "::" + params.get("mtp_part_1"))
-        function_data_static = function_data_static.replace("double mtp_part_1_sudo_1",
-                                                            "::" + params.get("mtp_part_1"))
+        function_data_static = function_data_static.replace("double mltp_1", "::" + params.get("mtp_part_1"))
 
     if "max_part_2" in params and params.get("max_part_2").strip():
-        function_data_static = function_data_static.replace("double max_part_2_sudo_22", "::" + params.get("max_part_2"))
-        function_data_static = function_data_static.replace("double max_part_2_sudo_2",
-                                                            "::" + params.get("max_part_2"))
+        function_data_static = function_data_static.replace("double max_2", "::" + params.get("max_part_2"))
     if "min_part_2" in params and params.get("min_part_2").strip():
-        function_data_static = function_data_static.replace("double min_part_2_sudo_22", "::" + params.get("min_part_2"))
-        function_data_static = function_data_static.replace("double min_part_2_sudo_2",
-                                                            "::" + params.get("min_part_2"))
+        function_data_static = function_data_static.replace("double min_2", "::" + params.get("min_part_2"))
     if "mtp_part_2" in params and params.get("mtp_part_2").strip():
-        function_data_static = function_data_static.replace("double mtp_part_2_sudo_22", "::" + params.get("mtp_part_2"))
-        function_data_static = function_data_static.replace("double mtp_part_2_sudo_2",
-                                                            "::" + params.get("mtp_part_2"))
+        function_data_static = function_data_static.replace("double mltp_2", "::" + params.get("mtp_part_2"))
 
     if "max_part_3" in params and params.get("max_part_3").strip():
-        function_data_static = function_data_static.replace("double max_part_3_sudo_33", "::" + params.get("max_part_3"))
-        function_data_static = function_data_static.replace("double max_part_3_sudo_3",
-                                                            "::" + params.get("max_part_3"))
+        function_data_static = function_data_static.replace("double max_3", "::" + params.get("max_part_3"))
     if "min_part_3" in params and params.get("min_part_3").strip():
-        function_data_static = function_data_static.replace("double min_part_3_sudo_33", "::" + params.get("min_part_3"))
-        function_data_static = function_data_static.replace("double min_part_3_sudo_3",
-                                                            "::" + params.get("min_part_3"))
+        function_data_static = function_data_static.replace("double min_3", "::" + params.get("min_part_3"))
     if "mtp_part_3" in params and params.get("mtp_part_3").strip():
-        function_data_static = function_data_static.replace("double mtp_part_3_sudo_33", "::" + params.get("mtp_part_3"))
-        function_data_static = function_data_static.replace("double mtp_part_3_sudo_3",
-                                                            "::" + params.get("mtp_part_3"))
+        function_data_static = function_data_static.replace("double mltp_3", "::" + params.get("mtp_part_3"))
 
     if "max_part_4" in params and params.get("max_part_4").strip():
-        function_data_static = function_data_static.replace("double max_part_4_sudo_44", "::" + params.get("max_part_4"))
-        function_data_static = function_data_static.replace("double max_part_4_sudo_4",
-                                                            "::" + params.get("max_part_4"))
+        function_data_static = function_data_static.replace("double max_4", "::" + params.get("max_part_4"))
     if "min_part_4" in params and params.get("min_part_4").strip():
-        function_data_static = function_data_static.replace("double min_part_4_sudo_44", "::" + params.get("min_part_4"))
-        function_data_static = function_data_static.replace("double min_part_4_sudo_4",
-                                                            "::" + params.get("min_part_4"))
+        function_data_static = function_data_static.replace("double min_4", "::" + params.get("min_part_4"))
     if "mtp_part_4" in params and params.get("mtp_part_4").strip():
-        function_data_static = function_data_static.replace("double mtp_part_4_sudo_44", "::" + params.get("mtp_part_4"))
-        function_data_static = function_data_static.replace("double mtp_part_4_sudo_4",
-                                                            "::" + params.get("mtp_part_4"))
+        function_data_static = function_data_static.replace("double mltp_4", "::" + params.get("mtp_part_4"))
 
     if "max_part_5" in params and params.get("max_part_5").strip():
-        function_data_static = function_data_static.replace("double max_part_5_sudo_55", "::" + params.get("max_part_5"))
-        function_data_static = function_data_static.replace("double max_part_5_sudo_5",
-                                                            "::" + params.get("max_part_5"))
+        function_data_static = function_data_static.replace("double max_5", "::" + params.get("max_part_5"))
     if "min_part_5" in params and params.get("min_part_5").strip():
-        function_data_static = function_data_static.replace("double min_part_5_sudo_55", "::" + params.get("min_part_5"))
-        function_data_static = function_data_static.replace("double min_part_5_sudo_5",
-                                                            "::" + params.get("min_part_5"))
+        function_data_static = function_data_static.replace("double min_5", "::" + params.get("min_part_5"))
     if "mtp_part_5" in params and params.get("mtp_part_5").strip():
-        function_data_static = function_data_static.replace("double mtp_part_5_sudo_55", "::" + params.get("mtp_part_5"))
-        function_data_static = function_data_static.replace("double mtp_part_5_sudo_5",
-                                                            "::" + params.get("mtp_part_5"))
+        function_data_static = function_data_static.replace("double mltp_5", "::" + params.get("mtp_part_5"))
 
     return function_data_static
 
