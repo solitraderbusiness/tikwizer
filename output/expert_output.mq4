@@ -2920,8 +2920,7 @@ public:
 
       double ratio = hgSize/(double)numberOfBars;
       static int hgSize_temp = 0;
-      bool conBreak = hgSize_temp!=0 && ((hgSize>numberOfBars && hgSize_temp<numberOfBars) || (hgSize<numberOfBars && hgSize_temp>numberOfBars));
-      if(hgSize != hgSize_temp && !conBreak)
+      if(hgSize != hgSize_temp)
         {
          hgSize_temp = hgSize;
          HgPointScale = HgPointScale*ratio;
