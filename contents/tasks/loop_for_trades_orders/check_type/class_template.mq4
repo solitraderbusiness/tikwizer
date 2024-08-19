@@ -19,8 +19,10 @@ public:
 
       //LoopedResume();
 
-      if((CheckBuyOrSell == "both" || (CheckBuyOrSell == "buy" && IsOrderTypeBuy()) || (CheckBuyOrSell == "sell" && IsOrderTypeSell()))
-         && (CheckLimitOrStop == "both" || (CheckLimitOrStop == "limit" && IsOrderTypeLimit()) || (CheckLimitOrStop == "stop" && IsOrderTypeStop())))
+      if (
+			   (CheckBuyOrSell == "both" || (CheckBuyOrSell == "buy" && IsOrderTypeBuy()) || (CheckBuyOrSell == "sell" && IsOrderTypeSell()))
+			&& (CheckLimitOrStop == "both" || (CheckLimitOrStop == "buy" && IsOrderTypeStop()) || (CheckLimitOrStop == "sell" && IsOrderTypeStop()))
+		)
         {
          //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);

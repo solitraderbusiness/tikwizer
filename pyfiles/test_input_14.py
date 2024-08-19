@@ -4125,3 +4125,147 @@ input_data_28 = {
   "name_by_user": "test vp",
   "highestIndex": "5"
 }
+
+# test check type
+input_data_29 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "25ceb8ad-a3fd-459e-b2b0-95256fc20484",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "dc95e90a-b25f-49ab-b10e-6777fc5d2dba",
+            "id_by_user": 5,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "CheckBuyOrSell": "buy",
+              "CheckLimitOrStop": "both"
+            },
+            "id": "a36b05b7-ee7b-451d-8b4d-c8bac5bff988",
+            "id_by_user": 6,
+            "blockName": "check type",
+            "category": "loop_for_trades_orders",
+            "block_name_mql": "check_type"
+          }
+        ],
+        "edges": [
+          {
+            "source": "25ceb8ad-a3fd-459e-b2b0-95256fc20484",
+            "sourceHandle": "blue",
+            "target": "dc95e90a-b25f-49ab-b10e-6777fc5d2dba",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "66b71bb0-524e-4f28-a192-6b8a1a37ddc9"
+          },
+          {
+            "source": "25ceb8ad-a3fd-459e-b2b0-95256fc20484",
+            "sourceHandle": "blue",
+            "target": "a36b05b7-ee7b-451d-8b4d-c8bac5bff988",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "ecbe6178-8709-437c-bf91-6c7c1d78b781"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "7b90993b-bfee-43aa-9b15-8a739dc1d7e1",
+        "type": "double",
+        "name": "max_1",
+        "value": "",
+        "description": ""
+      },
+      {
+        "id": "baf77aa2-de6a-4719-b763-281059682c5c",
+        "type": "double",
+        "name": "min_1",
+        "value": "",
+        "description": ""
+      },
+      {
+        "id": "c9d0b52c-635e-46e2-b148-588e533da1c4",
+        "type": "double",
+        "name": "mtp_1",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": []
+  },
+  "selected_name": "dc467dcf-acce-46bc-bcf8-afc370150ff0",
+  "name_by_user": "test vp",
+  "highestIndex": "7"
+}
