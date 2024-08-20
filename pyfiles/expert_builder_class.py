@@ -32,7 +32,9 @@ def get_version():
     path = path_root.get()
     with open(path + "/.project-version") as version_file:
         if version_file:
-            return "\n\n\n//g-v: " + version_file.read()
+            lines = version_file.read().split('\n')
+            commented_lines = ['//' + line for line in lines]
+            return "\n\n\n//g-v: " + '\n'.join(commented_lines)
 
 
 def handle_const_var_value(data):
