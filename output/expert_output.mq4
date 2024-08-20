@@ -2080,16 +2080,16 @@ public:
          timeFrom_str_holder = timeFrom_str;
          timeTo_str_holder = timeTo_str;
 
-         timeFrom_date = StrToTime(timeFrom_str);
-         timeTo_date = StrToTime(timeTo_str);
+         timeFrom_date = getProperTime(timeFrom_str);
+         timeTo_date = getProperTime(timeTo_str);
          time_str_changed = true;
         }
 
       //2_ check if with same time str, time date changed (day change when time str is like "10:00")
       if(!time_str_changed)
         {
-         datetime timeFrom_date_temp = StrToTime(timeFrom_str);
-         datetime timeTo_date_temp = StrToTime(timeTo_str);
+         datetime timeFrom_date_temp = getProperTime(timeFrom_str);
+         datetime timeTo_date_temp = getProperTime(timeTo_str);
 
          if(timeFrom_date != timeFrom_date_temp || timeTo_date != timeTo_date_temp)
            {
@@ -2264,8 +2264,6 @@ public:
 
 
 
-
-
    void              drawRegions()
      {
       //delete objects first so we are able to redraw
@@ -2436,6 +2434,48 @@ public:
               }
      }
 
+   datetime          getProperTime(string date_str)
+     {
+      datetime dt = ConvertUnixTimestamp(date_str);
+      return dt!=0 ? dt : StrToTime(timeFrom_str);
+     }
+
+
+   // Function to check if a string contains only digits
+   bool              IsNumeric(string s)
+     {
+      int len = StringLen(s);
+      for(int i = 0; i < len; i++)
+        {
+         int charCode = StringGetChar(s, i);
+         if(charCode < 48 || charCode > 57)    // ASCII codes for '0' to '9'
+           {
+            return false;
+           }
+        }
+      return true;
+     }
+
+   // Function to check if a string is a Unix timestamp and convert it to datetime
+   datetime          ConvertUnixTimestamp(string s)
+     {
+      // Check if the string is numeric
+      if(IsNumeric(s))
+        {
+         // Convert the string to an integer
+         int timestamp = StringToInteger(s);
+
+         // Check if the timestamp is within a reasonable range (e.g., from 1970 to 2038)
+         if(timestamp >= 0 && timestamp <= TimeCurrent())
+           {
+            // Convert the integer to datetime
+            datetime dt = timestamp;
+            return dt;
+           }
+        }
+      // Return 0 if the string is not a valid Unix timestamp
+      return 0;
+     }
 
 
    bool              Update()
@@ -6649,6 +6689,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.1"
-//__timestamp__ = "2024.08.20 11:50"
+//__version__ = "0.9.2"
+//__timestamp__ = "2024.08.20 12:29"
 //
