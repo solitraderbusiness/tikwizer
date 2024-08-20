@@ -307,6 +307,9 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_trade()
         self.on_init.append(call_add_blocks)
 
+        # prevent run if there are no blocks (important)
+        self.on_trade.append("   if(ArraySize(blocks_trade)<=0)\n      return;\n      ")
+
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_trade()
         self.on_trade.append(call_reset_blocks)
