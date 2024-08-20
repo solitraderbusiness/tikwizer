@@ -6647,7 +6647,7 @@ void OnDeinit(const int reason)
 
 
 
-//g-v: //__version__ = "0.2.21"
-//__timestamp__ = "2024.08.20 10:19"
+//g-v: //__version__ = "0.2.22"
+//__timestamp__ = "2024.08.20 11:43"
 //
 //
