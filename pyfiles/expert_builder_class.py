@@ -34,7 +34,7 @@ def get_version():
         if version_file:
             lines = version_file.read().split('\n')
             commented_lines = ['//' + line for line in lines]
-            return "\n\n\n".join(commented_lines)
+            return "\n\n\n" + '\n'.join(commented_lines)
 
 
 def handle_const_var_value(data):
