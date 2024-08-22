@@ -1,32 +1,31 @@
-class Task_id : public Task
+//Draw Text
+class Task3 : public Task
   {
    //defined by user
-   bool              object_per_bar;
-   bool              object_update;
-   string            obj_name;
-   ENUM_OBJECT       object_type;
-   int               obj_x;
-   int               obj_y;
-   bool              obj_fill;
-   int               obj_x_size;
-   int               obj_y_size;
-   int               obj_border_type;
-   color             obj_bg_color;
-   int               obj_corner;
-   color             obj_color;
-   ENUM_LINE_STYLE   obj_style;
-   int               obj_width;
-   bool              obj_back;
-   bool              obj_selectable;
-   bool              obj_selected;
-   bool              obj_hidden;
-   int               obj_z_order;
-   string            obj_chart_subwindow;
+   bool                  object_per_bar;
+   bool                  object_update;
+   string                obj_name;
+   ENUM_OBJECT           object_type;
+   int                   obj_x;
+   int                   obj_y;
+   string                obj_font;
+   int                   obj_font_size;
+   double                obj_angle;
+   ENUM_BASE_CORNER      obj_corner;
+   int                   obj_anchor;
+   color                 obj_color;
+   bool                  obj_back;
+   bool                  obj_selectable;
+   bool                  obj_selected;
+   bool                  obj_hidden;
+   int                   obj_z_order;
+   string                obj_chart_subwindow;
    //defined by system
    int               count;
    datetime          time0;
+
 public:
-                     Task_id(string name):Task(name)
+                     Task3(string name):Task(name)
      {
       //defined by user
       object_per_bar = object_per_bar_val;
@@ -35,15 +34,12 @@ public:
       object_type = object_type_val;
       obj_x = obj_x_val;
       obj_y = obj_y_val;
-      obj_fill = obj_fill_val;
-      obj_x_size = obj_x_size_val;
-      obj_y_size = obj_y_size_val;
-      obj_border_type = obj_border_type_val;
-      obj_bg_color = obj_bg_color_val;
+      obj_font = obj_font_val;
+      obj_font_size = obj_font_size_val;
+      obj_angle = obj_angle_val;
       obj_corner = obj_corner_val;
+      obj_anchor = obj_anchor_val;
       obj_color = obj_color_val;
-      obj_style = obj_style_val;
-      obj_width = obj_width_val;
       obj_back = obj_back_val;
       obj_selectable = obj_selectable_val;
       obj_selected = obj_selected_val;
@@ -59,7 +55,7 @@ public:
      {
       Task::run(block_id, block);
 
-      string obj_name_prefix = "tikwiser_shape_";
+      string obj_name_prefix = "tikwiser_text_";
       long obj_chart_id      = 0;
       int subwindow_id     = WindowFindVisible(obj_chart_id, obj_chart_subwindow);
 
@@ -132,74 +128,39 @@ public:
 
             if(ObjectFind(obj_chart_id,name) < 0 && !ObjectCreate(obj_chart_id,name,(ENUM_OBJECT)object_type,subwindow_id,0,0))
               {
-               Print(__FUNCTION__,": Object failed to create! Error code = ",GetLastError());
+               Print(__FUNCTION__,": failed to create text object! Error code = ",GetLastError());
               }
 
-            double p1=0, p2=0, p3=0;
-            datetime t1=0, t2=0, t3=0;
+            double p1=0, p2=0;
+            datetime t1=0, t2=0;
 
-            switch(object_type)
-              {
-               case OBJ_RECTANGLE_LABEL :
-                 {break;}
-               case OBJ_RECTANGLE       :
-                 {t1=1; p1=1; t2=1; p2=1; break;}
-               case OBJ_TRIANGLE        :
-                 {t1=1; p1=1; t2=1; p2=1; t3=1; p3=1; break;}
-               case OBJ_ELLIPSE         :
-                 {t1=1; p1=1; t2=1; p2=1; t3=1; p3=1; break;}
-              }
-
-            if(t1 == 1)
+            if(object_type == OBJ_TEXT)
               {
                initializer_time_1
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,variable_name_time_1);
-              }
-            if(t2 == 1)
-              {
-               initializer_time_2
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,1,variable_name_time_2);
-              }
-            if(t3 == 1)
-              {
-               initializer_time_3
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,2,variable_name_time_3);
-              }
-            if(p1 == 1)
-              {
-               initializer_price_1
-               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,variable_name_price_1);
-              }
-            if(p2 == 1)
-              {
-               initializer_price_2
-               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,1,variable_name_price_2);
-              }
-            if(p3 == 1)
-              {
-               initializer_price_3
-               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,2,variable_name_price_3);
-              }
+               ObjectSetInteger(obj_chart_id,name,OBJPROP_TIME,0,(long)variable_name_time_1);
 
-            if(object_type==OBJ_RECTANGLE_LABEL)
-              {
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_XDISTANCE,obj_x);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_YDISTANCE,obj_y);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_XSIZE,obj_x_size);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_YSIZE,obj_y_size);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_BGCOLOR,obj_bg_color);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_BORDER_TYPE,obj_border_type);
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_CORNER,obj_corner);
+               initializer_price_1
+               ObjectSetDouble(obj_chart_id,name,OBJPROP_PRICE,0,(double)variable_name_price_1);
               }
             else
               {
-               ObjectSetInteger(obj_chart_id,name,OBJPROP_FILL,obj_fill);
+               ObjectSetInteger(obj_chart_id,name,OBJPROP_XDISTANCE,obj_x);
+               ObjectSetInteger(obj_chart_id,name,OBJPROP_YDISTANCE,obj_y);
               }
 
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_STYLE,obj_style);
+            initializer_text
+
+            ObjectSetString(obj_chart_id,name,OBJPROP_TEXT,(string)variable_name_text);
+            ObjectSetString(obj_chart_id,name,OBJPROP_FONT,obj_font);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_FONTSIZE,obj_font_size);
+            ObjectSetDouble(obj_chart_id,name,OBJPROP_ANGLE,obj_angle);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_CORNER,obj_corner);
+            ObjectSetInteger(obj_chart_id,name,OBJPROP_ANCHOR,obj_anchor);
+
+            //ObjectSetInteger(ObjChartID,name,OBJPROP_STYLE,ObjStyle);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_COLOR,obj_color);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_BACK,obj_back);
-            ObjectSetInteger(obj_chart_id,name,OBJPROP_WIDTH,obj_width);
+            //ObjectSetInteger(ObjChartID,name,OBJPROP_WIDTH,ObjWidth);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTABLE,obj_selectable);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_SELECTED,obj_selected);
             ObjectSetInteger(obj_chart_id,name,OBJPROP_HIDDEN,obj_hidden);
@@ -208,6 +169,7 @@ public:
             ChartRedraw();
            }
         }
+
 
       //printf("task"+block_id + " passed route 1");
       block.onResult(ROUTE_1_PASSED);

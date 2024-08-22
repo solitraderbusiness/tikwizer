@@ -833,6 +833,8 @@ class ExpertBuilder:
                 self.draw_line(node)
             elif task_name == "draw_edit_field":
                 self.draw_editfield(node)
+            elif task_name == "draw_text":
+                self.draw_text(node)
             elif task_name == "check_trendline_price_level":
                 self.check_trendline_price_level(node)
             elif task_name == "no_trade_order_nearby":
@@ -1257,6 +1259,32 @@ class ExpertBuilder:
         params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
         self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+
+    def draw_text(self, node):
+        params = node.get("params")
+        if "time_1" in params:
+            value_fetch_time_1 = params.get("time_1")
+            row1_time_1 = value_fetch_time_1.get("row1")
+            row2_time_1 = value_fetch_time_1.get("row2")
+            params_time_1 = value_fetch_time_1.get("params")
+            id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+        if "price_1" in params:
+            value_fetch_price_1 = params.get("price_1")
+            row1_price_1 = value_fetch_price_1.get("row1")
+            row2_price_1 = value_fetch_price_1.get("row2")
+            params_price_1 = value_fetch_price_1.get("params")
+            id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+            self.task_elements.append(
+                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+        if "text" in params:
+            value_fetch_text = params.get("text")
+            row1_text = value_fetch_text.get("row1")
+            row2_text = value_fetch_text.get("row2")
+            params_text = value_fetch_text.get("params")
+            id_val_text = str(node.get("id_by_user")) + "_text"
+            self.task_elements.append(
+                self.value_fetch_class(row1_text, row2_text, params_text, id_val_text))
 
     def modify_stops_of_trades(self, node):
         params = node.get("params")

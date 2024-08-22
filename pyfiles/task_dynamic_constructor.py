@@ -141,6 +141,8 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = draw_line_run_data(node, run_data_static)
     elif task_name == "draw_edit_field":
         run_data = draw_editfield_run_data(node, run_data_static)
+    elif task_name == "draw_text":
+        run_data = draw_text_run_data(node, run_data_static)
     elif task_name == "check_trendline_price_level":
         run_data = check_trendline_price_level_run_data(node, run_data_static)
     elif task_name == "no_trade_order_nearby":
@@ -159,6 +161,7 @@ def run_data_dynamic_fun(node, run_data_static):
         run_data = move_run_data(node, run_data_static)
     elif task_name == "modify_text_description":
         run_data = modify_text_description_run_data(node, run_data_static)
+
     return run_data
 
 
@@ -195,7 +198,7 @@ def function_data_dynamic_fun(node, function_data_static, constants, variables):
     return function_data
 
 
-# In GoldBlox, if user references a class field to a global var,
+# In tikwiser, if user references a class field to a global var,
 # then it must get updated with the global var each time block runs.
 # Below function adds this feature by calling field assignment each
 # time block's run method is called.
@@ -797,6 +800,55 @@ def check_trendline_price_level_run_data(node, run_data_static):
     val = get_value_fetch_val(row1, row2, id_val)
     run_data_static = run_data_static.replace("initializer_price_level", init)
     run_data_static = run_data_static.replace("variable_name_price_level", val)
+
+    return run_data_static
+
+
+def draw_text_run_data(node, run_data_static):
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+
+    if "text" in params:
+        value_fetch_text = params.get("text")
+        row1_text = value_fetch_text.get("row1")
+        row2_text = value_fetch_text.get("row2")
+        id_val_text = str(node.get("id_by_user")) + "_text"
+
+        init_text = get_value_fetch_init(row1_text, row2_text, value_fetch_text.get("params"),
+                                         id_val_text)
+        val_text = get_value_fetch_val(row1_text, row2_text, id_val_text)
+        run_data_static = run_data_static.replace("initializer_text", init_text)
+        run_data_static = run_data_static.replace("variable_name_text", val_text)
+    else:
+        run_data_static = run_data_static.replace("initializer_text", "")
+        run_data_static = run_data_static.replace("variable_name_text", "\"\"")
 
     return run_data_static
 
