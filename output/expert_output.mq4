@@ -2036,7 +2036,7 @@ public:
       /* Boundaries and multipliers */
 
       timeFrom_str = "01:00";
-      timeTo_str = "10:00";
+      timeTo_str = "9:00";
 
       how_many_regions = 3; //max is 5
       region_1_factor = 2;
@@ -2437,7 +2437,7 @@ public:
    datetime          getProperTime(string date_str)
      {
       datetime dt = ConvertUnixTimestamp(date_str);
-      return dt!=0 ? dt : StrToTime(timeFrom_str);
+      return dt!=0 ? dt : StrToTime(date_str);
      }
 
 
@@ -6689,6 +6689,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.2"
-//__timestamp__ = "2024.08.20 12:29"
+//__version__ = "0.9.3"
+//__timestamp__ = "2024.08.20 15:40"
 //

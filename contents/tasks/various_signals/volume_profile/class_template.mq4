@@ -640,7 +640,7 @@ public:
  datetime          getProperTime(string date_str)
      {
       datetime dt = ConvertUnixTimestamp(date_str);
-      return dt!=0 ? dt : StrToTime(timeFrom_str);
+      return dt!=0 ? dt : StrToTime(date_str);
      }
 
 
