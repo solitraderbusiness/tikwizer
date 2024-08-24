@@ -4380,3 +4380,281 @@ input_data_30 = {
     "name_by_user": "test 5896",
     "highestIndex": "3"
 }
+
+# test draw text
+input_data_31 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "",
+              "object_type": "OBJ_ARROW_UP",
+              "obj_anchor": "ANCHOR_TOP",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_CANDLE_TIME",
+                  "mode_time_shift": "0",
+                  "time_candle_id": "1",
+                  "time_market": "",
+                  "time_candle_timeframe": "PERIOD_CURRENT"
+                }
+              },
+              "price_1": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
+            "id_by_user": 2,
+            "blockName": "Draw Arrow",
+            "category": "chart_objects",
+            "block_name_mql": "draw_arrow"
+          },
+          {
+            "params": {
+              "object_per_bar": "false",
+              "object_update": "true",
+              "obj_name": "",
+              "object_type": "OBJ_TREND",
+              "obj_angle": "45",
+              "obj_ray": "true",
+              "obj_ray_left": "false",
+              "obj_ray_right": "false",
+              "obj_color": "clrDeepPink",
+              "obj_style": "STYLE_SOLID",
+              "obj_width": "1",
+              "obj_back": "false",
+              "obj_selectable": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "time_1": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_CANDLE_TIME",
+                  "mode_time_shift": "0",
+                  "time_candle_id": "1",
+                  "time_market": "",
+                  "time_candle_timeframe": "PERIOD_CURRENT"
+                }
+              },
+              "price_1": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": "0"
+                }
+              },
+              "time_2": {
+                "row1": "value",
+                "row2": "Time",
+                "params": {
+                  "mode_time": "MODE_TIME_CANDLE_TIME",
+                  "mode_time_shift": "0",
+                  "time_candle_id": 10,
+                  "time_market": "",
+                  "time_candle_timeframe": "PERIOD_CURRENT"
+                }
+              },
+              "price_2": {
+                "row1": "candle",
+                "row2": "Candle",
+                "params": {
+                  "price_mode": "CANDLE_CLOSE",
+                  "find_method": "FIND_BY_ID",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "adjust": "",
+                  "shift": 10
+                }
+              }
+            },
+            "id": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
+            "id_by_user": 3,
+            "blockName": "Draw Line",
+            "category": "chart_objects",
+            "block_name_mql": "draw_line"
+          },
+          {
+            "params": {
+              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+              "RangeMinutes": "2440",
+              "ModeStep": "3",
+              "numberOfBars": "30",
+              "DataSource": "VP_SOURCE_M1",
+              "VolumeType": "VOLUME_TICK",
+              "HgBarStyle": "VP_BAR_STYLE_BAR",
+              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+              "HgColor": "clrNavy",
+              "HgColor2": "clrSteelBlue",
+              "HgLineWidth": "2",
+              "ModeColor": "clrMediumBlue",
+              "MaxColor": "clrRed",
+              "MedianColor": "clrNONE",
+              "VwapColor": "clrNONE",
+              "ModeLineWidth": "2",
+              "StatLineStyle": "STYLE_SOLID",
+              "ModeLevelColor": "clrNONE",
+              "ModeLevelWidth": "1",
+              "ModeLevelStyle": "STYLE_SOLID",
+              "RegionDividerColor": "clrDarkBlue",
+              "Id_user": "+vpr",
+              "ShowHorizon": "true",
+              "TimeFromColor": "clrDarkGreen",
+              "TimeFromStyle": "STYLE_DASH",
+              "TimeToColor": "clrDarkGreen",
+              "TimeToStyle": "STYLE_DASH",
+              "HgWidthPercent": "15",
+              "timeFrom_str": "01:00",
+              "timeTo_str": "10:00",
+              "how_many_regions": "3",
+              "region_1_factor": "2",
+              "region_2_factor": "3",
+              "region_3_factor": "1",
+              "region_4_factor": "1",
+              "region_5_factor": "1",
+              "max_part_1": "",
+              "min_part_1": "",
+              "mtp_part_1": "",
+              "max_part_2": "",
+              "min_part_2": "",
+              "mtp_part_2": "",
+              "max_part_3": "",
+              "min_part_3": "",
+              "mtp_part_3": "",
+              "max_part_4": "",
+              "min_part_4": "",
+              "mtp_part_4": "",
+              "max_part_5": "",
+              "min_part_5": "",
+              "mtp_part_5": "",
+              "redraw_each_time": "true"
+            },
+            "id": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
+            "id_by_user": 4,
+            "blockName": "Volume Profile",
+            "category": "various_signals",
+            "block_name_mql": "volume_profile"
+          },
+          {
+            "params": {
+              "object_type": "OBJ_ARROW_UP",
+              "obj_anchor": "ANCHOR_TOP",
+              "obj_width": "1",
+              "obj_z_order": "0",
+              "obj_chart_subwindow": "",
+              "obj_style": "STYLE_SOLID",
+              "obj_back": "false",
+              "obj_selected": "false",
+              "obj_hidden": "false",
+              "obj_selectable": "false",
+              "obj_color": "clrDeepPink",
+              "obj_name": "",
+              "object_update": "true",
+              "object_per_bar": "false"
+            },
+            "id": "e45eae66-a7ef-429b-a010-fdb9c862bd60",
+            "id_by_user": 5,
+            "category": "chart_objects",
+            "block_name_mql": "draw_arrow",
+            "blockName": "Draw Arrow"
+          }
+        ],
+        "edges": [
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "f3fb72ec-f61d-4f63-adbd-07bd557c1adf"
+          },
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "da1b0957-949c-4a89-8c21-9eeb044e310c"
+          },
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "cab03b0b-587c-4b1b-9274-9cc27ce8418a"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": []
+  },
+  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+  "name_by_user": "test",
+  "highestIndex": "6"
+}
