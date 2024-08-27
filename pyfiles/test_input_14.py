@@ -4658,3 +4658,341 @@ input_data_31 = {
   "name_by_user": "test",
   "highestIndex": "6"
 }
+
+# test buy sell group empty
+input_data_32 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+            "id_by_user": 8,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {
+              "operator": ">",
+              "count_limit": "3",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "group_number": "\"\"",
+              "symbols_str": ""
+            },
+            "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+            "id_by_user": 9,
+            "blockName": "Check trades count",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_trades_count"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
+            "id_by_user": 10,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "count_limit": "3",
+              "operator": ">",
+              "type": "{0,1}"
+            },
+            "id": "37ac29f3-6b90-40a8-b121-a084f49775bb",
+            "id_by_user": 11,
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_trades_count",
+            "blockName": "Check trades count"
+          }
+        ],
+        "edges": [
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
+          },
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
+          },
+          {
+            "source": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
+            "sourceHandle": "blue",
+            "target": "37ac29f3-6b90-40a8-b121-a084f49775bb",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "cb808f4a-b72a-48a9-8743-49f5db19a823"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+        "type": "double",
+        "name": "y",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+        "type": "double",
+        "name": "x",
+        "value": "",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+  "name_by_user": "test",
+  "highestIndex": "12"
+}
+
+# test buy sell filter general group empty
+input_data_33 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+            "id_by_user": 8,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {
+              "operator": ">",
+              "count_limit": "3",
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "group_number": "",
+              "symbols_str": ""
+            },
+            "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+            "id_by_user": 9,
+            "blockName": "Check trades count",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_trades_count"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_NUMBER",
+              "group_number": "11",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "type": "{0,1}",
+              "symbols_str": ""
+            },
+            "id": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
+            "id_by_user": 11,
+            "blockName": "If trade",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "if_trade"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "11",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
+            "id_by_user": 12,
+            "blockName": "Sell now",
+            "category": "buy_sell",
+            "block_name_mql": "sell_now"
+          }
+        ],
+        "edges": [
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
+          },
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
+          },
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "a55351ac-ffc5-4d27-ad71-b260b5a4eb7a"
+          },
+          {
+            "source": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+            "sourceHandle": "blue",
+            "target": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "0f461237-4b09-4a99-b238-2e699d7ce8a0"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+        "type": "double",
+        "name": "y",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+        "type": "double",
+        "name": "x",
+        "value": "",
+        "description": ""
+      }
+    ]
+  },
+  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+  "name_by_user": "test",
+  "highestIndex": "13"
+}

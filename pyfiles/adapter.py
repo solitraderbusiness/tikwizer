@@ -16,6 +16,7 @@ def refactor(data_raw):
         event = events[key]
         overwrite_ids(event["nodes"], event["edges"])
         create_specific_input(event["nodes"])
+        group_check(event["nodes"])
         correct_block_names_mql(event["nodes"])
         # Block input_dic
         set_blocks_input_dic(key, event["nodes"], event["edges"])
@@ -48,6 +49,16 @@ def enum_check(constants, variables):
 
     constants = [d for d in constants if d.get("type").strip() != "enum"]
     return constants
+
+
+# Handles empty group number in buy sell
+# and pendings and also in trade/order filters
+def group_check(nodes):
+    for node in nodes:
+        if "group" in node.get("params") and not node.get("params").get("group").strip():
+            node.get("params")["group"] = "\"\""
+        if "group_number" in node.get("params") and not node.get("params").get("group_number").strip():
+            node.get("params")["group_number"] = "\"\""
 
 
 # This function creates generator specific input like order_type in buy_sell
