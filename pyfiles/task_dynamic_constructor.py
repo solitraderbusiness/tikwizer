@@ -205,8 +205,8 @@ def function_data_dynamic_fun(node, function_data_static, constants, variables):
 def add_var_reference_if_any(data, params, variables, field_data):
     if "operator" and "variable" in params:  # This is Formula, don't do anything
         return data
-    if "max_part_1" in params:  # This is Volume profile, don't do anything
-        return data
+    # if "max_part_1" in params:  # This is Volume profile, don't do anything
+    #     return data
     fix_star = "Task::run(block_id, block);"
     for key, value in params.items():
         if not isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
