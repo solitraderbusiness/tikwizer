@@ -4383,760 +4383,789 @@ input_data_30 = {
 
 # test draw text
 input_data_31 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "object_per_bar": "false",
-              "object_update": "true",
-              "obj_name": "",
-              "object_type": "OBJ_ARROW_UP",
-              "obj_anchor": "ANCHOR_TOP",
-              "obj_color": "clrDeepPink",
-              "obj_style": "STYLE_SOLID",
-              "obj_width": "1",
-              "obj_back": "false",
-              "obj_selectable": "false",
-              "obj_selected": "false",
-              "obj_hidden": "false",
-              "obj_z_order": "0",
-              "obj_chart_subwindow": "",
-              "time_1": {
-                "row1": "value",
-                "row2": "Time",
-                "params": {
-                  "mode_time": "MODE_TIME_CANDLE_TIME",
-                  "mode_time_shift": "0",
-                  "time_candle_id": "1",
-                  "time_market": "",
-                  "time_candle_timeframe": "PERIOD_CURRENT"
-                }
-              },
-              "price_1": {
-                "row1": "candle",
-                "row2": "Candle",
-                "params": {
-                  "price_mode": "CANDLE_CLOSE",
-                  "find_method": "FIND_BY_ID",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": "",
-                  "shift": "0"
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
-            "id_by_user": 2,
-            "blockName": "Draw Arrow",
-            "category": "chart_objects",
-            "block_name_mql": "draw_arrow"
-          },
-          {
-            "params": {
-              "object_per_bar": "false",
-              "object_update": "true",
-              "obj_name": "",
-              "object_type": "OBJ_TREND",
-              "obj_angle": "45",
-              "obj_ray": "true",
-              "obj_ray_left": "false",
-              "obj_ray_right": "false",
-              "obj_color": "clrDeepPink",
-              "obj_style": "STYLE_SOLID",
-              "obj_width": "1",
-              "obj_back": "false",
-              "obj_selectable": "false",
-              "obj_selected": "false",
-              "obj_hidden": "false",
-              "obj_z_order": "0",
-              "obj_chart_subwindow": "",
-              "time_1": {
-                "row1": "value",
-                "row2": "Time",
-                "params": {
-                  "mode_time": "MODE_TIME_CANDLE_TIME",
-                  "mode_time_shift": "0",
-                  "time_candle_id": "1",
-                  "time_market": "",
-                  "time_candle_timeframe": "PERIOD_CURRENT"
-                }
-              },
-              "price_1": {
-                "row1": "candle",
-                "row2": "Candle",
-                "params": {
-                  "price_mode": "CANDLE_CLOSE",
-                  "find_method": "FIND_BY_ID",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": "",
-                  "shift": "0"
-                }
-              },
-              "time_2": {
-                "row1": "value",
-                "row2": "Time",
-                "params": {
-                  "mode_time": "MODE_TIME_CANDLE_TIME",
-                  "mode_time_shift": "0",
-                  "time_candle_id": 10,
-                  "time_market": "",
-                  "time_candle_timeframe": "PERIOD_CURRENT"
-                }
-              },
-              "price_2": {
-                "row1": "candle",
-                "row2": "Candle",
-                "params": {
-                  "price_mode": "CANDLE_CLOSE",
-                  "find_method": "FIND_BY_ID",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": "",
-                  "shift": 10
-                }
-              }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
-            "id_by_user": 3,
-            "blockName": "Draw Line",
-            "category": "chart_objects",
-            "block_name_mql": "draw_line"
-          },
-          {
-            "params": {
-              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
-              "RangeMinutes": "2440",
-              "ModeStep": "3",
-              "numberOfBars": "30",
-              "DataSource": "VP_SOURCE_M1",
-              "VolumeType": "VOLUME_TICK",
-              "HgBarStyle": "VP_BAR_STYLE_BAR",
-              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
-              "HgColor": "clrNavy",
-              "HgColor2": "clrSteelBlue",
-              "HgLineWidth": "2",
-              "ModeColor": "clrMediumBlue",
-              "MaxColor": "clrRed",
-              "MedianColor": "clrNONE",
-              "VwapColor": "clrNONE",
-              "ModeLineWidth": "2",
-              "StatLineStyle": "STYLE_SOLID",
-              "ModeLevelColor": "clrNONE",
-              "ModeLevelWidth": "1",
-              "ModeLevelStyle": "STYLE_SOLID",
-              "RegionDividerColor": "clrDarkBlue",
-              "Id_user": "+vpr",
-              "ShowHorizon": "true",
-              "TimeFromColor": "clrDarkGreen",
-              "TimeFromStyle": "STYLE_DASH",
-              "TimeToColor": "clrDarkGreen",
-              "TimeToStyle": "STYLE_DASH",
-              "HgWidthPercent": "15",
-              "timeFrom_str": "01:00",
-              "timeTo_str": "10:00",
-              "how_many_regions": "3",
-              "region_1_factor": "2",
-              "region_2_factor": "3",
-              "region_3_factor": "1",
-              "region_4_factor": "1",
-              "region_5_factor": "1",
-              "max_part_1": "",
-              "min_part_1": "",
-              "mtp_part_1": "",
-              "max_part_2": "",
-              "min_part_2": "",
-              "mtp_part_2": "",
-              "max_part_3": "",
-              "min_part_3": "",
-              "mtp_part_3": "",
-              "max_part_4": "",
-              "min_part_4": "",
-              "mtp_part_4": "",
-              "max_part_5": "",
-              "min_part_5": "",
-              "mtp_part_5": "",
-              "redraw_each_time": "true"
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "object_per_bar": "false",
+                            "object_update": "true",
+                            "obj_name": "",
+                            "object_type": "OBJ_ARROW_UP",
+                            "obj_anchor": "ANCHOR_TOP",
+                            "obj_color": "clrDeepPink",
+                            "obj_style": "STYLE_SOLID",
+                            "obj_width": "1",
+                            "obj_back": "false",
+                            "obj_selectable": "false",
+                            "obj_selected": "false",
+                            "obj_hidden": "false",
+                            "obj_z_order": "0",
+                            "obj_chart_subwindow": "",
+                            "time_1": {
+                                "row1": "value",
+                                "row2": "Time",
+                                "params": {
+                                    "mode_time": "MODE_TIME_CANDLE_TIME",
+                                    "mode_time_shift": "0",
+                                    "time_candle_id": "1",
+                                    "time_market": "",
+                                    "time_candle_timeframe": "PERIOD_CURRENT"
+                                }
+                            },
+                            "price_1": {
+                                "row1": "candle",
+                                "row2": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_CLOSE",
+                                    "find_method": "FIND_BY_ID",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": "",
+                                    "shift": "0"
+                                }
+                            }
+                        },
+                        "id": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
+                        "id_by_user": 2,
+                        "blockName": "Draw Arrow",
+                        "category": "chart_objects",
+                        "block_name_mql": "draw_arrow"
+                    },
+                    {
+                        "params": {
+                            "object_per_bar": "false",
+                            "object_update": "true",
+                            "obj_name": "",
+                            "object_type": "OBJ_TREND",
+                            "obj_angle": "45",
+                            "obj_ray": "true",
+                            "obj_ray_left": "false",
+                            "obj_ray_right": "false",
+                            "obj_color": "clrDeepPink",
+                            "obj_style": "STYLE_SOLID",
+                            "obj_width": "1",
+                            "obj_back": "false",
+                            "obj_selectable": "false",
+                            "obj_selected": "false",
+                            "obj_hidden": "false",
+                            "obj_z_order": "0",
+                            "obj_chart_subwindow": "",
+                            "time_1": {
+                                "row1": "value",
+                                "row2": "Time",
+                                "params": {
+                                    "mode_time": "MODE_TIME_CANDLE_TIME",
+                                    "mode_time_shift": "0",
+                                    "time_candle_id": "1",
+                                    "time_market": "",
+                                    "time_candle_timeframe": "PERIOD_CURRENT"
+                                }
+                            },
+                            "price_1": {
+                                "row1": "candle",
+                                "row2": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_CLOSE",
+                                    "find_method": "FIND_BY_ID",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": "",
+                                    "shift": "0"
+                                }
+                            },
+                            "time_2": {
+                                "row1": "value",
+                                "row2": "Time",
+                                "params": {
+                                    "mode_time": "MODE_TIME_CANDLE_TIME",
+                                    "mode_time_shift": "0",
+                                    "time_candle_id": 10,
+                                    "time_market": "",
+                                    "time_candle_timeframe": "PERIOD_CURRENT"
+                                }
+                            },
+                            "price_2": {
+                                "row1": "candle",
+                                "row2": "Candle",
+                                "params": {
+                                    "price_mode": "CANDLE_CLOSE",
+                                    "find_method": "FIND_BY_ID",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": "",
+                                    "shift": 10
+                                }
+                            }
+                        },
+                        "id": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
+                        "id_by_user": 3,
+                        "blockName": "Draw Line",
+                        "category": "chart_objects",
+                        "block_name_mql": "draw_line"
+                    },
+                    {
+                        "params": {
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "RangeMinutes": "2440",
+                            "ModeStep": "3",
+                            "numberOfBars": "30",
+                            "DataSource": "VP_SOURCE_M1",
+                            "VolumeType": "VOLUME_TICK",
+                            "HgBarStyle": "VP_BAR_STYLE_BAR",
+                            "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+                            "HgColor": "clrNavy",
+                            "HgColor2": "clrSteelBlue",
+                            "HgLineWidth": "2",
+                            "ModeColor": "clrMediumBlue",
+                            "MaxColor": "clrRed",
+                            "MedianColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeLineWidth": "2",
+                            "StatLineStyle": "STYLE_SOLID",
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelWidth": "1",
+                            "ModeLevelStyle": "STYLE_SOLID",
+                            "RegionDividerColor": "clrDarkBlue",
+                            "Id_user": "+vpr",
+                            "ShowHorizon": "true",
+                            "TimeFromColor": "clrDarkGreen",
+                            "TimeFromStyle": "STYLE_DASH",
+                            "TimeToColor": "clrDarkGreen",
+                            "TimeToStyle": "STYLE_DASH",
+                            "HgWidthPercent": "15",
+                            "timeFrom_str": "01:00",
+                            "timeTo_str": "10:00",
+                            "how_many_regions": "3",
+                            "region_1_factor": "2",
+                            "region_2_factor": "3",
+                            "region_3_factor": "1",
+                            "region_4_factor": "1",
+                            "region_5_factor": "1",
+                            "max_part_1": "",
+                            "min_part_1": "",
+                            "mtp_part_1": "",
+                            "max_part_2": "",
+                            "min_part_2": "",
+                            "mtp_part_2": "",
+                            "max_part_3": "",
+                            "min_part_3": "",
+                            "mtp_part_3": "",
+                            "max_part_4": "",
+                            "min_part_4": "",
+                            "mtp_part_4": "",
+                            "max_part_5": "",
+                            "min_part_5": "",
+                            "mtp_part_5": "",
+                            "redraw_each_time": "true"
+                        },
+                        "id": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
+                        "id_by_user": 4,
+                        "blockName": "Volume Profile",
+                        "category": "various_signals",
+                        "block_name_mql": "volume_profile"
+                    },
+                    {
+                        "params": {
+                            "object_type": "OBJ_ARROW_UP",
+                            "obj_anchor": "ANCHOR_TOP",
+                            "obj_width": "1",
+                            "obj_z_order": "0",
+                            "obj_chart_subwindow": "",
+                            "obj_style": "STYLE_SOLID",
+                            "obj_back": "false",
+                            "obj_selected": "false",
+                            "obj_hidden": "false",
+                            "obj_selectable": "false",
+                            "obj_color": "clrDeepPink",
+                            "obj_name": "",
+                            "object_update": "true",
+                            "object_per_bar": "false"
+                        },
+                        "id": "e45eae66-a7ef-429b-a010-fdb9c862bd60",
+                        "id_by_user": 5,
+                        "category": "chart_objects",
+                        "block_name_mql": "draw_arrow",
+                        "blockName": "Draw Arrow"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "f3fb72ec-f61d-4f63-adbd-07bd557c1adf"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "da1b0957-949c-4a89-8c21-9eeb044e310c"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "cab03b0b-587c-4b1b-9274-9cc27ce8418a"
+                    }
+                ]
             },
-            "id": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
-            "id_by_user": 4,
-            "blockName": "Volume Profile",
-            "category": "various_signals",
-            "block_name_mql": "volume_profile"
-          },
-          {
-            "params": {
-              "object_type": "OBJ_ARROW_UP",
-              "obj_anchor": "ANCHOR_TOP",
-              "obj_width": "1",
-              "obj_z_order": "0",
-              "obj_chart_subwindow": "",
-              "obj_style": "STYLE_SOLID",
-              "obj_back": "false",
-              "obj_selected": "false",
-              "obj_hidden": "false",
-              "obj_selectable": "false",
-              "obj_color": "clrDeepPink",
-              "obj_name": "",
-              "object_update": "true",
-              "object_per_bar": "false"
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "e45eae66-a7ef-429b-a010-fdb9c862bd60",
-            "id_by_user": 5,
-            "category": "chart_objects",
-            "block_name_mql": "draw_arrow",
-            "blockName": "Draw Arrow"
-          }
-        ],
-        "edges": [
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "8df3b247-77cb-4c9c-b308-35fa82a51c61",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "f3fb72ec-f61d-4f63-adbd-07bd557c1adf"
-          },
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "e9ff2349-aa0e-4c1c-a71e-a989d441278a",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "da1b0957-949c-4a89-8c21-9eeb044e310c"
-          },
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "90a8cae3-55e4-4ad5-959c-14a2c1789b49",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "cab03b0b-587c-4b1b-9274-9cc27ce8418a"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [],
+        "constants": []
     },
-    "variables": [],
-    "constants": []
-  },
-  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
-  "name_by_user": "test",
-  "highestIndex": "6"
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "6"
 }
 
 # test buy sell group empty
 input_data_32 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "group": "",
-              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
-              "volume_upper_limit": "0",
-              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
-              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
-              "slippage": "4",
-              "comment": "",
-              "arrow_color": "clrMaroon",
-              "how_much_volume": "0.1",
-              "stoploss": "20",
-              "takeprofit": "20"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
-            "id_by_user": 8,
-            "blockName": "Buy now",
-            "category": "buy_sell",
-            "block_name_mql": "buy_now"
-          },
-          {
-            "params": {
-              "operator": ">",
-              "count_limit": "3",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "type": "{0,1}",
-              "group_number": "\"\"",
-              "symbols_str": ""
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
-            "id_by_user": 9,
-            "blockName": "Check trades count",
-            "category": "check_trades_orders_count",
-            "block_name_mql": "check_trades_count"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "group": "",
-              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
-              "volume_upper_limit": "0",
-              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
-              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
-              "slippage": "4",
-              "comment": "",
-              "arrow_color": "clrMaroon",
-              "how_much_volume": "0.1",
-              "stoploss": "20",
-              "takeprofit": "20"
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+                        "id_by_user": 8,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    },
+                    {
+                        "params": {
+                            "operator": ">",
+                            "count_limit": "3",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "type": "{0,1}",
+                            "group_number": "\"\"",
+                            "symbols_str": ""
+                        },
+                        "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+                        "id_by_user": 9,
+                        "blockName": "Check trades count",
+                        "category": "check_trades_orders_count",
+                        "block_name_mql": "check_trades_count"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
+                        "id_by_user": 10,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    },
+                    {
+                        "params": {
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "symbols_str": "",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "count_limit": "3",
+                            "operator": ">",
+                            "type": "{0,1}"
+                        },
+                        "id": "37ac29f3-6b90-40a8-b121-a084f49775bb",
+                        "id_by_user": 11,
+                        "category": "check_trades_orders_count",
+                        "block_name_mql": "check_trades_count",
+                        "blockName": "Check trades count"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
+                    },
+                    {
+                        "source": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
+                        "sourceHandle": "blue",
+                        "target": "37ac29f3-6b90-40a8-b121-a084f49775bb",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "cb808f4a-b72a-48a9-8743-49f5db19a823"
+                    }
+                ]
             },
-            "id": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
-            "id_by_user": 10,
-            "blockName": "Buy now",
-            "category": "buy_sell",
-            "block_name_mql": "buy_now"
-          },
-          {
-            "params": {
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "symbols_str": "",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "count_limit": "3",
-              "operator": ">",
-              "type": "{0,1}"
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "37ac29f3-6b90-40a8-b121-a084f49775bb",
-            "id_by_user": 11,
-            "category": "check_trades_orders_count",
-            "block_name_mql": "check_trades_count",
-            "blockName": "Check trades count"
-          }
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+                "type": "double",
+                "name": "y",
+                "value": "",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
-          },
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
-          },
-          {
-            "source": "d9e6f7d8-214c-42b7-8a6b-0d9b0fc2b7fd",
-            "sourceHandle": "blue",
-            "target": "37ac29f3-6b90-40a8-b121-a084f49775bb",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "cb808f4a-b72a-48a9-8743-49f5db19a823"
-          }
+        "constants": [
+            {
+                "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
         ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
     },
-    "variables": [
-      {
-        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
-        "type": "double",
-        "name": "y",
-        "value": "",
-        "description": ""
-      }
-    ],
-    "constants": [
-      {
-        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
-        "type": "double",
-        "name": "x",
-        "value": "",
-        "description": ""
-      }
-    ]
-  },
-  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
-  "name_by_user": "test",
-  "highestIndex": "12"
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "12"
 }
 
 # test buy sell filter general group empty
 input_data_33 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "group": "",
-              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
-              "volume_upper_limit": "0",
-              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
-              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
-              "slippage": "4",
-              "comment": "",
-              "arrow_color": "clrMaroon",
-              "how_much_volume": "0.1",
-              "stoploss": "20",
-              "takeprofit": "20"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
-            "id_by_user": 8,
-            "blockName": "Buy now",
-            "category": "buy_sell",
-            "block_name_mql": "buy_now"
-          },
-          {
-            "params": {
-              "operator": ">",
-              "count_limit": "3",
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "type": "{0,1}",
-              "group_number": "",
-              "symbols_str": ""
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
-            "id_by_user": 9,
-            "blockName": "Check trades count",
-            "category": "check_trades_orders_count",
-            "block_name_mql": "check_trades_count"
-          },
-          {
-            "params": {
-              "group_mode": "ORDER_GROUP_MODE_NUMBER",
-              "group_number": "11",
-              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
-              "type": "{0,1}",
-              "symbols_str": ""
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+                        "id_by_user": 8,
+                        "blockName": "Buy now",
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now"
+                    },
+                    {
+                        "params": {
+                            "operator": ">",
+                            "count_limit": "3",
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "type": "{0,1}",
+                            "group_number": "",
+                            "symbols_str": ""
+                        },
+                        "id": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+                        "id_by_user": 9,
+                        "blockName": "Check trades count",
+                        "category": "check_trades_orders_count",
+                        "block_name_mql": "check_trades_count"
+                    },
+                    {
+                        "params": {
+                            "group_mode": "ORDER_GROUP_MODE_NUMBER",
+                            "group_number": "11",
+                            "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+                            "type": "{0,1}",
+                            "symbols_str": ""
+                        },
+                        "id": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
+                        "id_by_user": 11,
+                        "blockName": "If trade",
+                        "category": "check_trades_orders_count",
+                        "block_name_mql": "if_trade"
+                    },
+                    {
+                        "params": {
+                            "symbol": "",
+                            "group": "11",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "volume_upper_limit": "0",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "how_much_volume": "0.1",
+                            "stoploss": "20",
+                            "takeprofit": "20"
+                        },
+                        "id": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
+                        "id_by_user": 12,
+                        "blockName": "Sell now",
+                        "category": "buy_sell",
+                        "block_name_mql": "sell_now"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "a55351ac-ffc5-4d27-ad71-b260b5a4eb7a"
+                    },
+                    {
+                        "source": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
+                        "sourceHandle": "blue",
+                        "target": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "0f461237-4b09-4a99-b238-2e699d7ce8a0"
+                    }
+                ]
             },
-            "id": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
-            "id_by_user": 11,
-            "blockName": "If trade",
-            "category": "check_trades_orders_count",
-            "block_name_mql": "if_trade"
-          },
-          {
-            "params": {
-              "symbol": "",
-              "group": "11",
-              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
-              "volume_upper_limit": "0",
-              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
-              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
-              "slippage": "4",
-              "comment": "",
-              "arrow_color": "clrMaroon",
-              "how_much_volume": "0.1",
-              "stoploss": "20",
-              "takeprofit": "20"
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
-            "id_by_user": 12,
-            "blockName": "Sell now",
-            "category": "buy_sell",
-            "block_name_mql": "sell_now"
-          }
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+                "type": "double",
+                "name": "y",
+                "value": "",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "3d56a01e-5acc-40f3-a61e-e38b4176b9ca"
-          },
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "0de86e9f-e19d-4e44-b255-6e4721d14ae1",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "25632c92-5b2a-4095-a1ff-c949680eea0b"
-          },
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "f4f6a27c-4050-4377-b86d-dc5dab12eaf4",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "a55351ac-ffc5-4d27-ad71-b260b5a4eb7a"
-          },
-          {
-            "source": "49d69d5c-be98-4bf4-a508-8efa2b88fea2",
-            "sourceHandle": "blue",
-            "target": "a7feae85-3ad6-4ec3-b52f-6ee2732c142c",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "0f461237-4b09-4a99-b238-2e699d7ce8a0"
-          }
+        "constants": [
+            {
+                "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
         ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
     },
-    "variables": [
-      {
-        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
-        "type": "double",
-        "name": "y",
-        "value": "",
-        "description": ""
-      }
-    ],
-    "constants": [
-      {
-        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
-        "type": "double",
-        "name": "x",
-        "value": "",
-        "description": ""
-      }
-    ]
-  },
-  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
-  "name_by_user": "test",
-  "highestIndex": "13"
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "13"
 }
 
 # test vol profile
 input_data_34 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
-              "RangeMinutes": "2440",
-              "ModeStep": "3",
-              "numberOfBars": "30",
-              "DataSource": "VP_SOURCE_M1",
-              "VolumeType": "VOLUME_TICK",
-              "HgBarStyle": "VP_BAR_STYLE_BAR",
-              "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
-              "HgColor": "clrNavy",
-              "HgColor2": "clrSteelBlue",
-              "HgLineWidth": "2",
-              "ModeColor": "clrMediumBlue",
-              "MaxColor": "clrRed",
-              "MedianColor": "clrNONE",
-              "VwapColor": "clrNONE",
-              "ModeLineWidth": "2",
-              "StatLineStyle": "STYLE_SOLID",
-              "ModeLevelColor": "clrNONE",
-              "ModeLevelWidth": "1",
-              "ModeLevelStyle": "STYLE_SOLID",
-              "RegionDividerColor": "clrDarkBlue",
-              "Id_user": "+vpr",
-              "ShowHorizon": "true",
-              "TimeFromColor": "clrDarkGreen",
-              "TimeFromStyle": "STYLE_DASH",
-              "TimeToColor": "clrDarkGreen",
-              "TimeToStyle": "STYLE_DASH",
-              "HgWidthPercent": "15",
-              "timeFrom_str": "z",
-              "timeTo_str": "10:00",
-              "how_many_regions": "3",
-              "region_1_factor": "2",
-              "region_2_factor": "3",
-              "region_3_factor": "1",
-              "region_4_factor": "1",
-              "region_5_factor": "1",
-              "max_part_1": "y",
-              "min_part_1": "",
-              "mtp_part_1": "",
-              "max_part_2": "",
-              "min_part_2": "",
-              "mtp_part_2": "",
-              "max_part_3": "",
-              "min_part_3": "",
-              "mtp_part_3": "",
-              "max_part_4": "",
-              "min_part_4": "",
-              "mtp_part_4": "",
-              "max_part_5": "",
-              "min_part_5": "",
-              "mtp_part_5": "",
-              "redraw_each_time": "true"
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "5386ffdc-dea1-4252-9e86-3352653e6920",
-            "id_by_user": 12,
-            "blockName": "Volume Profile",
-            "category": "various_signals",
-            "block_name_mql": "volume_profile"
-          }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "RangeMode": "VP_RANGE_MODE_BETWEEN_LINES",
+                            "RangeMinutes": "2440",
+                            "ModeStep": "3",
+                            "numberOfBars": "30",
+                            "DataSource": "VP_SOURCE_M1",
+                            "VolumeType": "VOLUME_TICK",
+                            "HgBarStyle": "VP_BAR_STYLE_BAR",
+                            "HgPosition": "VP_HG_POSITION_LEFT_INSIDE",
+                            "HgColor": "clrNavy",
+                            "HgColor2": "clrSteelBlue",
+                            "HgLineWidth": "2",
+                            "ModeColor": "clrMediumBlue",
+                            "MaxColor": "clrRed",
+                            "MedianColor": "clrNONE",
+                            "VwapColor": "clrNONE",
+                            "ModeLineWidth": "2",
+                            "StatLineStyle": "STYLE_SOLID",
+                            "ModeLevelColor": "clrNONE",
+                            "ModeLevelWidth": "1",
+                            "ModeLevelStyle": "STYLE_SOLID",
+                            "RegionDividerColor": "clrDarkBlue",
+                            "Id_user": "+vpr",
+                            "ShowHorizon": "true",
+                            "TimeFromColor": "clrDarkGreen",
+                            "TimeFromStyle": "STYLE_DASH",
+                            "TimeToColor": "clrDarkGreen",
+                            "TimeToStyle": "STYLE_DASH",
+                            "HgWidthPercent": "15",
+                            "timeFrom_str": "z",
+                            "timeTo_str": "10:00",
+                            "how_many_regions": "3",
+                            "region_1_factor": "2",
+                            "region_2_factor": "3",
+                            "region_3_factor": "1",
+                            "region_4_factor": "1",
+                            "region_5_factor": "1",
+                            "max_part_1": "y",
+                            "min_part_1": "",
+                            "mtp_part_1": "",
+                            "max_part_2": "",
+                            "min_part_2": "",
+                            "mtp_part_2": "",
+                            "max_part_3": "",
+                            "min_part_3": "",
+                            "mtp_part_3": "",
+                            "max_part_4": "",
+                            "min_part_4": "",
+                            "mtp_part_4": "",
+                            "max_part_5": "",
+                            "min_part_5": "",
+                            "mtp_part_5": "",
+                            "redraw_each_time": "true"
+                        },
+                        "id": "5386ffdc-dea1-4252-9e86-3352653e6920",
+                        "id_by_user": 12,
+                        "blockName": "Volume Profile",
+                        "category": "various_signals",
+                        "block_name_mql": "volume_profile"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "5386ffdc-dea1-4252-9e86-3352653e6920",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "b3fa6052-8942-452e-bab6-722e2008ac48"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+                "type": "double",
+                "name": "y",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
+                "type": "double",
+                "name": "z",
+                "value": "",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "5386ffdc-dea1-4252-9e86-3352653e6920",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "b3fa6052-8942-452e-bab6-722e2008ac48"
-          }
-        ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
+        "constants": [
+            {
+                "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
+        ],
+        "project_options": {
+            "magic_and_other": {
+                "magic_number": 1254785,
+                "expiration_date": "2025.02.11",
+                "on_timer_period": 60
+            },
+            "pip_size": {
+                "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+            },
+            "description_and_version_number": {
+                "copy_right": "",
+                "description": "",
+                "website_address": "",
+                "version_number": ""
+            },
+            "virtual_stops": {
+                "virtual_stops": False,
+                "virtual_stops_time_out": 0,
+                "emergency_stops": "no",
+                "relative_size": 0,
+                "add_pips": 0
+            },
+            "visual": {
+                "display_spread_meter": True,
+                "display_status_messages": True,
+                "display_indicators_after_test": True
+            }
+        }
     },
-    "variables": [
-      {
-        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
-        "type": "double",
-        "name": "y",
-        "value": "",
-        "description": ""
-      },
-      {
-        "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
-        "type": "double",
-        "name": "z",
-        "value": "",
-        "description": ""
-      }
-    ],
-    "constants": [
-      {
-        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
-        "type": "double",
-        "name": "x",
-        "value": "",
-        "description": ""
-      }
-    ]
-  },
-  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
-  "name_by_user": "test",
-  "highestIndex": "13"
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "13",
+
 }
