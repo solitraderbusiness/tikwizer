@@ -33,6 +33,10 @@ public:
 
       datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
       datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
+
+      if (timeStart >= timeEnd) //say according to user timestart is 22:00 and timeend is 10:00. They mean from 22:00 yesterday up to 10:00 today.
+        timeStart -= 86400;
+
       int range_start = iBarShift(msymbol, mtimeframe, timeEnd, false);
       int range_end   = iBarShift(msymbol, mtimeframe, timeStart, false);
 
