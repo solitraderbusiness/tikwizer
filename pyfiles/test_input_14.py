@@ -5172,124 +5172,307 @@ input_data_34 = {
 
 # test market properties after edits
 input_data_35 = {
-  "data": {
-    "events": {
-      "on_init": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_timer": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_tick": {
-        "nodes": [
-          {
-            "params": {},
-            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "id_by_user": 1,
-            "category": "more",
-            "block_name_mql": "pass",
-            "blockName": "Pass"
-          },
-          {
-            "params": {
-              "operator": {
-                "label": ">",
-                "cross_width": 1
-              },
-              "left": {
-                "row1": "market-properties",
-                "row2": "highest_price_time_period",
-                "params": {
-                  "server_or_local_time": "TIME_SERVER",
-                  "timestr_start": "09:00",
-                  "timestr_end": "08:00",
-                  "day_offset": "0",
-                  "what_to_get": "GET_PRICE",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": ""
-                }
-              },
-              "right": {
-                "row1": "market-properties",
-                "row2": "lowest_price_time_period",
-                "params": {
-                  "server_or_local_time": "TIME_SERVER",
-                  "timestr_start": "01:00",
-                  "timestr_end": "08:00",
-                  "day_offset": "0",
-                  "what_to_get": "GET_PRICE",
-                  "symbol": "",
-                  "timeframe": "PERIOD_CURRENT",
-                  "adjust": ""
-                }
-              }
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
             },
-            "id": "f5c041a3-01b9-452f-8b54-f9c11b176232",
-            "id_by_user": 12,
-            "blockName": "Condition",
-            "category": "condition_formula",
-            "block_name_mql": "condition"
-          }
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row1": "market-properties",
+                                "row2": "highest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_SERVER",
+                                    "timestr_start": "09:00",
+                                    "timestr_end": "08:00",
+                                    "day_offset": "0",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                }
+                            },
+                            "right": {
+                                "row1": "market-properties",
+                                "row2": "lowest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_SERVER",
+                                    "timestr_start": "01:00",
+                                    "timestr_end": "08:00",
+                                    "day_offset": "0",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                }
+                            }
+                        },
+                        "id": "f5c041a3-01b9-452f-8b54-f9c11b176232",
+                        "id_by_user": 12,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "f5c041a3-01b9-452f-8b54-f9c11b176232",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "724b32f4-a591-4790-ac30-664dd5ec4653"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+                "type": "double",
+                "name": "y",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
+                "type": "double",
+                "name": "z",
+                "value": "",
+                "description": ""
+            }
         ],
-        "edges": [
-          {
-            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
-            "sourceHandle": "blue",
-            "target": "f5c041a3-01b9-452f-8b54-f9c11b176232",
-            "targetHandle": "c",
-            "type": "customEdge",
-            "id": "724b32f4-a591-4790-ac30-664dd5ec4653"
-          }
+        "constants": [
+            {
+                "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
         ]
-      },
-      "on_trade": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_chart": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      },
-      "on_deinit": {
-        "nodes": [],
-        "nodesData": [],
-        "edges": []
-      }
     },
-    "variables": [
-      {
-        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
-        "type": "double",
-        "name": "y",
-        "value": "",
-        "description": ""
-      },
-      {
-        "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
-        "type": "double",
-        "name": "z",
-        "value": "",
-        "description": ""
-      }
-    ],
-    "constants": [
-      {
-        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
-        "type": "double",
-        "name": "x",
-        "value": "",
-        "description": ""
-      }
-    ]
-  },
-  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
-  "name_by_user": "test",
-  "highestIndex": "13"
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "13"
+}
+
+# test buy sell tp sl mode percent of price/tp/sl
+input_data_36 = {
+    "data": {
+        "events": {
+            "on_init": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_timer": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_tick": {
+                "nodes": [
+                    {
+                        "params": {},
+                        "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "id_by_user": 1,
+                        "category": "more",
+                        "block_name_mql": "pass",
+                        "blockName": "Pass"
+                    },
+                    {
+                        "params": {
+                            "operator": {
+                                "label": ">",
+                                "cross_width": 1
+                            },
+                            "left": {
+                                "row2": "highest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_SERVER",
+                                    "timestr_start": "09:00",
+                                    "timestr_end": "08:00",
+                                    "day_offset": "0",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                },
+                                "row1": "market-properties"
+                            },
+                            "right": {
+                                "row2": "lowest_price_time_period",
+                                "params": {
+                                    "server_or_local_time": "TIME_SERVER",
+                                    "timestr_start": "01:00",
+                                    "timestr_end": "08:00",
+                                    "day_offset": "0",
+                                    "what_to_get": "GET_PRICE",
+                                    "symbol": "",
+                                    "timeframe": "PERIOD_CURRENT",
+                                    "adjust": ""
+                                },
+                                "row1": "market-properties"
+                            }
+                        },
+                        "id": "f5c041a3-01b9-452f-8b54-f9c11b176232",
+                        "id_by_user": 12,
+                        "blockName": "Condition",
+                        "category": "condition_formula",
+                        "block_name_mql": "condition"
+                    },
+                    {
+                        "params": {
+                            "slippage": "4",
+                            "comment": "",
+                            "arrow_color": "clrMaroon",
+                            "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+                            "takeprofit": "20",
+                            "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+                            "stoploss": "20",
+                            "takeprofit_percent": 40,
+                            "stoploss_percent": 0,
+                            "symbol": "",
+                            "group": "",
+                            "volume_upper_limit": "0",
+                            "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+                            "how_much_volume": "0.1"
+                        },
+                        "id": "8c4df55c-2128-4bd5-af66-9676b71bc38e",
+                        "id_by_user": 14,
+                        "category": "buy_sell",
+                        "block_name_mql": "buy_now",
+                        "blockName": "Buy now"
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "f5c041a3-01b9-452f-8b54-f9c11b176232",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "724b32f4-a591-4790-ac30-664dd5ec4653"
+                    },
+                    {
+                        "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+                        "sourceHandle": "blue",
+                        "target": "8c4df55c-2128-4bd5-af66-9676b71bc38e",
+                        "targetHandle": "c",
+                        "type": "customEdge",
+                        "id": "e85243c2-4c99-4c9a-b0a2-ef12c5ef58bc"
+                    }
+                ]
+            },
+            "on_trade": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_chart": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            },
+            "on_deinit": {
+                "nodes": [],
+                "nodesData": [],
+                "edges": []
+            }
+        },
+        "variables": [
+            {
+                "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+                "type": "double",
+                "name": "y",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
+                "type": "double",
+                "name": "z",
+                "value": "",
+                "description": ""
+            }
+        ],
+        "constants": [
+            {
+                "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+                "type": "double",
+                "name": "x",
+                "value": "",
+                "description": ""
+            }
+        ],
+        "project_options": {
+            "magic_and_other": {
+                "magic_number": 8275,
+                "expiration_date": "123456",
+                "on_timer_period": 60
+            },
+            "pip_size": {
+                "rules": "0.001 = 0.011\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+            },
+            "description_and_version_number": {
+                "copy_right": "",
+                "description": "",
+                "website_address": "",
+                "version_number": ""
+            },
+            "virtual_stops": {
+                "virtual_stops": "true",
+                "virtual_stops_time_out": 0,
+                "emergency_stops": "always",
+                "relative_size": 0,
+                "add_pips": "100"
+            },
+            "visual": {
+                "display_spread_meter": "false",
+                "display_status_messages": "false",
+                "display_indicators_after_test": "false"
+            }
+        }
+    },
+    "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+    "name_by_user": "test",
+    "highestIndex": "15"
 }

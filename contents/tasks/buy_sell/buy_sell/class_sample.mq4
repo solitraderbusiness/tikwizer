@@ -16,6 +16,8 @@ class Task2 : public Task
    int               take_profit_mode;
    double            stoploss;
    double            takeprofit;
+   double            takeprofit_percent;
+   double            stoploss_percent;
    string            comment;
    int               magic;
    datetime          expiration;
@@ -57,6 +59,8 @@ public:
       slippage = 4;
       stoploss = 20;
       takeprofit = 20;
+      takeprofit_percent = 20;
+      stoploss_percent = 40;
       take_profit_mode = TPSL_MODE_FIXED_PIPS;
       stop_loss_mode = TPSL_MODE_CUSTOM_PRICE_LEVEL;
       comment = "";
@@ -246,7 +250,7 @@ private:
 
    ////////////////////////////////////////////////////////////
 
-   void              calc_tp_buy()
+    void              calc_tp_buy()
      {
       switch(take_profit_mode)
         {
@@ -256,6 +260,13 @@ private:
             break;
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
+            break;
+         case TPSL_MODE_PERCENT_OF_PRICE:
+            tpPrice = SymbolInfoDouble(msymbol, SYMBOL_ASK) + (SymbolInfoDouble(msymbol, SYMBOL_ASK) * takeprofit_percent / 100);
+            break;
+         case TPSL_MODE_PERCENT_OF_SL:
+            calc_sl_buy();
+            tpPrice = price + ((price-slPrice) * takeprofit_percent / 100);
             break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
 
@@ -284,6 +295,13 @@ private:
          case TPSL_MODE_NO_SL:
             slPrice = 0;
             break;
+         case TPSL_MODE_PERCENT_OF_PRICE:
+            slPrice = SymbolInfoDouble(msymbol, SYMBOL_ASK) - (SymbolInfoDouble(msymbol, SYMBOL_ASK) * stoploss_percent / 100);
+            break;
+         case TPSL_MODE_PERCENT_OF_TP:
+            calc_tp_buy();
+            slPrice = price - ((tpPrice-price) * takeprofit_percent / 100);
+            break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
 
             slPrice = EMPTY;
@@ -310,6 +328,13 @@ private:
             break;
          case TPSL_MODE_NO_TP:
             tpPrice = 0;
+            break;
+         case TPSL_MODE_PERCENT_OF_PRICE:
+            tpPrice = SymbolInfoDouble(msymbol, SYMBOL_BID) - (SymbolInfoDouble(msymbol, SYMBOL_BID) * takeprofit_percent / 100);
+            break;
+         case TPSL_MODE_PERCENT_OF_SL:
+            calc_sl_sell();
+            tpPrice = price - ((slPrice-price) * takeprofit_percent / 100);
             break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
 
@@ -338,11 +363,16 @@ private:
          case TPSL_MODE_NO_SL:
             slPrice = 0;
             break;
+         case TPSL_MODE_PERCENT_OF_PRICE:
+            slPrice = SymbolInfoDouble(msymbol, SYMBOL_BID) + (SymbolInfoDouble(msymbol, SYMBOL_BID) * stoploss_percent / 100);
+            break;
+         case TPSL_MODE_PERCENT_OF_TP:
+            calc_tp_buy();
+            slPrice = price + ((price-tpPrice) * stoploss_percent / 100);
+            break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
-            ObjectOnTheChart_numeric2_slpl objectOnTheChart_numeric2_slpl;
-            objectOnTheChart_numeric2_slpl.init();
-            double valueObjectOnTheChart_numeric2_slpl = objectOnTheChart_numeric2_slpl.calc();
-            slPrice = valueObjectOnTheChart_numeric2_slpl;
+
+            slPrice = EMPTY;
             break;
          case TPSL_MODE_CUSTOM_PIPS:
 
@@ -355,6 +385,8 @@ private:
             break;
         }
      }
+
+///////////////////////////////////////////////////////////////
 
    void              calcVolume()
      {
