@@ -1239,10 +1239,10 @@ public:
       slippage = 4;
       stoploss = 20;
       takeprofit = 20;
-      takeprofit_percent = 40;
-      stoploss_percent = 0;
-      take_profit_mode = TPSL_MODE_FIXED_PIPS;
-      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
+      takeprofit_percent = 100;
+      stoploss_percent = 0.55;
+      take_profit_mode = TPSL_MODE_PERCENT_OF_SL;
+      stop_loss_mode = TPSL_MODE_PERCENT_OF_PRICE;
       comment = "";
       expiration = 0;
       arrow_color = clrMaroon;
@@ -4570,6 +4570,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.10"
-//__timestamp__ = "2024.09.10 15:10"
+//__version__ = "0.9.11"
+//__timestamp__ = "2024.09.17 15:55"
 //
