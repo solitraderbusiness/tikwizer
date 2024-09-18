@@ -296,7 +296,7 @@ private:
             break;
          case TPSL_MODE_PERCENT_OF_TP:
             calc_tp_buy();
-            slPrice = price - ((tpPrice-price) * takeprofit_percent / 100);
+            slPrice = price - ((tpPrice-price) * stoploss_percent / 100);
             break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
             initializer_tmcpl_sb

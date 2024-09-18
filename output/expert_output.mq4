@@ -1000,124 +1000,6 @@ public:
    virtual void      reset(int level) = NULL;
 
   };
-class MarketPropertiesHighestTimePeriod12_left
-
-  {
-
-public:
-   string            symbol;
-   int               timeframe;
-   int               what_to_get;
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-   void              init()
-     {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      what_to_get = GET_PRICE;
-      timestr_start = "09:00";
-      timestr_end   = "08:00";
-      day_offset = 0;
-     }
-
-   template<typename T>
-   T                 calc()
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-
-      datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-      datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-
-      if(timeStart >= timeEnd)  //say according to user timestart is 22:00 and timeend is 10:00. They mean from 22:00 yesterday up to 10:00 today.
-         timeStart -= 86400;
-
-      int range_start = iBarShift(msymbol, mtimeframe, timeEnd, false);
-      int range_end   = iBarShift(msymbol, mtimeframe, timeStart, false);
-
-
-      int hi = iHighest(msymbol, mtimeframe, MODE_HIGH, range_end-range_start+1, range_start);
-
-      T result;
-
-      if(what_to_get == GET_PRICE)
-         result = iHigh(msymbol, mtimeframe, hi);
-      else
-         if(what_to_get == GET_CANDLE_ID)
-            result = hi;
-         else
-            if(what_to_get == GET_TIME)
-               result = iTime(msymbol, mtimeframe, hi);
-
-      return result;
-     }
-  };
-class MarketPropertiesLowestTimePeriod12_right
-
-  {
-
-public:
-   string            symbol;
-   int               timeframe;
-   int               what_to_get;
-   string            timestr_start;
-   string            timestr_end;
-   int               day_offset;
-
-   string            msymbol;
-   int               mtimeframe;
-
-public:
-   void              init()
-     {
-      symbol = "";
-      timeframe = PERIOD_CURRENT;
-      what_to_get = GET_PRICE;
-      timestr_start = "01:00";
-      timestr_end   = "08:00";
-      day_offset = 0;
-     }
-
-   template<typename T>
-   T                 calc()
-     {
-      msymbol = getSymbol(symbol);
-      mtimeframe = getTimeframe(timeframe);
-
-
-      datetime timeStart = StrToTime(timestr_start) - 86400*day_offset;
-      datetime timeEnd   = StrToTime(timestr_end) - 86400*day_offset;
-
-      if(timeStart >= timeEnd)  //say according to user timestart is 22:00 and timeend is 10:00. They mean from 22:00 yesterday up to 10:00 today.
-         timeStart -= 86400;
-
-      int range_start = iBarShift(msymbol, mtimeframe, timeEnd, false);
-      int range_end   = iBarShift(msymbol, mtimeframe, timeStart, false);
-
-
-      int li = iLowest(msymbol, mtimeframe, MODE_LOW, range_end-range_start+1, range_start);
-
-      T result;
-
-      if(what_to_get == GET_PRICE)
-         result = iLow(msymbol, mtimeframe, li);
-      else
-         if(what_to_get == GET_CANDLE_ID)
-            result = li;
-         else
-            if(what_to_get == GET_TIME)
-               result = iTime(msymbol, mtimeframe, li);
-
-      return result;
-     }
-  };
 
 //Pass
 class Task1 : public Task
@@ -1140,45 +1022,7 @@ public:
 
   };
 
-//Condition
-class Task12 : public Task
-  {
-
-public:
-                     Task12(string name):Task(name)
-     {
-
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-
-      MarketPropertiesHighestTimePeriod12_left marketPropertiesHighestTimePeriod12_left;
-      marketPropertiesHighestTimePeriod12_left.init();
-      double valueMarketPropertiesHighestTimePeriod12_left = marketPropertiesHighestTimePeriod12_left.calc<double>();
-      MarketPropertiesLowestTimePeriod12_right marketPropertiesLowestTimePeriod12_right;
-      marketPropertiesLowestTimePeriod12_right.init();
-      double valueMarketPropertiesLowestTimePeriod12_right = marketPropertiesLowestTimePeriod12_right.calc<double>();
-
-      if(valueMarketPropertiesHighestTimePeriod12_left > valueMarketPropertiesLowestTimePeriod12_right)
-        {
-         //printf("task"+block_id + " passed route 1");
-         block.onResult(ROUTE_1_PASSED);
-        }
-      else
-        {
-         //printf("task"+block_id + " passed route 2");
-         block.onResult(ROUTE_2_PASSED);
-        }
-     }
-   virtual void      reset(int level)
-     {
-
-     }
-
-  };
-
-//Buy now
+//Buy pending order
 class Task14 : public Task
   {
    //values set by user
@@ -1228,24 +1072,24 @@ public:
      {
       symbol = "";
       group = "";
-      order_type = ORDER_BUY;
+      order_type = ORDER_BUY_PENDING;
       money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
       how_much_volume = 0.1;
       volume_upper_limit = 0;
       open_at_price = OPEN_AT_ASK;
-      price_offset = 25;
+      price_offset = 20;
       price_offset_as_pip = True;
 
       slippage = 4;
       stoploss = 20;
       takeprofit = 20;
-      takeprofit_percent = 100;
-      stoploss_percent = 0.55;
-      take_profit_mode = TPSL_MODE_PERCENT_OF_SL;
-      stop_loss_mode = TPSL_MODE_PERCENT_OF_PRICE;
+      takeprofit_percent = 0.25;
+      stoploss_percent = 90;
+      take_profit_mode = TPSL_MODE_PERCENT_OF_PRICE;
+      stop_loss_mode = TPSL_MODE_PERCENT_OF_TP;
       comment = "";
       expiration = 0;
-      arrow_color = clrMaroon;
+      arrow_color = clrDarkBlue;
 
       //martingale
       look_up_on = LOOK_UP_RUNNING_ONLY;
@@ -1477,7 +1321,7 @@ private:
             break;
          case TPSL_MODE_PERCENT_OF_TP:
             calc_tp_buy();
-            slPrice = price - ((tpPrice-price) * takeprofit_percent / 100);
+            slPrice = price - ((tpPrice-price) * stoploss_percent / 100);
             break;
          case TPSL_MODE_CUSTOM_PRICE_LEVEL:
 
@@ -1836,7 +1680,7 @@ public:
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1,2};
+      int mnexts_true[] = {1};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1851,38 +1695,12 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block12 : public Block
-  {
-public:
-                     Block12()
-     {
-      id = 1;
-      id_by_user = 12;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task12(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
 class Block14 : public Block
   {
 public:
                      Block14()
      {
-      id = 2;
+      id = 1;
       id_by_user = 14;
       name = "buy_sell";
       enabled = True;
@@ -1967,14 +1785,12 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 3);
+   ArrayResize(blocks_tick, 2);
    Block1 *block1 = new Block1();
-   Block12 *block12 = new Block12();
    Block14 *block14 = new Block14();
 
    blocks_tick[0] = block1;
-   blocks_tick[1] = block12;
-   blocks_tick[2] = block14;
+   blocks_tick[1] = block14;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4570,6 +4386,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.11"
-//__timestamp__ = "2024.09.17 15:55"
+//__version__ = "0.9.12"
+//__timestamp__ = "2024.09.17 17:06"
 //

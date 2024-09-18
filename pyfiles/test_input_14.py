@@ -5657,3 +5657,137 @@ input_data_37 = {
   "name_by_user": "test",
   "highestIndex": "15"
 }
+
+# test buy sell tp sl mode percent of price tp sl
+input_data_38 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "id_by_user": 1,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "open_at_price": "OPEN_AT_ASK",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_PERCENT_OF_TP",
+              "take_profit_mode": "TPSL_MODE_PERCENT_OF_PRICE",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrDarkBlue",
+              "price_offset": "20",
+              "how_much_volume": "0.1",
+              "stoploss_percent": "90",
+              "takeprofit_percent": "0.25"
+            },
+            "id": "7fa94edd-c32f-4191-a666-d2153767b6f0",
+            "id_by_user": 14,
+            "blockName": "Buy pending order",
+            "category": "buy_sell",
+            "block_name_mql": "buy_pending_order"
+          }
+        ],
+        "edges": [
+          {
+            "source": "02eb9626-f375-4b74-9e8b-354470a094d8",
+            "sourceHandle": "blue",
+            "target": "7fa94edd-c32f-4191-a666-d2153767b6f0",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "4dc2c3a9-3dd7-40c9-bdc8-5631171fa801"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+        "type": "double",
+        "name": "y",
+        "value": "",
+        "description": ""
+      },
+      {
+        "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
+        "type": "double",
+        "name": "z",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+        "type": "double",
+        "name": "x",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8275,
+        "expiration_date": "123456",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.011\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": "true",
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "always",
+        "relative_size": 0,
+        "add_pips": "100"
+      },
+      "visual": {
+        "display_spread_meter": "false",
+        "display_status_messages": "false",
+        "display_indicators_after_test": "false"
+      }
+    }
+  },
+  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+  "name_by_user": "test",
+  "highestIndex": "15"
+}
