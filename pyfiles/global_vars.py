@@ -6,7 +6,7 @@ TEMPLATE_BLOCKS_CHART = "Block *blocks_chart[];\n"
 TEMPLATE_BLOCKS_DEINIT = "Block *blocks_deinit[];\n"
 
 TEMPLATE_EXIT_LOOP = "bool exit_loop = false;\n"
-TEMPLATE_TIMER_PERIOD = "int timer_period = 60;//seconds\n"
+TEMPLATE_TIMER_PERIOD = "int timer_period = user_timer_period;//seconds\n"
 
 TEMPLATE_OVERRIDING_SYMBOL = "string overriding_symbol = \"\";\n"
 TEMPLATE_OVERRIDING_TIMEFRAME = "int overriding_timeframe = -1;\n"

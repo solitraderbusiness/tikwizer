@@ -1,4 +1,4 @@
 {
-  "": ""
+  "": "\tif (TimeCurrent() > D'2028.02.12' || TimeLocal() > D'2028.02.12')\n\t{\n\t\tAlert (\"The trial version has expired at \"+TimeToString(D'2028.02.12', TIME_DATE)+\"\");\n\t\tExpertRemove();\n\t}\n"
 }
 

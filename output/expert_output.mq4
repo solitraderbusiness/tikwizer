@@ -1673,7 +1673,8 @@ private:
 
    void              buildMagic()
      {
-      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+      magic = user_magic;
+      //         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
 
   };
@@ -1914,7 +1915,8 @@ int overriding_timeframe = -1;
 OnChartEventHolder onchartEventHolder;
 OnTradeEventDetector onTradeEventDetector;
 bool exit_loop = false;
-int timer_period = 60;//seconds
+int timer_period = 600;//seconds
+int user_magic = 5522;
 template <typename T>
 void AddToArray(T& A[], T &value)
   {
@@ -4474,6 +4476,11 @@ double iZigZag(
 //+------------------------------------------------------------------+
 int OnInit()
   {
+   if(TimeCurrent() > D'2027.07.07' || TimeLocal() > D'2027.07.07')
+     {
+      Alert("The trial version has expired at "+TimeToString(D'2027.07.07', TIME_DATE)+"");
+      ExpertRemove();
+     }
    addBlocksTick();
    addBlocksChart();
    addBlocksTrade();
@@ -4573,6 +4580,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.13"
-//__timestamp__ = "2024.09.18 10:49"
+//__version__ = "0.9.14"
+//__timestamp__ = "2024.09.19 09:54"
 //

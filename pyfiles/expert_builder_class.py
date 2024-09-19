@@ -69,6 +69,7 @@ class ExpertBuilder:
         self.header = ""
         self.properties = []
         self.consts_system = []
+        self.project_options = []
         self.consts_user = []
         self.vars_system = []
         self.vars_user = []
@@ -381,7 +382,13 @@ class ExpertBuilder:
         self.vars_system.append(exit_loop_var)
 
         timer_period = self.global_vars.get__timer_period()
+        timer_period = timer_period.replace("user_timer_period",
+                                            self.data.get("project_options").get("magic_and_other").get(
+                                                "on_timer_period"))
         self.vars_system.append(timer_period)
+
+        user_magic = "int user_magic = " + self.data.get("project_options").get("magic_and_other").get("magic_number") + ";\n"
+        self.vars_system.append(user_magic)
 
     def add_vars_user(self, mvars):
         for var in mvars:
@@ -721,6 +728,7 @@ class ExpertBuilder:
 
     def get_on_init_items(self):
         result = "int OnInit(){\n"
+        result += self.expert_expiration()
         for item in self.on_init:
             result += item
         result += "\n       if (ArraySize(blocks_timer)>0)\n           EventSetTimer(timer_period);"
@@ -773,6 +781,11 @@ class ExpertBuilder:
         # block_comment = "\n//" + block_name + "\n"
         block = self.block_constructor.get_block_child(input_dic, id_block)
         return block
+
+    def expert_expiration(self):
+        expiration_code_snippet = "\tif (TimeCurrent() > D'user_expiration' || TimeLocal() > D'user_expiration')\n\t{\n\t\tAlert (\"The trial version has expired at \"+TimeToString(D'user_expiration', TIME_DATE)+\"\");\n\t\tExpertRemove();\n\t}\n"
+        expiration_code_snippet = expiration_code_snippet.replace("user_expiration", self.data.get("project_options").get("magic_and_other").get("expiration_date"))
+        return expiration_code_snippet
 
     # Elements that are assigned to multiple
     # tasks of same type or to multiple task types
