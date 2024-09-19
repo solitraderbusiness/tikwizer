@@ -5791,3 +5791,185 @@ input_data_38 = {
   "name_by_user": "test",
   "highestIndex": "15"
 }
+
+# test buy sell tp sl mode percent of the price tp sl
+input_data_39 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "operator": {
+                "label": "-"
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ichimoku",
+                "params": {
+                  "tenkan_sen": "9",
+                  "kijun_sen": "26",
+                  "senkou_span_b": "52",
+                  "mode": "MODE_TENKANSEN",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ichimoku",
+                "params": {
+                  "tenkan_sen": "9",
+                  "kijun_sen": "26",
+                  "senkou_span_b": "52",
+                  "mode": "MODE_KIJUNSEN",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "adjust": "y",
+              "variable": ""
+            },
+            "id": "a85d21b1-30c4-4130-b015-37fd4733da5e",
+            "id_by_user": 15,
+            "blockName": "Formula",
+            "category": "condition_formula",
+            "block_name_mql": "formula"
+          },
+          {
+            "params": {},
+            "id": "1c5a7352-59e2-4b9b-a65b-04a39af36934",
+            "id_by_user": 16,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "takeprofit": "20",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "stoploss": "20",
+              "symbol": "",
+              "group": "",
+              "volume_upper_limit": "0",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "how_much_volume": "0.1"
+            },
+            "id": "30b5af29-7a93-4614-81e3-1a66b9bba636",
+            "id_by_user": 17,
+            "category": "buy_sell",
+            "block_name_mql": "buy_now",
+            "blockName": "Buy now"
+          }
+        ],
+        "edges": [
+          {
+            "source": "1c5a7352-59e2-4b9b-a65b-04a39af36934",
+            "sourceHandle": "blue",
+            "target": "a85d21b1-30c4-4130-b015-37fd4733da5e",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "22139be1-51fa-4ca5-818d-67b56f998fff"
+          },
+          {
+            "source": "1c5a7352-59e2-4b9b-a65b-04a39af36934",
+            "sourceHandle": "blue",
+            "target": "30b5af29-7a93-4614-81e3-1a66b9bba636",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "a79b4f64-6354-4a65-808e-d0a0064d101a"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "a0f89806-f45d-4bf0-81b8-6749a95e7337",
+        "type": "double",
+        "name": "y",
+        "value": "",
+        "description": ""
+      },
+      {
+        "id": "8cef6f63-f5a2-4ff4-a90d-ba22789e1cf4",
+        "type": "double",
+        "name": "z",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "constants": [
+      {
+        "id": "8d0afdbd-b1d2-44d1-b530-7a9833dd9c65",
+        "type": "double",
+        "name": "x",
+        "value": "",
+        "description": ""
+      }
+    ],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8275,
+        "expiration_date": "123456",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.011\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": "true",
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "always",
+        "relative_size": 0,
+        "add_pips": "100"
+      },
+      "visual": {
+        "display_spread_meter": "false",
+        "display_status_messages": "false",
+        "display_indicators_after_test": "false"
+      }
+    }
+  },
+  "selected_name": "c3af9c3c-6ca3-4317-afd2-81e0e293b7f0",
+  "name_by_user": "test",
+  "highestIndex": "18"
+}

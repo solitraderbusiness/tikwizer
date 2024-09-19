@@ -12,6 +12,8 @@
       "slippage" : 4,
       "stoploss" : 20,
       "takeprofit" : 20,
+      "stoploss_percent": 0,
+      "takeprofit_percent": 0,
       "take_profit_mode" : "TPSL_MODE_FIXED_PIPS",
       "stop_loss_mode" : "TPSL_MODE_FIXED_PIPS",
       "comment" : "",

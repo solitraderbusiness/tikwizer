@@ -1001,12 +1001,171 @@ public:
 
   };
 
-//Pass
-class Task1 : public Task
+
+class ICHIMOKU15_left
+
+  {
+
+
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               tenkan_sen;
+
+   int               kijun_sen;
+
+   int               senkou_span_b;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+
+
+      symbol = "";
+
+      timeframe = PERIOD_CURRENT;
+
+      tenkan_sen = 9;
+
+      kijun_sen = 26;
+
+      senkou_span_b = 52;
+
+      mode = MODE_TENKANSEN;
+
+      shift = 0;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iIchimoku(symbol,timeframe,tenkan_sen,kijun_sen,senkou_span_b,mode,shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class ICHIMOKU15_right
+
+  {
+
+
+
+   string            symbol;
+
+   int               timeframe;
+
+   int               tenkan_sen;
+
+   int               kijun_sen;
+
+   int               senkou_span_b;
+
+   int               mode;
+
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+
+
+      symbol = "";
+
+      timeframe = PERIOD_CURRENT;
+
+      tenkan_sen = 9;
+
+      kijun_sen = 26;
+
+      senkou_span_b = 52;
+
+      mode = MODE_KIJUNSEN;
+
+      shift = 0;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iIchimoku(symbol,timeframe,tenkan_sen,kijun_sen,senkou_span_b,mode,shift);
+
+      return result;
+
+     }
+
+
+
+  };
+//Formula
+class Task15 : public Task
   {
 
 public:
-                     Task1(string name):Task(name)
+                     Task15(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      ICHIMOKU15_left ichimoku15_left;
+      ichimoku15_left.init();
+      double valueICHIMOKU15_left = ichimoku15_left.calc();
+      ICHIMOKU15_right ichimoku15_right;
+      ichimoku15_right.init();
+      double valueICHIMOKU15_right = ichimoku15_right.calc();
+      string undefined_var_0 = (valueICHIMOKU15_left - valueICHIMOKU15_right) + y;
+
+      //printf("task"+block_id + " passed route 1");
+      block.onResult(ROUTE_1_PASSED);
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Pass
+class Task16 : public Task
+  {
+
+public:
+                     Task16(string name):Task(name)
      {
 
      }
@@ -1022,8 +1181,8 @@ public:
 
   };
 
-//Buy pending order
-class Task14 : public Task
+//Buy now
+class Task17 : public Task
   {
    //values set by user
    string            symbol;
@@ -1068,28 +1227,28 @@ class Task14 : public Task
    double            martingale_reset_on_n_profits;
    int               type[];
 public:
-                     Task14(string name):Task(name)
+                     Task17(string name):Task(name)
      {
       symbol = "";
       group = "";
-      order_type = ORDER_BUY_PENDING;
+      order_type = ORDER_BUY;
       money_management = MONEY_MANAGEMENT_FIXED_VOLUME;
       how_much_volume = 0.1;
       volume_upper_limit = 0;
       open_at_price = OPEN_AT_ASK;
-      price_offset = 20;
+      price_offset = 25;
       price_offset_as_pip = True;
 
       slippage = 4;
       stoploss = 20;
       takeprofit = 20;
-      takeprofit_percent = 0.25;
-      stoploss_percent = 90;
-      take_profit_mode = TPSL_MODE_PERCENT_OF_PRICE;
-      stop_loss_mode = TPSL_MODE_PERCENT_OF_TP;
+      takeprofit_percent = 0;
+      stoploss_percent = 0;
+      take_profit_mode = TPSL_MODE_FIXED_PIPS;
+      stop_loss_mode = TPSL_MODE_FIXED_PIPS;
       comment = "";
       expiration = 0;
-      arrow_color = clrDarkBlue;
+      arrow_color = clrMaroon;
 
       //martingale
       look_up_on = LOOK_UP_RUNNING_ONLY;
@@ -1669,18 +1828,44 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block1 : public Block
+class Block15 : public Block
   {
 public:
-                     Block1()
+                     Block15()
      {
       id = 0;
-      id_by_user = 1;
+      id_by_user = 15;
+      name = "formula";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {1};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task15(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block16 : public Block
+  {
+public:
+                     Block16()
+     {
+      id = 1;
+      id_by_user = 16;
       name = "pass";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {0,2};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1689,33 +1874,33 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task1(name);
+      task = new Task16(name);
      }
   };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block14 : public Block
+class Block17 : public Block
   {
 public:
-                     Block14()
+                     Block17()
      {
-      id = 1;
-      id_by_user = 14;
+      id = 2;
+      id_by_user = 17;
       name = "buy_sell";
       enabled = True;
       event = EVENT_ON_TICK;
 
       int mnexts_true[] = {};
       int mnexts_false[] = {};
-      int mprevs_true[] = {0};
+      int mprevs_true[] = {1};
       int mprevs_false[] = {};
       populateNextsTrue(mnexts_true);
       populateNextsFalse(mnexts_false);
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task14(name);
+      task = new Task17(name);
      }
   };
 Block *blocks_init[];
@@ -1785,12 +1970,14 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 //+------------------------------------------------------------------+
 void addBlocksTick()
   {
-   ArrayResize(blocks_tick, 2);
-   Block1 *block1 = new Block1();
-   Block14 *block14 = new Block14();
+   ArrayResize(blocks_tick, 3);
+   Block15 *block15 = new Block15();
+   Block16 *block16 = new Block16();
+   Block17 *block17 = new Block17();
 
-   blocks_tick[0] = block1;
-   blocks_tick[1] = block14;
+   blocks_tick[0] = block15;
+   blocks_tick[1] = block16;
+   blocks_tick[2] = block17;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4341,7 +4528,7 @@ void OnTick()
   {
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }
@@ -4386,6 +4573,6 @@ void OnDeinit(const int reason)
 
 
 
-//__version__ = "0.9.12"
-//__timestamp__ = "2024.09.17 17:06"
+//__version__ = "0.9.13"
+//__timestamp__ = "2024.09.18 10:49"
 //
