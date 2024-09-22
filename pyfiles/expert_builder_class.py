@@ -387,8 +387,8 @@ class ExpertBuilder:
         self.vars_system.append(timer_period)
 
         magic_number = self.data.get("project_options").get("magic_and_other").get("magic_number")
-        user_magic = "int user_magic = " + str(magic_number) + ";\n"
-        self.vars_system.append(user_magic)
+        user_magic = "input int user_magic = " + str(magic_number) + ";\n"
+        self.consts_system.append(user_magic)
 
     def add_vars_user(self, mvars):
         for var in mvars:

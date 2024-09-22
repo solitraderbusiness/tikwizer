@@ -6124,7 +6124,7 @@ input_data_40 = {
     ],
     "project_options": {
       "magic_and_other": {
-        "magic_number": "5522",
+        "magic_number": "55225",
         "expiration_date": "2027.07.07",
         "on_timer_period": "600"
       },
