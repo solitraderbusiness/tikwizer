@@ -694,6 +694,7 @@ class ExpertBuilder:
     def build(self):
         expert = ""
         expert += self.header
+        expert += self.description_and_version_number()
         for prop in self.properties:
             expert += prop
         for const in self.consts_system:
@@ -788,6 +789,15 @@ class ExpertBuilder:
         expiration_date = self.data.get("project_options").get("magic_and_other").get("expiration_date")
         expiration_code_snippet = expiration_code_snippet.replace("user_expiration", str(expiration_date))
         return expiration_code_snippet
+
+    def description_and_version_number(self):
+        text = "#property copyright   \"copy_right_val\"\n#property link        \"website_address_val\"\n#property description \"description_val\"\n#property version     \"version_number_val\"\n\n"
+        info = self.data.get("project_options").get("description_and_version_number")
+        text = text.replace("copy_right_val", info.get("copy_right"))
+        text = text.replace("website_address_val", info.get("website_address"))
+        text = text.replace("description_val", info.get("description"))
+        text = text.replace("version_number_val", info.get("version_number"))
+        return text
 
     # Elements that are assigned to multiple
     # tasks of same type or to multiple task types
