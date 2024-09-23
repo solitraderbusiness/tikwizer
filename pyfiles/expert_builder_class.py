@@ -150,6 +150,8 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_tick()
         self.on_init.append(call_add_blocks)
 
+        self.on_tick.append("if (DRAW_SPREAD_INFO) DrawSpreadInfo();\n")
+
         self.on_tick.append("TicksData(""); // Collect ticks in case we need it\n")
 
         # resetBlocks call
@@ -225,6 +227,13 @@ class ExpertBuilder:
         for node in nodes:
             block = self.get_block_child(node.get("blockName"), node.get("input_dic_block"), node.get("id_by_user"))
             self.blocks.append(block)
+
+        spread_meter_check = "\tif (ENABLE_SPREAD_METER == false) {\n\t\tDRAW_SPREAD_INFO = false;\n\t}\n\telse {\n\t\tDRAW_SPREAD_INFO = !(MQLInfoInteger(MQL_TESTER) && !MQLInfoInteger(MQL_VISUAL_MODE));\n\t}\n\tif (DRAW_SPREAD_INFO) DrawSpreadInfo();"
+        self.on_init.append(spread_meter_check)
+
+        # handle show indicator after test in project options
+        show_indicator_code = "	TesterHideIndicators(!ENABLE_TEST_INDICATORS);\n"
+        self.on_init.append(show_indicator_code)
 
         # set expert start time
         self.on_init.append("\n	TimeAtStart(\"set\");\n")
@@ -349,6 +358,8 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_deinit()
         self.on_init.append(call_add_blocks)
 
+        self.on_deinit.append("   if(ENABLE_SPREAD_METER)\n      DrawSpreadInfo();")
+
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_deinit()
         self.on_deinit.append(call_reset_blocks)
@@ -386,9 +397,8 @@ class ExpertBuilder:
         timer_period = timer_period.replace("user_timer_period", str(on_timer_period))
         self.vars_system.append(timer_period)
 
-        magic_number = self.data.get("project_options").get("magic_and_other").get("magic_number")
-        user_magic = "input int user_magic = " + str(magic_number) + ";\n"
-        self.consts_system.append(user_magic)
+        spread_info = "bool DRAW_SPREAD_INFO   = false;"
+        self.vars_system.append(spread_info)
 
     def add_vars_user(self, mvars):
         for var in mvars:
@@ -398,13 +408,20 @@ class ExpertBuilder:
 
     def add_consts_system(self):
         rule = self.data.get("project_options").get("pip_size").get("rules")
-        self.consts_system.extend(self.constants_constructor.get_constants(rule))
+        spread = self.data.get("project_options").get("visual").get("display_spread_meter")
+        status = self.data.get("project_options").get("visual").get("display_status_messages")
+        show_indicator = self.data.get("project_options").get("visual").get("display_indicators_after_test")
+        self.consts_system.extend(self.constants_constructor.get_constants(rule, spread, status, show_indicator))
 
     def add_consts_user(self, const_inputs):  # Defined by user
         for my_input in const_inputs:
             input_str = "extern " + my_input.get("type") + " " + my_input.get("name") \
                         + handle_const_var_value(my_input) + "; // " + my_input.get("description") + "\n"
             self.consts_user.append(input_str)
+
+        magic_number = self.data.get("project_options").get("magic_and_other").get("magic_number")
+        user_magic = "input int user_magic = " + str(magic_number) + ";\n"
+        self.consts_system.append(user_magic)
 
     def add_global_functions(self, data):
         # AddToArray function
@@ -683,6 +700,9 @@ class ExpertBuilder:
 
         izigzag = self.global_functions.get_fun__izigzag()
         self.functions.append(izigzag)
+
+        draw_spread_info = self.global_functions.get_fun__draw_spread_info()
+        self.functions.append(draw_spread_info)
 
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"

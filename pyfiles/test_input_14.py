@@ -6145,7 +6145,7 @@ input_data_40 = {
         "add_pips": "100"
       },
       "visual": {
-        "display_spread_meter": "false",
+        "display_spread_meter": "true",
         "display_status_messages": "false",
         "display_indicators_after_test": "false"
       }

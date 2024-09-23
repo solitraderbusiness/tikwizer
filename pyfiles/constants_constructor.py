@@ -156,7 +156,12 @@ constants = [
     "#define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13",
     "#define MONEY_MANAGEMENT_CUSTOM_VALUE 14",
 
-    "#define POINT_FORMAT_RULES \"point_format_rules_val\"",
+    # ##################### project options ##########################
+
+    "#define POINT_FORMAT_RULES \"value\"",
+    "#define ENABLE_SPREAD_METER value",
+    "#define ENABLE_STATUS value",
+    "#define ENABLE_TEST_INDICATORS value",
 
     # ##################### break even ##########################
 
@@ -295,10 +300,17 @@ constants = [
 ]
 
 
-def get_constants(rule):
+def get_constants(rule, spread, status, show_indicator):
     mconsts = constants.copy()
+    rule = rule.replace("\n", " ")
     for i in range(len(mconsts)):
-        if "point_format_rules_val" in mconsts[i]:
-            mconsts[i] = mconsts[i].replace("point_format_rules_val", str(rule.replace("\n", " ")))
+        if "POINT_FORMAT_RULES" in mconsts[i]:
+            mconsts[i] = mconsts[i].replace("value", str(rule))
+        elif "ENABLE_SPREAD_METER" in mconsts[i]:
+            mconsts[i] = mconsts[i].replace("value", str(spread))
+        elif "ENABLE_STATUS" in mconsts[i]:
+            mconsts[i] = mconsts[i].replace("value", str(status))
+        elif "ENABLE_TEST_INDICATORS" in mconsts[i]:
+            mconsts[i] = mconsts[i].replace("value", str(show_indicator))
         mconsts[i] = mconsts[i] + "\n"
     return mconsts
