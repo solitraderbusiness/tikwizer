@@ -6125,11 +6125,11 @@ input_data_40 = {
     "project_options": {
       "magic_and_other": {
         "magic_number": "55225",
-        "expiration_date": "2027.07.07",
+        "expiration_date": " ",
         "on_timer_period": "600"
       },
       "pip_size": {
-        "rules": "0.001 = 0.011\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+        "rules": "0.001 = 0.015\n0.016 = 0.0001\n0.000001 = 0.0001 \n"
       },
       "description_and_version_number": {
         "copy_right": "",

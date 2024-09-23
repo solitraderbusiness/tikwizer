@@ -156,7 +156,7 @@ constants = [
     "#define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13",
     "#define MONEY_MANAGEMENT_CUSTOM_VALUE 14",
 
-    "#define POINT_FORMAT_RULES \"0.001=0.01,0.00001=0.0001,0.000001=0.0001\"",
+    "#define POINT_FORMAT_RULES \"point_format_rules_val\"",
 
     # ##################### break even ##########################
 
@@ -295,8 +295,10 @@ constants = [
 ]
 
 
-def get_constants():
+def get_constants(rule):
     mconsts = constants.copy()
     for i in range(len(mconsts)):
+        if "point_format_rules_val" in mconsts[i]:
+            mconsts[i] = mconsts[i].replace("point_format_rules_val", str(rule.replace("\n", " ")))
         mconsts[i] = mconsts[i] + "\n"
     return mconsts

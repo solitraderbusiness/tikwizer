@@ -397,7 +397,8 @@ class ExpertBuilder:
             self.vars_user.append(var_str)
 
     def add_consts_system(self):
-        self.consts_system.extend(self.constants_constructor.get_constants())
+        rule = self.data.get("project_options").get("pip_size").get("rules")
+        self.consts_system.extend(self.constants_constructor.get_constants(rule))
 
     def add_consts_user(self, const_inputs):  # Defined by user
         for my_input in const_inputs:
@@ -783,7 +784,7 @@ class ExpertBuilder:
         return block
 
     def expert_expiration(self):
-        expiration_code_snippet = "\tif (TimeCurrent() > D'user_expiration' || TimeLocal() > D'user_expiration')\n\t{\n\t\tAlert (\"The trial version has expired at \"+TimeToString(D'user_expiration', TIME_DATE)+\"\");\n\t\tExpertRemove();\n\t}\n"
+        expiration_code_snippet = "   string exp_date_str = \"user_expiration\";\n   exp_date_str = StringTrimLeft(StringTrimRight(exp_date_str));\n   if(exp_date_str!=\"\" && (TimeCurrent() > D'user_expiration' || TimeLocal() > D'user_expiration'))\n     {\n      Alert(\"The trial version has expired at \"+TimeToString(D'user_expiration', TIME_DATE)+\"\");\n      ExpertRemove();\n     }"
         expiration_date = self.data.get("project_options").get("magic_and_other").get("expiration_date")
         expiration_code_snippet = expiration_code_snippet.replace("user_expiration", str(expiration_date))
         return expiration_code_snippet

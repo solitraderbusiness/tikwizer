@@ -116,7 +116,7 @@
 #define MONEY_MANAGEMENT_FIXED_RATIO_BY_RYAN_JONES 12
 #define MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI 13
 #define MONEY_MANAGEMENT_CUSTOM_VALUE 14
-#define POINT_FORMAT_RULES "0.001=0.01,0.00001=0.0001,0.000001=0.0001"
+#define POINT_FORMAT_RULES "0.001 = 0.015 0.016 = 0.0001 0.000001 = 0.0001  "
 #define ON_PROFIT_MODE_FIXED_VALUE 1
 #define ON_PROFIT_MODE_PERCENT_OF_CURRENT_SL 2
 #define ON_PROFIT_MODE_PERCENT_OF_CURRENT_TP 3
@@ -4112,12 +4112,13 @@ double iZigZag(
    return NormalizeDouble(value, 10);
   }
 int OnInit(){
-	if (TimeCurrent() > D'2027.07.07' || TimeLocal() > D'2027.07.07')
-	{
-		Alert ("The trial version has expired at "+TimeToString(D'2027.07.07', TIME_DATE)+"");
-		ExpertRemove();
-	}
-addBlocksTick();addBlocksChart();addBlocksTrade();addBlocksTimer();addBlocksDeinit();
+   string exp_date_str = " ";
+   exp_date_str = StringTrimLeft(StringTrimRight(exp_date_str));
+   if(exp_date_str!="" && (TimeCurrent() > D' ' || TimeLocal() > D' '))
+     {
+      Alert("The trial version has expired at "+TimeToString(D' ', TIME_DATE)+"");
+      ExpertRemove();
+     }addBlocksTick();addBlocksChart();addBlocksTrade();addBlocksTimer();addBlocksDeinit();
 	TimeAtStart("set");
 addBlocksInit();resetBlocksInit(RESET_LEVEL_DEFAULT);
        if (ArraySize(blocks_timer)>0)
@@ -4187,6 +4188,6 @@ resetBlocksDeinit(RESET_LEVEL_DEFAULT);
 
 
 
-//__version__ = "0.9.16"
-//__timestamp__ = "2024.09.22 11:25"
+//__version__ = "0.9.17"
+//__timestamp__ = "2024.09.22 11:32"
 //
