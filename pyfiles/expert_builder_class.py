@@ -150,7 +150,10 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_tick()
         self.on_init.append(call_add_blocks)
 
+        self.on_tick.append("   ticks_from_start++;\n")
+
         self.on_tick.append("if (DRAW_SPREAD_INFO) DrawSpreadInfo();\n")
+        self.on_tick.append("	if (ENABLE_STATUS && ticks_from_start == 1) DrawStatus(\"working\");\n")
 
         self.on_tick.append("TicksData(""); // Collect ticks in case we need it\n")
 
@@ -230,6 +233,9 @@ class ExpertBuilder:
 
         spread_meter_check = "\tif (ENABLE_SPREAD_METER == false) {\n\t\tDRAW_SPREAD_INFO = false;\n\t}\n\telse {\n\t\tDRAW_SPREAD_INFO = !(MQLInfoInteger(MQL_TESTER) && !MQLInfoInteger(MQL_VISUAL_MODE));\n\t}\n\tif (DRAW_SPREAD_INFO) DrawSpreadInfo();"
         self.on_init.append(spread_meter_check)
+
+        draw_status_check = "if (ENABLE_STATUS) DrawStatus(\"waiting for tick...\");"
+        self.on_init.append(draw_status_check)
 
         # handle show indicator after test in project options
         show_indicator_code = "	TesterHideIndicators(!ENABLE_TEST_INDICATORS);\n"
@@ -358,7 +364,11 @@ class ExpertBuilder:
         call_add_blocks = self.global_functions.get_call__add_blocks_deinit()
         self.on_init.append(call_add_blocks)
 
-        self.on_deinit.append("   if(ENABLE_SPREAD_METER)\n      DrawSpreadInfo();")
+        self.on_deinit.append("   if(ENABLE_STATUS)\n   DrawStatus(\"stopped\");")
+
+        self.on_deinit.append("   if(ENABLE_SPREAD_METER)\n      DrawSpreadInfo();\n")
+
+        self.on_deinit.append("   EventKillTimer();\n")
 
         # resetBlocks call
         call_reset_blocks = self.global_functions.get_call__reset_blocks_deinit()
@@ -399,6 +409,9 @@ class ExpertBuilder:
 
         spread_info = "bool DRAW_SPREAD_INFO   = false;"
         self.vars_system.append(spread_info)
+
+        ticks_from_start = "int ticks_from_start    = 0;"
+        self.vars_system.append(ticks_from_start)
 
     def add_vars_user(self, mvars):
         for var in mvars:
@@ -703,6 +716,9 @@ class ExpertBuilder:
 
         draw_spread_info = self.global_functions.get_fun__draw_spread_info()
         self.functions.append(draw_spread_info)
+
+        draw_status = self.global_functions.get_fun__draw_status()
+        self.functions.append(draw_status)
 
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
