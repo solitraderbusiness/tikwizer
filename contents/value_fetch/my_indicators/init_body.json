@@ -1,0 +1,3 @@
+{
+	"init_body" : "      Symbol = (string)Symbol_val;\n      Period = (ENUM_TIMEFRAMES)Period_val;\n      ModeOutput = (string)ModeOutput_val;\n      TimeStamp = (string)TimeStamp_val;\n      VisibleID = (int)VisibleID_val;\n      VisibleShift = (int)VisibleShift_val;\n      VisibleLimit = (int)VisibleLimit_val;\n      RangeCandleStart = (int)RangeCandleStart_val;\n      RangeCandleEnd = (int)RangeCandleEnd_val;\n      RangeTimeSource = (string)RangeTimeSource_val;\n      RangeTimeStart = (string)RangeTimeStart_val;\n      RangeTimeEnd = (string)RangeTimeEnd_val;\n      RangeDayOffset = (double)RangeDayOffset_val;\n      RangeValue = (string)RangeValue_val;\n      Shift = (int)Shift_val;"
+}

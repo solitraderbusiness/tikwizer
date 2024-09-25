@@ -228,6 +228,8 @@ def check_value_fetch_params(side):  # Side means left or right
             path_module = "value_fetch/trade_order_in_loop/"
         case "account":
             path_module = "value_fetch/account/"
+        case "my_indicator":
+            path_module = "value_fetch/my_indicator/"
     with open(path + path_sub + path_module + "input.json") as input_file:
         if input_file:
             input_text = input_file.read()

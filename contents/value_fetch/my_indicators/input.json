@@ -1,0 +1,20 @@
+{
+  "input": [],
+  "buffer": 3,
+  "adjust": "",
+  "Symbol": "",
+  "Period": "PERIOD_CURRENT",
+  "ModeOutput": "id",
+  "TimeStamp": "00:00",
+  "VisibleID": 0,
+  "VisibleShift": 0,
+  "VisibleLimit": 100,
+  "RangeCandleStart": 0,
+  "RangeCandleEnd": 10,
+  "RangeTimeSource": "server",
+  "RangeTimeStart": "01:00",
+  "RangeTimeEnd": "08:00",
+  "RangeDayOffset": 0,
+  "RangeValue": "max",
+  "shift": "0"
+}

@@ -720,6 +720,9 @@ class ExpertBuilder:
         draw_status = self.global_functions.get_fun__draw_status()
         self.functions.append(draw_status)
 
+        i_candle_id = self.global_functions.get_fun__i_candle_id()
+        self.functions.append(i_candle_id)
+
     def add_global_classes_structs(self):
         structs_data_chart_event = "//This is used to hold onchart event for onchart blocks process\nstruct OnChartEventHolder\n  {\n   int               id;\n   long              lparam;\n   double            dparam;\n   string            sparam;\n  };"
         self.classes_structs_enums.append(structs_data_chart_event)
