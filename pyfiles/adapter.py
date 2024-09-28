@@ -126,7 +126,8 @@ def add_extra_double_quotation_if_any(dic, constants, variables):
             "AlertLabel2", "AlertLabel3", "AlertLabel4", "AlertLabel5", "AlertLabel6", "AlertLabel7", "AlertLabel8",
             "AlertLabel9", "AlertLabel10", "Title", "Label1", "Label2", "Label3", "Label4", "Label5", "Label6",
             "Label7", "Label8", "MYsound", "MTsound", "PromptCaption", "PromptText", "CheckBuyOrSell",
-            "CheckLimitOrStop", "timeFrom_str", "timeTo_str", "Id_user"]
+            "CheckLimitOrStop", "timeFrom_str", "timeTo_str", "Id_user", "Symbol", "TimeStamp", "ModeOutput",
+            "RangeTimeSource", "RangeValue", "RangeTimeStart", "RangeTimeEnd"]
 
     for key, value in dic.items():
         if isinstance(value, dict):
@@ -228,8 +229,8 @@ def check_value_fetch_params(side):  # Side means left or right
             path_module = "value_fetch/trade_order_in_loop/"
         case "account":
             path_module = "value_fetch/account/"
-        case "my_indicator":
-            path_module = "value_fetch/my_indicator/"
+        case "my_indicators":
+            path_module = "value_fetch/my_indicators/"
     with open(path + path_sub + path_module + "input.json") as input_file:
         if input_file:
             input_text = input_file.read()

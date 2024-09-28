@@ -1,4 +1,4 @@
 {
-  "initializer": "MyIndicator_id myIndicator_id;\n   myIndicator_id.init();\n   double valueMyIndicator_id = myIndicator_id.execute();",
+  "initializer": "MyIndicator_id myIndicator_id;\n   myIndicator_id.init();\n   double valueMyIndicator_id = myIndicator_id.calc();",
   "variable_name": "valueMyIndicator_id"
 }

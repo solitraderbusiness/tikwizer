@@ -3,7 +3,7 @@ from . import path_root
 from . import adjust
 
 path = path_root.get()
-path_sub = "/contents/value_fetch/my_indicator/"
+path_sub = "/contents/value_fetch/my_indicators/"
 
 
 def get_class(row2, input_dic, class_id, constants, variables):
@@ -35,7 +35,8 @@ def get_class(row2, input_dic, class_id, constants, variables):
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
         .replace("init_body", init_body_dic.get("init_body")) \
-        .replace("indicator_name_val", row2) \
+        .replace("buffer_val", str(input_dic.get("buffer")))\
+        .replace("indicator_name_val", "\"" + row2 + "\"") \
         .replace("indicator_input_val", get_proper_input(input_dic.get("input")))
 
     if "adjust" in input_dic:
@@ -65,10 +66,13 @@ def is_not_const_var(value, constants, variables):
     return True
 
 
-def get_proper_input(input_custom):
+def get_proper_input(indicator_input):
     proper_input = ""
-    for item in input_custom:
-        proper_input += item + ", "
+    for item in indicator_input:
+        if item.get("type") == "string":
+            proper_input += "\"" + str(item.get("value")) + "\"" + ", "
+        else:
+            proper_input += str(item.get("value")) + ", "
     proper_input = replace_last_occurrence(proper_input, ", ", "")
     return proper_input
 
@@ -82,70 +86,14 @@ def replace_last_occurrence(s, old, new):
     return s[:index] + new + s[index + len(old):]
 
 
-def get_initializer(row2, var_id):
-    mpath = path + path_sub
+def get_initializer(var_id):
+    mpath = path + path_sub + "/"
     with open(mpath + "initializer.json") as initializer_file:
         if initializer_file:
             initializer_str = initializer_file.read()
             initializer_dic = json.loads(initializer_str)
-
-            mtype = get_return_type(row2)
-
-            initializer_body = initializer_dic.get("initializer") \
-                .replace("_id", str(var_id)) \
-                .replace("type", mtype, 1) \
-                .replace("type_return", mtype)
+            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
             return initializer_body
-
-
-def get_return_type(row2):
-    match row2:
-        case "ACCOUNT_INFO_BALLANCE":
-            return "double"
-        case "ACCOUNT_INFO_CREDIT":
-            return "double"
-        case "ACCOUNT_INFO_EQUITY":
-            return "double"
-        case "ACCOUNT_INFO_FREE_MARGIN":
-            return "double"
-        case "ACCOUNT_INFO_FREE_MARGIN_CHECK":
-            return "double"
-        case "ACCOUNT_INFO_LEVERAGE":
-            return "long"
-        case "ACCOUNT_INFO_LOGIN_NUMBER":
-            return "long"
-        case "ACCOUNT_INFO_MARGIN":
-            return "double"
-        case "ACCOUNT_INFO_MARGIN_LEVEL":
-            return "double"
-        case "ACCOUNT_INFO_NAME_BROKER":
-            return "string"
-        case "ACCOUNT_INFO_NAME_CLIENT":
-            return "string"
-        case "ACCOUNT_INFO_NAME_DEPOSIT_CURRENCY":
-            return "string"
-        case "ACCOUNT_INFO_NAME_SERVER":
-            return "string"
-        case "ACCOUNT_INFO_PROFIT_EQUITY_BALLANCE":
-            return "double"
-        case "ACCOUNT_INFO_STOPOUT_LEVEL":
-            return "double"
-        case "ACCOUNT_INFO_MARGIN_CALL_LEVEL":
-            return "double"
-        case "ACCOUNT_INFO_ORDERS_TRADES_LIMIT":
-            return "int"
-
-
-def get_initializer_split(var_id):
-    mpath = path + path_sub
-    with open(mpath + "initializer.json") as initializer_file:
-        if initializer_file:
-            initializer_str = initializer_file.read()
-            initializer_dic = json.loads(initializer_str)
-            initializer_list = initializer_dic.get("initializer_split")
-            for i in range(len(initializer_list)):
-                initializer_list[i] = initializer_list[i].replace("_id", str(var_id))
-            return initializer_list
 
 
 def get_var_name(var_id):

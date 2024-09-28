@@ -8,6 +8,7 @@ from . import value_class_constructor
 from . import object_on_the_chart_class_constructor
 from . import trade_order_in_loop_class_constructor
 from . import account_class_constructor
+from . import my_indicator_class_constructor
 
 path = path_root.get()
 path_sub = "/contents/"
@@ -1674,6 +1675,8 @@ def get_value_fetch_init(row1, row2, params, suffix):
         init = trade_order_in_loop_class_constructor.get_initializer(row2, suffix)
     elif row1 == "account":
         init = account_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "my_indicators":
+        init = my_indicator_class_constructor.get_initializer(suffix)
     return init
 
 
@@ -1693,6 +1696,8 @@ def get_value_fetch_val(row1, row2, suffix):
         val = trade_order_in_loop_class_constructor.get_var_name(suffix)
     elif row1 == "account":
         val = account_class_constructor.get_var_name(suffix)
+    elif row1 == "my_indicators":
+        val = my_indicator_class_constructor.get_var_name(suffix)
     return val
 
 

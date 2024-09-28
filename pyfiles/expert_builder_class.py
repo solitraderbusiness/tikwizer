@@ -61,6 +61,7 @@ class ExpertBuilder:
     from . import account_class_constructor
     from . import spread_filter_struct_constructor
     from . import on_trade_event_detector_class_constructor
+    from . import my_indicator_class_constructor
     from . import close_partially_items
     from . import volume_profile_items
 
@@ -742,6 +743,7 @@ class ExpertBuilder:
             expert += var
         for const in self.consts_user:
             expert += const
+        self.remove_repetitive_enums_custom_indicator()
         for struct in self.classes_structs_enums:
             expert += struct
         expert += self.block_parent_blueprint
@@ -838,6 +840,10 @@ class ExpertBuilder:
         text = text.replace("version_number_val", info.get("version_number"))
         return text
 
+    # there might be multiple instances of the same custom indicator in blocks, just remove repetitive enums if any
+    def remove_repetitive_enums_custom_indicator(self):
+        self.classes_structs_enums = list(set(self.classes_structs_enums))
+
     # Elements that are assigned to multiple
     # tasks of same type or to multiple task types
     def add_task_elements_common(self, nodes):
@@ -924,7 +930,7 @@ class ExpertBuilder:
         row2 = value_fetch.get("row2")
         params_price_level = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_text"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params_price_level, id_val))
+        self.append_value_fetch_class_enum(row1, row2, params_price_level, id_val)
 
     def move(self, node):
         params = node.get("params")
@@ -934,45 +940,42 @@ class ExpertBuilder:
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
             id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
-            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+            self.append_value_fetch_class_enum(row1_time_1, row2_time_1, params_time_1, id_val_time_1)
         if "time_2" in params:
             value_fetch_time_2 = params.get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
             params_time_2 = value_fetch_time_2.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+            self.append_value_fetch_class_enum(row1_time_2, row2_time_2, params_time_2, id_val_time_2)
         if "time_3" in params:
             value_fetch_time_3 = params.get("time_3")
             row1_time_3 = value_fetch_time_3.get("row1")
             row2_time_3 = value_fetch_time_3.get("row2")
             id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
             params_time_3 = value_fetch_time_3.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
+            self.append_value_fetch_class_enum(row1_time_3, row2_time_3, params_time_3, id_val_time_3)
         if "price_1" in params:
             value_fetch_price_1 = params.get("price_1")
             row1_price_1 = value_fetch_price_1.get("row1")
             row2_price_1 = value_fetch_price_1.get("row2")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
             params_price_1 = value_fetch_price_1.get("params")
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+            self.append_value_fetch_class_enum(row1_price_1, row2_price_1, params_price_1, id_val_price_1)
         if "price_2" in params:
             value_fetch_price_2 = params.get("price_2")
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
             params_price_2 = value_fetch_price_2.get("params")
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+            self.append_value_fetch_class_enum(row1_price_2, row2_price_2, params_price_2, id_val_price_2)
         if "price_3" in params:
             value_fetch_price_3 = params.get("price_3")
             row1_price_3 = value_fetch_price_3.get("row1")
             row2_price_3 = value_fetch_price_3.get("row2")
             id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
             params_price_3 = value_fetch_price_3.get("params")
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
+            self.append_value_fetch_class_enum(row1_price_3, row2_price_3, params_price_3, id_val_price_3)
 
     def phone_notification(self, node):
         params = node.get("params")
@@ -982,56 +985,56 @@ class ExpertBuilder:
             row2_1 = value_fetch_1.get("row2")
             params_1 = value_fetch_1.get("params")
             id_val_1 = str(node.get("id_by_user")) + "_1"
-            self.task_elements.append(self.value_fetch_class(row1_1, row2_1, params_1, id_val_1))
+            self.append_value_fetch_class_enum(row1_1, row2_1, params_1, id_val_1)
         if params.get("Label2") != "\"\"" and "value_2" in params:
             value_fetch_2 = params.get("value_2")
             row1_2 = value_fetch_2.get("row1")
             row2_2 = value_fetch_2.get("row2")
             id_val_2 = str(node.get("id_by_user")) + "_2"
             params_2 = value_fetch_2.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_2, row2_2, params_2, id_val_2))
+            self.append_value_fetch_class_enum(row1_2, row2_2, params_2, id_val_2)
         if params.get("Label3") != "\"\"" and "value_3" in params:
             value_fetch_3 = params.get("value_3")
             row1_3 = value_fetch_3.get("row1")
             row2_3 = value_fetch_3.get("row2")
             id_val_3 = str(node.get("id_by_user")) + "_3"
             params_3 = value_fetch_3.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_3, row2_3, params_3, id_val_3))
+            self.append_value_fetch_class_enum(row1_3, row2_3, params_3, id_val_3)
         if params.get("Label4") != "\"\"" and "value_4" in params:
             value_fetch_4 = params.get("value_4")
             row1_4 = value_fetch_4.get("row1")
             row2_4 = value_fetch_4.get("row2")
             id_val_4 = str(node.get("id_by_user")) + "_4"
             params_4 = value_fetch_4.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_4, row2_4, params_4, id_val_4))
+            self.append_value_fetch_class_enum(row1_4, row2_4, params_4, id_val_4)
         if params.get("Label5") != "\"\"" and "value_5" in params:
             value_fetch_5 = params.get("value_5")
             row1_5 = value_fetch_5.get("row1")
             row2_5 = value_fetch_5.get("row2")
             id_val_5 = str(node.get("id_by_user")) + "_5"
             params_5 = value_fetch_5.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_5, row2_5, params_5, id_val_5))
+            self.append_value_fetch_class_enum(row1_5, row2_5, params_5, id_val_5)
         if params.get("Label6") != "\"\"" and "value_6" in params:
             value_fetch_6 = params.get("value_6")
             row1_6 = value_fetch_6.get("row1")
             row2_6 = value_fetch_6.get("row2")
             id_val_6 = str(node.get("id_by_user")) + "_6"
             params_6 = value_fetch_6.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_6, row2_6, params_6, id_val_6))
+            self.append_value_fetch_class_enum(row1_6, row2_6, params_6, id_val_6)
         if params.get("Label7") != "\"\"" and "value_7" in params:
             value_fetch_7 = params.get("value_7")
             row1_7 = value_fetch_7.get("row1")
             row2_7 = value_fetch_7.get("row2")
             id_val_7 = str(node.get("id_by_user")) + "_7"
             params_7 = value_fetch_7.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_7, row2_7, params_7, id_val_7))
+            self.append_value_fetch_class_enum(row1_7, row2_7, params_7, id_val_7)
         if params.get("Label8") != "\"\"" and "value_8" in params:
             value_fetch_8 = params.get("value_8")
             row1_8 = value_fetch_8.get("row1")
             row2_8 = value_fetch_8.get("row2")
             id_val_8 = str(node.get("id_by_user")) + "_8"
             params_8 = value_fetch_8.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_8, row2_8, params_8, id_val_8))
+            self.append_value_fetch_class_enum(row1_8, row2_8, params_8, id_val_8)
 
     def alert_message(self, node):
         params = node.get("params")
@@ -1041,70 +1044,70 @@ class ExpertBuilder:
             row2_1 = value_fetch_1.get("row2")
             params_1 = value_fetch_1.get("params")
             id_val_1 = str(node.get("id_by_user")) + "_1"
-            self.task_elements.append(self.value_fetch_class(row1_1, row2_1, params_1, id_val_1))
+            self.append_value_fetch_class_enum(row1_1, row2_1, params_1, id_val_1)
         if params.get("AlertLabel2") != "\"\"" and "value_2" in params:
             value_fetch_2 = params.get("value_2")
             row1_2 = value_fetch_2.get("row1")
             row2_2 = value_fetch_2.get("row2")
             id_val_2 = str(node.get("id_by_user")) + "_2"
             params_2 = value_fetch_2.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_2, row2_2, params_2, id_val_2))
+            self.append_value_fetch_class_enum(row1_2, row2_2, params_2, id_val_2)
         if params.get("AlertLabel3") != "\"\"" and "value_3" in params:
             value_fetch_3 = params.get("value_3")
             row1_3 = value_fetch_3.get("row1")
             row2_3 = value_fetch_3.get("row2")
             id_val_3 = str(node.get("id_by_user")) + "_3"
             params_3 = value_fetch_3.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_3, row2_3, params_3, id_val_3))
+            self.append_value_fetch_class_enum(row1_3, row2_3, params_3, id_val_3)
         if params.get("AlertLabel4") != "\"\"" and "value_4" in params:
             value_fetch_4 = params.get("value_4")
             row1_4 = value_fetch_4.get("row1")
             row2_4 = value_fetch_4.get("row2")
             id_val_4 = str(node.get("id_by_user")) + "_4"
             params_4 = value_fetch_4.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_4, row2_4, params_4, id_val_4))
+            self.append_value_fetch_class_enum(row1_4, row2_4, params_4, id_val_4)
         if params.get("AlertLabel5") != "\"\"" and "value_5" in params:
             value_fetch_5 = params.get("value_5")
             row1_5 = value_fetch_5.get("row1")
             row2_5 = value_fetch_5.get("row2")
             id_val_5 = str(node.get("id_by_user")) + "_5"
             params_5 = value_fetch_5.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_5, row2_5, params_5, id_val_5))
+            self.append_value_fetch_class_enum(row1_5, row2_5, params_5, id_val_5)
         if params.get("AlertLabel6") != "\"\"" and "value_6" in params:
             value_fetch_6 = params.get("value_6")
             row1_6 = value_fetch_6.get("row1")
             row2_6 = value_fetch_6.get("row2")
             id_val_6 = str(node.get("id_by_user")) + "_6"
             params_6 = value_fetch_6.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_6, row2_6, params_6, id_val_6))
+            self.append_value_fetch_class_enum(row1_6, row2_6, params_6, id_val_6)
         if params.get("AlertLabel7") != "\"\"" and "value_7" in params:
             value_fetch_7 = params.get("value_7")
             row1_7 = value_fetch_7.get("row1")
             row2_7 = value_fetch_7.get("row2")
             id_val_7 = str(node.get("id_by_user")) + "_7"
             params_7 = value_fetch_7.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_7, row2_7, params_7, id_val_7))
+            self.append_value_fetch_class_enum(row1_7, row2_7, params_7, id_val_7)
         if params.get("AlertLabel8") != "\"\"" and "value_8" in params:
             value_fetch_8 = params.get("value_8")
             row1_8 = value_fetch_8.get("row1")
             row2_8 = value_fetch_8.get("row2")
             id_val_8 = str(node.get("id_by_user")) + "_8"
             params_8 = value_fetch_8.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_8, row2_8, params_8, id_val_8))
+            self.append_value_fetch_class_enum(row1_8, row2_8, params_8, id_val_8)
         if params.get("AlertLabel9") != "\"\"" and "value_9" in params:
             value_fetch_9 = params.get("value_9")
             row1_9 = value_fetch_9.get("row1")
             row2_9 = value_fetch_9.get("row2")
             id_val_9 = str(node.get("id_by_user")) + "_9"
             params_9 = value_fetch_9.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_9, row2_9, params_9, id_val_9))
+            self.append_value_fetch_class_enum(row1_9, row2_9, params_9, id_val_9)
         if params.get("AlertLabel10") != "\"\"" and "value_10" in params:
             value_fetch_10 = params.get("value_10")
             row1_10 = value_fetch_10.get("row1")
             row2_10 = value_fetch_10.get("row2")
             id_val_10 = str(node.get("id_by_user")) + "_10"
             params_10 = value_fetch_10.get("params")
-            self.task_elements.append(self.value_fetch_class(row1_10, row2_10, params_10, id_val_10))
+            self.append_value_fetch_class_enum(row1_10, row2_10, params_10, id_val_10)
 
     def modify_stops(self, node):
         params = node.get("params")
@@ -1114,49 +1117,49 @@ class ExpertBuilder:
             row2_rtd = value_fetch_rtd.get("row2")
             params_rtd = value_fetch_rtd.get("params")
             id_val_rtd = str(node.get("id_by_user")) + "_rtd"
-            self.task_elements.append(self.value_fetch_class(row1_rtd, row2_rtd, params_rtd, id_val_rtd))
+            self.append_value_fetch_class_enum(row1_rtd, row2_rtd, params_rtd, id_val_rtd)
         if "new_sl_mode_function" in params:
             value_fetch_nsmf = params.get("new_sl_mode_function")
             row1_nsf = value_fetch_nsmf.get("row1")
             row2_nsf = value_fetch_nsmf.get("row2")
             params_nsf = value_fetch_nsmf.get("params")
             id_val_nsf = str(node.get("id_by_user")) + "_nsmf"
-            self.task_elements.append(self.value_fetch_class(row1_nsf, row2_nsf, params_nsf, id_val_nsf))
+            self.append_value_fetch_class_enum(row1_nsf, row2_nsf, params_nsf, id_val_nsf)
         if "new_sl_mode_dynamicPips" in params:
             value_fetch_nsmdp = params.get("new_sl_mode_dynamicPips")
             row1_nsmdp = value_fetch_nsmdp.get("row1")
             row2_nsmdp = value_fetch_nsmdp.get("row2")
             params_nsmdp = value_fetch_nsmdp.get("params")
             id_val_nsmdp = str(node.get("id_by_user")) + "_nsmdp"
-            self.task_elements.append(self.value_fetch_class(row1_nsmdp, row2_nsmdp, params_nsmdp, id_val_nsmdp))
+            self.append_value_fetch_class_enum(row1_nsmdp, row2_nsmdp, params_nsmdp, id_val_nsmdp)
         if "new_sl_mode_dynamicDigits" in params:
             value_fetch_nsmdd = params.get("new_sl_mode_dynamicDigits")
             row1_nsmdd = value_fetch_nsmdd.get("row1")
             row2_nsmdd = value_fetch_nsmdd.get("row2")
             params_nsmdd = value_fetch_nsmdd.get("params")
             id_val_nsmdd = str(node.get("id_by_user")) + "_nsmdd"
-            self.task_elements.append(self.value_fetch_class(row1_nsmdd, row2_nsmdd, params_nsmdd, id_val_nsmdd))
+            self.append_value_fetch_class_enum(row1_nsmdd, row2_nsmdd, params_nsmdd, id_val_nsmdd)
         if "new_tp_mode_function" in params:
             value_fetch_ntmf = params.get("new_tp_mode_function")
             row1_ntmf = value_fetch_ntmf.get("row1")
             row2_ntmf = value_fetch_ntmf.get("row2")
             params_ntmf = value_fetch_ntmf.get("params")
             id_val_ntmf = str(node.get("id_by_user")) + "_ntmf"
-            self.task_elements.append(self.value_fetch_class(row1_ntmf, row2_ntmf, params_ntmf, id_val_ntmf))
+            self.append_value_fetch_class_enum(row1_ntmf, row2_ntmf, params_ntmf, id_val_ntmf)
         if "new_tp_mode_dynamicPips" in params:
             value_fetch_ntmdp = params.get("new_tp_mode_dynamicPips")
             row1_ntmdp = value_fetch_ntmdp.get("row1")
             row2_ntmdp = value_fetch_ntmdp.get("row2")
             params_ntmdp = value_fetch_ntmdp.get("params")
             id_val_ntmdp = str(node.get("id_by_user")) + "_ntmdp"
-            self.task_elements.append(self.value_fetch_class(row1_ntmdp, row2_ntmdp, params_ntmdp, id_val_ntmdp))
+            self.append_value_fetch_class_enum(row1_ntmdp, row2_ntmdp, params_ntmdp, id_val_ntmdp)
         if "new_tp_mode_dynamicDigits" in params:
             value_fetch_ntmdd = params.get("new_tp_mode_dynamicDigits")
             row1_ntmdd = value_fetch_ntmdd.get("row1")
             row2_ntmdd = value_fetch_ntmdd.get("row2")
             params_ntmdd = value_fetch_ntmdd.get("params")
             id_val_ntmdd = str(node.get("id_by_user")) + "_ntmdd"
-            self.task_elements.append(self.value_fetch_class(row1_ntmdd, row2_ntmdd, params_ntmdd, id_val_ntmdd))
+            self.append_value_fetch_class_enum(row1_ntmdd, row2_ntmdd, params_ntmdd, id_val_ntmdd)
 
     def pips_away_from_open_price(self, node):
         params = node.get("params")
@@ -1166,16 +1169,15 @@ class ExpertBuilder:
             row2_pips = value_fetch_pips.get("row2")
             params_pips = value_fetch_pips.get("params")
             id_val_pips = str(node.get("id_by_user")) + "_pips"
-            self.task_elements.append(self.value_fetch_class(row1_pips, row2_pips, params_pips, id_val_pips))
+            self.append_value_fetch_class_enum(row1_pips, row2_pips, params_pips, id_val_pips)
         if "custom_price_fraction" in params:
             value_fetch_price_fraction = params.get("custom_price_fraction")
             row1_price_fraction = value_fetch_price_fraction.get("row1")
             row2_price_fraction = value_fetch_price_fraction.get("row2")
             params_price_fraction = value_fetch_price_fraction.get("params")
             id_val_price_fraction = str(node.get("id_by_user")) + "_price_fraction"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_fraction, row2_price_fraction, params_price_fraction,
-                                       id_val_price_fraction))
+            self.append_value_fetch_class_enum(row1_price_fraction, row2_price_fraction, params_price_fraction,
+                                               id_val_price_fraction)
 
     def check_distance(self, node):
         value_fetch_upper_level = node.get("params").get("upper_level")
@@ -1183,25 +1185,22 @@ class ExpertBuilder:
         row2_upper_level = value_fetch_upper_level.get("row2")
         params_upper_level = value_fetch_upper_level.get("params")
         id_val_upper_level = str(node.get("id_by_user")) + "_upper_level"
-        self.task_elements.append(
-            self.value_fetch_class(row1_upper_level, row2_upper_level, params_upper_level, id_val_upper_level))
+        self.append_value_fetch_class_enum(row1_upper_level, row2_upper_level, params_upper_level, id_val_upper_level)
 
         value_fetch_lower_level = node.get("params").get("lower_level")
         row1_lower_level = value_fetch_lower_level.get("row1")
         row2_lower_level = value_fetch_lower_level.get("row2")
         params_lower_level = value_fetch_lower_level.get("params")
         id_val_lower_level = str(node.get("id_by_user")) + "_lower_level"
-        self.task_elements.append(
-            self.value_fetch_class(row1_lower_level, row2_lower_level, params_lower_level, id_val_lower_level))
+        self.append_value_fetch_class_enum(row1_lower_level, row2_lower_level, params_lower_level, id_val_lower_level)
 
         value_fetch_checking_distance = node.get("params").get("checking_distance")
         row1_checking_distance = value_fetch_checking_distance.get("row1")
         row2_checking_distance = value_fetch_checking_distance.get("row2")
         params_checking_distance = value_fetch_checking_distance.get("params")
         id_val_checking_distance = str(node.get("id_by_user")) + "_checking_distance"
-        self.task_elements.append(
-            self.value_fetch_class(row1_checking_distance, row2_checking_distance, params_checking_distance,
-                                   id_val_checking_distance))
+        self.append_value_fetch_class_enum(row1_checking_distance, row2_checking_distance, params_checking_distance,
+                                           id_val_checking_distance)
 
     def check_trendline_price_level(self, node):
         value_fetch = node.get("params").get("price_level")
@@ -1209,7 +1208,7 @@ class ExpertBuilder:
         row2 = value_fetch.get("row2")
         params_price_level = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_price_level"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params_price_level, id_val))
+        self.append_value_fetch_class_enum(row1, row2, params_price_level, id_val)
 
     def draw_editfield(self, node):
         value_fetch = node.get("params").get("text")
@@ -1217,7 +1216,7 @@ class ExpertBuilder:
         row2 = value_fetch.get("row2")
         params_text = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_text"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params_text, id_val))
+        self.append_value_fetch_class_enum(row1, row2, params_text, id_val)
 
     def draw_line(self, node):
         params = node.get("params")
@@ -1227,14 +1226,14 @@ class ExpertBuilder:
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
             id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
-            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+            self.append_value_fetch_class_enum(row1_time_1, row2_time_1, params_time_1, id_val_time_1)
         if "time_2" in params:
             value_fetch_time_2 = params.get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             params_time_2 = value_fetch_time_2.get("params")
             id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
-            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+            self.append_value_fetch_class_enum(row1_time_2, row2_time_2, params_time_2, id_val_time_2)
 
         if "price_1" in params:
             value_fetch_price_1 = params.get("price_1")
@@ -1242,16 +1241,14 @@ class ExpertBuilder:
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+            self.append_value_fetch_class_enum(row1_price_1, row2_price_1, params_price_1, id_val_price_1)
         if "price_2" in params:
             value_fetch_price_2 = params.get("price_2")
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             params_price_2 = value_fetch_price_2.get("params")
             id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+            self.append_value_fetch_class_enum(row1_price_2, row2_price_2, params_price_2, id_val_price_2)
 
     def draw_shape(self, node):
         if "time_1" in node.get("params"):
@@ -1260,21 +1257,21 @@ class ExpertBuilder:
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
             id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
-            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+            self.append_value_fetch_class_enum(row1_time_1, row2_time_1, params_time_1, id_val_time_1)
         if "time_2" in node.get("params"):
             value_fetch_time_2 = node.get("params").get("time_2")
             row1_time_2 = value_fetch_time_2.get("row1")
             row2_time_2 = value_fetch_time_2.get("row2")
             params_time_2 = value_fetch_time_2.get("params")
             id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
-            self.task_elements.append(self.value_fetch_class(row1_time_2, row2_time_2, params_time_2, id_val_time_2))
+            self.append_value_fetch_class_enum(row1_time_2, row2_time_2, params_time_2, id_val_time_2)
         if "time_3" in node.get("params"):
             value_fetch_time_3 = node.get("params").get("time_3")
             row1_time_3 = value_fetch_time_3.get("row1")
             row2_time_3 = value_fetch_time_3.get("row2")
             params_time_3 = value_fetch_time_3.get("params")
             id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
-            self.task_elements.append(self.value_fetch_class(row1_time_3, row2_time_3, params_time_3, id_val_time_3))
+            self.append_value_fetch_class_enum(row1_time_3, row2_time_3, params_time_3, id_val_time_3)
 
         if "price_1" in node.get("params"):
             value_fetch_price_1 = node.get("params").get("price_1")
@@ -1282,24 +1279,21 @@ class ExpertBuilder:
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+            self.append_value_fetch_class_enum(row1_price_1, row2_price_1, params_price_1, id_val_price_1)
         if "price_2" in node.get("params"):
             value_fetch_price_2 = node.get("params").get("price_2")
             row1_price_2 = value_fetch_price_2.get("row1")
             row2_price_2 = value_fetch_price_2.get("row2")
             params_price_2 = value_fetch_price_2.get("params")
             id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_2, row2_price_2, params_price_2, id_val_price_2))
+            self.append_value_fetch_class_enum(row1_price_2, row2_price_2, params_price_2, id_val_price_2)
         if "price_3" in node.get("params"):
             value_fetch_price_3 = node.get("params").get("price_3")
             row1_price_3 = value_fetch_price_3.get("row1")
             row2_price_3 = value_fetch_price_3.get("row2")
             params_price_3 = value_fetch_price_3.get("params")
             id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_3, row2_price_3, params_price_3, id_val_price_3))
+            self.append_value_fetch_class_enum(row1_price_3, row2_price_3, params_price_3, id_val_price_3)
 
     def draw_button(self, node):
         value_fetch = node.get("params").get("text")
@@ -1307,7 +1301,7 @@ class ExpertBuilder:
         row2 = value_fetch.get("row2")
         params_obj_text = value_fetch.get("params")
         id_val = str(node.get("id_by_user")) + "_obj_text"
-        self.task_elements.append(self.value_fetch_class(row1, row2, params_obj_text, id_val))
+        self.append_value_fetch_class_enum(row1, row2, params_obj_text, id_val)
 
     def draw_arrow(self, node):
         value_fetch_time_1 = node.get("params").get("time_1")
@@ -1315,14 +1309,14 @@ class ExpertBuilder:
         row2_time_1 = value_fetch_time_1.get("row2")
         params_time_1 = value_fetch_time_1.get("params")
         id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
-        self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+        self.append_value_fetch_class_enum(row1_time_1, row2_time_1, params_time_1, id_val_time_1)
 
         value_fetch_price_1 = node.get("params").get("price_1")
         row1_price_1 = value_fetch_price_1.get("row1")
         row2_price_1 = value_fetch_price_1.get("row2")
         params_price_1 = value_fetch_price_1.get("params")
         id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
-        self.task_elements.append(self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+        self.append_value_fetch_class_enum(row1_price_1, row2_price_1, params_price_1, id_val_price_1)
 
     def draw_text(self, node):
         params = node.get("params")
@@ -1332,23 +1326,21 @@ class ExpertBuilder:
             row2_time_1 = value_fetch_time_1.get("row2")
             params_time_1 = value_fetch_time_1.get("params")
             id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
-            self.task_elements.append(self.value_fetch_class(row1_time_1, row2_time_1, params_time_1, id_val_time_1))
+            self.append_value_fetch_class_enum(row1_time_1, row2_time_1, params_time_1, id_val_time_1)
         if "price_1" in params:
             value_fetch_price_1 = params.get("price_1")
             row1_price_1 = value_fetch_price_1.get("row1")
             row2_price_1 = value_fetch_price_1.get("row2")
             params_price_1 = value_fetch_price_1.get("params")
             id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
-            self.task_elements.append(
-                self.value_fetch_class(row1_price_1, row2_price_1, params_price_1, id_val_price_1))
+            self.append_value_fetch_class_enum(row1_price_1, row2_price_1, params_price_1, id_val_price_1)
         if "text" in params:
             value_fetch_text = params.get("text")
             row1_text = value_fetch_text.get("row1")
             row2_text = value_fetch_text.get("row2")
             params_text = value_fetch_text.get("params")
             id_val_text = str(node.get("id_by_user")) + "_text"
-            self.task_elements.append(
-                self.value_fetch_class(row1_text, row2_text, params_text, id_val_text))
+            self.append_value_fetch_class_enum(row1_text, row2_text, params_text, id_val_text)
 
     def modify_stops_of_trades(self, node):
         params = node.get("params")
@@ -1358,7 +1350,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_rt = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_rt"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_rt, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_rt, id_val)
 
         if params.get("new_tpsl_mode") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
             value_fetch_tp = params.get("new_take_profit_level")
@@ -1373,8 +1365,8 @@ class ExpertBuilder:
             params_sl = value_fetch_sl.get("params")
             id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
 
-            self.task_elements.append(self.value_fetch_class(row1_tp, row2_tp, params_tp, id_val_tp))
-            self.task_elements.append(self.value_fetch_class(row1_sl, row2_sl, params_sl, id_val_sl))
+            self.append_value_fetch_class_enum(row1_tp, row2_tp, params_tp, id_val_tp)
+            self.append_value_fetch_class_enum(row1_sl, row2_sl, params_sl, id_val_sl)
 
     def trailing_pending_orders(self, node):
         params = node.get("params")
@@ -1392,7 +1384,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_tdmd = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_tdmd"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_tdmd, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_tdmd, id_val)
 
     def buy_sell(self, node):
         params = node.get("params")
@@ -1402,49 +1394,49 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_oacp = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "oacp"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_oacp, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_oacp, id_val)
         if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
             value_fetch = params.get("take_profit_price_level")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_tppl = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_tppl"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_tppl, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_tppl, id_val)
         if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PIPS":
             value_fetch = params.get("take_profit_pips")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_tpp = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_tpp"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_tpp, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_tpp, id_val)
         if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
             value_fetch = params.get("take_profit_price_fraction")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_tppf = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_tppf"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_tppf, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_tppf, id_val)
         if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
             value_fetch = params.get("stop_loss_price_level")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_slpl = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_slpl"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_slpl, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_slpl, id_val)
         if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PIPS":
             value_fetch = params.get("stop_loss_pips")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_slp = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_slp"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_slp, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_slp, id_val)
         if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
             value_fetch = params.get("stop_loss_price_fraction")
             row1 = value_fetch.get("row1")
             row2 = value_fetch.get("row2")
             params_slpf = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_slpf"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_slpf, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_slpf, id_val)
 
     def comment(self, node):
         params = node.get("params")
@@ -1454,7 +1446,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r1"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_2") != "\"\"" and "value_fetch_2" in params:
             value_fetch = params.get("value_fetch_2")
@@ -1462,7 +1454,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r2"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_3") != "\"\"" and "value_fetch_3" in params:
             value_fetch = params.get("value_fetch_3")
@@ -1470,7 +1462,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r3"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_4") != "\"\"" and "value_fetch_4" in params:
             value_fetch = params.get("value_fetch_4")
@@ -1478,7 +1470,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r4"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_5") != "\"\"" and "value_fetch_5" in params:
             value_fetch = params.get("value_fetch_5")
@@ -1486,7 +1478,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r5"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_6") != "\"\"" and "value_fetch_6" in params:
             value_fetch = params.get("value_fetch_6")
@@ -1494,7 +1486,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r6"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_7") != "\"\"" and "value_fetch_7" in params:
             value_fetch = params.get("value_fetch_7")
@@ -1502,7 +1494,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r7"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
         if params.get("label_8") != "\"\"" and "value_fetch_8" in params:
             value_fetch = params.get("value_fetch_8")
@@ -1510,7 +1502,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_value_fetch = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "cm_r8"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_value_fetch, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_value_fetch, id_val)
 
     def trailing_stop_each_trade(self, node):
         params = node.get("params")
@@ -1520,7 +1512,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params_tsm = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "tsm_cl"
-            self.task_elements.append(self.value_fetch_class(row1, row2, params_tsm, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params_tsm, id_val)
 
     def no_trade_order_nearby_run_data(self, node):
         params = node.get("params")
@@ -1530,21 +1522,21 @@ class ExpertBuilder:
             row2_price = value_fetch_price.get("row2")
             params_price = value_fetch_price.get("params")
             id_val_price = str(node.get("id_by_user")) + "_price"
-            self.task_elements.append(self.value_fetch_class(row1_price, row2_price, params_price, id_val_price))
+            self.append_value_fetch_class_enum(row1_price, row2_price, params_price, id_val_price)
 
         value_fetch_t1 = params.get("time_1")
         row1_t1 = value_fetch_t1.get("row1")
         row2_t1 = value_fetch_t1.get("row2")
         params_t1 = value_fetch_t1.get("params")
         id_val_t1 = str(node.get("id_by_user")) + "_t1"
-        self.task_elements.append(self.value_fetch_class(row1_t1, row2_t1, params_t1, id_val_t1))
+        self.append_value_fetch_class_enum(row1_t1, row2_t1, params_t1, id_val_t1)
 
         value_fetch_t2 = params.get("time_2")
         row1_t2 = value_fetch_t2.get("row1")
         row2_t2 = value_fetch_t2.get("row2")
         params_t2 = value_fetch_t2.get("params")
         id_val_t2 = str(node.get("id_by_user")) + "_t2"
-        self.task_elements.append(self.value_fetch_class(row1_t2, row2_t2, params_t2, id_val_t2))
+        self.append_value_fetch_class_enum(row1_t2, row2_t2, params_t2, id_val_t2)
 
     def modify_variables(self, node):
         i = 0
@@ -1557,7 +1549,7 @@ class ExpertBuilder:
             row2 = value_fetch.get("row2")
             params = value_fetch.get("params")
             id_val = str(node.get("id_by_user")) + "_var_" + str(i)
-            self.task_elements.append(self.value_fetch_class(row1, row2, params, id_val))
+            self.append_value_fetch_class_enum(row1, row2, params, id_val)
 
     def formula_elements(self, node):
         params = node.get("params")
@@ -1566,13 +1558,13 @@ class ExpertBuilder:
         row2_left = params.get("left").get("row2")
         id_val_left = str(node.get("id_by_user")) + "_" + "left"
         params_left = params.get("left").get("params")
-        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
+        self.append_value_fetch_class_enum(row1_left, row2_left, params_left, id_val_left)
         # right data
         row1_right = params.get("right").get("row1")
         row2_right = params.get("right").get("row2")
         id_val_right = str(node.get("id_by_user")) + "_" + "right"
         params_right = params.get("right").get("params")
-        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
+        self.append_value_fetch_class_enum(row1_right, row2_right, params_right, id_val_right)
 
     def condition_1_normal_elements(self, node):
         params = node.get("params")
@@ -1581,13 +1573,13 @@ class ExpertBuilder:
         row2_left = params.get("left").get("row2")
         id_val_left = str(node.get("id_by_user")) + "_" + "left"
         params_left = params.get("left").get("params")
-        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left, id_val_left))
+        self.append_value_fetch_class_enum(row1_left, row2_left, params_left, id_val_left)
         # right data
         row1_right = params.get("right").get("row1")
         row2_right = params.get("right").get("row2")
         id_val_right = str(node.get("id_by_user")) + "_" + "right"
         params_right = params.get("right").get("params")
-        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right, id_val_right))
+        self.append_value_fetch_class_enum(row1_right, row2_right, params_right, id_val_right)
 
     def condition_1_cross_elements(self, node):
         params = node.get("params")
@@ -1604,8 +1596,8 @@ class ExpertBuilder:
         if "TickID" in params_left_2:
             params_left_2["TickID"] = str(params_left_2["TickID"]) + " + " + str(
                 (params.get("operator").get("cross_width")))
-        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_1, id_val_left_1))
-        self.task_elements.append(self.value_fetch_class(row1_left, row2_left, params_left_2, id_val_left_2))
+        self.append_value_fetch_class_enum(row1_left, row2_left, params_left_1, id_val_left_1)
+        self.append_value_fetch_class_enum(row1_left, row2_left, params_left_2, id_val_left_2)
         # right data
         row1_right = params.get("right").get("row1")
         row2_right = params.get("right").get("row2")
@@ -1619,36 +1611,49 @@ class ExpertBuilder:
         if "TickID" in params_right_2:
             params_right_2["TickID"] = str(params_right_2["TickID"]) + "+" + str(
                 params.get("operator").get("cross_width"))
-        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_1, id_val_right_1))
-        self.task_elements.append(self.value_fetch_class(row1_right, row2_right, params_right_2, id_val_right_2))
+        self.append_value_fetch_class_enum(row1_right, row2_right, params_right_1, id_val_right_1)
+        self.append_value_fetch_class_enum(row1_right, row2_right, params_right_2, id_val_right_2)
 
-    def value_fetch_class(self, row1, row2, params, id_val):
+    def append_value_fetch_class_enum(self, row1, row2, params, id_val):
         if row1 == "indicator":
-            return self.indicator_class_constructor.get_class(row2, params, id_val,
-                                                              self.data.get("constants"),
-                                                              self.data.get("variables"))
+            self.task_elements.append(self.indicator_class_constructor.get_class(row2, params, id_val,
+                                                                                 self.data.get("constants"),
+                                                                                 self.data.get("variables")))
         elif row1 == "candle":
-            return self.candle_class_constructor.get_class(params, id_val,
-                                                           self.data.get("constants"),
-                                                           self.data.get("variables"))
+            self.task_elements.append(self.candle_class_constructor.get_class(params, id_val,
+                                                                              self.data.get("constants"),
+                                                                              self.data.get("variables")))
         elif row1 == "market-properties":
-            return self.market_properties_class_constructor_new.get_class(row2, params, id_val,
-                                                                          self.data.get("constants"),
-                                                                          self.data.get("variables"))
+            self.task_elements.append(
+                self.market_properties_class_constructor_new.get_class(row2, params, id_val,
+                                                                       self.data.get("constants"),
+                                                                       self.data.get("variables")))
         elif row1 == "value":
-            return self.value_class_constructor.get_class(row2, params, id_val,
-                                                          self.data.get("constants"),
-                                                          self.data.get("variables"))
+            self.task_elements.append(self.value_class_constructor.get_class(row2, params, id_val,
+                                                                             self.data.get("constants"),
+                                                                             self.data.get("variables")))
         elif row1 == "object-on-the-chart":
-            return self.object_on_the_chart_class_constructor.get_class(row2, params, id_val,
-                                                                        self.data.get("constants"),
-                                                                        self.data.get("variables"))
+            self.task_elements.append(self.object_on_the_chart_class_constructor.get_class(row2, params, id_val,
+                                                                                           self.data.get(
+                                                                                               "constants"),
+                                                                                           self.data.get(
+                                                                                               "variables")))
         elif row1 == "trade-order-in-loop":
-            return self.trade_order_in_loop_class_constructor.get_class(row2, params, id_val,
-                                                                        self.data.get("constants"),
-                                                                        self.data.get("variables"))
+            self.task_elements.append(self.trade_order_in_loop_class_constructor.get_class(row2, params, id_val,
+                                                                                           self.data.get(
+                                                                                               "constants"),
+                                                                                           self.data.get(
+                                                                                               "variables")))
 
         elif row1 == "account":
-            return self.account_class_constructor.get_class(row2, params, id_val,
-                                                            self.data.get("constants"),
-                                                            self.data.get("variables"))
+            self.task_elements.append(self.account_class_constructor.get_class(row2, params, id_val,
+                                                                               self.data.get("constants"),
+                                                                               self.data.get("variables")))
+
+        elif row1 == "my_indicators":
+            self.task_elements.append(self.my_indicator_class_constructor.get_class(row2, params, id_val,
+                                                                                    self.data.get("constants"),
+                                                                                    self.data.get("variables")))
+            if params.get("enums"):  # custom indicators may have enums
+                for item in params.get("enums"):
+                    self.classes_structs_enums.append(item)
