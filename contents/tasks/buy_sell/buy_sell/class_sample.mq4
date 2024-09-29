@@ -231,7 +231,7 @@ private:
                   ObjectOnTheChart_numeric2oacp objectOnTheChart_numeric2oacp;
                   objectOnTheChart_numeric2oacp.init();
                   double valueObjectOnTheChart_numeric2oacp = objectOnTheChart_numeric2oacp.calc();
-                  price = valueObjectOnTheChart_numeric2oacp;
+                  price = NormalizeDouble(price, SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
                   break;
               }
            }

@@ -214,16 +214,16 @@ input_data_1 = {
                 "version_number": "fsdfsad 125.45"
             },
             "virtual_stops": {
-                "virtual_stops": "true",
+                "virtual_stops": "True",
                 "virtual_stops_time_out": 0,
                 "emergency_stops": "always",
                 "relative_size": 0,
                 "add_pips": "100"
             },
             "visual": {
-                "display_spread_meter": "true",
-                "display_status_messages": "false",
-                "display_indicators_after_test": "false"
+                "display_spread_meter": "True",
+                "display_status_messages": "False",
+                "display_indicators_after_test": "False"
             }
         }
     },
@@ -452,4 +452,427 @@ input_data_2 = {
   "selected_name": "2dda19ff-50a6-4e98-801b-67601bab1201",
   "name_by_user": "unnamed",
   "highestIndex": "5"
+}
+
+# test pending open at fix
+input_data_3 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "6a6b0347-309b-4748-8f04-0b7c514fa634",
+            "id_by_user": 1,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "type": "{0,1}",
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "order_age_mins": "0",
+              "level_color": "clrDeepPink",
+              "relative_to": "PRICE_RELATIVE_TO_OPEN_PRICE",
+              "new_tpsl_mode": "NEW_STOPS_FIXED",
+              "new_stoploss": "50",
+              "new_takeprofit": "50"
+            },
+            "id": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+            "id_by_user": 2,
+            "category": "trading_actions",
+            "block_name_mql": "modify_stops_of_trades",
+            "blockName": "Modify stops of trades"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "cbfe57fc-4bb3-4253-b1ed-6274fbd7aa6c",
+            "id_by_user": 3,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrMaroon",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "takeprofit": "20",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "stoploss": "20",
+              "symbol": "",
+              "group": "",
+              "volume_upper_limit": "0",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "how_much_volume": "0.1"
+            },
+            "id": "e0856e95-43d9-4fde-8cf4-dccc3380ce6d",
+            "id_by_user": 4,
+            "category": "buy_sell",
+            "block_name_mql": "buy_now",
+            "blockName": "Buy now"
+          },
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "open_at_price": "OPEN_AT_CUSTOM_PRICE",
+              "money_management": "MONEY_MANAGEMENT_FIXED_VOLUME",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrDarkBlue",
+              "price_offset": "20",
+              "how_much_volume": "0.1",
+              "stoploss": "20",
+              "takeprofit": "20",
+              "price_to_open_dynamic_level": {
+                "row1": "value",
+                "row2": "Numeric",
+                "params": {
+                  "value": "1",
+                  "adjust": ""
+                }
+              }
+            },
+            "id": "c5ba7e7f-4ebe-424c-8807-4a76e1c4bd1e",
+            "id_by_user": 5,
+            "blockName": "Buy pending order",
+            "category": "buy_sell",
+            "block_name_mql": "buy_pending_order"
+          }
+        ],
+        "nodesData": [
+          {
+            "id": "6a6b0347-309b-4748-8f04-0b7c514fa634",
+            "type": "customNode",
+            "position": {
+              "x": -219.5,
+              "y": -2.999999999999986
+            },
+            "data": {
+              "id": "6a6b0347-309b-4748-8f04-0b7c514fa634",
+              "child_name": "Condition",
+              "color_bg": "rgb(255, 220, 169)",
+              "color_font": "#222",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "condition",
+              "url_to_fetch": "NULL",
+              "parent_name": 8,
+              "title": "Condition",
+              "bgcolor": "rgb(255, 220, 169)",
+              "color": "#222",
+              "category": "condition_formula",
+              "index": 1,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 84,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+            "type": "customNode",
+            "position": {
+              "x": -255,
+              "y": -150
+            },
+            "data": {
+              "id": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+              "child_name": "Modify stops of trades",
+              "color_bg": "blue",
+              "color_font": "white",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": False,
+              "slug": "modify-stops-of-trades",
+              "url_to_fetch": "NULL",
+              "parent_name": 23,
+              "title": "Modify stops of trades",
+              "bgcolor": "blue",
+              "color": "white",
+              "category": "trading_actions",
+              "index": 2,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 156,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "cbfe57fc-4bb3-4253-b1ed-6274fbd7aa6c",
+            "type": "customNode",
+            "position": {
+              "x": -78,
+              "y": -79
+            },
+            "data": {
+              "id": "cbfe57fc-4bb3-4253-b1ed-6274fbd7aa6c",
+              "child_name": "Condition",
+              "color_bg": "rgb(255, 220, 169)",
+              "color_font": "#222",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "condition",
+              "url_to_fetch": "NULL",
+              "parent_name": 8,
+              "title": "Condition",
+              "bgcolor": "rgb(255, 220, 169)",
+              "color": "#222",
+              "category": "condition_formula",
+              "index": 3,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 84,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "e0856e95-43d9-4fde-8cf4-dccc3380ce6d",
+            "type": "customNode",
+            "position": {
+              "x": -373,
+              "y": 37
+            },
+            "data": {
+              "id": "e0856e95-43d9-4fde-8cf4-dccc3380ce6d",
+              "child_name": "Buy now",
+              "color_bg": "rgb(0, 128, 0)",
+              "color_font": "rgb(255, 255, 255)",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "buy-now",
+              "url_to_fetch": "NULL",
+              "parent_name": 1,
+              "title": "Buy now",
+              "bgcolor": "rgb(0, 128, 0)",
+              "color": "rgb(255, 255, 255)",
+              "category": "buy_sell",
+              "index": 4,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 76,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "c5ba7e7f-4ebe-424c-8807-4a76e1c4bd1e",
+            "type": "customNode",
+            "position": {
+              "x": -156.67275943419781,
+              "y": 141.32407748642126
+            },
+            "data": {
+              "id": "c5ba7e7f-4ebe-424c-8807-4a76e1c4bd1e",
+              "child_name": "Buy pending order",
+              "color_bg": "#008000",
+              "color_font": "#ccc",
+              "id_sent": "2",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "buy-pending-order",
+              "url_to_fetch": "NULL",
+              "parent_name": 1,
+              "title": "Buy pending order",
+              "bgcolor": "#008000",
+              "color": "#ccc",
+              "category": "buy_sell",
+              "index": 5,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 134,
+              "height": 24
+            },
+            "dragging": False
+          }
+        ],
+        "edges": [
+          {
+            "source": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+            "sourceHandle": "blue",
+            "target": "6a6b0347-309b-4748-8f04-0b7c514fa634",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "d8c8ccfe-6469-490f-b18c-1a137a1d0ee5"
+          },
+          {
+            "source": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+            "sourceHandle": "blue",
+            "target": "cbfe57fc-4bb3-4253-b1ed-6274fbd7aa6c",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "593cd5c1-9abe-4dbc-8e32-3de6be2689f4"
+          },
+          {
+            "source": "3f6ad442-2c27-4b34-a654-a1ce88ea72ad",
+            "sourceHandle": "blue",
+            "target": "e0856e95-43d9-4fde-8cf4-dccc3380ce6d",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "ee804605-8f08-4457-91e2-a6b609836cbe"
+          },
+          {
+            "source": "6a6b0347-309b-4748-8f04-0b7c514fa634",
+            "sourceHandle": "blue",
+            "target": "c5ba7e7f-4ebe-424c-8807-4a76e1c4bd1e",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "cac05a02-bc13-4bc7-ad6f-b0119cad7301"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8580,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "2dda19ff-50a6-4e98-801b-67601bab1201",
+  "name_by_user": "unnamed",
+  "highestIndex": "6"
 }

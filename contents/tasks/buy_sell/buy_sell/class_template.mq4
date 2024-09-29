@@ -227,7 +227,7 @@ private:
                   break;
                case OPEN_AT_CUSTOM_PRICE:
                   initializer_oacp
-                  price = variable_name_oacp;
+                  price = NormalizeDouble(variable_name_oacp, SymbolInfoInteger(msymbol, SYMBOL_DIGITS));
                   break;
               }
            }
