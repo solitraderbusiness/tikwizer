@@ -406,7 +406,7 @@ public:
 
          maxs[i] = prices[maxPart];
          mins[i] = prices[minPart];
-         mltps[i] = prices[xIndex];
+         mltps[i] = xIndex>=0 ? prices[xIndex] : -1;
          dns[i] = prices[startIndex];
          ups[i] = prices[(int)(startIndex + partSize -1)];
 
