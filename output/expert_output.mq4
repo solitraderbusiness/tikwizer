@@ -224,6 +224,13 @@ bool ONTIMER_TAKEN      = false;
 bool ONTIMER_TAKEN_IN_MILLISECONDS = false;
 double ONTIMER_TAKEN_TIME = 0;
 input int user_magic = 8580;
+//This is used to hold onchart event for onchart blocks process
+struct OnChartEventHolder {
+   int               id;
+   long              lparam;
+   double            dparam;
+   string            sparam;
+};
 class OnTradeEventDetector {
 private:
    //--- structures
@@ -923,13 +930,6 @@ public:
       return eventValues[eventValuesQueueIndex].symbol;
    }
 };
-//This is used to hold onchart event for onchart blocks process
-struct OnChartEventHolder {
-   int               id;
-   long              lparam;
-   double            dparam;
-   string            sparam;
-};
 class BlockParent {
 public:
    int               current_source_id;
@@ -1355,8 +1355,8 @@ private:
    }
 
    void              buildMagic() {
-      magic = user_magic;
-//         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+      // magic = user_magic;
+      magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
    }
 
 };
@@ -2738,7 +2738,7 @@ bool              filterGeneral(string &symbols[], int symbol_mode, int &type[],
    bool con2 = sameOrderType(type, OrderType());
    bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());
    bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());
-   return con1 && con2; //&& con3 && con4;
+   return con1 && con2 && con3 && con4;
 }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4280,6 +4280,6 @@ void OnDeinit(const int reason) {
 
 
 
-//__version__ = "0.9.25"
-//__timestamp__ = "2024.09.29 15:53"
+//__version__ = "0.9.27"
+//__timestamp__ = "2024.10.20 11:08"
 //

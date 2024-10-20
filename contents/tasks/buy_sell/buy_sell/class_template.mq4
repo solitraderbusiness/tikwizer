@@ -489,8 +489,8 @@ private:
 
    void              buildMagic()
      {
-         magic = user_magic;
-//         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
+//         magic = user_magic;
+         magic = StrToInteger(group + "72" + "000"); //72 shows it's automated (opened by the expert).
      }
 
   };
