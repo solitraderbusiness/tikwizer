@@ -376,7 +376,7 @@ def get_fun__history_trade_select_by_index():
 
 
 def get_fun__filter_general():
-    result = "   bool              filterGeneral(string &symbols[], int symbol_mode, int &type[], int group_mode, int group_number)\n     {\n      bool con1 = is_symbol_accepted(symbol_mode, symbols);\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());\n      return con1 && con2 && con3 && con4;\n     }"
+    result = "   bool              filterGeneral(string &symbols[], int symbol_mode, int &type[], int group_mode, int group_number)\n     {\n      bool con1 = is_symbol_accepted(symbol_mode, symbols);\n      bool con2 = sameOrderType(type, OrderType());\n      bool con3 = group_mode!=ORDER_GROUP_MODE_NUMBER || group_number==getGroupNumber(OrderMagicNumber());\n      bool con4 = group_mode!=ORDER_GROUP_MODE_MANUAL || !isAutomated(OrderMagicNumber());\n      return con1 && con2; //&& con3 && con4;\n     }"
 
     return result
 

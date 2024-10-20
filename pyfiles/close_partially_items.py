@@ -5,7 +5,6 @@ path = path_root.get()
 path_sub = "/contents/tasks/loop_for_trades_orders/close_partially/"
 
 
-
 def get_structs():
     mpath = path + path_sub
     with open(mpath + "struct_data.json") as structs_file:

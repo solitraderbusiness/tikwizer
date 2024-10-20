@@ -1400,3 +1400,193 @@ input_data_4 = {
   "name_by_user": "unnamed",
   "highestIndex": "7"
 }
+
+# test: group check in filter general in global functions disabled
+input_data_5 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "symbol": "",
+              "group": "",
+              "money_management": "MONEY_MANAGEMENT_BETTING_MARTINGALE_PAROLI",
+              "volume_upper_limit": "0",
+              "stop_loss_mode": "TPSL_MODE_FIXED_PIPS",
+              "take_profit_mode": "TPSL_MODE_FIXED_PIPS",
+              "slippage": "4",
+              "comment": "",
+              "arrow_color": "clrBlue",
+              "look_up_on": "LOOK_UP_RUNNING_THEN_HISTORY",
+              "martingale_init_vol": "0.1",
+              "martingale_multiply_on_loss": "2",
+              "martingale_multiply_on_profit": "1",
+              "martingale_addlots_on_loss": "0",
+              "martingale_addlots_on_profit": "0",
+              "martingale_reset_on_n_losses": "0",
+              "martingale_reset_on_n_profits": "1",
+              "stoploss": "20",
+              "takeprofit": "20"
+            },
+            "id": "b8b4901f-4cb2-4f20-84d4-f7ea0ca87136",
+            "id_by_user": 7,
+            "blockName": "Buy now",
+            "category": "buy_sell",
+            "block_name_mql": "buy_now"
+          },
+          {
+            "params": {
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "symbol_mode": "SYMBOL_MODE_ANY",
+              "type": "{0,1}"
+            },
+            "id": "182fea71-7178-42b5-807e-5e86ab90bc22",
+            "id_by_user": 8,
+            "blockName": "No trade",
+            "category": "check_trades_orders_count",
+            "block_name_mql": "no_trade"
+          }
+        ],
+        "nodesData": [
+          {
+            "id": "b8b4901f-4cb2-4f20-84d4-f7ea0ca87136",
+            "type": "customNode",
+            "position": {
+              "x": -255,
+              "y": 135
+            },
+            "data": {
+              "id": "b8b4901f-4cb2-4f20-84d4-f7ea0ca87136",
+              "child_name": "Buy now",
+              "color_bg": "rgb(0, 128, 0)",
+              "color_font": "rgb(255, 255, 255)",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "buy-now",
+              "url_to_fetch": "NULL",
+              "parent_name": 1,
+              "title": "Buy now",
+              "bgcolor": "rgb(0, 128, 0)",
+              "color": "rgb(255, 255, 255)",
+              "category": "buy_sell",
+              "index": 7,
+              "loading": False,
+              "closeHeaders": [],
+              "openHeaders": [
+                "Group and Symbol to use"
+              ]
+            },
+            "selected": False,
+            "measured": {
+              "width": 76,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "182fea71-7178-42b5-807e-5e86ab90bc22",
+            "type": "customNode",
+            "position": {
+              "x": -195,
+              "y": 0
+            },
+            "data": {
+              "id": "182fea71-7178-42b5-807e-5e86ab90bc22",
+              "child_name": "No trade",
+              "color_bg": "SkyBlue",
+              "color_font": "black",
+              "id_sent": "6",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "no-trade",
+              "url_to_fetch": "NULL",
+              "parent_name": 22,
+              "title": "No trade",
+              "bgcolor": "SkyBlue",
+              "color": "black",
+              "category": "check_trades_orders_count",
+              "index": 8,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 78,
+              "height": 24
+            },
+            "dragging": False
+          }
+        ],
+        "edges": [
+          {
+            "source": "182fea71-7178-42b5-807e-5e86ab90bc22",
+            "sourceHandle": "blue",
+            "target": "b8b4901f-4cb2-4f20-84d4-f7ea0ca87136",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "2592a07d-b269-4429-8318-63a4f2b87e01"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8580,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "2dda19ff-50a6-4e98-801b-67601bab1201",
+  "name_by_user": "unnamed",
+  "highestIndex": "9"
+}
