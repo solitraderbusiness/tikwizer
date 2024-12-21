@@ -2,6 +2,7 @@ import time
 
 from . import adapter
 from . import expert_builder_class
+from . import encryption
 import traceback
 
 
@@ -14,4 +15,4 @@ def generate_mql(data_raw):
     except Exception:
         exception_traceback = traceback.format_exc()
         print("Traceback: ", exception_traceback)
-        return exception_traceback
+        return "ERROR:\n\n" + encryption.encrypt_aes(exception_traceback)

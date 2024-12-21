@@ -1590,3 +1590,389 @@ input_data_5 = {
   "name_by_user": "unnamed",
   "highestIndex": "9"
 }
+
+input_data_6 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "count_limit": "3",
+              "operator": ">",
+              "type": "{0,1}"
+            },
+            "id": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "id_by_user": 14,
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_trades_count",
+            "blockName": "Check trades count"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "ee1eda08-89e8-43ba-9117-b7eb7816ebe1",
+            "id_by_user": 15,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row2": "Bearsx",
+                "row1": "indicators-my-indicators",
+                "params": {
+                  "input": [
+                    {
+                      "type": "int",
+                      "name": "InpBearsPeriod",
+                      "value": "13"
+                    },
+                    {
+                      "type": "double",
+                      "name": "testparam",
+                      "value": "100"
+                    }
+                  ],
+                  "enums": [],
+                  "buffer": 3
+                }
+              },
+              "right": {
+                "row2": "ma",
+                "row1": "indicator",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "053ed5a7-7e6a-4e24-a35a-99aa9b6e739e",
+            "id_by_user": 16,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ee1eda08-89e8-43ba-9117-b7eb7816ebe1",
+            "sourceHandle": "blue",
+            "target": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "db344fb2-565c-419d-8b6c-2b11a2a93e3d"
+          },
+          {
+            "source": "053ed5a7-7e6a-4e24-a35a-99aa9b6e739e",
+            "sourceHandle": "blue",
+            "target": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "bff32c94-553f-4a56-9081-aa80f8d252b1"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8580,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "2dda19ff-50a6-4e98-801b-67601bab1201",
+  "name_by_user": "unnamed",
+  "highestIndex": "17"
+}
+
+# test custom indicator
+input_data_7 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {
+              "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+              "symbols_str": "",
+              "group_mode": "ORDER_GROUP_MODE_ALL",
+              "count_limit": "3",
+              "operator": ">",
+              "type": "{0,1}"
+            },
+            "id": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "id_by_user": 14,
+            "category": "check_trades_orders_count",
+            "block_name_mql": "check_trades_count",
+            "blockName": "Check trades count"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "5",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              },
+              "right": {
+                "row1": "indicator",
+                "row2": "ma",
+                "params": {
+                  "value": "1",
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                }
+              }
+            },
+            "id": "ee1eda08-89e8-43ba-9117-b7eb7816ebe1",
+            "id_by_user": 15,
+            "category": "condition_formula",
+            "block_name_mql": "condition",
+            "blockName": "Condition"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row2": "Bearsy",
+                "params": {
+                  "input": [
+                    {
+                      "type": "int",
+                      "name": "InpBearsPeriod",
+                      "value": "13"
+                    },
+                    {
+                      "type": "double",
+                      "name": "testparam",
+                      "value": "100"
+                    }
+                  ],
+                  "enums": [],
+                  "buffer": 3,
+                  "InpBearsPeriod": "13"
+                },
+                "row1": "indicators-my-indicators"
+              },
+              "right": {
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                },
+                "row1": "indicator"
+              }
+            },
+            "id": "053ed5a7-7e6a-4e24-a35a-99aa9b6e739e",
+            "id_by_user": 16,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ],
+        "edges": [
+          {
+            "source": "ee1eda08-89e8-43ba-9117-b7eb7816ebe1",
+            "sourceHandle": "blue",
+            "target": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "db344fb2-565c-419d-8b6c-2b11a2a93e3d"
+          },
+          {
+            "source": "053ed5a7-7e6a-4e24-a35a-99aa9b6e739e",
+            "sourceHandle": "blue",
+            "target": "8a9aa52b-4eb7-4df0-841e-ad614c655045",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "bff32c94-553f-4a56-9081-aa80f8d252b1"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 8580,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001=0.01,0.00001=0.0001,0.000001=0.0001"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "2dda19ff-50a6-4e98-801b-67601bab1201",
+  "name_by_user": "unnamed",
+  "highestIndex": "17"
+}
