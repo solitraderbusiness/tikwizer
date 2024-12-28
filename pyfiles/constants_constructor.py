@@ -302,7 +302,8 @@ constants = [
 
 def get_constants(rule, spread, status, show_indicator):
     mconsts = constants.copy()
-    rule = rule.replace("\n", "")
+    rule = rule.replace("\n", ",")
+    rule = rule.rstrip(",")  # removes the comma
     rule = rule.replace(" ", "")
     for i in range(len(mconsts)):
         if "POINT_FORMAT_RULES" in mconsts[i]:
