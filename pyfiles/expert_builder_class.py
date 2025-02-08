@@ -1650,10 +1650,10 @@ class ExpertBuilder:
                                                                                self.data.get("constants"),
                                                                                self.data.get("variables")))
 
-        elif row1 == "my_indicators":
+        elif row1 == "indicators-my-indicators":
             self.task_elements.append(self.my_indicator_class_constructor.get_class(row2, params, id_val,
                                                                                     self.data.get("constants"),
                                                                                     self.data.get("variables")))
             if params.get("enums"):  # custom indicators may have enums
                 for item in params.get("enums"):
-                    self.classes_structs_enums.append(item)
+                    self.classes_structs_enums.append(item + ";\n")

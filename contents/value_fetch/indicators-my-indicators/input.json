@@ -1,20 +1,4 @@
 {
-  "input": [
-    {
-      "type": "bool",
-      "name": "state",
-      "value": true
-    },
-    {
-      "type": "int",
-      "name": "count",
-      "value": 0
-    }
-  ],
-    "enums": [
-    "enum Sample1 {hello};",
-    "enum Sample2 {goodbye};"
-  ],
   "buffer": 3,
   "adjust": "",
   "Symbol": "",

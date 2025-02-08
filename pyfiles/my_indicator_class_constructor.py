@@ -3,7 +3,7 @@ from . import path_root
 from . import adjust
 
 path = path_root.get()
-path_sub = "/contents/value_fetch/my_indicators/"
+path_sub = "/contents/value_fetch/indicators-my-indicators/"
 
 
 def get_class(row2, input_dic, class_id, constants, variables):
@@ -35,9 +35,9 @@ def get_class(row2, input_dic, class_id, constants, variables):
         .replace("_id", str(class_id), 1) \
         .replace("field_body", field_body_dic.get("field_body")) \
         .replace("init_body", init_body_dic.get("init_body")) \
-        .replace("buffer_val", str(input_dic.get("buffer")))\
+        .replace("buffer_val", str(input_dic.get("buffer"))) \
         .replace("indicator_name_val", "\"" + row2 + "\"") \
-        .replace("indicator_input_val", get_proper_input(input_dic.get("input")))
+        .replace("indicator_input_val", get_proper_input(input_dic))
 
     if "adjust" in input_dic:
         var_name = "retval"
@@ -66,13 +66,20 @@ def is_not_const_var(value, constants, variables):
     return True
 
 
-def get_proper_input(indicator_input):
+def get_proper_input(input_dic):
+    indicator_input = input_dic.get("input")
     proper_input = ""
     for item in indicator_input:
         if item.get("type") == "string":
-            proper_input += "\"" + str(item.get("value")) + "\"" + ", "
+            if item.get("name") in input_dic:
+                proper_input += "\"" + str(input_dic.get(item.get("name"))) + "\"" + ", "
+            else:
+                proper_input += "\"" + str(item.get("value")) + "\"" + ", "
         else:
-            proper_input += str(item.get("value")) + ", "
+            if item.get("name") in input_dic:
+                proper_input += str(input_dic.get(item.get("name"))) + ", "
+            else:
+                proper_input += str(item.get("value")) + ", "
     proper_input = replace_last_occurrence(proper_input, ", ", "")
     return proper_input
 
@@ -104,3 +111,40 @@ def get_var_name(var_id):
             initializer_dic = json.loads(initializer_str)
             var_name = initializer_dic.get("variable_name").replace("_id", str(var_id))
             return var_name
+
+# Sample input
+# {
+#   "input": [
+#     {
+#       "type": "bool",
+#       "name": "state",
+#       "value": true
+#     },
+#     {
+#       "type": "int",
+#       "name": "count",
+#       "value": 0
+#     }
+#   ],
+#     "enums": [
+#     "enum Sample1 {hello};",
+#     "enum Sample2 {goodbye};"
+#   ],
+#   "buffer": 3,
+#   "adjust": "",
+#   "Symbol": "",
+#   "Period": "PERIOD_CURRENT",
+#   "ModeOutput": "id",
+#   "TimeStamp": "00:00",
+#   "VisibleID": 0,
+#   "VisibleShift": 0,
+#   "VisibleLimit": 100,
+#   "RangeCandleStart": 0,
+#   "RangeCandleEnd": 10,
+#   "RangeTimeSource": "server",
+#   "RangeTimeStart": "01:00",
+#   "RangeTimeEnd": "08:00",
+#   "RangeDayOffset": 0,
+#   "RangeValue": "max",
+#   "Shift": "0"
+# }

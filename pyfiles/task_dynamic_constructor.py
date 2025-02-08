@@ -1675,7 +1675,7 @@ def get_value_fetch_init(row1, row2, params, suffix):
         init = trade_order_in_loop_class_constructor.get_initializer(row2, suffix)
     elif row1 == "account":
         init = account_class_constructor.get_initializer(row2, suffix)
-    elif row1 == "my_indicators":
+    elif row1 == "indicators-my-indicators":
         init = my_indicator_class_constructor.get_initializer(suffix)
     return init
 
@@ -1696,7 +1696,7 @@ def get_value_fetch_val(row1, row2, suffix):
         val = trade_order_in_loop_class_constructor.get_var_name(suffix)
     elif row1 == "account":
         val = account_class_constructor.get_var_name(suffix)
-    elif row1 == "my_indicators":
+    elif row1 == "indicators-my-indicators":
         val = my_indicator_class_constructor.get_var_name(suffix)
     return val
 

@@ -20,7 +20,7 @@ input_data_1 = {
                                 "label": "-"
                             },
                             "left": {
-                                "row1": "my_indicators",
+                                "row1": "indicators-my-indicators",
                                 "row2": "test_indicator",
                                 "params": {
                                     "input": [
@@ -60,7 +60,7 @@ input_data_1 = {
 
                             },
                             "right": {
-                                "row1": "my_indicators",
+                                "row1": "indicators-my-indicators",
                                 "row2": "Awesome - Copy",
                                 "params": {
                                     "input": [
@@ -2076,6 +2076,438 @@ input_data_8 = {
             "position": {
               "x": -105,
               "y": -105
+            },
+            "data": {
+              "id": "86238671-e966-4039-9899-c6ad77876a67",
+              "child_name": "Condition",
+              "color_bg": "rgb(255, 220, 169)",
+              "color_font": "#222",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "condition",
+              "url_to_fetch": "NULL",
+              "parent_name": 8,
+              "title": "Condition",
+              "bgcolor": "rgb(255, 220, 169)",
+              "color": "#222",
+              "category": "condition_formula",
+              "index": 3,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 84,
+              "height": 24
+            },
+            "dragging": False
+          }
+        ],
+        "edges": [
+          {
+            "source": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "sourceHandle": "blue",
+            "target": "86238671-e966-4039-9899-c6ad77876a67",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "d16bdc04-90fc-4f82-9292-3ec7c765dea9"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "4ab939e2-c60f-47b8-af65-81f2b22ef66c",
+        "type": "double",
+        "name": "x_var",
+        "value": "0",
+        "description": ""
+      }
+    ],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 1073,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "51ef531f-bf2f-4c14-8c00-8ad86aba1954",
+  "name_by_user": "Testdkfsjdl",
+  "highestIndex": "4"
+}
+
+# test custom indicator
+input_data_9 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "params": {
+                  "input": [
+                    {
+                      "type": "int",
+                      "name": "InpBearsPeriod",
+                      "value": "13"
+                    }
+                  ],
+                  "enums": [
+                    "enum textenum {hi, bye}"
+                  ],
+                  "buffer": 2,
+                  "ModeOutput": "id_by_visible",
+                  "VisibleID": "0",
+                  "VisibleShift": "0",
+                  "VisibleLimit": "100"
+                },
+                "row1": "indicators-my-indicators",
+                "row2": "Bearsy"
+              },
+              "right": {
+                "row2": "ma",
+                "params": {
+                  "ma_period": "20",
+                  "ma_shift": "0",
+                  "ma_method": "MODE_SMA",
+                  "applied_price": "PRICE_CLOSE",
+                  "adjust": "",
+                  "symbol": "",
+                  "timeframe": "PERIOD_CURRENT",
+                  "shift": "0"
+                },
+                "row1": "indicator"
+              }
+            },
+            "id": "86238671-e966-4039-9899-c6ad77876a67",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ],
+        "nodesData": [
+          {
+            "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "type": "customNode",
+            "position": {
+              "x": -105,
+              "y": -210
+            },
+            "data": {
+              "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+              "child_name": "Pass",
+              "color_bg": "gray",
+              "color_font": "white",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": False,
+              "slug": "pass",
+              "url_to_fetch": "NULL",
+              "parent_name": 21,
+              "title": "Pass",
+              "bgcolor": "gray",
+              "color": "white",
+              "category": "more",
+              "index": 2,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 52,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "86238671-e966-4039-9899-c6ad77876a67",
+            "type": "customNode",
+            "position": {
+              "x": -105,
+              "y": -105
+            },
+            "data": {
+              "id": "86238671-e966-4039-9899-c6ad77876a67",
+              "child_name": "Condition",
+              "color_bg": "rgb(255, 220, 169)",
+              "color_font": "#222",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": True,
+              "slug": "condition",
+              "url_to_fetch": "NULL",
+              "parent_name": 8,
+              "title": "Condition",
+              "bgcolor": "rgb(255, 220, 169)",
+              "color": "#222",
+              "category": "condition_formula",
+              "index": 3,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 84,
+              "height": 24
+            },
+            "dragging": False
+          }
+        ],
+        "edges": [
+          {
+            "source": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "sourceHandle": "blue",
+            "target": "86238671-e966-4039-9899-c6ad77876a67",
+            "targetHandle": "c",
+            "type": "customEdge",
+            "id": "d16bdc04-90fc-4f82-9292-3ec7c765dea9"
+          }
+        ]
+      },
+      "on_trade": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_chart": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_deinit": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      }
+    },
+    "variables": [
+      {
+        "id": "4ab939e2-c60f-47b8-af65-81f2b22ef66c",
+        "type": "double",
+        "name": "x_var",
+        "value": "0",
+        "description": ""
+      }
+    ],
+    "constants": [],
+    "project_options": {
+      "magic_and_other": {
+        "magic_number": 1073,
+        "expiration_date": "",
+        "on_timer_period": 60
+      },
+      "pip_size": {
+        "rules": "0.001 = 0.01\n0.00001 = 0.0001\n0.000001 = 0.0001 \n"
+      },
+      "description_and_version_number": {
+        "copy_right": "",
+        "description": "",
+        "website_address": "",
+        "version_number": ""
+      },
+      "virtual_stops": {
+        "virtual_stops": False,
+        "virtual_stops_time_out": 0,
+        "emergency_stops": "no",
+        "relative_size": 0,
+        "add_pips": 0
+      },
+      "visual": {
+        "display_spread_meter": True,
+        "display_status_messages": True,
+        "display_indicators_after_test": True
+      }
+    }
+  },
+  "selected_name": "51ef531f-bf2f-4c14-8c00-8ad86aba1954",
+  "name_by_user": "Testdkfsjdl",
+  "highestIndex": "4"
+}
+
+# test custom indicator
+input_data_10 = {
+  "data": {
+    "events": {
+      "on_init": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_timer": {
+        "nodes": [],
+        "nodesData": [],
+        "edges": []
+      },
+      "on_tick": {
+        "nodes": [
+          {
+            "params": {},
+            "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "id_by_user": 2,
+            "category": "more",
+            "block_name_mql": "pass",
+            "blockName": "Pass"
+          },
+          {
+            "params": {
+              "operator": {
+                "label": ">",
+                "cross_width": 1
+              },
+              "left": {
+                "row2": "Bearsy",
+                "row1": "indicators-my-indicators",
+                "params": {
+                  "input": [
+                    {
+                      "type": "int",
+                      "name": "InpBearsPeriod",
+                      "value": "13"
+                    }
+                  ],
+                  "enums": [
+                    "enum textenum {hi, bye}",
+                    "enum textenum2 {hic, byec}"
+                  ],
+                  "buffer": 2,
+                  "InpBearsPeriod": "18",
+                  "ModeOutput": "range",
+                  "RangeCandleStart": "50",
+                  "RangeCandleEnd": "100",
+                  "RangeValue": "min",
+                  "Timeframe": "PERIOD_H1",
+                  "symbol": "GBPUSD"
+                }
+              },
+              "right": {
+                "row2": "Bearsx",
+                "row1": "indicators-my-indicators",
+                "params": {
+                  "input": [
+                    {
+                      "type": "int",
+                      "name": "InpBearsPeriod",
+                      "value": "13"
+                    },
+                    {
+                      "type": "double",
+                      "name": "testparam",
+                      "value": "100"
+                    }
+                  ],
+                  "enums": [],
+                  "buffer": 3,
+                  "InpBearsPeriod": "17",
+                  "testparam": "25"
+                }
+              }
+            },
+            "id": "86238671-e966-4039-9899-c6ad77876a67",
+            "id_by_user": 3,
+            "blockName": "Condition",
+            "category": "condition_formula",
+            "block_name_mql": "condition"
+          }
+        ],
+        "nodesData": [
+          {
+            "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+            "type": "customNode",
+            "position": {
+              "x": -105,
+              "y": -210
+            },
+            "data": {
+              "id": "4772c16d-99e9-410b-a6bb-0ff90d4a720d",
+              "child_name": "Pass",
+              "color_bg": "gray",
+              "color_font": "white",
+              "id_sent": "1",
+              "is_shown": True,
+              "is_triple": False,
+              "slug": "pass",
+              "url_to_fetch": "NULL",
+              "parent_name": 21,
+              "title": "Pass",
+              "bgcolor": "gray",
+              "color": "white",
+              "category": "more",
+              "index": 2,
+              "loading": False
+            },
+            "selected": False,
+            "measured": {
+              "width": 52,
+              "height": 24
+            },
+            "dragging": False
+          },
+          {
+            "id": "86238671-e966-4039-9899-c6ad77876a67",
+            "type": "customNode",
+            "position": {
+              "x": -107.4375,
+              "y": -50
             },
             "data": {
               "id": "86238671-e966-4039-9899-c6ad77876a67",
