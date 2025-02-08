@@ -226,14 +226,6 @@ double ONTIMER_TAKEN_TIME = 0;
 input int user_magic = 1073;
 double x_var = 0; //
 enum textenum {hi, bye};
-//This is used to hold onchart event for onchart blocks process
-struct OnChartEventHolder
-  {
-   int               id;
-   long              lparam;
-   double            dparam;
-   string            sparam;
-  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -972,7 +964,14 @@ public:
    string            EventValueComment() {return eventValues[eventValuesQueueIndex].comment;}
    string            EventValueSymbol()  {return eventValues[eventValuesQueueIndex].symbol;}
   };
-enum textenum2 {hic, byec};
+//This is used to hold onchart event for onchart blocks process
+struct OnChartEventHolder
+  {
+   int               id;
+   long              lparam;
+   double            dparam;
+   string            sparam;
+  };
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -1012,7 +1011,7 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class MyIndicator3_left
+class MyIndicator3_left1
   {
 public:
    string            Symbol;
@@ -1036,18 +1035,18 @@ public:
      {
       Symbol = (string)"";
       Period = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
-      ModeOutput = (string)"range";
+      ModeOutput = (string)"id";
       TimeStamp = (string)"00:00";
       VisibleID = (int)0;
       VisibleShift = (int)0;
       VisibleLimit = (int)100;
-      RangeCandleStart = (int)50;
-      RangeCandleEnd = (int)100;
+      RangeCandleStart = (int)0;
+      RangeCandleEnd = (int)10;
       RangeTimeSource = (string)"server";
       RangeTimeStart = (string)"01:00";
       RangeTimeEnd = (string)"08:00";
       RangeDayOffset = (double)0;
-      RangeValue = (string)"min";
+      RangeValue = (string)"max";
       Shift = (int)0;
      }
 
@@ -1067,7 +1066,7 @@ public:
 
       if(ModeOutput == "id")
         {
-         retval = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift);
+         retval = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift);
 
         }
       else
@@ -1085,7 +1084,7 @@ public:
               }
 
             shift = iCandleID(symbol, timeframe, time);
-            retval = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift);
+            retval = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift);
            }
          else
             if(ModeOutput == "visible" || ModeOutput == "id_by_visible")
@@ -1099,7 +1098,7 @@ public:
 
                for(i = shift; i <= VisibleLimit; i++)
                  {
-                  ival = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift + i);
+                  ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
 
                   if(ival == EMPTY_VALUE || ival == 0)
                     {
@@ -1142,7 +1141,7 @@ public:
 
                      for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
                        {
-                        ival = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift + i);
+                        ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
                         if(ival == EMPTY_VALUE || ival == 0)
                           {
                            continue;
@@ -1165,7 +1164,7 @@ public:
 
                         for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
                           {
-                           ival = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift + i);
+                           ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
                            if(ival == EMPTY_VALUE || ival == 0)
                              {
                               continue;
@@ -1207,7 +1206,7 @@ public:
 
                         for(i=x2; i<=x1; i++)
                           {
-                           ival = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift + i);
+                           ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
                            if(ival == EMPTY_VALUE || ival == 0)
                              {
                               continue;
@@ -1230,7 +1229,7 @@ public:
 
                            for(i=x2; i<=x1; i++)
                              {
-                              ival = iCustom(symbol, timeframe, "Bearsy", 18, buffer, shift + i);
+                              ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
                               if(ival == EMPTY_VALUE || ival == 0)
                                 {
                                  continue;
@@ -1252,7 +1251,247 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class MyIndicator3_right
+class MyIndicator3_left2
+  {
+public:
+   string            Symbol;
+   ENUM_TIMEFRAMES   Period;
+   string            ModeOutput;
+   string            TimeStamp;
+   int               VisibleID;
+   int               VisibleShift;
+   int               VisibleLimit;
+   int               RangeCandleStart;
+   int               RangeCandleEnd;
+   string            RangeTimeSource;
+   string            RangeTimeStart;
+   string            RangeTimeEnd;
+   double            RangeDayOffset;
+   string            RangeValue;
+   int               Shift;
+
+public:
+   void              init()
+     {
+      Symbol = (string)"";
+      Period = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
+      ModeOutput = (string)"id";
+      TimeStamp = (string)"00:00";
+      VisibleID = (int)0;
+      VisibleShift = (int)0;
+      VisibleLimit = (int)100;
+      RangeCandleStart = (int)0;
+      RangeCandleEnd = (int)10;
+      RangeTimeSource = (string)"server";
+      RangeTimeStart = (string)"01:00";
+      RangeTimeEnd = (string)"08:00";
+      RangeDayOffset = (double)0;
+      RangeValue = (string)"max";
+      Shift = (int)0 + 10;
+     }
+
+   double            calc()
+     {
+
+
+      string symbol = getSymbol(Symbol);
+      ENUM_TIMEFRAMES timeframe = getTimeframe(Period);
+
+      int buffer    = 2;
+      int shift     = Shift;//STest, + cross length
+
+      double retval = EMPTY_VALUE;
+      int i;
+      double ival;
+
+      if(ModeOutput == "id")
+        {
+         retval = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift);
+
+        }
+      else
+         if(ModeOutput == "time")
+           {
+            datetime time;
+
+            if(0 && StringFind(TimeStamp, ":") == -1)
+              {
+               time = (datetime)StringToInteger(TimeStamp); // hangs in MQL4!!!
+              }
+            else
+              {
+               time = StringToTime(TimeStamp);
+              }
+
+            shift = iCandleID(symbol, timeframe, time);
+            retval = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift);
+           }
+         else
+            if(ModeOutput == "visible" || ModeOutput == "id_by_visible")
+              {
+               if(VisibleLimit == 0)
+                 {
+                  VisibleLimit = iBars(symbol, timeframe);
+                 }
+
+               int vid = 0;
+
+               for(i = shift; i <= VisibleLimit; i++)
+                 {
+                  ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
+
+                  if(ival == EMPTY_VALUE || ival == 0)
+                    {
+                     continue;
+                    }
+                  if(vid >= VisibleID)
+                    {
+                     if(ModeOutput == "visible")
+                       {
+                        retval = ival;
+                       }
+                     else
+                       {
+                        retval = i;
+                       }
+                     break;
+                    }
+
+                  vid++;
+                 }
+              }
+            else
+               if(ModeOutput == "range")
+                 {
+                  int cstart = RangeCandleStart;
+                  int cend   = RangeCandleEnd;
+                  //string RangeValue = RangeValue;
+
+                  // reverse values, if needed
+                  if(RangeCandleStart > RangeCandleEnd)
+                    {
+                     int ctmp = RangeCandleEnd;
+                     RangeCandleEnd = RangeCandleStart;
+                     RangeCandleStart = ctmp;
+                    }
+
+                  if(RangeValue == "max")
+                    {
+                     retval = -EMPTY_VALUE;
+
+                     for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
+                       {
+                        ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
+                        if(ival == EMPTY_VALUE || ival == 0)
+                          {
+                           continue;
+                          }
+                        if(ival > retval)
+                          {
+                           retval = ival;
+                          }
+                       }
+
+                     if(retval == -EMPTY_VALUE)
+                       {
+                        retval = EMPTY_VALUE;
+                       }
+                    }
+                  else
+                     if(RangeValue == "min")
+                       {
+                        retval = EMPTY_VALUE;
+
+                        for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
+                          {
+                           ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
+                           if(ival == EMPTY_VALUE || ival == 0)
+                             {
+                              continue;
+                             }
+                           if(ival < retval)
+                             {
+                              retval = ival;
+                             }
+                          }
+                       }
+                 }
+               else
+                  if(ModeOutput == "range_time")
+                    {
+                     datetime offset = 0;
+                     if(RangeTimeSource == "gmt")
+                       {
+                        offset = (int)(TimeCurrent() - TimeLocal() + TimeGMTOffset());
+                       }
+                     else
+                        if(RangeTimeSource == "server")
+                          {
+                           offset = (int)(TimeCurrent() - TimeLocal());
+                          }
+
+                     datetime time1 = StringToTime(RangeTimeStart)-(datetime)(86400*RangeDayOffset) + offset;
+                     datetime time2 = StringToTime(RangeTimeEnd)-(datetime)(86400*RangeDayOffset) + offset;
+
+                     int x1 = iBarShift(symbol, timeframe, time1, false);
+                     int x2 = iBarShift(symbol, timeframe, time2, false);
+                     if(x1<x2)
+                       {
+                        x1=iBarShift(symbol,timeframe,(time1-86400),false);
+                       }
+
+                     if(RangeValue == "max")
+                       {
+                        retval = -EMPTY_VALUE;
+
+                        for(i=x2; i<=x1; i++)
+                          {
+                           ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
+                           if(ival == EMPTY_VALUE || ival == 0)
+                             {
+                              continue;
+                             }
+                           if(ival > retval)
+                             {
+                              retval = ival;
+                             }
+                          }
+
+                        if(retval == -EMPTY_VALUE)
+                          {
+                           retval = EMPTY_VALUE;
+                          }
+                       }
+                     else
+                        if(RangeValue == "min")
+                          {
+                           retval = EMPTY_VALUE;
+
+                           for(i=x2; i<=x1; i++)
+                             {
+                              ival = iCustom(symbol, timeframe, "Bearsy", 13, buffer, shift + i);
+                              if(ival == EMPTY_VALUE || ival == 0)
+                                {
+                                 continue;
+                                }
+                              if(ival < retval)
+                                {
+                                 retval = ival;
+                                }
+                             }
+                          }
+                    }
+
+      return retval;
+
+     }
+
+  };
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class MyIndicator3_right1
   {
 public:
    string            Symbol;
@@ -1307,7 +1546,7 @@ public:
 
       if(ModeOutput == "id")
         {
-         retval = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift);
+         retval = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift);
 
         }
       else
@@ -1325,7 +1564,7 @@ public:
               }
 
             shift = iCandleID(symbol, timeframe, time);
-            retval = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift);
+            retval = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift);
            }
          else
             if(ModeOutput == "visible" || ModeOutput == "id_by_visible")
@@ -1339,7 +1578,7 @@ public:
 
                for(i = shift; i <= VisibleLimit; i++)
                  {
-                  ival = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift + i);
+                  ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
 
                   if(ival == EMPTY_VALUE || ival == 0)
                     {
@@ -1382,7 +1621,7 @@ public:
 
                      for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
                        {
-                        ival = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift + i);
+                        ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
                         if(ival == EMPTY_VALUE || ival == 0)
                           {
                            continue;
@@ -1405,7 +1644,7 @@ public:
 
                         for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
                           {
-                           ival = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift + i);
+                           ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
                            if(ival == EMPTY_VALUE || ival == 0)
                              {
                               continue;
@@ -1447,7 +1686,7 @@ public:
 
                         for(i=x2; i<=x1; i++)
                           {
-                           ival = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift + i);
+                           ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
                            if(ival == EMPTY_VALUE || ival == 0)
                              {
                               continue;
@@ -1470,7 +1709,247 @@ public:
 
                            for(i=x2; i<=x1; i++)
                              {
-                              ival = iCustom(symbol, timeframe, "Bearsx", 17, 25, buffer, shift + i);
+                              ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
+                              if(ival == EMPTY_VALUE || ival == 0)
+                                {
+                                 continue;
+                                }
+                              if(ival < retval)
+                                {
+                                 retval = ival;
+                                }
+                             }
+                          }
+                    }
+
+      return retval;
+
+     }
+
+  };
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class MyIndicator3_right2
+  {
+public:
+   string            Symbol;
+   ENUM_TIMEFRAMES   Period;
+   string            ModeOutput;
+   string            TimeStamp;
+   int               VisibleID;
+   int               VisibleShift;
+   int               VisibleLimit;
+   int               RangeCandleStart;
+   int               RangeCandleEnd;
+   string            RangeTimeSource;
+   string            RangeTimeStart;
+   string            RangeTimeEnd;
+   double            RangeDayOffset;
+   string            RangeValue;
+   int               Shift;
+
+public:
+   void              init()
+     {
+      Symbol = (string)"";
+      Period = (ENUM_TIMEFRAMES)PERIOD_CURRENT;
+      ModeOutput = (string)"id";
+      TimeStamp = (string)"00:00";
+      VisibleID = (int)0;
+      VisibleShift = (int)0;
+      VisibleLimit = (int)100;
+      RangeCandleStart = (int)0;
+      RangeCandleEnd = (int)10;
+      RangeTimeSource = (string)"server";
+      RangeTimeStart = (string)"01:00";
+      RangeTimeEnd = (string)"08:00";
+      RangeDayOffset = (double)0;
+      RangeValue = (string)"max";
+      Shift = (int)0+10;
+     }
+
+   double            calc()
+     {
+
+
+      string symbol = getSymbol(Symbol);
+      ENUM_TIMEFRAMES timeframe = getTimeframe(Period);
+
+      int buffer    = 3;
+      int shift     = Shift;//STest, + cross length
+
+      double retval = EMPTY_VALUE;
+      int i;
+      double ival;
+
+      if(ModeOutput == "id")
+        {
+         retval = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift);
+
+        }
+      else
+         if(ModeOutput == "time")
+           {
+            datetime time;
+
+            if(0 && StringFind(TimeStamp, ":") == -1)
+              {
+               time = (datetime)StringToInteger(TimeStamp); // hangs in MQL4!!!
+              }
+            else
+              {
+               time = StringToTime(TimeStamp);
+              }
+
+            shift = iCandleID(symbol, timeframe, time);
+            retval = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift);
+           }
+         else
+            if(ModeOutput == "visible" || ModeOutput == "id_by_visible")
+              {
+               if(VisibleLimit == 0)
+                 {
+                  VisibleLimit = iBars(symbol, timeframe);
+                 }
+
+               int vid = 0;
+
+               for(i = shift; i <= VisibleLimit; i++)
+                 {
+                  ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
+
+                  if(ival == EMPTY_VALUE || ival == 0)
+                    {
+                     continue;
+                    }
+                  if(vid >= VisibleID)
+                    {
+                     if(ModeOutput == "visible")
+                       {
+                        retval = ival;
+                       }
+                     else
+                       {
+                        retval = i;
+                       }
+                     break;
+                    }
+
+                  vid++;
+                 }
+              }
+            else
+               if(ModeOutput == "range")
+                 {
+                  int cstart = RangeCandleStart;
+                  int cend   = RangeCandleEnd;
+                  //string RangeValue = RangeValue;
+
+                  // reverse values, if needed
+                  if(RangeCandleStart > RangeCandleEnd)
+                    {
+                     int ctmp = RangeCandleEnd;
+                     RangeCandleEnd = RangeCandleStart;
+                     RangeCandleStart = ctmp;
+                    }
+
+                  if(RangeValue == "max")
+                    {
+                     retval = -EMPTY_VALUE;
+
+                     for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
+                       {
+                        ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
+                        if(ival == EMPTY_VALUE || ival == 0)
+                          {
+                           continue;
+                          }
+                        if(ival > retval)
+                          {
+                           retval = ival;
+                          }
+                       }
+
+                     if(retval == -EMPTY_VALUE)
+                       {
+                        retval = EMPTY_VALUE;
+                       }
+                    }
+                  else
+                     if(RangeValue == "min")
+                       {
+                        retval = EMPTY_VALUE;
+
+                        for(i = RangeCandleStart; i <= RangeCandleEnd; i++)
+                          {
+                           ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
+                           if(ival == EMPTY_VALUE || ival == 0)
+                             {
+                              continue;
+                             }
+                           if(ival < retval)
+                             {
+                              retval = ival;
+                             }
+                          }
+                       }
+                 }
+               else
+                  if(ModeOutput == "range_time")
+                    {
+                     datetime offset = 0;
+                     if(RangeTimeSource == "gmt")
+                       {
+                        offset = (int)(TimeCurrent() - TimeLocal() + TimeGMTOffset());
+                       }
+                     else
+                        if(RangeTimeSource == "server")
+                          {
+                           offset = (int)(TimeCurrent() - TimeLocal());
+                          }
+
+                     datetime time1 = StringToTime(RangeTimeStart)-(datetime)(86400*RangeDayOffset) + offset;
+                     datetime time2 = StringToTime(RangeTimeEnd)-(datetime)(86400*RangeDayOffset) + offset;
+
+                     int x1 = iBarShift(symbol, timeframe, time1, false);
+                     int x2 = iBarShift(symbol, timeframe, time2, false);
+                     if(x1<x2)
+                       {
+                        x1=iBarShift(symbol,timeframe,(time1-86400),false);
+                       }
+
+                     if(RangeValue == "max")
+                       {
+                        retval = -EMPTY_VALUE;
+
+                        for(i=x2; i<=x1; i++)
+                          {
+                           ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
+                           if(ival == EMPTY_VALUE || ival == 0)
+                             {
+                              continue;
+                             }
+                           if(ival > retval)
+                             {
+                              retval = ival;
+                             }
+                          }
+
+                        if(retval == -EMPTY_VALUE)
+                          {
+                           retval = EMPTY_VALUE;
+                          }
+                       }
+                     else
+                        if(RangeValue == "min")
+                          {
+                           retval = EMPTY_VALUE;
+
+                           for(i=x2; i<=x1; i++)
+                             {
+                              ival = iCustom(symbol, timeframe, "Bearsx", 13, 100, buffer, shift + i);
                               if(ival == EMPTY_VALUE || ival == 0)
                                 {
                                  continue;
@@ -1490,27 +1969,198 @@ public:
   };
 
 
-//Pass
-class Task2 : public Task
+
+class MovingAverage4_left1
+
   {
 
+   string            symbol;
+   int               timeframe;
+   int               ma_period;
+   int               ma_shift;
+   int               ma_method;
+   int               applied_price;
+   int               shift;
+
+
+
 public:
-                     Task2(string name):Task(name)
+
+   void              init()
+
      {
 
-     }
-   virtual void               run(int block_id, BlockParent &block)
-     {
-      Task::run(block_id, block);
-      block.onResult(ROUTE_1_PASSED);
-     }
-   virtual void      reset(int level)
-     {
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      ma_period = 5;
+      ma_shift = 0;
+      ma_method = MODE_SMA;
+      applied_price = PRICE_CLOSE;
+      shift = 0;
 
      }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
+
+      return result;
+
+     }
+
+
 
   };
 
+class MovingAverage4_left2
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               ma_period;
+   int               ma_shift;
+   int               ma_method;
+   int               applied_price;
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      ma_period = 5;
+      ma_shift = 0;
+      ma_method = MODE_SMA;
+      applied_price = PRICE_CLOSE;
+      shift = 0 + 10;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MovingAverage4_right1
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               ma_period;
+   int               ma_shift;
+   int               ma_method;
+   int               applied_price;
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      ma_period = 20;
+      ma_shift = 0;
+      ma_method = MODE_SMA;
+      applied_price = PRICE_CLOSE;
+      shift = 0;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
+
+class MovingAverage4_right2
+
+  {
+
+   string            symbol;
+   int               timeframe;
+   int               ma_period;
+   int               ma_shift;
+   int               ma_method;
+   int               applied_price;
+   int               shift;
+
+
+
+public:
+
+   void              init()
+
+     {
+
+      symbol = "";
+      timeframe = PERIOD_CURRENT;
+      ma_period = 20;
+      ma_shift = 0;
+      ma_method = MODE_SMA;
+      applied_price = PRICE_CLOSE;
+      shift = 0+10;
+
+     }
+
+
+
+   double            calc()
+
+     {
+
+      string symbol =  getSymbol(this.symbol);
+      int timeframe = getTimeframe(this.timeframe);
+      double result = iMA(symbol, timeframe, ma_period, ma_shift, ma_method, applied_price, shift);
+
+      return result;
+
+     }
+
+
+
+  };
 //Condition
 class Task3 : public Task
   {
@@ -1524,14 +2174,64 @@ public:
      {
       Task::run(block_id, block);
 
-      MyIndicator3_left myIndicator3_left;
-      myIndicator3_left.init();
-      double valueMyIndicator3_left = myIndicator3_left.calc();
-      MyIndicator3_right myIndicator3_right;
-      myIndicator3_right.init();
-      double valueMyIndicator3_right = myIndicator3_right.calc();
+      MyIndicator3_left1 myIndicator3_left1;
+      myIndicator3_left1.init();
+      double valueMyIndicator3_left1 = myIndicator3_left1.calc();
+      MyIndicator3_left2 myIndicator3_left2;
+      myIndicator3_left2.init();
+      double valueMyIndicator3_left2 = myIndicator3_left2.calc();
+      MyIndicator3_right1 myIndicator3_right1;
+      myIndicator3_right1.init();
+      double valueMyIndicator3_right1 = myIndicator3_right1.calc();
+      MyIndicator3_right2 myIndicator3_right2;
+      myIndicator3_right2.init();
+      double valueMyIndicator3_right2 = myIndicator3_right2.calc();
 
-      if(valueMyIndicator3_left > valueMyIndicator3_right)
+      if(valueMyIndicator3_left1 > valueMyIndicator3_right1 && valueMyIndicator3_left2 < valueMyIndicator3_right2)
+        {
+         //printf("task"+block_id + " passed route 1");
+         block.onResult(ROUTE_1_PASSED);
+        }
+      else
+        {
+         //printf("task"+block_id + " passed route 2");
+         block.onResult(ROUTE_2_PASSED);
+        }
+     }
+   virtual void      reset(int level)
+     {
+
+     }
+
+  };
+
+//Condition
+class Task4 : public Task
+  {
+
+public:
+                     Task4(string name):Task(name)
+     {
+
+     }
+   virtual void               run(int block_id, BlockParent &block)
+     {
+      Task::run(block_id, block);
+
+      MovingAverage4_left1 movingaverage4_left1;
+      movingaverage4_left1.init();
+      double valueMovingAverage4_left1 = movingaverage4_left1.calc();
+      MovingAverage4_left2 movingaverage4_left2;
+      movingaverage4_left2.init();
+      double valueMovingAverage4_left2 = movingaverage4_left2.calc();
+      MovingAverage4_right1 movingaverage4_right1;
+      movingaverage4_right1.init();
+      double valueMovingAverage4_right1 = movingaverage4_right1.calc();
+      MovingAverage4_right2 movingaverage4_right2;
+      movingaverage4_right2.init();
+      double valueMovingAverage4_right2 = movingaverage4_right2.calc();
+
+      if(valueMovingAverage4_left1 > valueMovingAverage4_right1 && valueMovingAverage4_left2 < valueMovingAverage4_right2)
         {
          //printf("task"+block_id + " passed route 1");
          block.onResult(ROUTE_1_PASSED);
@@ -1699,18 +2399,44 @@ public:
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-class Block2 : public Block
+class Block3 : public Block
   {
 public:
-                     Block2()
+                     Block3()
      {
       id = 0;
-      id_by_user = 2;
-      name = "pass";
+      id_by_user = 3;
+      name = "condition_1_cross";
       enabled = True;
       event = EVENT_ON_TICK;
 
-      int mnexts_true[] = {1};
+      int mnexts_true[] = {};
+      int mnexts_false[] = {};
+      int mprevs_true[] = {1};
+      int mprevs_false[] = {};
+      populateNextsTrue(mnexts_true);
+      populateNextsFalse(mnexts_false);
+      populatePrevsTrue(mprevs_true);
+      populatePrevsFalse(mprevs_false);
+
+      task = new Task3(name);
+     }
+  };
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+class Block4 : public Block
+  {
+public:
+                     Block4()
+     {
+      id = 1;
+      id_by_user = 4;
+      name = "condition_1_cross";
+      enabled = True;
+      event = EVENT_ON_TICK;
+
+      int mnexts_true[] = {0};
       int mnexts_false[] = {};
       int mprevs_true[] = {};
       int mprevs_false[] = {};
@@ -1719,33 +2445,7 @@ public:
       populatePrevsTrue(mprevs_true);
       populatePrevsFalse(mprevs_false);
 
-      task = new Task2(name);
-     }
-  };
-//+------------------------------------------------------------------+
-//|                                                                  |
-//+------------------------------------------------------------------+
-class Block3 : public Block
-  {
-public:
-                     Block3()
-     {
-      id = 1;
-      id_by_user = 3;
-      name = "condition_1_normal";
-      enabled = True;
-      event = EVENT_ON_TICK;
-
-      int mnexts_true[] = {};
-      int mnexts_false[] = {};
-      int mprevs_true[] = {0};
-      int mprevs_false[] = {};
-      populateNextsTrue(mnexts_true);
-      populateNextsFalse(mnexts_false);
-      populatePrevsTrue(mprevs_true);
-      populatePrevsFalse(mprevs_false);
-
-      task = new Task3(name);
+      task = new Task4(name);
      }
   };
 Block *blocks_init[];
@@ -1818,11 +2518,11 @@ void runBlockTick(int source_id, int source_result, int dest_id)
 void addBlocksTick()
   {
    ArrayResize(blocks_tick, 2);
-   Block2 *block2 = new Block2();
    Block3 *block3 = new Block3();
+   Block4 *block4 = new Block4();
 
-   blocks_tick[0] = block2;
-   blocks_tick[1] = block3;
+   blocks_tick[0] = block3;
+   blocks_tick[1] = block4;
   }
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -4703,7 +5403,7 @@ void OnTick()
       DrawStatus("working");
    TicksData(); // Collect ticks in case we need it
    resetBlocksTick(RESET_LEVEL_TICK);
-   runBlockTick(-1, -1, 0);
+   runBlockTick(-1, -1, 1);
    if(ArraySize(blocks_trade)>0)
       OnTrade();
   }

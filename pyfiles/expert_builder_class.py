@@ -1593,6 +1593,9 @@ class ExpertBuilder:
         if "shift" in params_left_2:
             params_left_2["shift"] = str(params_left_2["shift"]) + " + " + str(
                 (params.get("operator").get("cross_width")))
+        if "Shift" in params_left_2:
+            params_left_2["Shift"] = str(params_left_2["Shift"]) + " + " + str(
+                (params.get("operator").get("cross_width")))
         if "TickID" in params_left_2:
             params_left_2["TickID"] = str(params_left_2["TickID"]) + " + " + str(
                 (params.get("operator").get("cross_width")))
@@ -1607,6 +1610,9 @@ class ExpertBuilder:
         params_right_2 = params_right_1.copy()
         if "shift" in params_right_2:
             params_right_2["shift"] = str(params_right_2["shift"]) + "+" + str(
+                params.get("operator").get("cross_width"))
+        if "Shift" in params_right_2:
+            params_right_2["Shift"] = str(params_right_2["Shift"]) + "+" + str(
                 params.get("operator").get("cross_width"))
         if "TickID" in params_right_2:
             params_right_2["TickID"] = str(params_right_2["TickID"]) + "+" + str(
