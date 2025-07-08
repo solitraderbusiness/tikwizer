@@ -1,0 +1,308 @@
+# Detailed Documentation for Task Dynamic Constructor
+
+## Overview
+The `task_dynamic_constructor.py` file contains various functions that dynamically construct and modify task-related data for MQL scripts. These functions process input nodes and static data, applying transformations and generating necessary initializers and variable names.
+
+---
+
+### 1. `alert_message_run_data(node, run_data_static)`
+- **Purpose**: Placeholder function for processing alert message data.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+
+---
+
+### 2. `modify_stops_run_data(node, run_data_static)`
+- **Purpose**: Modifies stop-related data.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Returns**: Modified `run_data_static`.
+
+---
+
+### 3. `pips_away_from_open_price_run_data(node, run_data_static)`
+- **Purpose**: Processes data for pips away from the open price.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Checks for specific parameters like `pips_away_input_in_pips` and `custom_price_fraction`.
+  - Modifies `run_data_static` accordingly.
+
+---
+
+### 4. `check_distance_run_data(node, run_data_static)`
+- **Purpose**: Processes data for checking distances.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles upper level, lower level, and checking distance parameters.
+  - Generates initializers and variable names using helper functions.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 5. `check_trendline_price_level_run_data(node, run_data_static)`
+- **Purpose**: Processes data for checking trendline price levels.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Generates initializers and variable names for price levels.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 6. `draw_text_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing text on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Checks for parameters like `time_1`, `price_1`, and `text`.
+  - Modifies `run_data_static` accordingly.
+
+---
+
+### 7. `draw_editfield_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing editable fields on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Generates initializers and variable names for text fields.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 8. `draw_line_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing lines on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters like `time_1`, `time_2`, `price_1`, and `price_2`.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 9. `draw_shape_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing shapes on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters like `time_1`, `time_2`, `time_3`, `price_1`, `price_2`, and `price_3`.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 10. `draw_button_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing buttons on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Generates initializers and variable names for button text.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 11. `draw_arrow_run_data(node, run_data_static)`
+- **Purpose**: Processes data for drawing arrows on the chart.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters like `time_1` and `price_1`.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 12. `modify_stops_of_trades_run_data(node, run_data_static)`
+- **Purpose**: Processes data for modifying stops of trades.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters like `relative_to` and `new_tpsl_mode`.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data_static`.
+
+---
+
+### 13. `spread_filter_run_data(node, run_data)`
+- **Purpose**: Processes data for spread filters.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Replaces operator placeholders in `run_data`.
+
+---
+
+### 14. `comment_run_data(node, run_data)`
+- **Purpose**: Processes data for comments.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles multiple labels and value fetches.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 15. `trailing_pending_orders_run_data(node, run_data)`
+- **Purpose**: Processes data for trailing pending orders.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles different trailing distance modes.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 16. `trailing_stop_each_trade_run_data(node, run_data)`
+- **Purpose**: Processes data for trailing stops for each trade.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles custom level trailing stops.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 17. `no_trade_order_nearby_run_data(node, run_data)`
+- **Purpose**: Processes data for ensuring no trade orders are nearby.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles base price and time parameters.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 18. `modify_variable_run_data(node, run_data)`
+- **Purpose**: Processes data for modifying variables.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Iterates through parameters to generate initializers and variable modifications.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 19. `buy_sell_function_data(node, function_data_static)`
+- **Purpose**: Processes data for buy/sell functions.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `function_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters like `open_at_price`, `take_profit_mode`, and `stop_loss_mode`.
+  - Generates initializers and variable names.
+  - Replaces placeholders in `function_data_static`.
+
+---
+
+### 20. `volume_profile_function_data(node, function_data_static)`
+- **Purpose**: Processes data for volume profile functions.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `function_data_static`: Static data to be modified.
+- **Logic**:
+  - Handles parameters for different parts of the volume profile.
+  - Replaces placeholders in `function_data_static`.
+
+---
+
+### 21. `formula(node, run_data)`
+- **Purpose**: Processes data for formulas.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles left and right data, operators, and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 22. `condition_1_run_data_normal(node, run_data)`
+- **Purpose**: Processes data for normal conditions.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles left and right data, operators, and variable names.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 23. `condition_1_run_data_cross(node, run_data)`
+- **Purpose**: Processes data for cross conditions.
+- **Parameters**:
+  - `node`: Input node containing parameters.
+  - `run_data`: Data to be modified.
+- **Logic**:
+  - Handles left and right data, operators, and variable names for cross conditions.
+  - Replaces placeholders in `run_data`.
+
+---
+
+### 24. `get_value_fetch_init(row1, row2, params, suffix)`
+- **Purpose**: Generates initializers for value fetches.
+- **Parameters**:
+  - `row1`, `row2`: Row identifiers.
+  - `params`: Additional parameters.
+  - `suffix`: Suffix for the initializer.
+- **Logic**:
+  - Delegates to specific constructors based on `row1`.
+
+---
+
+### 25. `get_value_fetch_val(row1, row2, suffix)`
+- **Purpose**: Generates variable names for value fetches.
+- **Parameters**:
+  - `row1`, `row2`: Row identifiers.
+  - `suffix`: Suffix for the variable name.
+- **Logic**:
+  - Delegates to specific constructors based on `row1`.
+
+---
+
+### 26. `get_initializer(var_id)`
+- **Purpose**: Retrieves the initializer for a given variable ID.
+- **Parameters**:
+  - `var_id`: Variable ID.
+- **Logic**:
+  - Reads the initializer from a JSON file and replaces placeholders.
+
+---
+
+### 27. `get_var_name()`
+- **Purpose**: Retrieves the variable name.
+- **Logic**:
+  - Reads the variable name from a JSON file.
+
+---
+
+### 28. `get_var_data(category, task_name)`
+- **Purpose**: Retrieves variable data for a specific task.
+- **Parameters**:
+  - `category`: Task category.
+  - `task_name`: Task name.
+- **Logic**:
+  - Reads variable data from a JSON file.

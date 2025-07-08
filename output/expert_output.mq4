@@ -225,6 +225,14 @@ bool ONTIMER_TAKEN_IN_MILLISECONDS = false;
 double ONTIMER_TAKEN_TIME = 0;
 input int user_magic = 1073;
 double x_var = 0; //
+//This is used to hold onchart event for onchart blocks process
+struct OnChartEventHolder
+  {
+   int               id;
+   long              lparam;
+   double            dparam;
+   string            sparam;
+  };
 enum textenum {hi, bye};
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -963,14 +971,6 @@ public:
 
    string            EventValueComment() {return eventValues[eventValuesQueueIndex].comment;}
    string            EventValueSymbol()  {return eventValues[eventValuesQueueIndex].symbol;}
-  };
-//This is used to hold onchart event for onchart blocks process
-struct OnChartEventHolder
-  {
-   int               id;
-   long              lparam;
-   double            dparam;
-   string            sparam;
   };
 //+------------------------------------------------------------------+
 //|                                                                  |

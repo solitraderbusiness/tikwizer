@@ -1,0 +1,76 @@
+
+Input Data:
+The process begins with structured input data provided in Python files (e.g., test_input_15.py).
+This data defines trading strategies, parameters, and configurations.
+
+Entry Point:
+The test() function in test.py acts as the entry point.
+It reads input data and calls the generate_mql(data_raw) function from mql_generator.py.
+
+Data Refactoring:
+Inside generate_mql(data_raw), the input data is passed to the adapter.refactor(data_raw) function.
+This function processes and refactors the raw input data into a structured format.
+
+ExpertBuilder Initialization:
+An instance of the ExpertBuilder class (from expert_builder_class.py) is created using the refactored data.
+
+Processing Input:
+The process_input() method of the ExpertBuilder instance is called.
+This method processes the input data to add constants, variables, and blocks (e.g., trade logic, timer logic).
+
+Script Construction:
+The build() method of the ExpertBuilder class is invoked.
+This method combines all components (constants, variables, and blocks) to generate the final MQL script.
+
+Error Handling:
+If any exception occurs during the process, it is caught, and the traceback is encrypted using the encryption.encrypt_aes() function.
+
+Output:
+The generated MQL script is returned as a string.
+In the test() function, this script is saved as a .mq4 file in the output directory.
+
+Testing:
+The generated .mq4 file can be tested in the MetaTrader 4 platform to verify its functionality.
+
+
+Text-Based Flowchart:
+
+Input Data (test_input_*.py)
+       ↓
+test.py (test() function)
+       ↓
+mql_generator.py (generate_mql(data_raw))
+       ↓
+adapter.py (refactor(data_raw))
+       ↓
+expert_builder_class.py (ExpertBuilder class)
+       ↓
+process_input() → build()
+       ↓
+Output File (/output/expert_output.mq4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

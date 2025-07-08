@@ -1,0 +1,4 @@
+pip~=24.3.1
+wheel~=0.43.0
+cryptography~=44.0.0
+setuptools~=75.2.0
