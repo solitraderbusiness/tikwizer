@@ -1,0 +1,1 @@
+{"initializer": "   MACD_id macd_id;\n   macd_id.init();\n   double valueMACD_id = macd_id.calc();", "initializer_split": ["   MACD_id macd_id;\n", "   macd_id.init();\n", "   double valueMACD_id = macd_id.calc();\n"], "variable_name": "valueMACD_id"}

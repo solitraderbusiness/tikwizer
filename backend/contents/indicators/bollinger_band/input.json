@@ -1,0 +1,10 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "period":20,
+  "deviation":2,
+  "bands_shift":0,
+  "applied_price":"PRICE_CLOSE",
+  "mode":"MODE_LOWER",
+  "shift":0
+}

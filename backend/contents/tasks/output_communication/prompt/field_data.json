@@ -1,0 +1,3 @@
+{
+	"field_data" : "    string                PromptCaption;\n   string                PromptText;\n   int                PromptButtons;"
+}

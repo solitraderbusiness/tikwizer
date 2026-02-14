@@ -1,0 +1,3 @@
+{
+	"run_data" : "Task::run(block_id, block);\n\n      msymbol = msymbol = getSymbol(symbol);\n\n      removeSpreadExtra();\n      addSpread();\n\n      double spread_benchmark = spread_mode==SPREAD_BENCHMARK_AVERAGE ? spreadAverage() : spread_benchmark_fix_value;\n      double spread_current = MarketInfo(msymbol, MODE_SPREAD);\n\n      bool result = spread_current operator_val spread_benchmark;\n      if(result)\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

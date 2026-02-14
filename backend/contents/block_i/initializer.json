@@ -1,0 +1,4 @@
+{
+  "initializer": "Block_id *block_id = new Block_id();",
+  "variable_name": "block_id"
+}

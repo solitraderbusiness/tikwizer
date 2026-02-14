@@ -1,0 +1,3 @@
+{
+	"field_data" : "int               part_vol_mode;\n   double            part_vol_value;\n   double            slippage;\n   color             arrow_color;"
+}

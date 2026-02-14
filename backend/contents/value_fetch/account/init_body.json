@@ -1,0 +1,3 @@
+{
+	"init_body" : "      row2 = row2_val;\n      margin_check_OP_TYPE = (int)margin_check_OP_TYPE_val;\n      margin_check_VOLUME = (double)margin_check_VOLUME_val;\n      symbol = (string)symbol_val;\n      margin_level_WhenNoTrades = (int)margin_level_WhenNoTrades_val;"
+}

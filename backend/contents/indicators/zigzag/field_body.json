@@ -1,0 +1,3 @@
+{
+	"field_body" : "   int               ZigZagDepth;\n   int               ZigZagDeviation;\n   int               ZigZagBackstep;\n   int               ModeZigZag;\n   int               ZigZagReverseID;\n   string            symbol;\n   ENUM_TIMEFRAMES   timeframe;\n   int               shift;\n"
+}

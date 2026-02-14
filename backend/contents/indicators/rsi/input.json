@@ -1,0 +1,9 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "period":14,
+  "applied_price":"PRICE_CLOSE",
+  "buy_threshold": 70,
+  "sell_threshold": 30,
+  "shift":0
+}

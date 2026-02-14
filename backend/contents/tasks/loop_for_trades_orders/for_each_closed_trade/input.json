@@ -1,0 +1,13 @@
+{
+
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "EURUSD,GBPUSD",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
+  "group_number": 15,
+  "type": "{0, 1}",
+  "loop_direction": "newest_first",
+  "skip_n": 1,
+  "not_more_than_n": 5,
+  "every_n": 3,
+  "second_output": "if_not_empty"
+}

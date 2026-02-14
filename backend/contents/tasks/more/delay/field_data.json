@@ -1,0 +1,3 @@
+{
+	"field_data" : "   double               sleep_seconds;\n   bool              sleep_tester_normal;\n   bool              sleep_tester_visual;"
+}

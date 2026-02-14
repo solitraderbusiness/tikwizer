@@ -1,0 +1,5 @@
+{
+  "initializer": "ObjectOnTheChart_string_id objectOnTheChart_string_id;\n   objectOnTheChart_string_id.init();\n   string valueObjectOnTheChart_string_id = objectOnTheChart_string_id.calc();",
+  "initializer_split": ["ObjectOnTheChart_string_id objectOnTheChart_string_id;\n", "objectOnTheChart_string_id.init();\n", "string valueObjectOnTheChart_id = objectObjectOnTheChart_string_id.calc();\n"],
+  "variable_name": "valueObjectOnTheChart_string_id"
+}

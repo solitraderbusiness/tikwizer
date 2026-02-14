@@ -1,0 +1,1 @@
+{"initializer": "BullsPower_id bulls_power_id;\n   bulls_power_id.init();\n   double valueBullsPower_id = bulls_power_id.calc();", "initializer_split": ["BullsPower_id bulls_power_id;\n", "   bulls_power_id.init();\n", "   double valueBullsPower_id = bulls_power_id.calc();\n"], "variable_name": "valueBullsPower_id"}

@@ -1,0 +1,1 @@
+{"initializer": "   ForceIndex_id forceindex_id;\n   forceindex_id.init();\n   double valueForceIndex_id = forceindex_id.calc();", "initializer_split": ["   ForceIndex_id forceindex_id;\n", "   forceindex_id.init();\n", "   double valueForceIndex_id = forceindex_id.calc();\n"], "variable_name": "valueForceIndex_id"}

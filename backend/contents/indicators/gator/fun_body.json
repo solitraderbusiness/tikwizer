@@ -1,0 +1,3 @@
+{
+	"fun_body" : "iGator(symbol,timeframe,jaw_period,jaw_shift,teeth_period, teeth_shift, lips_period, lips_shift, ma_method, applied_price, mode, shift)"
+}

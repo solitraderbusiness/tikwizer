@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      symbol_mode = symbol_mode_val;\n      symbols_str = symbols_str_val;\n\n      group_mode = group_mode_val;\n      group_number = group_number_val;\n\n      order_age_mins = order_age_mins_val;\n      relative_to = relative_to_val;\n      new_tpsl_mode = new_tpsl_mode_val;\n      new_stoploss = new_stoploss_val;\n      new_stoploss_percent = new_stoploss_percent_val;\n      new_takeprofit = new_takeprofit_val;\n      new_takeprofit_percent = new_takeprofit_percent_val;\n      level_color = level_color_val;"
+}

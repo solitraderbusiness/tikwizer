@@ -1,0 +1,12 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "EURUSD,GBPUSD",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
+  "group_number": 15,
+  "type": "{2, 3, 4, 5}",
+  "type_pending": [2, 3],
+
+  "trailing_distance_mode" : "TRAILING_DISTANCE_MODE_FIXED",
+  "t_distance_pips" : 10.0,
+  "t_step_pips" : 1.0
+}

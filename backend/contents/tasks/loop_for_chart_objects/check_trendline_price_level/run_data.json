@@ -1,0 +1,3 @@
+{
+  "run_data": "      Task::run(block_id, block);\n\n      double value = ObjectGetValueByShift(loaded_object_chart_id(), loaded_object_name(), candle_id);\n\n      initializer_price_level\n\n      if(value operator_val variable_name_price_level)\n        {\n         //printf(\"task\"+block_id + \" passed route 1\");\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         //printf(\"task\"+block_id + \" passed route 2\");\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

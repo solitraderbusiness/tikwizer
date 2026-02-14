@@ -1,0 +1,3 @@
+{
+	"field_data" : "   //specified by user\n   string                symbol;\n   int                n;\n   //specified by system\n   double            a0;\n   double            b0;\n   int               t0;\n   int               count;"
+}

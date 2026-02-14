@@ -1,0 +1,10 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "fast_ema_period":12,
+  "slow_ema_period":26,
+  "signal_period":9,
+  "applied_price":"PRICE_CLOSE",
+  "mode":"MODE_MAIN",
+  "shift":0
+}

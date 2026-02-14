@@ -1,0 +1,3 @@
+{
+	"field_data" : "   string                symbol;\n   ENUM_TIMEFRAMES       timeframe;\n   int                   n;\n   //system parameters\n   datetime               barTime;\n   int                    barCount;"
+}

@@ -1,0 +1,3 @@
+{
+	"run_data" : "Task::run(block_id, block);\n\n      initializer_11\n      initializer_12\n      initializer_21\n      initializer_22\n      \n      if(var_name_11 operator_1 var_name_21 && var_name_12 operator_2 var_name_22)\n        {\n         //printf(\"task\"+block_id + \" passed route 1\");\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         //printf(\"task\"+block_id + \" passed route 2\");\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

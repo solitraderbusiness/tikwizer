@@ -1,0 +1,3 @@
+{
+	"field_body" : "string            symbol;\r\n   int               timeframe;\r\n   int               fast_ema_period;\r\n   int               slow_ema_period;\r\n   int               signal_period;\r\n   int              custom_params_array_here   int               shift;"
+}

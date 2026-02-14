@@ -1,0 +1,19 @@
+{
+  "object_per_bar": false,
+  "object_update": true,
+  "obj_name": "my_line",
+  "object_type": "OBJ_TREND",
+  "obj_angle": 45.0,
+  "obj_ray": true,
+  "obj_ray_left": false,
+  "obj_ray_right": false,
+  "obj_color": "clrDeepPink",
+  "obj_style": "STYLE_SOLID",
+  "obj_width": 1,
+  "obj_back": false,
+  "obj_selectable": true,
+  "obj_selected": false,
+  "obj_hidden": false,
+  "obj_z_order": 0,
+  "obj_chart_subwindow": "\"\""
+}

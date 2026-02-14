@@ -1,0 +1,3 @@
+{
+	"field_data" : "   int                 server_or_local_time;\n   int                 FirstStartMinute;\n   int                 FirstEndMinute;\n   bool                SecondMinutesBlock;\n   int                 SecondStartMinute;\n   int                 SecondEndMinute;\n   bool                ThirdMinutesBlock;\n   int                 ThirdStartMinute;\n   int                 ThirdEndMinute;\n   bool                FourthMinutesBlock;\n   int                 FourthStartMinute;\n   int                 FourthEndMinute;"
+}

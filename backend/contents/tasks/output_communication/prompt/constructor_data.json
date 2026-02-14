@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      PromptCaption = (string)PromptCaption_val;\n      PromptText = (string)PromptText_val;\n      PromptButtons = (int)PromptButtons_val;"
+}

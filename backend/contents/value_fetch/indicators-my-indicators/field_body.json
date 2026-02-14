@@ -1,0 +1,3 @@
+{
+	"field_body" : "   string            Symbol;\n   ENUM_TIMEFRAMES   Period;\n   string            ModeOutput;\n   string            TimeStamp;\n   int               VisibleID;\n   int               VisibleShift;\n   int               VisibleLimit;\n   int               RangeCandleStart;\n   int               RangeCandleEnd;\n   string            RangeTimeSource;\n   string            RangeTimeStart;\n   string            RangeTimeEnd;\n   double            RangeDayOffset;\n   string            RangeValue;\n   int               Shift;"
+}

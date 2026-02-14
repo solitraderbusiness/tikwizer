@@ -1,0 +1,10 @@
+{
+	"symbol_mode" : "SYMBOL_MODE_SPECIFIED",
+	"symbols_str" : ",EURUSD,GBPUSD",
+	"group_mode" : "ORDER_GROUP_MODE_ALL",
+	"group_number" : 25,
+	"type" : "{0,1}",
+	"type_pending" : "{0,1,2,3,4,5}",
+	"count_limit" : 10,
+	"operator": ">"
+}

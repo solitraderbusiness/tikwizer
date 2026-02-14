@@ -1,0 +1,3 @@
+{
+	"field_data" : "   int                   server_or_local_time;\n   string                FirstStartHour;\n   string                FirstEndHour;\n   bool                  SecondHoursBlock;\n   string                SecondStartHour;\n   string                SecondEndHour;\n   bool                  ThirdHoursBlock;\n   string                ThirdStartHour;\n   string                ThirdEndHour;\n   bool                  FourthHoursBlock;\n   string                FourthStartHour;\n   string                FourthEndHour;"
+}

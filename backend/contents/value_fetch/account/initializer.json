@@ -1,0 +1,5 @@
+{
+  "initializer": "Account_id account_id;\n   account_id.init();\n   type valueAccount_id = account_id.execute<type_return>();",
+  "initializer_split": ["Account_id account_id;\n", "account_id.init();\n", "type valueAccount_id = account_id.execute<type_return>();\n"],
+  "variable_name": "valueAccount_id"
+}

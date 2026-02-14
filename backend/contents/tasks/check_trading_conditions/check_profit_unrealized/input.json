@@ -1,0 +1,13 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "EURUSD,GBPUSD",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
+  "group_number": 15,
+  "type": "{0,1}",
+  "profit_mode_each" : "PROFIT_MODE_NO_MATTER",
+  "profit_amount_each" : 0.0,
+  "profit_mode" : "PROFIT_MODE_MONEY",
+  "profit_amount" : 0.0,
+  "compare_each": ">=",
+  "compare": "<"
+}

@@ -1,0 +1,1 @@
+{"initializer": "   Stochastic_id stochastic_id;\n   stochastic_id.init();\n   double valueStochastic_id = stochastic_id.calc();", "initializer_split": ["   Stochastic_id stochastic_id;\n", "   stochastic_id.init();\n", "   double valueStochastic_id = stochastic_id.calc();\n"], "variable_name": "valueStochastic_id"}

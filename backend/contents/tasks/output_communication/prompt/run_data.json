@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n      \n      int code = MessageBox(PromptText, PromptCaption, PromptButtons);\n\n      if(\n         code == IDOK // OK\n         || code == IDYES // Yes\n         || code == IDRETRY // Retry\n         || code == IDCONTINUE // Continue\n      )\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n         if(\n            code == IDABORT // Abort\n            || code == IDNO // No\n            || code == IDTRYAGAIN // Try Again\n            || (code == IDCANCEL && (PromptButtons == MB_OKCANCEL || PromptButtons == MB_RETRYCANCEL)\n               )\n         )\n           {\n            block.onResult(ROUTE_2_PASSED);\n           }\n"
+}

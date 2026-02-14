@@ -1,0 +1,3 @@
+{
+	"field_data" : "   string                SignalType;\n   string                CandleType;\n   int                   CandleID;\n   string                symbol;\n   ENUM_TIMEFRAMES       timeframe;\n   string                UpperWickMode;\n   double                UpWickFrom;\n   double                UpWickTo;\n   string                LowerWickMode;\n   double                LoWickFrom;\n   double                LoWickTo;\n   double                CandleMinSize;\n   double                CandleMaxSize;\n   //defined by system\n   datetime          time0;\n   string            msymbol;\n   ENUM_TIMEFRAMES   mtimeframe;"
+}

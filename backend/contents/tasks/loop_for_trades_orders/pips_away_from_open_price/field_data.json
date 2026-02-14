@@ -1,0 +1,3 @@
+{
+	"field_data" : "   string                DirectionMode;\n   int                   PipsAwayReferencePrice;\n   int                   OpenPriceMode;\n   string                PipsAwayMode;\n   double                PipsAway;\n   double                PipsAwayPercent;\n"
+}

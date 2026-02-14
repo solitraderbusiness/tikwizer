@@ -1,0 +1,3 @@
+{
+	"field_data" : "   string                RelativeTo;\n   string                NewSLmode;\n   double                NewStopLoss;\n   double                NewStopLossPercentPrice;\n   double                NewStopLossPercent;\n   double                NewStopLossPercentTP;\n   string               NewTPmode;\n   double               NewTakeProfit;\n   double               NewTakeProfitPercentPrice;\n   double               NewTakeProfitPercent;\n   double               NewTakeProfitPercentSL;\n   color               LevelColor;"
+}

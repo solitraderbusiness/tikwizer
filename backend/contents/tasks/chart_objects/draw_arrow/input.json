@@ -1,0 +1,17 @@
+{
+  "object_per_bar": true,
+  "object_update": true,
+  "obj_name": "my_arrow",
+  "object_type": "OBJ_ARROW_UP",
+  "obj_arrow_code": 58,
+  "obj_anchor": "ANCHOR_TOP",
+  "obj_color": "clrDeepPink",
+  "obj_style": "STYLE_SOLID",
+  "obj_width": 3,
+  "obj_back": false,
+  "obj_selectable": true,
+  "obj_selected": false,
+  "obj_hidden": false,
+  "obj_z_order": 0,
+  "obj_chart_subwindow": ""
+}

@@ -1,0 +1,20 @@
+{
+  "object_per_bar": true,
+  "object_update": true,
+  "obj_name": "my_arrow",
+  "object_type": "OBJ_ARROW_UP",
+  "obj_x": 10,
+  "obj_y": 10,
+  "obj_font": "Arial",
+  "obj_font_size": 10,
+  "obj_angle": 0,
+  "obj_corner": "CORNER_LEFT_UPPER",
+  "obj_anchor": "ANCHOR_TOP",
+  "obj_color": "clrDeepPink",
+  "obj_back": false,
+  "obj_selectable": true,
+  "obj_selected": false,
+  "obj_hidden": false,
+  "obj_z_order": 0,
+  "obj_chart_subwindow": ""
+}

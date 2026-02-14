@@ -1,0 +1,3 @@
+{
+	"fun_body" : "iCustom(symbol,timeframe,custom_params_for_loop, applied_price, mode, shift)"
+}

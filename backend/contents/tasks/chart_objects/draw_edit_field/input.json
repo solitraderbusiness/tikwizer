@@ -1,0 +1,23 @@
+{
+  "object_per_bar": false,
+  "object_update": true,
+  "obj_name": "",
+  "obj_x": 10,
+  "obj_y": 10,
+  "obj_font": "Arial",
+  "obj_font_size": 10,
+  "obj_align": "ALIGN_CENTER",
+  "obj_x_size": 50,
+  "obj_y_size": 18,
+  "obj_bg_color": "clrWhite",
+  "obj_border_color": "clrNONE",
+  "obj_corner": "CORNER_LEFT_UPPER",
+  "obj_read_only": false,
+  "obj_color": "clrDeepPink",
+  "obj_back": false,
+  "obj_selectable": false,
+  "obj_selected": false,
+  "obj_hidden": false,
+  "obj_z_order": 0,
+  "obj_chart_subwindow": ""
+}

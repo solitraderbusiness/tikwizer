@@ -1,0 +1,23 @@
+{
+  "object_per_bar": false,
+  "object_update": true,
+  "obj_name": "",
+  "object_type": "OBJ_RECTANGLE",
+  "obj_x": 10,
+  "obj_y": 10,
+  "obj_fill": false,
+  "obj_x_size": 100,
+  "obj_y_size": 100,
+  "obj_border_type": "BORDER_FLAT",
+  "obj_bg_color": "clrSkyBlue",
+  "obj_corner": "CORNER_LEFT_UPPER",
+  "obj_color": "clrDeepPink",
+  "obj_style": "STYLE_SOLID",
+  "obj_width": 1,
+  "obj_back": false,
+  "obj_selectable": true,
+  "obj_selected": false,
+  "obj_hidden": false,
+  "obj_z_order": 0,
+  "obj_chart_subwindow": "\"\""
+}

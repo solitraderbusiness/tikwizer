@@ -1,0 +1,1 @@
+{"initializer": "   OsMA_id osma_id;\n   osma_id.init();\n   double valueOsMA_id = osma_id.calc();", "initializer_split": ["   OsMA_id osma_id;\n", "   osma_id.init();\n", "   double valueOsMA_id = osma_id.calc();\n"], "variable_name": "valueOsMA_id"}

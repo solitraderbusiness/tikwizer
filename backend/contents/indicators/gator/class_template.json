@@ -1,0 +1,3 @@
+{
+	"class_template" : "\r\nclass Gator_id\r\n  {\r\n   field_body\r\n\r\npublic:\r\n   void              init()\r\n     {\r\n      init_body\r\n     }\r\n\r\n   double            calc()\r\n     {\r\n      string symbol =  getSymbol(this.symbol);\n      int timeframe = getTimeframe(this.timeframe);\n      double result = fun_body;\r\n      return result;\r\n     }\r\n\r\n  };"
+}

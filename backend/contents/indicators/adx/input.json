@@ -1,0 +1,8 @@
+{
+  "symbol":"NULL",
+  "timeframe":0,
+  "period":14,
+  "applied_price":"PRICE_HIGH",
+  "mode": "MODE_MAIN",
+  "shift":0
+}

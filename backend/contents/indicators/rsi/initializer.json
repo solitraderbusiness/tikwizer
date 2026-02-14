@@ -1,0 +1,1 @@
+{"initializer": "RSI_id rsi_id;\n   rsi_id.init();\n   double valueRSI_id = rsi_id.calc();", "initializer_split": ["RSI_id rsi_id;\n", "   rsi_id.init();\n", "   double valueRSI_id = rsi_id.calc();\n"], "variable_name": "valueRSI_id"}

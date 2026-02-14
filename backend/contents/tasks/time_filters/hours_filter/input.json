@@ -1,0 +1,14 @@
+{
+  "server_or_local_time": "TIME_SERVER",
+  "FirstStartHour": "00:00",
+  "FirstEndHour": "06:00",
+  "SecondHoursBlock": false,
+  "SecondStartHour": "06:00",
+  "SecondEndHour": "12:00",
+  "ThirdHoursBlock": false,
+  "ThirdStartHour": "12:00",
+  "ThirdEndHour": "18:00",
+  "FourthHoursBlock": false,
+  "FourthStartHour": "18:00",
+  "FourthEndHour": "00:00"
+}

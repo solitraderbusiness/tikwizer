@@ -1,0 +1,3 @@
+{
+	"fun_body" : "iStochastic(symbol,timeframe,k_period,d_period,slowing, method, price_field, mode, shift)"
+}

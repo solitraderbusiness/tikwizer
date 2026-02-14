@@ -1,0 +1,10 @@
+{
+  "symbol": "NULL",
+  "timeframe": 0,
+  "ZigZagDepth": 12,
+  "ZigZagDeviation": 5,
+  "ZigZagBackstep": 3,
+  "ModeZigZag": 0,
+  "ZigZagReverseID": 0,
+  "shift": 0
+}

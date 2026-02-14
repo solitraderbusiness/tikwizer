@@ -1,0 +1,4 @@
+{
+  "initializer": "MarketPropertiesHighestTimePeriod_id marketPropertiesHighestTimePeriod_id;\n   marketPropertiesHighestTimePeriod_id.init();\n   type valueMarketPropertiesHighestTimePeriod_id = marketPropertiesHighestTimePeriod_id.calc<type_return>();",
+  "variable_name": "valueMarketPropertiesHighestTimePeriod_id"
+}

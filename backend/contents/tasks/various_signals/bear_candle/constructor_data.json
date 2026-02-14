@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      SignalType = (string)SignalType_val;\n      CandleID = (int)CandleID_val;\n      MinBodySize = (double)MinBodySize_val;\n      MaxBodySize = (double)MaxBodySize_val;\n      symbol = (string)symbol_val;\n      timeframe = (ENUM_TIMEFRAMES)timeframe_val;\n      //defined by system\n      bartime =  0;"
+}

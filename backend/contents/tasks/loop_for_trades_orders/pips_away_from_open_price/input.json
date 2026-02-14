@@ -1,0 +1,8 @@
+{
+      "DirectionMode" : "trading",
+      "PipsAwayReferencePrice" : 0,
+      "OpenPriceMode" : 0,
+      "PipsAwayMode" : "fixed",
+      "PipsAway" : 50.0,
+      "PipsAwayPercent" : 150.0
+}

@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      AlertTitle  = (string)AlertTitle_val;\n      AlertLabel1 = (string)AlertLabel1_val;\n      AlertLabel2 = (string)AlertLabel2_val;\n      AlertLabel3 = (string)AlertLabel3_val;\n      AlertLabel4 = (string)AlertLabel4_val;\n      AlertLabel5 = (string)AlertLabel5_val;\n      AlertLabel6 = (string)AlertLabel6_val;\n      AlertLabel7 = (string)AlertLabel7_val;\n      AlertLabel8 = (string)AlertLabel8_val;\n      AlertLabel9 = (string)AlertLabel9_val;\n      AlertLabel10 =(string)AlertLabel10_val;\n      AlsoSendNotification = (bool)AlsoSendNotification_val;"
+}

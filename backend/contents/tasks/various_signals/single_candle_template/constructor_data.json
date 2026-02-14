@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      SignalType = (string)SignalType_val;\n      CandleType = (string)CandleType_val;\n      CandleID = (int)CandleID_val;\n      symbol = (string)symbol_val;\n      timeframe = (ENUM_TIMEFRAMES)timeframe_val;\n      UpperWickMode = (string)UpperWickMode_val;\n      UpWickFrom = (double)UpWickFrom_val;\n      UpWickTo = (double)UpWickTo_val;\n      LowerWickMode = (string)LowerWickMode_val;\n      LoWickFrom = (double)LoWickFrom_val;\n      LoWickTo = (double)LoWickTo_val;\n      CandleMinSize = (double)CandleMinSize_val;\n      CandleMaxSize = (double)CandleMaxSize_val;\n      //defined by system\n      time0 =  0;"
+}

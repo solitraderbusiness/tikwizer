@@ -1,0 +1,227 @@
+
+   //price modes
+#define  CANDLE_OPEN  1
+#define  CANDLE_HIGH  2
+#define  CANDLE_LOW  3
+#define  CANDLE_CLOSE  4
+#define  CANDLE_MEDIAN  5
+#define  CANDLE_HLC3  6
+#define  CANDLE_AVERAGE  7
+#define  CANDLE_GAP_TO_PREV  8
+
+#define  CANDLE_TOTAL_SIZE  9
+#define  CANDLE_BODY_SIZE  10
+#define  CANDLE_TOP_WICK  11
+#define  CANDLE_BOTTOM_WICK  12
+
+#define  BULL_CANDLE_TOTAL_SIZE  13
+#define  BULL_CANDLE_BODY_SIZE  14
+#define  BULL_CANDLE_TOP_WICK  15
+#define  BULL_CANDLE_BOTTOM_WICK  16
+
+#define  BEAR_CANDLE_TOTAL_SIZE  17
+#define  BEAR_CANDLE_BODY_SIZE  18
+#define  BEAR_CANDLE_TOP_WICK  19
+#define  BEAR_CANDLE_BOTTOM_WICK  20
+
+   //find methods
+#define  FIND_BY_ID  1
+#define  FIND_BY_DATE  2
+
+
+class Candle14_right
+
+  {
+
+public:
+
+   string            symbol;
+   int               timeframe;
+   int               find_method;
+   int               price_mode;
+   string            timestr;
+   int               shift;
+
+   string            msymbol;
+   string            mtimeframe;
+
+public:
+
+   void              init()
+
+     {
+      symbol = "BNBUSD";
+      timeframe = PERIOD_M5;
+      find_method = FIND_BY_ID;
+      price_mode = CANDLE_LOW;
+      timestr = "2023.4.26 13:40:30";
+      shift = 3;
+     }
+
+
+
+   double            calc()
+
+     {
+      msymbol = getSymbol(symbol);
+      mtimeframe = getTimeframe(timeframe);
+
+      int index = get_index();
+      double value = get_value(index);
+      return value;
+     }
+
+private:
+   int               get_index()
+     {
+      int index = -1;
+      if(find_method==FIND_BY_DATE)
+        {
+         datetime date = StrToTime(timestr);
+         index = iBarShift(msymbol, mtimeframe, date, false);
+        }
+      else
+         if(find_method==FIND_BY_ID)
+           {
+            index = shift;
+           }
+      return index;
+     }
+
+   double            get_value(int index)
+     {
+      double val, valPips;
+      double point = SymbolInfoDouble(msymbol, SYMBOL_POINT);
+      switch(price_mode)
+        {
+         case CANDLE_OPEN:
+            return iOpen(msymbol, mtimeframe, index);
+         case CANDLE_HIGH:
+            return iHigh(msymbol, mtimeframe, index);
+         case CANDLE_LOW:
+            return iLow(msymbol, mtimeframe, index);;
+         case CANDLE_CLOSE:
+            return iClose(msymbol, mtimeframe, index);;
+         case CANDLE_MEDIAN:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index))/2;
+         case CANDLE_HLC3:
+            return (iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/3;
+         case CANDLE_AVERAGE:
+            return (iOpen(msymbol, mtimeframe, index)+iHigh(msymbol, mtimeframe, index)+iLow(msymbol, mtimeframe, index)+iClose(msymbol, mtimeframe, index))/4;
+         case CANDLE_GAP_TO_PREV:
+            //STest, is this calc right?
+            double gapup = iLow(msymbol, mtimeframe, index+1)-iHigh(msymbol, mtimeframe, index);
+            double gapdn = iLow(msymbol, mtimeframe, index)-iHigh(msymbol, mtimeframe, index+1);
+            double gap = gapup>0 ? gapup : gapdn>0 ? gapdn : 0;
+            return gap;
+         case CANDLE_TOTAL_SIZE:
+            val = length(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BODY_SIZE:
+            val = body(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_TOP_WICK:
+            val = wickup(index);
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_BOTTOM_WICK:
+            val = wickdn(index);
+            valPips = val/point/10;
+            return valPips;
+
+         //STest, effect of bull here compared to code above
+         case BULL_CANDLE_TOTAL_SIZE:
+            val = isGreen(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BODY_SIZE:
+            val = isGreen(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_TOP_WICK:
+            val = isGreen(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BULL_CANDLE_BOTTOM_WICK:
+            val = isGreen(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+
+         //STest, effect of bear here compared to code above
+         case BEAR_CANDLE_TOTAL_SIZE:
+            val = isRed(index) ? length(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BODY_SIZE:
+            val = isRed(index) ? body(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_TOP_WICK:
+            val = isRed(index) ? wickup(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case BEAR_CANDLE_BOTTOM_WICK:
+            val = isRed(index) ? wickdn(index) : 0;
+            valPips = val/point/10;
+            return valPips;
+         case CANDLE_TICK_VOLUME:
+            val = iVolume(msymbol, mtimeframe, index);
+            return val;
+         case CANDLE_TIME:
+            val = iTime(msymbol, mtimeframe, index);
+            return val;
+        }
+      return -1;
+     }
+
+
+
+
+   double            length(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-iLow(msymbol, mtimeframe, i);
+     }
+   double            body(int i)
+     {
+      return MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i)) - MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickup(int i)
+     {
+      return iHigh(msymbol, mtimeframe, i)-MathMax(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i));
+     }
+   double            wickdn(int i)
+     {
+      return MathMin(iOpen(msymbol, mtimeframe, i),iClose(msymbol, mtimeframe, i))-iLow(msymbol, mtimeframe, i);
+     }
+   bool              isGreen(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)<iClose(msymbol, mtimeframe, i);
+     }
+   bool              isRed(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)>iClose(msymbol, mtimeframe, i);
+     }
+   bool              isDoji(int i)
+     {
+      return iOpen(msymbol, mtimeframe, i)==iClose(msymbol, mtimeframe, i);
+     }
+
+  };
+
+
+//+------------------------------------------------------------------+
+
+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+void OnTick()
+  {
+   Candle14_right candle14_right;
+   candle14_right.init();
+   printf("AAAAAAAAAAAAAA " + candle14_right.calc());
+  }
+//+------------------------------------------------------------------+

@@ -1,0 +1,1 @@
+{"initializer": "   ICHIMOKU_id ichimoku_id;\n   ichimoku_id.init();\n   double valueICHIMOKU_id = ichimoku_id.calc();", "initializer_split": ["   ICHIMOKU_id ichimoku_id;\n", "   ichimoku_id.init();\n", "   double valueICHIMOKU_id = ichimoku_id.calc();\n"], "variable_name": "valueICHIMOKU_id"}

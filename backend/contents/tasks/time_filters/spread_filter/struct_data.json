@@ -1,0 +1,3 @@
+{
+	"struct_data" : "struct SpreadHolder\n  {\n   double            spread;\n   datetime          time;\n  };\n"
+}

@@ -1,0 +1,3 @@
+{
+	"run_data" : "      Task::run(block_id, block);\n\n      int passes = Counter(CounterID, \"increment\");\n\n      if(passes < TimesToPass)\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }\n"
+}

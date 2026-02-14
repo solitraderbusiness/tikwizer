@@ -1,0 +1,10 @@
+{
+  "Period_candle_id": "PERIOD_CURRENT",
+  "Period_candle_time": "PERIOD_CURRENT",
+  "ModeProfit": 0,
+  "ModeStopLoss": "level",
+  "ModeTakeProfit": "level",
+  "ModeTicket": 0,
+  "ModeVolume": 0,
+  "adjust": ""
+}

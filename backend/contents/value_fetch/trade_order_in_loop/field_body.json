@@ -1,0 +1,3 @@
+{
+	"field_body" : "   int               row2;\n   ENUM_TIMEFRAMES   Period_candle_id; //candle id\n   ENUM_TIMEFRAMES   Period_candle_time; //candle time\n   int               ModeProfit; //Order profit\n   string            ModeStopLoss; //Order stoploss\n   string            ModeTakeProfit; //Order take profit\n   int               ModeTicket; //Order ticket number\n   int               ModeVolume; //Order volume"
+}

@@ -1,0 +1,10 @@
+{
+  "server_or_local_time": "TIME_SERVER",
+  "monday": "true",
+  "tuesday": "true",
+  "wednesday": "true",
+  "thursday": "true",
+  "friday": "true",
+  "saturday": "false",
+  "sunday": "false"
+}

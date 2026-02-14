@@ -1,0 +1,3 @@
+{
+	"field_body" : "string            symbol;\n   int               timeframe;\n   int               k_period;\n   int               d_period;\n   int               slowing;\n   int               method;\n   int               price_field;\n   int               mode;\n   int               shift;"
+}

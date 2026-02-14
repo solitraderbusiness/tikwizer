@@ -1,0 +1,3 @@
+{
+	"class_template" : "class Task_id : public Task\n  {\n   field_data\npublic:\n                     Task_id(string name):Task(name)\n     {\n         constructor_data\n     }\n   virtual void               run(int block_id, BlockParent &block)\n     {\n      run_data\n     }\n   virtual void      reset(int level) {\n      reset_data\n   }\n   function_data\n  };\n"
+}

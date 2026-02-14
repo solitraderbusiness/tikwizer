@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      DirectionMode = (string)DirectionMode_val;\n      PipsAwayReferencePrice = (int)PipsAwayReferencePrice_val;\n      OpenPriceMode = (int)OpenPriceMode_val;\n      PipsAwayMode = (string)PipsAwayMode_val;\n      PipsAway = (double)PipsAway_val;\n      PipsAwayPercent = (double)PipsAwayPercent_val;"
+}

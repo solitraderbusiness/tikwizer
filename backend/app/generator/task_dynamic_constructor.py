@@ -1,0 +1,1731 @@
+import json
+from . import path_root, adjust
+import collections.abc
+from . import indicator_class_constructor
+from . import candle_class_constructor
+from . import market_properties_class_constructor_new
+from . import value_class_constructor
+from . import object_on_the_chart_class_constructor
+from . import trade_order_in_loop_class_constructor
+from . import account_class_constructor
+from . import my_indicator_class_constructor
+
+path = path_root.get()
+path_sub = "/contents/"
+
+
+def get_task():
+    path_task = path + path_sub + "task" + "/"
+    class_template = ""
+    with open(path_task + "class_template.json") as class_file:
+        if class_file:
+            class_txt = class_file.read()
+            class_template_dic = json.loads(class_txt)
+            class_template = class_template_dic.get("class_template")
+    return class_template
+
+
+def get_task_child(node, constants, variables):
+    category = node.get("category")
+    task_name = node.get("block_name_mql")
+    params = node.get("params")
+    class_id = node.get("id_by_user")
+
+    path_task_id_template = path + path_sub + "task_id" + "/"  # used to get template
+    path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"  # used to get data and fill template
+    # class template
+    class_template = class_template_fun(path_task_id_template)
+    # class parts
+    field_data_static = field_data_static_fun(path_task_id)
+    field_data = field_data_dynamic_fun(field_data_static)
+
+    constructor_data_static = constructor_data_static_fun(path_task_id, params, constants, variables)
+    constructor_data = constructor_data_dynamic_fun(constructor_data_static)
+
+    run_data_static = run_data_static_fun(path_task_id, params, constants, variables, field_data)
+    run_data = run_data_dynamic_fun(node, run_data_static)
+
+    reset_data_static = reset_data_static_fun(path_task_id)
+    reset_data = reset_data_dynamic_fun(reset_data_static)
+
+    function_data_static = function_data_static_fun(path_task_id)
+    function_data = function_data_dynamic_fun(node, function_data_static, constants, variables)
+
+    # class template to class final
+    task = class_template \
+        .replace("_id", str(class_id), 2) \
+        .replace("field_data", field_data) \
+        .replace("constructor_data", constructor_data) \
+        .replace("run_data", run_data) \
+        .replace("run_data", run_data) \
+        .replace("reset_data", reset_data) \
+        .replace("function_data", function_data)
+
+    return task
+
+
+def class_template_fun(path_task_id_template):
+    with open(path_task_id_template + "class_template.json") as class_file:
+        if class_file:
+            class_txt = class_file.read()
+            class_template = json.loads(class_txt).get("class_template")
+            return class_template
+    return ""
+
+
+def field_data_static_fun(path_task_id):
+    with open(path_task_id + "field_data.json") as field_file:
+        if field_file:
+            field_txt = field_file.read()
+            field_data = json.loads(field_txt).get("field_data")
+            return field_data
+    return ""
+
+
+def field_data_dynamic_fun(field_data_static):
+    return field_data_static
+
+
+def constructor_data_static_fun(path_task_id, params, constants, variables):
+    with open(path_task_id + "constructor_data.json") as constructor_file:
+        if constructor_file:
+            constructor_text = constructor_file.read()
+            constructor_data = json.loads(constructor_text).get("constructor_data")
+            constructor_data = replace_input_values(constructor_data, params, constants, variables)
+            return constructor_data
+    return ""
+
+
+def constructor_data_dynamic_fun(constructor_data_static):
+    return constructor_data_static
+
+
+def run_data_static_fun(path_task_id, input_dic, constants, variables, field_data):
+    with open(path_task_id + "run_data.json") as run_file:
+        if run_file:
+            run_txt = run_file.read()
+            run_data = json.loads(run_txt).get("run_data")
+            run_data = add_var_reference_if_any(run_data, input_dic, variables, field_data)
+            run_data = replace_input_values(run_data, input_dic, constants, variables)
+            return run_data
+    return ""
+
+
+def run_data_dynamic_fun(node, run_data_static):
+    task_name = node.get("block_name_mql")
+    run_data = run_data_static
+    if task_name == "condition_1_normal":
+        run_data = condition_1_run_data_normal(node, run_data_static)
+    elif task_name == "condition_1_cross":
+        run_data = condition_1_run_data_cross(node, run_data_static)
+    elif task_name == "formula":
+        run_data = formula(node, run_data_static)
+    elif task_name == "modify_variables":
+        run_data = modify_variable_run_data(node, run_data_static)
+    elif task_name == "spread_filter":
+        run_data = spread_filter_run_data(node, run_data_static)
+    elif task_name == "trailing_stop_each_trade":
+        run_data = trailing_stop_each_trade_run_data(node, run_data_static)
+    elif task_name == "comment":
+        run_data = comment_run_data(node, run_data_static)
+    elif task_name == "trailing_pending_orders":
+        run_data = trailing_pending_orders_run_data(node, run_data_static)
+    elif task_name == "modify_stops_of_trades":
+        run_data = modify_stops_of_trades_run_data(node, run_data_static)
+    elif task_name == "draw_arrow":
+        run_data = draw_arrow_run_data(node, run_data_static)
+    elif task_name == "draw_button":
+        run_data = draw_button_run_data(node, run_data_static)
+    elif task_name == "draw_shape":
+        run_data = draw_shape_run_data(node, run_data_static)
+    elif task_name == "draw_line":
+        run_data = draw_line_run_data(node, run_data_static)
+    elif task_name == "draw_edit_field":
+        run_data = draw_editfield_run_data(node, run_data_static)
+    elif task_name == "draw_text":
+        run_data = draw_text_run_data(node, run_data_static)
+    elif task_name == "check_trendline_price_level":
+        run_data = check_trendline_price_level_run_data(node, run_data_static)
+    elif task_name == "no_trade_order_nearby":
+        run_data = no_trade_order_nearby_run_data(node, run_data_static)
+    elif task_name == "check_distance":
+        run_data = check_distance_run_data(node, run_data_static)
+    elif task_name == "pips_away_from_open_price":
+        run_data = pips_away_from_open_price_run_data(node, run_data_static)
+    elif task_name == "modify_stops":
+        run_data = modify_stops_run_data(node, run_data_static)
+    elif task_name == "alert_message":
+        run_data = alert_message_run_data(node, run_data_static)
+    elif task_name == "phone_notification":
+        run_data = phone_notification_run_data(node, run_data_static)
+    elif task_name == "move":
+        run_data = move_run_data(node, run_data_static)
+    elif task_name == "modify_text_description":
+        run_data = modify_text_description_run_data(node, run_data_static)
+
+    return run_data
+
+
+def reset_data_static_fun(path_task_id):
+    with open(path_task_id + "reset_data.json") as reset_file:
+        if reset_file:
+            reset_txt = reset_file.read()
+            reset_data = json.loads(reset_txt).get("reset_data")
+            return reset_data
+    return ""
+
+
+def reset_data_dynamic_fun(reset_data_static):
+    return reset_data_static
+
+
+def function_data_static_fun(path_task_id):
+    with open(path_task_id + "function_data.json") as function_file:
+        if function_file:
+            function_txt = function_file.read()
+            function_data = json.loads(function_txt).get("function_data")
+            return function_data
+    return ""
+
+
+def function_data_dynamic_fun(node, function_data_static, constants, variables):
+    task_name = node.get("block_name_mql")
+    function_data = function_data_static
+    if task_name == "buy_sell":
+        function_data = buy_sell_function_data(node, function_data_static)
+    elif task_name == "volume_profile":
+        function_data = volume_profile_function_data(node, function_data_static)
+
+    return function_data
+
+
+# In tikwiser, if user references a class field to a global var,
+# then it must get updated with the global var each time block runs.
+# Below function adds this feature by calling field assignment each
+# time block's run method is called.
+def add_var_reference_if_any(data, params, variables, field_data):
+    if "operator" and "variable" in params:  # This is Formula, don't do anything
+        return data
+    # if "max_part_1" in params:  # This is Volume profile, don't do anything
+    #     return data
+    fix_star = "Task::run(block_id, block);"
+    for key, value in params.items():
+        if not isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
+            if is_var(value, variables):
+                if " " + key in field_data:  # This extra check ignores cases where replacement takes place in run data (it's not a field) so it doesn't need to update every time. Like loop pass n times, trade filters asf.
+                    data = data.replace(fix_star, fix_star + "\n" + key + " = ::" + value + ";\n")
+    return data
+
+
+def replace_input_values(data, params, constants, variables):
+    for key, value in params.items():
+        if isinstance(value, dict):  # This is a value_fetch dictionary, I have nothing to do with it here.
+            pass
+        else:  # So it's a string (or number or bool)
+            data = data.replace(key + "_val", get_proper_value(value, constants, variables))
+    return data
+
+
+def get_proper_value(value, constants, variables):
+    if isinstance(value, str):
+        if not is_const_var(value, constants, variables):
+            return value
+        else:  # The value is the name of a constant/variable, so use the global scope
+            return "::" + value
+    else:
+        return str(value)
+
+
+def is_const_var(value, constants, variables):
+    for constant in constants:
+        if constant.get("name") == value:
+            return True
+    for variable in variables:
+        if variable.get("name") == value:
+            return True
+    return False
+
+
+def is_var(value, variables):
+    for variable in variables:
+        if variable.get("name") == value:
+            return True
+    return False
+
+
+def modify_text_description_run_data(node, run_data_static):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id_by_user")) + "_text"
+
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    run_data_static = run_data_static.replace("initializer_text", init)
+    run_data_static = run_data_static.replace("variable_name_text", val)
+
+    return run_data_static
+
+
+def move_run_data(node, run_data_static):
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+
+    if "time_2" in params:
+        value_fetch_time_2 = params.get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        run_data_static = run_data_static.replace("initializer_time_2", init_time_2)
+        run_data_static = run_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_2", "")
+        run_data_static = run_data_static.replace("variable_name_time_2", "\"\"")
+
+    if "time_3" in params:
+        value_fetch_time_3 = params.get("time_3")
+        row1_time_3 = value_fetch_time_3.get("row1")
+        row2_time_3 = value_fetch_time_3.get("row2")
+        id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
+
+        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, value_fetch_time_3.get("params"), id_val_time_3)
+        val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
+        run_data_static = run_data_static.replace("initializer_time_3", init_time_3)
+        run_data_static = run_data_static.replace("variable_name_time_3", val_time_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_3", "")
+        run_data_static = run_data_static.replace("variable_name_time_3", "\"\"")
+
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+
+    if "price_2" in params:
+        value_fetch_price_2 = params.get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"),
+                                            id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        run_data_static = run_data_static.replace("initializer_price_2", init_price_2)
+        run_data_static = run_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_2", "")
+        run_data_static = run_data_static.replace("variable_name_price_2", "\"\"")
+
+    if "price_3" in params:
+        value_fetch_price_3 = params.get("price_3")
+        row1_price_3 = value_fetch_price_3.get("row1")
+        row2_price_3 = value_fetch_price_3.get("row2")
+        id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
+
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"),
+                                            id_val_price_3)
+        val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
+        run_data_static = run_data_static.replace("initializer_price_3", init_price_3)
+        run_data_static = run_data_static.replace("variable_name_price_3", val_price_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_3", "")
+        run_data_static = run_data_static.replace("variable_name_price_3", "\"\"")
+
+    return run_data_static
+
+
+def phone_notification_run_data(node, run_data_static):
+    params = node.get("params")
+    if params.get("Label1") != "\"\"" and "value_1" in params:
+        value_fetch_1 = params.get("value_1")
+        row1_1 = value_fetch_1.get("row1")
+        row2_1 = value_fetch_1.get("row2")
+        id_val_1 = str(node.get("id_by_user")) + "_1"
+
+        init_1 = get_value_fetch_init(row1_1, row2_1, value_fetch_1.get("params"), id_val_1)
+        val_1 = get_value_fetch_val(row1_1, row2_1, id_val_1)
+        run_data_static = run_data_static.replace("initializer_1", init_1)
+        run_data_static = run_data_static.replace("variable_name_1", val_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_1", "")
+        run_data_static = run_data_static.replace("variable_name_1", "\"\"")
+
+    if params.get("Label2") != "\"\"" and "value_2" in params:
+        value_fetch_2 = params.get("value_2")
+        row1_2 = value_fetch_2.get("row1")
+        row2_2 = value_fetch_2.get("row2")
+        id_val_2 = str(node.get("id_by_user")) + "_2"
+
+        init_2 = get_value_fetch_init(row1_2, row2_2, value_fetch_2.get("params"), id_val_2)
+        val_2 = get_value_fetch_val(row1_2, row2_2, id_val_2)
+        run_data_static = run_data_static.replace("initializer_2", init_2)
+        run_data_static = run_data_static.replace("variable_name_2", val_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_2", "")
+        run_data_static = run_data_static.replace("variable_name_2", "\"\"")
+
+    if params.get("Label3") != "\"\"" and "value_3" in params:
+        value_fetch_3 = params.get("value_3")
+        row1_3 = value_fetch_3.get("row1")
+        row2_3 = value_fetch_3.get("row2")
+        id_val_3 = str(node.get("id_by_user")) + "_3"
+
+        init_3 = get_value_fetch_init(row1_3, row2_3, value_fetch_3.get("params"), id_val_3)
+        val_3 = get_value_fetch_val(row1_3, row2_3, id_val_3)
+        run_data_static = run_data_static.replace("initializer_3", init_3)
+        run_data_static = run_data_static.replace("variable_name_3", val_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_3", "")
+        run_data_static = run_data_static.replace("variable_name_3", "\"\"")
+
+    if params.get("Label4") != "\"\"" and "value_4" in params:
+        value_fetch_4 = params.get("value_4")
+        row1_4 = value_fetch_4.get("row1")
+        row2_4 = value_fetch_4.get("row2")
+        id_val_4 = str(node.get("id_by_user")) + "_4"
+
+        init_4 = get_value_fetch_init(row1_4, row2_4, value_fetch_4.get("params"), id_val_4)
+        val_4 = get_value_fetch_val(row1_4, row2_4, id_val_4)
+        run_data_static = run_data_static.replace("initializer_4", init_4)
+        run_data_static = run_data_static.replace("variable_name_4", val_4)
+    else:
+        run_data_static = run_data_static.replace("initializer_4", "")
+        run_data_static = run_data_static.replace("variable_name_4", "\"\"")
+
+    if params.get("Label5") != "\"\"" and "value_5" in params:
+        value_fetch_5 = params.get("value_5")
+        row1_5 = value_fetch_5.get("row1")
+        row2_5 = value_fetch_5.get("row2")
+        id_val_5 = str(node.get("id_by_user")) + "_5"
+
+        init_5 = get_value_fetch_init(row1_5, row2_5, value_fetch_5.get("params"), id_val_5)
+        val_5 = get_value_fetch_val(row1_5, row2_5, id_val_5)
+        run_data_static = run_data_static.replace("initializer_5", init_5)
+        run_data_static = run_data_static.replace("variable_name_5", val_5)
+    else:
+        run_data_static = run_data_static.replace("initializer_5", "")
+        run_data_static = run_data_static.replace("variable_name_5", "\"\"")
+
+    if params.get("Label6") != "\"\"" and "value_6" in params:
+        value_fetch_6 = params.get("value_6")
+        row1_6 = value_fetch_6.get("row1")
+        row2_6 = value_fetch_6.get("row2")
+        id_val_6 = str(node.get("id_by_user")) + "_6"
+
+        init_6 = get_value_fetch_init(row1_6, row2_6, value_fetch_6.get("params"), id_val_6)
+        val_6 = get_value_fetch_val(row1_6, row2_6, id_val_6)
+        run_data_static = run_data_static.replace("initializer_6", init_6)
+        run_data_static = run_data_static.replace("variable_name_6", val_6)
+    else:
+        run_data_static = run_data_static.replace("initializer_6", "")
+        run_data_static = run_data_static.replace("variable_name_6", "\"\"")
+
+    if params.get("Label7") != "\"\"" and "value_7" in params:
+        value_fetch_7 = params.get("value_7")
+        row1_7 = value_fetch_7.get("row1")
+        row2_7 = value_fetch_7.get("row2")
+        id_val_7 = str(node.get("id_by_user")) + "_7"
+
+        init_7 = get_value_fetch_init(row1_7, row2_7, value_fetch_7.get("params"), id_val_7)
+        val_7 = get_value_fetch_val(row1_7, row2_7, id_val_7)
+        run_data_static = run_data_static.replace("initializer_7", init_7)
+        run_data_static = run_data_static.replace("variable_name_7", val_7)
+    else:
+        run_data_static = run_data_static.replace("initializer_7", "")
+        run_data_static = run_data_static.replace("variable_name_7", "\"\"")
+
+    if params.get("Label8") != "\"\"" and "value_8" in params:
+        value_fetch_8 = params.get("value_8")
+        row1_8 = value_fetch_8.get("row1")
+        row2_8 = value_fetch_8.get("row2")
+        id_val_8 = str(node.get("id_by_user")) + "_8"
+
+        init_8 = get_value_fetch_init(row1_8, row2_8, value_fetch_8.get("params"), id_val_8)
+        val_8 = get_value_fetch_val(row1_8, row2_8, id_val_8)
+        run_data_static = run_data_static.replace("initializer_8", init_8)
+        run_data_static = run_data_static.replace("variable_name_8", val_8)
+    else:
+        run_data_static = run_data_static.replace("initializer_8", "")
+        run_data_static = run_data_static.replace("variable_name_8", "\"\"")
+
+    return run_data_static
+
+
+def alert_message_run_data(node, run_data_static):
+    params = node.get("params")
+    if params.get("AlertLabel1") != "\"\"" and "value_1" in params:
+        value_fetch_1 = params.get("value_1")
+        row1_1 = value_fetch_1.get("row1")
+        row2_1 = value_fetch_1.get("row2")
+        id_val_1 = str(node.get("id_by_user")) + "_1"
+
+        init_1 = get_value_fetch_init(row1_1, row2_1, value_fetch_1.get("params"), id_val_1)
+        val_1 = get_value_fetch_val(row1_1, row2_1, id_val_1)
+        run_data_static = run_data_static.replace("initializer_1", init_1)
+        run_data_static = run_data_static.replace("variable_name_1", val_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_1", "")
+        run_data_static = run_data_static.replace("variable_name_1", "\"\"")
+
+    if params.get("AlertLabel2") != "\"\"" and "value_2" in params:
+        value_fetch_2 = params.get("value_2")
+        row1_2 = value_fetch_2.get("row1")
+        row2_2 = value_fetch_2.get("row2")
+        id_val_2 = str(node.get("id_by_user")) + "_2"
+
+        init_2 = get_value_fetch_init(row1_2, row2_2, value_fetch_2.get("params"), id_val_2)
+        val_2 = get_value_fetch_val(row1_2, row2_2, id_val_2)
+        run_data_static = run_data_static.replace("initializer_2", init_2)
+        run_data_static = run_data_static.replace("variable_name_2", val_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_2", "")
+        run_data_static = run_data_static.replace("variable_name_2", "\"\"")
+
+    if params.get("AlertLabel3") != "\"\"" and "value_3" in params:
+        value_fetch_3 = params.get("value_3")
+        row1_3 = value_fetch_3.get("row1")
+        row2_3 = value_fetch_3.get("row2")
+        id_val_3 = str(node.get("id_by_user")) + "_3"
+
+        init_3 = get_value_fetch_init(row1_3, row2_3, value_fetch_3.get("params"), id_val_3)
+        val_3 = get_value_fetch_val(row1_3, row2_3, id_val_3)
+        run_data_static = run_data_static.replace("initializer_3", init_3)
+        run_data_static = run_data_static.replace("variable_name_3", val_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_3", "")
+        run_data_static = run_data_static.replace("variable_name_3", "\"\"")
+
+    if params.get("AlertLabel4") != "\"\"" and "value_4" in params:
+        value_fetch_4 = params.get("value_4")
+        row1_4 = value_fetch_4.get("row1")
+        row2_4 = value_fetch_4.get("row2")
+        id_val_4 = str(node.get("id_by_user")) + "_4"
+
+        init_4 = get_value_fetch_init(row1_4, row2_4, value_fetch_4.get("params"), id_val_4)
+        val_4 = get_value_fetch_val(row1_4, row2_4, id_val_4)
+        run_data_static = run_data_static.replace("initializer_4", init_4)
+        run_data_static = run_data_static.replace("variable_name_4", val_4)
+    else:
+        run_data_static = run_data_static.replace("initializer_4", "")
+        run_data_static = run_data_static.replace("variable_name_4", "\"\"")
+
+    if params.get("AlertLabel5") != "\"\"" and "value_5" in params:
+        value_fetch_5 = params.get("value_5")
+        row1_5 = value_fetch_5.get("row1")
+        row2_5 = value_fetch_5.get("row2")
+        id_val_5 = str(node.get("id_by_user")) + "_5"
+
+        init_5 = get_value_fetch_init(row1_5, row2_5, value_fetch_5.get("params"), id_val_5)
+        val_5 = get_value_fetch_val(row1_5, row2_5, id_val_5)
+        run_data_static = run_data_static.replace("initializer_5", init_5)
+        run_data_static = run_data_static.replace("variable_name_5", val_5)
+    else:
+        run_data_static = run_data_static.replace("initializer_5", "")
+        run_data_static = run_data_static.replace("variable_name_5", "\"\"")
+
+    if params.get("AlertLabel6") != "\"\"" and "value_6" in params:
+        value_fetch_6 = params.get("value_6")
+        row1_6 = value_fetch_6.get("row1")
+        row2_6 = value_fetch_6.get("row2")
+        id_val_6 = str(node.get("id_by_user")) + "_6"
+
+        init_6 = get_value_fetch_init(row1_6, row2_6, value_fetch_6.get("params"), id_val_6)
+        val_6 = get_value_fetch_val(row1_6, row2_6, id_val_6)
+        run_data_static = run_data_static.replace("initializer_6", init_6)
+        run_data_static = run_data_static.replace("variable_name_6", val_6)
+    else:
+        run_data_static = run_data_static.replace("initializer_6", "")
+        run_data_static = run_data_static.replace("variable_name_6", "\"\"")
+
+    if params.get("AlertLabel7") != "\"\"" and "value_7" in params:
+        value_fetch_7 = params.get("value_7")
+        row1_7 = value_fetch_7.get("row1")
+        row2_7 = value_fetch_7.get("row2")
+        id_val_7 = str(node.get("id_by_user")) + "_7"
+
+        init_7 = get_value_fetch_init(row1_7, row2_7, value_fetch_7.get("params"), id_val_7)
+        val_7 = get_value_fetch_val(row1_7, row2_7, id_val_7)
+        run_data_static = run_data_static.replace("initializer_7", init_7)
+        run_data_static = run_data_static.replace("variable_name_7", val_7)
+    else:
+        run_data_static = run_data_static.replace("initializer_7", "")
+        run_data_static = run_data_static.replace("variable_name_7", "\"\"")
+
+    if params.get("AlertLabel8") != "\"\"" and "value_8" in params:
+        value_fetch_8 = params.get("value_8")
+        row1_8 = value_fetch_8.get("row1")
+        row2_8 = value_fetch_8.get("row2")
+        id_val_8 = str(node.get("id_by_user")) + "_8"
+
+        init_8 = get_value_fetch_init(row1_8, row2_8, value_fetch_8.get("params"), id_val_8)
+        val_8 = get_value_fetch_val(row1_8, row2_8, id_val_8)
+        run_data_static = run_data_static.replace("initializer_8", init_8)
+        run_data_static = run_data_static.replace("variable_name_8", val_8)
+    else:
+        run_data_static = run_data_static.replace("initializer_8", "")
+        run_data_static = run_data_static.replace("variable_name_8", "\"\"")
+
+    if params.get("AlertLabel9") != "\"\"" and "value_9" in params:
+        value_fetch_9 = params.get("value_9")
+        row1_9 = value_fetch_9.get("row1")
+        row2_9 = value_fetch_9.get("row2")
+        id_val_9 = str(node.get("id_by_user")) + "_9"
+
+        init_9 = get_value_fetch_init(row1_9, row2_9, value_fetch_9.get("params"), id_val_9)
+        val_9 = get_value_fetch_val(row1_9, row2_9, id_val_9)
+        run_data_static = run_data_static.replace("initializer_9", init_9)
+        run_data_static = run_data_static.replace("variable_name_9", val_9)
+    else:
+        run_data_static = run_data_static.replace("initializer_9", "")
+        run_data_static = run_data_static.replace("variable_name_9", "\"\"")
+
+    if params.get("AlertLabel10") != "\"\"" and "value_10" in params:
+        value_fetch_10 = params.get("value_10")
+        row1_10 = value_fetch_10.get("row1")
+        row2_10 = value_fetch_10.get("row2")
+        id_val_10 = str(node.get("id_by_user")) + "_10"
+
+        init_10 = get_value_fetch_init(row1_10, row2_10, value_fetch_10.get("params"), id_val_10)
+        val_10 = get_value_fetch_val(row1_10, row2_10, id_val_10)
+        run_data_static = run_data_static.replace("initializer_ten", init_10)
+        run_data_static = run_data_static.replace("variable_name_ten", val_10)
+    else:
+        run_data_static = run_data_static.replace("initializer_ten", "")
+        run_data_static = run_data_static.replace("variable_name_ten", "\"\"")
+
+    return run_data_static
+
+
+def modify_stops_run_data(node, run_data_static):
+    params = node.get("params")
+    if "relative_to_dynamic" in params:
+        value_fetch_rtd = params.get("relative_to_dynamic")
+        row1_rtd = value_fetch_rtd.get("row1")
+        row2_rtd = value_fetch_rtd.get("row2")
+        id_val_rtd = str(node.get("id_by_user")) + "_rtd"
+
+        init_rtd = get_value_fetch_init(row1_rtd, row2_rtd, value_fetch_rtd.get("params"), id_val_rtd)
+        val_rtd = get_value_fetch_val(row1_rtd, row2_rtd, id_val_rtd)
+        run_data_static = run_data_static.replace("initializer_rtd", init_rtd)
+        run_data_static = run_data_static.replace("variable_name_rtd", val_rtd)
+    else:
+        run_data_static = run_data_static.replace("initializer_rtd", "")
+        run_data_static = run_data_static.replace("variable_name_rtd", "\"\"")
+    if "new_sl_mode_function" in params:
+        value_fetch_nsmf = params.get("new_sl_mode_function")
+        row1_nsmf = value_fetch_nsmf.get("row1")
+        row2_nsmf = value_fetch_nsmf.get("row2")
+        id_val_nsmf = str(node.get("id_by_user")) + "_nsmf"
+
+        init_nsmf = get_value_fetch_init(row1_nsmf, row2_nsmf, value_fetch_nsmf.get("params"), id_val_nsmf)
+        val_nsmf = get_value_fetch_val(row1_nsmf, row2_nsmf, id_val_nsmf)
+        run_data_static = run_data_static.replace("initializer_nsmf", init_nsmf)
+        run_data_static = run_data_static.replace("variable_name_nsmf", val_nsmf)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmf", "")
+        run_data_static = run_data_static.replace("variable_name_nsmf", "\"\"")
+    if "new_sl_mode_dynamicPips" in params:
+        value_fetch_nsmdp = params.get("new_sl_mode_dynamicPips")
+        row1_nsmdp = value_fetch_nsmdp.get("row1")
+        row2_nsmdp = value_fetch_nsmdp.get("row2")
+        id_val_nsmdp = str(node.get("id_by_user")) + "_nsmdp"
+
+        init_nsmdp = get_value_fetch_init(row1_nsmdp, row2_nsmdp, value_fetch_nsmdp.get("params"), id_val_nsmdp)
+        val_nsmdp = get_value_fetch_val(row1_nsmdp, row2_nsmdp, id_val_nsmdp)
+        run_data_static = run_data_static.replace("initializer_nsmdp", init_nsmdp)
+        run_data_static = run_data_static.replace("variable_name_nsmdp", val_nsmdp)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmdp", "")
+        run_data_static = run_data_static.replace("variable_name_nsmdp", "\"\"")
+    if "new_sl_mode_dynamicDigits" in params:
+        value_fetch_nsmdd = params.get("new_sl_mode_dynamicDigits")
+        row1_nsmdd = value_fetch_nsmdd.get("row1")
+        row2_nsmdd = value_fetch_nsmdd.get("row2")
+        id_val_nsmdd = str(node.get("id_by_user")) + "_nsmdd"
+
+        init_nsmdd = get_value_fetch_init(row1_nsmdd, row2_nsmdd, value_fetch_nsmdd.get("params"), id_val_nsmdd)
+        val_nsmdd = get_value_fetch_val(row1_nsmdd, row2_nsmdd, id_val_nsmdd)
+        run_data_static = run_data_static.replace("initializer_nsmdd", init_nsmdd)
+        run_data_static = run_data_static.replace("variable_name_nsmdd", val_nsmdd)
+    else:
+        run_data_static = run_data_static.replace("initializer_nsmdd", "")
+        run_data_static = run_data_static.replace("variable_name_nsmdd", "\"\"")
+    if "new_tp_mode_function" in params:
+        value_fetch_ntmf = params.get("new_tp_mode_function")
+        row1_ntmf = value_fetch_ntmf.get("row1")
+        row2_ntmf = value_fetch_ntmf.get("row2")
+        id_val_ntmf = str(node.get("id_by_user")) + "_ntmf"
+
+        init_ntmf = get_value_fetch_init(row1_ntmf, row2_ntmf, value_fetch_ntmf.get("params"), id_val_ntmf)
+        val_ntmf = get_value_fetch_val(row1_ntmf, row2_ntmf, id_val_ntmf)
+        run_data_static = run_data_static.replace("initializer_ntmf", init_ntmf)
+        run_data_static = run_data_static.replace("variable_name_ntmf", val_ntmf)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmf", "")
+        run_data_static = run_data_static.replace("variable_name_ntmf", "\"\"")
+    if "new_tp_mode_dynamicPips" in params:
+        value_fetch_ntmdp = params.get("new_tp_mode_dynamicPips")
+        row1_ntmdp = value_fetch_ntmdp.get("row1")
+        row2_ntmdp = value_fetch_ntmdp.get("row2")
+        id_val_ntmdp = str(node.get("id_by_user")) + "_ntmdp"
+
+        init_ntmdp = get_value_fetch_init(row1_ntmdp, row2_ntmdp, value_fetch_ntmdp.get("params"), id_val_ntmdp)
+        val_ntmdp = get_value_fetch_val(row1_ntmdp, row2_ntmdp, id_val_ntmdp)
+        run_data_static = run_data_static.replace("initializer_ntmdp", init_ntmdp)
+        run_data_static = run_data_static.replace("variable_name_ntmdp", val_ntmdp)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmdp", "")
+        run_data_static = run_data_static.replace("variable_name_ntmdp", "\"\"")
+    if "new_tp_mode_dynamicDigits" in params:
+        value_fetch_ntmdd = params.get("new_tp_mode_dynamicDigits")
+        row1_ntmdd = value_fetch_ntmdd.get("row1")
+        row2_ntmdd = value_fetch_ntmdd.get("row2")
+        id_val_ntmdd = str(node.get("id_by_user")) + "_ntmdd"
+
+        init_ntmdd = get_value_fetch_init(row1_ntmdd, row2_ntmdd, value_fetch_ntmdd.get("params"), id_val_ntmdd)
+        val_ntmdd = get_value_fetch_val(row1_ntmdd, row2_ntmdd, id_val_ntmdd)
+        run_data_static = run_data_static.replace("initializer_ntmdd", init_ntmdd)
+        run_data_static = run_data_static.replace("variable_name_ntmdd", val_ntmdd)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntmdd", "")
+        run_data_static = run_data_static.replace("variable_name_ntmdd", "\"\"")
+    return run_data_static
+
+
+def pips_away_from_open_price_run_data(node, run_data_static):
+    params = node.get("params")
+    if "pips_away_input_in_pips" in params:
+        value_fetch_pips = params.get("pips_away_input_in_pips")
+        row1_pips = value_fetch_pips.get("row1")
+        row2_pips = value_fetch_pips.get("row2")
+        id_val_pips = str(node.get("id_by_user")) + "_pips"
+
+        init_pips = get_value_fetch_init(row1_pips, row2_pips, value_fetch_pips.get("params"), id_val_pips)
+        val_pips = get_value_fetch_val(row1_pips, row2_pips, id_val_pips)
+        run_data_static = run_data_static.replace("initializer_pips", init_pips)
+        run_data_static = run_data_static.replace("variable_name_pips", val_pips)
+    else:
+        run_data_static = run_data_static.replace("initializer_pips", "")
+        run_data_static = run_data_static.replace("variable_name_pips", "\"\"")
+    if "custom_price_fraction" in params:
+        value_fetch_price_fraction = params.get("custom_price_fraction")
+        row1_price_fraction = value_fetch_price_fraction.get("row1")
+        row2_price_fraction = value_fetch_price_fraction.get("row2")
+        id_val_price_fraction = str(node.get("id_by_user")) + "_price_fraction"
+
+        init_price_fraction = get_value_fetch_init(row1_price_fraction, row2_price_fraction,
+                                                   value_fetch_price_fraction.get("params"), id_val_price_fraction)
+        val_price_fraction = get_value_fetch_val(row1_price_fraction, row2_price_fraction, id_val_price_fraction)
+        run_data_static = run_data_static.replace("initializer_price_fraction", init_price_fraction)
+        run_data_static = run_data_static.replace("variable_name_price_fraction", val_price_fraction)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_fraction", "")
+        run_data_static = run_data_static.replace("variable_name_price_fraction", "\"\"")
+
+    return run_data_static
+
+
+def check_distance_run_data(node, run_data_static):
+    # upper level
+    value_fetch_upper_level = node.get("params").get("upper_level")
+    row1_upper_level = value_fetch_upper_level.get("row1")
+    row2_upper_level = value_fetch_upper_level.get("row2")
+    id_val_upper_level = str(node.get("id_by_user")) + "_upper_level"
+
+    init_upper_level = get_value_fetch_init(row1_upper_level, row2_upper_level, value_fetch_upper_level.get("params"),
+                                            id_val_upper_level)
+    val_upper_level = get_value_fetch_val(row1_upper_level, row2_upper_level, id_val_upper_level)
+    run_data_static = run_data_static.replace("initializer_upper_level", init_upper_level)
+    run_data_static = run_data_static.replace("variable_name_upper_level", val_upper_level)
+
+    # lower level
+    value_fetch_lower_level = node.get("params").get("lower_level")
+    row1_lower_level = value_fetch_lower_level.get("row1")
+    row2_lower_level = value_fetch_lower_level.get("row2")
+    id_val_lower_level = str(node.get("id_by_user")) + "_lower_level"
+
+    init_lower_level = get_value_fetch_init(row1_lower_level, row2_lower_level, value_fetch_lower_level.get("params"),
+                                            id_val_lower_level)
+    val_lower_level = get_value_fetch_val(row1_lower_level, row2_lower_level, id_val_lower_level)
+    run_data_static = run_data_static.replace("initializer_lower_level", init_lower_level)
+    run_data_static = run_data_static.replace("variable_name_lower_level", val_lower_level)
+
+    # checking distance
+    value_fetch_checking_distance = node.get("params").get("checking_distance")
+    row1_checking_distance = value_fetch_checking_distance.get("row1")
+    row2_checking_distance = value_fetch_checking_distance.get("row2")
+    id_val_checking_distance = str(node.get("id_by_user")) + "_checking_distance"
+
+    init_checking_distance = get_value_fetch_init(row1_checking_distance, row2_checking_distance,
+                                                  value_fetch_checking_distance.get("params"), id_val_checking_distance)
+    val_checking_distance = get_value_fetch_val(row1_checking_distance, row2_checking_distance,
+                                                id_val_checking_distance)
+    run_data_static = run_data_static.replace("initializer_checking_distance", init_checking_distance)
+    run_data_static = run_data_static.replace("variable_name_checking_distance", val_checking_distance)
+
+    return run_data_static
+
+
+def check_trendline_price_level_run_data(node, run_data_static):
+    value_fetch = node.get("params").get("price_level")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id_by_user")) + "_price_level"
+
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    run_data_static = run_data_static.replace("initializer_price_level", init)
+    run_data_static = run_data_static.replace("variable_name_price_level", val)
+
+    return run_data_static
+
+
+def draw_text_run_data(node, run_data_static):
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+
+    if "text" in params:
+        value_fetch_text = params.get("text")
+        row1_text = value_fetch_text.get("row1")
+        row2_text = value_fetch_text.get("row2")
+        id_val_text = str(node.get("id_by_user")) + "_text"
+
+        init_text = get_value_fetch_init(row1_text, row2_text, value_fetch_text.get("params"),
+                                         id_val_text)
+        val_text = get_value_fetch_val(row1_text, row2_text, id_val_text)
+        run_data_static = run_data_static.replace("initializer_text", init_text)
+        run_data_static = run_data_static.replace("variable_name_text", val_text)
+    else:
+        run_data_static = run_data_static.replace("initializer_text", "")
+        run_data_static = run_data_static.replace("variable_name_text", "\"\"")
+
+    return run_data_static
+
+
+def draw_editfield_run_data(node, run_data_static):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id_by_user")) + "_text"
+
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    run_data_static = run_data_static.replace("initializer_text", init)
+    run_data_static = run_data_static.replace("variable_name_text", val)
+
+    return run_data_static
+
+
+def draw_line_run_data(node, run_data_static):
+    params = node.get("params")
+    if "time_1" in params:
+        value_fetch_time_1 = params.get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+    if "time_2" in params:
+        value_fetch_time_2 = params.get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        run_data_static = run_data_static.replace("initializer_time_2", init_time_2)
+        run_data_static = run_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_2", "")
+        run_data_static = run_data_static.replace("variable_name_time_2", "\"\"")
+
+    if "price_1" in params:
+        value_fetch_price_1 = params.get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+
+    if "price_2" in params:
+        value_fetch_price_2 = params.get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"),
+                                            id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        run_data_static = run_data_static.replace("initializer_price_2", init_price_2)
+        run_data_static = run_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_2", "")
+        run_data_static = run_data_static.replace("variable_name_price_2", "\"\"")
+
+    return run_data_static
+
+
+def draw_shape_run_data(node, run_data_static):
+    if "time_1" in node.get("params"):
+        value_fetch_time_1 = node.get("params").get("time_1")
+        row1_time_1 = value_fetch_time_1.get("row1")
+        row2_time_1 = value_fetch_time_1.get("row2")
+        id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+        init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+        val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+        run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+        run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_1", "")
+        run_data_static = run_data_static.replace("variable_name_time_1", "\"\"")
+    if "time_2" in node.get("params"):
+        value_fetch_time_2 = node.get("params").get("time_2")
+        row1_time_2 = value_fetch_time_2.get("row1")
+        row2_time_2 = value_fetch_time_2.get("row2")
+        id_val_time_2 = str(node.get("id_by_user")) + "_time_2"
+
+        init_time_2 = get_value_fetch_init(row1_time_2, row2_time_2, value_fetch_time_2.get("params"), id_val_time_2)
+        val_time_2 = get_value_fetch_val(row1_time_2, row2_time_2, id_val_time_2)
+        run_data_static = run_data_static.replace("initializer_time_2", init_time_2)
+        run_data_static = run_data_static.replace("variable_name_time_2", val_time_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_2", "")
+        run_data_static = run_data_static.replace("variable_name_time_2", "\"\"")
+    if "time_3" in node.get("params"):
+        value_fetch_time_3 = node.get("params").get("time_3")
+        row1_time_3 = value_fetch_time_3.get("row1")
+        row2_time_3 = value_fetch_time_3.get("row2")
+        id_val_time_3 = str(node.get("id_by_user")) + "_time_3"
+
+        init_time_3 = get_value_fetch_init(row1_time_3, row2_time_3, value_fetch_time_3.get("params"), id_val_time_3)
+        val_time_3 = get_value_fetch_val(row1_time_3, row2_time_3, id_val_time_3)
+        run_data_static = run_data_static.replace("initializer_time_3", init_time_3)
+        run_data_static = run_data_static.replace("variable_name_time_3", val_time_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_time_3", "")
+        run_data_static = run_data_static.replace("variable_name_time_3", "\"\"")
+    if "price_1" in node.get("params"):
+        value_fetch_price_1 = node.get("params").get("price_1")
+        row1_price_1 = value_fetch_price_1.get("row1")
+        row2_price_1 = value_fetch_price_1.get("row2")
+        id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+        init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"),
+                                            id_val_price_1)
+        val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+        run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+        run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_1", "")
+        run_data_static = run_data_static.replace("variable_name_price_1", "\"\"")
+    if "price_2" in node.get("params"):
+        value_fetch_price_2 = node.get("params").get("price_2")
+        row1_price_2 = value_fetch_price_2.get("row1")
+        row2_price_2 = value_fetch_price_2.get("row2")
+        id_val_price_2 = str(node.get("id_by_user")) + "_price_2"
+
+        init_price_2 = get_value_fetch_init(row1_price_2, row2_price_2, value_fetch_price_2.get("params"),
+                                            id_val_price_2)
+        val_price_2 = get_value_fetch_val(row1_price_2, row2_price_2, id_val_price_2)
+        run_data_static = run_data_static.replace("initializer_price_2", init_price_2)
+        run_data_static = run_data_static.replace("variable_name_price_2", val_price_2)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_2", "")
+        run_data_static = run_data_static.replace("variable_name_price_2", "\"\"")
+    if "price_3" in node.get("params"):
+        value_fetch_price_3 = node.get("params").get("price_3")
+        row1_price_3 = value_fetch_price_3.get("row1")
+        row2_price_3 = value_fetch_price_3.get("row2")
+        id_val_price_3 = str(node.get("id_by_user")) + "_price_3"
+
+        init_price_3 = get_value_fetch_init(row1_price_3, row2_price_3, value_fetch_price_3.get("params"),
+                                            id_val_price_3)
+        val_price_3 = get_value_fetch_val(row1_price_3, row2_price_3, id_val_price_3)
+        run_data_static = run_data_static.replace("initializer_price_3", init_price_3)
+        run_data_static = run_data_static.replace("variable_name_price_3", val_price_3)
+    else:
+        run_data_static = run_data_static.replace("initializer_price_3", "")
+        run_data_static = run_data_static.replace("variable_name_price_3", "\"\"")
+
+    return run_data_static
+
+
+def draw_button_run_data(node, run_data_static):
+    value_fetch = node.get("params").get("text")
+    row1 = value_fetch.get("row1")
+    row2 = value_fetch.get("row2")
+    id_val = str(node.get("id_by_user")) + "_obj_text"
+
+    init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+    val = get_value_fetch_val(row1, row2, id_val)
+    run_data_static = run_data_static.replace("initializer_obj_text", init)
+    run_data_static = run_data_static.replace("variable_name_obj_text", val)
+
+    return run_data_static
+
+
+def draw_arrow_run_data(node, run_data_static):
+    value_fetch_time_1 = node.get("params").get("time_1")
+    row1_time_1 = value_fetch_time_1.get("row1")
+    row2_time_1 = value_fetch_time_1.get("row2")
+    id_val_time_1 = str(node.get("id_by_user")) + "_time_1"
+
+    init_time_1 = get_value_fetch_init(row1_time_1, row2_time_1, value_fetch_time_1.get("params"), id_val_time_1)
+    val_time_1 = get_value_fetch_val(row1_time_1, row2_time_1, id_val_time_1)
+    run_data_static = run_data_static.replace("initializer_time_1", init_time_1)
+    run_data_static = run_data_static.replace("variable_name_time_1", val_time_1)
+
+    value_fetch_price_1 = node.get("params").get("price_1")
+    row1_price_1 = value_fetch_price_1.get("row1")
+    row2_price_1 = value_fetch_price_1.get("row2")
+    id_val_price_1 = str(node.get("id_by_user")) + "_price_1"
+
+    init_price_1 = get_value_fetch_init(row1_price_1, row2_price_1, value_fetch_price_1.get("params"), id_val_price_1)
+    val_price_1 = get_value_fetch_val(row1_price_1, row2_price_1, id_val_price_1)
+    run_data_static = run_data_static.replace("initializer_price_1", init_price_1)
+    run_data_static = run_data_static.replace("variable_name_price_1", val_price_1)
+
+    return run_data_static
+
+
+def modify_stops_of_trades_run_data(node, run_data_static):
+    params = node.get("params")
+    if params.get("relative_to") == "PRICE_RELATIVE_TO_CUSTOM_PRICE_LEVEL":
+        value_fetch = params.get("value_fetch_relative_to")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_rt"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data_static = run_data_static.replace("initializer_rt", init)
+        run_data_static = run_data_static.replace("variable_name_rt", val)
+    else:
+        run_data_static = run_data_static.replace("initializer_rt", "")
+        run_data_static = run_data_static.replace("variable_name_rt", "\"\"")
+
+    if params.get("new_tpsl_mode") == "NEW_STOPS_CUSTOM_PRICE_LEVEL":
+        value_fetch_tp = params.get("new_take_profit_level")
+        row1_tp = value_fetch_tp.get("row1")
+        row2_tp = value_fetch_tp.get("row2")
+        id_val_tp = str(node.get("id_by_user")) + "_ntm_tp"
+
+        init_tp = get_value_fetch_init(row1_tp, row2_tp, value_fetch_tp.get("params"), id_val_tp)
+        val_tp = get_value_fetch_val(row1_tp, row2_tp, id_val_tp)
+
+        value_fetch_sl = params.get("new_stop_loss_level")
+        row1_sl = value_fetch_sl.get("row1")
+        row2_sl = value_fetch_sl.get("row2")
+        id_val_sl = str(node.get("id_by_user")) + "_ntm_sl"
+
+        init_sl = get_value_fetch_init(row1_sl, row2_sl, value_fetch_sl.get("params"), id_val_sl)
+        val_sl = get_value_fetch_val(row1_sl, row2_sl, id_val_sl)
+
+        run_data_static = run_data_static.replace("initializer_ntm_tp", init_tp)
+        run_data_static = run_data_static.replace("variable_name_ntm_tp", val_tp)
+
+        run_data_static = run_data_static.replace("initializer_ntm_sl", init_sl)
+        run_data_static = run_data_static.replace("variable_name_ntm_sl", val_sl)
+    else:
+        run_data_static = run_data_static.replace("initializer_ntm_tp", "")
+        run_data_static = run_data_static.replace("variable_name_ntm_tp", "\"\"")
+
+        run_data_static = run_data_static.replace("initializer_ntm_sl", "")
+        run_data_static = run_data_static.replace("variable_name_ntm_sl", "\"\"")
+
+    return run_data_static
+
+
+def spread_filter_run_data(node, run_data):
+    run_data = run_data.replace("operator_val", node.get("params").get("operator"))
+    return run_data
+
+
+def comment_run_data(node, run_data):
+    params = node.get("params")
+    if params.get("label_1") != "\"\"" and "value_fetch_1" in params:
+        value_fetch = params.get("value_fetch_1")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r1"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_1", init)
+        run_data = run_data.replace("variable_name_1", val)
+    else:
+        run_data = run_data.replace("initializer_1", "")
+        run_data = run_data.replace("variable_name_1", "\"\"")
+
+    if params.get("label_2") != "\"\"" and "value_fetch_2" in params:
+        value_fetch = params.get("value_fetch_2")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r2"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_2", init)
+        run_data = run_data.replace("variable_name_2", val)
+    else:
+        run_data = run_data.replace("initializer_2", "")
+        run_data = run_data.replace("variable_name_2", "\"\"")
+
+    if params.get("label_3") != "\"\"" and "value_fetch_3" in params:
+        value_fetch = params.get("value_fetch_3")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r3"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_3", init)
+        run_data = run_data.replace("variable_name_3", val)
+    else:
+        run_data = run_data.replace("initializer_3", "")
+        run_data = run_data.replace("variable_name_3", "\"\"")
+
+    if params.get("label_4") != "\"\"" and "value_fetch_4" in params:
+        value_fetch = params.get("value_fetch_4")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r4"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_4", init)
+        run_data = run_data.replace("variable_name_4", val)
+    else:
+        run_data = run_data.replace("initializer_4", "")
+        run_data = run_data.replace("variable_name_4", "\"\"")
+
+    if params.get("label_5") != "\"\"" and "value_fetch_5" in params:
+        value_fetch = params.get("value_fetch_5")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r5"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_5", init)
+        run_data = run_data.replace("variable_name_5", val)
+    else:
+        run_data = run_data.replace("initializer_5", "")
+        run_data = run_data.replace("variable_name_5", "\"\"")
+
+    if params.get("label_6") != "\"\"" and "value_fetch_6" in params:
+        value_fetch = params.get("value_fetch_6")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r6"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_6", init)
+        run_data = run_data.replace("variable_name_6", val)
+    else:
+        run_data = run_data.replace("initializer_6", "")
+        run_data = run_data.replace("variable_name_6", "\"\"")
+
+    if params.get("label_7") != "\"\"" and "value_fetch_7" in params:
+        value_fetch = params.get("value_fetch_7")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r7"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_7", init)
+        run_data = run_data.replace("variable_name_7", val)
+    else:
+        run_data = run_data.replace("initializer_7", "")
+        run_data = run_data.replace("variable_name_7", "\"\"")
+
+    if params.get("label_8") != "\"\"" and "value_fetch_8" in params:
+        value_fetch = params.get("value_fetch_8")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "cm_r8"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_8", init)
+        run_data = run_data.replace("variable_name_8", val)
+    else:
+        run_data = run_data.replace("initializer_8", "")
+        run_data = run_data.replace("variable_name_8", "\"\"")
+
+    return run_data
+
+
+def trailing_pending_orders_run_data(node, run_data):
+    params = node.get("params")
+    trailing_distance_mode = params.get("trailing_distance_mode")
+    if trailing_distance_mode != "TRAILING_DISTANCE_MODE_FIXED":
+        key = ""
+        if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+            key = "dynamic_level"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+            key = "dynamic_size_pips_input"
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+            key = "dynamic_size_digits_input"
+        value_fetch = params.get(key)
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_tdmd"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+
+        if trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC":
+            run_data = run_data.replace("initializer_dynamic", init, 1)
+            run_data = run_data.replace("variable_name_dynamic", val, 1)
+            run_data = run_data.replace("initializer_dynamic_pips", "")
+            run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+            run_data = run_data.replace("initializer_dynamic_digits", "")
+            run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_PIPS":
+            run_data = run_data.replace("initializer_dynamic", "", 1)
+            run_data = run_data.replace("variable_name_dynamic", "0", 1)
+            run_data = run_data.replace("initializer_dynamic_pips", init)
+            run_data = run_data.replace("variable_name_dynamic_pips", val)
+            run_data = run_data.replace("initializer_dynamic_digits", "")
+            run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+
+        elif trailing_distance_mode == "TRAILING_DISTANCE_MODE_DYNAMIC_DIGITS":
+            run_data = run_data.replace("initializer_dynamic", "", 1)
+            run_data = run_data.replace("variable_name_dynamic", "0", 1)
+            run_data = run_data.replace("initializer_dynamic_pips", "")
+            run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+            run_data = run_data.replace("initializer_dynamic_digits", init)
+            run_data = run_data.replace("variable_name_dynamic_digits", val)
+
+    else:
+        run_data = run_data.replace("initializer_dynamic", "", 1)
+        run_data = run_data.replace("variable_name_dynamic", "0", 1)
+        run_data = run_data.replace("initializer_dynamic_pips", "")
+        run_data = run_data.replace("variable_name_dynamic_pips", "\"\"")
+        run_data = run_data.replace("initializer_dynamic_digits", "")
+        run_data = run_data.replace("variable_name_dynamic_digits", "\"\"")
+    return run_data
+
+
+def trailing_stop_each_trade_run_data(node, run_data):
+    params = node.get("params")
+    print(params.get("TrailingStopMode"))
+    if params.get("TrailingStopMode") == "TRAILING_STOP_MODE_CUSTOM_LEVEL":
+        value_fetch = params.get("value_fetch_trailingstopmode_custom_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "tsm_cl"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        run_data = run_data.replace("initializer_trailing_stop_mode", init)
+        run_data = run_data.replace("variable_name_trailing_stop_mode", val)
+    else:
+        run_data = run_data.replace("initializer_trailing_stop_mode", "")
+        run_data = run_data.replace("variable_name_trailing_stop_mode", "\"\"")
+    return run_data
+
+
+def no_trade_order_nearby_run_data(node, run_data):
+    params = node.get("params")
+    if params.get("mode_base_price") != "\"current\"":
+        value_fetch_price = params.get("price")
+        row1_price = value_fetch_price.get("row1")
+        row2_price = value_fetch_price.get("row2")
+        id_val_price = str(node.get("id_by_user")) + "_price"
+
+        init_price = get_value_fetch_init(row1_price, row2_price, value_fetch_price.get("params"), id_val_price)
+        val_price = get_value_fetch_val(row1_price, row2_price, id_val_price)
+        run_data = run_data.replace("initializer_price", init_price)
+        run_data = run_data.replace("variable_name_price", val_price)
+    else:
+        run_data = run_data.replace("initializer_price", "")
+        run_data = run_data.replace("variable_name_price", "\"\"")
+
+    value_fetch_t1 = params.get("time_1")
+    row1_t1 = value_fetch_t1.get("row1")
+    row2_t1 = value_fetch_t1.get("row2")
+    id_val_t1 = str(node.get("id_by_user")) + "_t1"
+
+    init_t1 = get_value_fetch_init(row1_t1, row2_t1, value_fetch_t1.get("params"), id_val_t1)
+    val_t1 = get_value_fetch_val(row1_t1, row2_t1, id_val_t1)
+    run_data = run_data.replace("initializer_t1", init_t1)
+    run_data = run_data.replace("variable_name_t1", val_t1)
+
+    value_fetch_t2 = params.get("time_2")
+    row1_t2 = value_fetch_t2.get("row1")
+    row2_t2 = value_fetch_t2.get("row2")
+    id_val_t2 = str(node.get("id_by_user")) + "_t2"
+
+    init_t2 = get_value_fetch_init(row1_t2, row2_t2, value_fetch_t2.get("params"), id_val_t2)
+    val_t2 = get_value_fetch_val(row1_t2, row2_t2, id_val_t2)
+    run_data = run_data.replace("initializer_t2", init_t2)
+    run_data = run_data.replace("variable_name_t2", val_t2)
+
+    return run_data
+
+
+def modify_variable_run_data(node, run_data):
+    modify_variables = ""
+    i = 0
+    for key, val in node.get("params").items():
+        i += 1
+        if not val.get("variable_name"):
+            continue
+        row1 = val.get("value_fetch").get("row1")
+        row2 = val.get("value_fetch").get("row2")
+        id_val = str(node.get("id_by_user")) + "_var_" + str(i)
+
+        init = get_value_fetch_init(row1, row2, val.get("value_fetch").get("params"), id_val)
+        mval = get_value_fetch_val(row1, row2, id_val)
+        modify_variables += init + "\n"
+        modify_variables += val.get("variable_name") + " = " + mval + ";\n\n"
+    run_data = run_data.replace("modify_variables", modify_variables)
+    return run_data
+
+
+def buy_sell_function_data(node, function_data_static):
+    params = node.get("params")
+    if params.get("open_at_price") == "OPEN_AT_CUSTOM_PRICE":
+        value_fetch = params.get("price_to_open_dynamic_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "oacp"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer_oacp", init)
+        function_data_static = function_data_static.replace("variable_name_oacp", val)
+    else:
+        function_data_static = function_data_static.replace("initializer_oacp", "")
+        function_data_static = function_data_static.replace("variable_name_oacp", "\"\"")
+
+    extra_post_fix_present = "_tmcpl_tb" if params.get("order_type") in ["ORDER_BUY",
+                                                                         "ORDER_BUY_PENDING"] else "_tmcpl_ts"
+    extra_post_fix_absent = "_tmcpl_tb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                            "ORDER_BUY_PENDING"] else "_tmcpl_ts"
+    if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
+        value_fetch = params.get("take_profit_price_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_tppl"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    extra_post_fix_present = "_tmcp_tb" if params.get("order_type") in ["ORDER_BUY",
+                                                                        "ORDER_BUY_PENDING"] else "_tmcp_ts"
+    extra_post_fix_absent = "_tmcp_tb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                           "ORDER_BUY_PENDING"] else "_tmcp_ts"
+    if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PIPS":
+        value_fetch = params.get("take_profit_pips")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_tpp"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    extra_post_fix_present = "_tmcpf_tb" if params.get("order_type") in ["ORDER_BUY",
+                                                                         "ORDER_BUY_PENDING"] else "_tmcpf_ts"
+    extra_post_fix_absent = "_tmcpf_tb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                            "ORDER_BUY_PENDING"] else "_tmcpf_ts"
+    if params.get("take_profit_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
+        value_fetch = params.get("take_profit_price_fraction")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_tppf"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    extra_post_fix_present = "_tmcpl_sb" if params.get("order_type") in ["ORDER_BUY",
+                                                                         "ORDER_BUY_PENDING"] else "_tmcpl_ss"
+    extra_post_fix_absent = "_tmcpl_sb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                            "ORDER_BUY_PENDING"] else "_tmcpl_ss"
+    if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_LEVEL":
+        value_fetch = params.get("stop_loss_price_level")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_slpl"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    extra_post_fix_present = "_tmcp_sb" if params.get("order_type") in ["ORDER_BUY",
+                                                                        "ORDER_BUY_PENDING"] else "_tmcp_ss"
+    extra_post_fix_absent = "_tmcp_sb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                           "ORDER_BUY_PENDING"] else "_tmcp_ss"
+    if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PIPS":
+        value_fetch = params.get("stop_loss_pips")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_slp"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    extra_post_fix_present = "_tmcpf_sb" if params.get("order_type") in ["ORDER_BUY",
+                                                                         "ORDER_BUY_PENDING"] else "_tmcpf_ss"
+    extra_post_fix_absent = "_tmcpf_sb" if params.get("order_type") not in ["ORDER_BUY",
+                                                                            "ORDER_BUY_PENDING"] else "_tmcpf_ss"
+    if params.get("stop_loss_mode") == "TPSL_MODE_CUSTOM_PRICE_FRACTION":
+        value_fetch = params.get("stop_loss_price_fraction")
+        row1 = value_fetch.get("row1")
+        row2 = value_fetch.get("row2")
+        id_val = str(node.get("id_by_user")) + "_slpf"
+
+        init = get_value_fetch_init(row1, row2, value_fetch.get("params"), id_val)
+        val = get_value_fetch_val(row1, row2, id_val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, init)
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, val)
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+    else:
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_present, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_present, "EMPTY")
+        function_data_static = function_data_static.replace("initializer" + extra_post_fix_absent, "")
+        function_data_static = function_data_static.replace("variable_name" + extra_post_fix_absent, "EMPTY")
+
+    return function_data_static
+
+
+def volume_profile_function_data(node, function_data_static):
+    params = node.get("params")
+    if "max_part_1" in params and params.get("max_part_1").strip():
+        function_data_static = function_data_static.replace("double max_1", "::" + params.get("max_part_1"))
+    if "min_part_1" in params and params.get("min_part_1").strip():
+        function_data_static = function_data_static.replace("double min_1", "::" + params.get("min_part_1"))
+    if "mtp_part_1" in params and params.get("mtp_part_1").strip():
+        function_data_static = function_data_static.replace("double mltp_1", "::" + params.get("mtp_part_1"))
+
+    if "max_part_2" in params and params.get("max_part_2").strip():
+        function_data_static = function_data_static.replace("double max_2", "::" + params.get("max_part_2"))
+    if "min_part_2" in params and params.get("min_part_2").strip():
+        function_data_static = function_data_static.replace("double min_2", "::" + params.get("min_part_2"))
+    if "mtp_part_2" in params and params.get("mtp_part_2").strip():
+        function_data_static = function_data_static.replace("double mltp_2", "::" + params.get("mtp_part_2"))
+
+    if "max_part_3" in params and params.get("max_part_3").strip():
+        function_data_static = function_data_static.replace("double max_3", "::" + params.get("max_part_3"))
+    if "min_part_3" in params and params.get("min_part_3").strip():
+        function_data_static = function_data_static.replace("double min_3", "::" + params.get("min_part_3"))
+    if "mtp_part_3" in params and params.get("mtp_part_3").strip():
+        function_data_static = function_data_static.replace("double mltp_3", "::" + params.get("mtp_part_3"))
+
+    if "max_part_4" in params and params.get("max_part_4").strip():
+        function_data_static = function_data_static.replace("double max_4", "::" + params.get("max_part_4"))
+    if "min_part_4" in params and params.get("min_part_4").strip():
+        function_data_static = function_data_static.replace("double min_4", "::" + params.get("min_part_4"))
+    if "mtp_part_4" in params and params.get("mtp_part_4").strip():
+        function_data_static = function_data_static.replace("double mltp_4", "::" + params.get("mtp_part_4"))
+
+    if "max_part_5" in params and params.get("max_part_5").strip():
+        function_data_static = function_data_static.replace("double max_5", "::" + params.get("max_part_5"))
+    if "min_part_5" in params and params.get("min_part_5").strip():
+        function_data_static = function_data_static.replace("double min_5", "::" + params.get("min_part_5"))
+    if "mtp_part_5" in params and params.get("mtp_part_5").strip():
+        function_data_static = function_data_static.replace("double mltp_5", "::" + params.get("mtp_part_5"))
+
+    return function_data_static
+
+
+def formula(node, run_data):
+    params = node.get("params")
+
+    # Left data
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
+    id_val_1 = str(node.get("id_by_user")) + "_" + "left"
+
+    init_1 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_1)
+    val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
+
+    # Right data
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
+    id_val_2 = str(node.get("id_by_user")) + "_" + "right"
+
+    init_2 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_2)
+    val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
+
+    operator = params.get("operator").get("label")
+
+    variable_name = params.get("variable")
+
+    adjustment = adjust.get("(var_name_1 operator var_name_2)", params.get("adjust"), "getSymbol(Symbol())")
+    run_data = run_data.replace("(var_name_1 operator var_name_2)", adjustment)
+
+    run_data = run_data.replace("initializer_1", init_1) \
+        .replace("initializer_2", init_2) \
+        .replace("var_name_1", str(val_1)) \
+        .replace("var_name_2", str(val_2)) \
+        .replace("variable_name", variable_name) \
+        .replace("operator", operator)
+    return run_data
+
+
+def condition_1_run_data_normal(node, run_data):
+    params = node.get("params")
+
+    # Left data
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
+    id_val_1 = str(node.get("id_by_user")) + "_" + "left"
+
+    init_1 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_1)
+    val_1 = get_value_fetch_val(row1_left, row2_left, id_val_1)
+
+    # Right data
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
+    id_val_2 = str(node.get("id_by_user")) + "_" + "right"
+
+    init_2 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_2)
+    val_2 = get_value_fetch_val(row1_right, row2_right, id_val_2)
+
+    operator = params.get("operator").get("label")
+
+    run_data = run_data.replace("initializer_1", init_1) \
+        .replace("initializer_2", init_2) \
+        .replace("var_name_1", str(val_1)) \
+        .replace("var_name_2", str(val_2)) \
+        .replace("operator", operator)
+    return run_data
+
+
+def condition_1_run_data_cross(node, run_data):
+    params = node.get("params")
+
+    # Left data
+    row1_left = params.get("left").get("row1")
+    row2_left = params.get("left").get("row2")
+    id_val_11 = str(node.get("id_by_user")) + "_" + "left" + "1"
+    id_val_12 = str(node.get("id_by_user")) + "_" + "left" + "2"
+
+    init11 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_11)
+    init12 = get_value_fetch_init(row1_left, row2_left, params.get("left").get("params"), id_val_12)
+    val_11 = get_value_fetch_val(row1_left, row2_left, id_val_11)
+    val_12 = get_value_fetch_val(row1_left, row2_left, id_val_12)
+
+    # Right data
+    row1_right = params.get("right").get("row1")
+    row2_right = params.get("right").get("row2")
+    id_val_21 = str(node.get("id_by_user")) + "_" + "right" + "1"
+    id_val_22 = str(node.get("id_by_user")) + "_" + "right" + "2"
+
+    init21 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_21)
+    init22 = get_value_fetch_init(row1_right, row2_right, params.get("right").get("params"), id_val_22)
+    val_21 = get_value_fetch_val(row1_right, row2_right, id_val_21)
+    val_22 = get_value_fetch_val(row1_right, row2_right, id_val_22)
+
+    # Operator
+    operator_1 = ""
+    operator_2 = ""
+    operator = node.get("params").get("operator").get("label")
+    if operator == "×>":
+        operator_1 = ">"
+        operator_2 = "<"
+    elif operator == "×<":
+        operator_1 = "<"
+        operator_2 = ">"
+
+    run_data = run_data \
+        .replace("initializer_11", init11) \
+        .replace("initializer_12", init12) \
+        .replace("initializer_21", init21) \
+        .replace("initializer_22", init22) \
+        .replace("var_name_11", str(val_11)) \
+        .replace("var_name_12", str(val_12)) \
+        .replace("var_name_21", str(val_21)) \
+        .replace("var_name_22", str(val_22)) \
+        .replace("operator_1", operator_1) \
+        .replace("operator_2", operator_2)
+
+    return run_data
+
+
+def get_value_fetch_init(row1, row2, params, suffix):
+    if row1 == "indicator":
+        init = indicator_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "candle":
+        init = candle_class_constructor.get_initializer(suffix)
+    elif row1 == "market-properties":
+        init = market_properties_class_constructor_new.get_initializer(row2, params, suffix)
+    elif row1 == "value":
+        init = value_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "object-on-the-chart":
+        init = object_on_the_chart_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "trade-order-in-loop":
+        init = trade_order_in_loop_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "account":
+        init = account_class_constructor.get_initializer(row2, suffix)
+    elif row1 == "indicators-my-indicators":
+        init = my_indicator_class_constructor.get_initializer(suffix)
+    return init
+
+
+def get_value_fetch_val(row1, row2, suffix):
+    val = ""
+    if row1 == "indicator":
+        val = indicator_class_constructor.get_var_name(row2, suffix)
+    elif row1 == "candle":
+        val = candle_class_constructor.get_var_name(suffix)
+    elif row1 == "market-properties":
+        val = market_properties_class_constructor_new.get_var_name(row2, suffix)
+    elif row1 == "value":
+        val = value_class_constructor.get_var_name(suffix)
+    elif row1 == "object-on-the-chart":
+        val = object_on_the_chart_class_constructor.get_var_name(row2, suffix)
+    elif row1 == "trade-order-in-loop":
+        val = trade_order_in_loop_class_constructor.get_var_name(suffix)
+    elif row1 == "account":
+        val = account_class_constructor.get_var_name(suffix)
+    elif row1 == "indicators-my-indicators":
+        val = my_indicator_class_constructor.get_var_name(suffix)
+    return val
+
+
+def get_initializer(var_id):
+    path_task_id = path + path_sub + "task_id" + "/"
+    with open(path_task_id + "initializer.json") as initializer_file:
+        if initializer_file:
+            initializer_str = initializer_file.read()
+            initializer_dic = json.loads(initializer_str)
+            initializer_body = initializer_dic.get("initializer").replace("_id", str(var_id))
+            return initializer_body
+
+
+def get_var_name():
+    path_task_id = path + path_sub + "task_id" + "/"
+    with open(path_task_id + "initializer.json") as initializer_file:
+        if initializer_file:
+            initializer_str = initializer_file.read()
+            initializer_dic = json.loads(initializer_str)
+            var_name = initializer_dic.get("variable_name")
+            return var_name
+
+
+def get_var_data(category, task_name):
+    path_task_id = path + path_sub + "tasks" + "/" + category + "/" + task_name + "/"
+    with open(path_task_id + "var_data.json") as var_file:
+        if var_file:
+            var_str = var_file.read()
+            var_dic = json.loads(var_str)
+            var_data = var_dic.get("var_data")
+            return var_data

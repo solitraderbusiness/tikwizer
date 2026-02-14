@@ -1,0 +1,14 @@
+{
+  "server_or_local_time": "TIME_SERVER",
+  "FirstStartMinute": 5,
+  "FirstEndMinute": 10,
+  "SecondMinutesBlock": false,
+  "SecondStartMinute": 20,
+  "SecondEndMinute": 25,
+  "ThirdMinutesBlock": false,
+  "ThirdStartMinute": 30,
+  "ThirdEndMinute": 35,
+  "FourthMinutesBlock": false,
+  "FourthStartMinute": 50,
+  "FourthEndMinute": 55
+}

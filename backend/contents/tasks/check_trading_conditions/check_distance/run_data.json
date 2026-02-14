@@ -1,0 +1,3 @@
+{
+  "run_data": "      Task::run(block_id, block);\n\n      initializer_upper_level\n      double upper_level = variable_name_upper_level;\n\n      initializer_lower_level\n      double lower_level = variable_name_lower_level;\n\n      initializer_checking_distance\n      double distance = variable_name_checking_distance;\n\n      double diff = upper_level - lower_level;\n\n      if(DistanceIsAbsolute == true && diff < 0)\n        {\n         diff = -1 * diff;\n        }\n\n      if(diff compare_val distance)\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

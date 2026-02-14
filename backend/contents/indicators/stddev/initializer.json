@@ -1,0 +1,1 @@
+{"initializer": "   StdDev_id stddev_id;\n   stddev_id.init();\n   double valueStdDev_id = stddev_id.calc();", "initializer_split": ["   StdDev_id stddev_id;\n", "   stddev_id.init();\n", "   double valueStdDev_id = stddev_id.calc();\n"], "variable_name": "valueStdDev_id"}

@@ -1,0 +1,1 @@
+{"initializer": "   Gator_id gator_id;\n   gator_id.init();\n   double valueGator_id = gator_id.calc();", "initializer_split": ["   Gator_id gator_id;\n", "   gator_id.init();\n", "   double valueGator_id = gator_id.calc();\n"], "variable_name": "valueGator_id"}

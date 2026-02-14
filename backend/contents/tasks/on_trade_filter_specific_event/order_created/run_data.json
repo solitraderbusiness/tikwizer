@@ -1,0 +1,3 @@
+{
+  "run_data": "      Task::run(block_id, block);\n\n      ushort u_sep=StringGetCharacter(\",\",0);\n      StringSplit(symbols_str, u_sep, symbols);\n      ArrayResize(type, 0, 0);\n      int mtype[] = type_val; \n      ArrayCopy(type,mtype,0,0,WHOLE_ARRAY);\n\n      if(\n         e_Reason() == \"new\"\n         && e_attrType() >= 2\n         && filterOnTrade())\n        {\n         block.onResult(ROUTE_1_PASSED);\n        }\n      else\n        {\n         block.onResult(ROUTE_2_PASSED);\n        }"
+}

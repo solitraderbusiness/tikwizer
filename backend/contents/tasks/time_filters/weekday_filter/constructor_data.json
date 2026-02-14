@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      server_or_local_time = server_or_local_time_val;\n      monday = monday_val;\n      tuesday = tuesday_val;\n      wednesday = wednesday_val;\n      thursday = thursday_val;\n      friday = friday_val;\n      saturday = saturday_val;\n      sunday = sunday_val;"
+}

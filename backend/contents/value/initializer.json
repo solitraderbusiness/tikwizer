@@ -1,0 +1,5 @@
+{
+  "initializer": "Value_id value_id;\n   value_id.init();\n   type valueValue_id = value_id.calc<type_return>();",
+  "initializer_split": ["Value_id value_id;\n", "value_id.init();\n", "type valueValue_id = value_id.calc<type_return>();\n"],
+  "variable_name": "valueValue_id"
+}

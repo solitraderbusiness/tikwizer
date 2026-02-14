@@ -1,0 +1,3 @@
+{
+	"constructor_data" : "      symbol_mode = symbol_mode_val;\n      symbols_str = symbols_str_val;\n\n      group_mode = group_mode_val;\n      group_number = group_number_val;"
+}

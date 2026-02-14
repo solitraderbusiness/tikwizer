@@ -1,0 +1,12 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "EURUSD, GBPUSD ",
+  "group_mode": "ORDER_GROUP_MODE_NUMBER",
+  "group_number": 25,
+  "type": "{1,2}",
+  "mode_base_price": "current",
+  "mode_range": "pips",
+  "range_pips": 10.0,
+  "range_fraction": 0.0010,
+  "range_position": 0
+}

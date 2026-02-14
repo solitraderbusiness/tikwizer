@@ -1,0 +1,3 @@
+{
+	"field_body" : "   string            ObjSource;\n   string            Name;\n   int               Property;\n   int               FiboLevelID;\n   double            TLpriceLevel;\n   int               Shift;"
+}

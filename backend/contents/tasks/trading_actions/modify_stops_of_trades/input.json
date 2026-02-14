@@ -1,0 +1,15 @@
+{
+  "symbol_mode": "SYMBOL_MODE_SPECIFIED",
+  "symbols_str": "EURUSD,GBPUSD",
+  "group_mode": "ORDER_GROUP_MODE_ALL",
+  "group_number": 15,
+  "type": "{0, 1}",
+  "order_age_mins": 0,
+  "relative_to": "PRICE_RELATIVE_TO_CURRENT_PRICE",
+  "new_tpsl_mode": "NEW_STOPS_FIXED",
+  "new_stoploss": 30.0,
+  "new_stoploss_percent": 50.0,
+  "new_takeprofit": 80.0,
+  "new_takeprofit_percent": 50.0,
+  "level_color": "clrDeepPink"
+}

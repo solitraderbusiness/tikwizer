@@ -1,0 +1,3 @@
+{
+	"field_data" : "   //specified by user\n   int               symbol_mode;\n   string            symbols_str;\n   string            symbols[];\n   int               group_mode;\n   int               group_number;\n   int               type[]; \n\n   string            profit_mode_each;\n   double            profit_amount_each;\n   string            profit_mode;\n   double            profit_amount;"
+}

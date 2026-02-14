@@ -1,0 +1,3 @@
+{
+	"field_data" : "   int                 server_or_local_time;\n   bool                monday;\n   bool                tuesday;\n   bool                wednesday;\n   bool                thursday;\n   bool                friday;\n   bool                saturday;\n   bool                sunday;"
+}

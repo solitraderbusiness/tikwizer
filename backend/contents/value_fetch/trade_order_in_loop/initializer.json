@@ -1,0 +1,5 @@
+{
+  "initializer": "TradeOrderInLoop_id tradeOrderInLoop_id;\n   tradeOrderInLoop_id.init();\n   type valueTradeOrderInLoop_id = tradeOrderInLoop_id.execute<type_return>();",
+  "initializer_split": ["TradeOrderInLoop_id tradeOrderInLoop_id;\n", "tradeOrderInLoop_id.init();\n", "type valueTradeOrderInLoop_id = tradeOrderInLoop_id.execute<type_return>();\n"],
+  "variable_name": "valueTradeOrderInLoop_id"
+}
