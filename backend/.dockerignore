@@ -1,0 +1,6 @@
+__pycache__
+*.pyc
+.git
+output/*.mq4
+output/*.ex4
+tests/

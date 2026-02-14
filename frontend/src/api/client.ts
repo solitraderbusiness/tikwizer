@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8001/api';
+// In dev (Vite), hit the backend directly. In production (nginx), use relative /api path.
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8001/api' : '/api';
 
 export async function apiGet<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`);
