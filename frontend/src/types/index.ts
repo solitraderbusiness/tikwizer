@@ -106,3 +106,29 @@ export interface FlowNodeData extends Record<string, unknown> {
   enabled: boolean;
   id_by_user: number;
 }
+
+// Context menu types
+export interface ContextMenuPosition {
+  x: number;
+  y: number;
+}
+
+export interface ClipboardNode {
+  type: string;
+  data: FlowNodeData;
+  relativePosition: { x: number; y: number };
+}
+
+export interface ClipboardEdge {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string | null;
+  targetHandle?: string | null;
+  type?: string;
+}
+
+export interface ClipboardPayload {
+  nodes: ClipboardNode[];
+  edges: ClipboardEdge[];
+}

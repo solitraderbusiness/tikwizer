@@ -1,11 +1,10 @@
 import { useStrategyStore } from '../../stores/strategyStore';
-
 interface StrategySettingsProps {
   onClose: () => void;
 }
 
 export function StrategySettings({ onClose }: StrategySettingsProps) {
-  const { name, setName, projectOptions, setProjectOptions, constants, variables, addConstant, removeConstant, addVariable, removeVariable } = useStrategyStore();
+  const { name, setName, projectOptions, setProjectOptions } = useStrategyStore();
 
   const opts = projectOptions;
 
@@ -76,55 +75,6 @@ export function StrategySettings({ onClose }: StrategySettingsProps) {
             />
           </div>
 
-          {/* Constants */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Constants</label>
-              <button
-                onClick={() => addConstant({ id: crypto.randomUUID(), type: 'double', name: '', value: '', description: '' })}
-                className="text-xs px-2 py-0.5 rounded"
-                style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
-              >
-                + Add
-              </button>
-            </div>
-            {constants.map((c) => (
-              <div key={c.id} className="flex gap-1 mb-1">
-                <select value={c.type} className="text-xs px-1 py-1 rounded border flex-shrink-0" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)', width: '70px' }}
-                  onChange={() => {}}>
-                  <option>double</option><option>int</option><option>string</option><option>bool</option>
-                </select>
-                <input value={c.name} placeholder="name" className="text-xs px-1 py-1 rounded border flex-1" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }} onChange={() => {}} />
-                <input value={c.value} placeholder="value" className="text-xs px-1 py-1 rounded border flex-1" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }} onChange={() => {}} />
-                <button onClick={() => removeConstant(c.id)} className="text-xs px-1" style={{ color: '#ef4444' }}>x</button>
-              </div>
-            ))}
-          </div>
-
-          {/* Variables */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Variables</label>
-              <button
-                onClick={() => addVariable({ id: crypto.randomUUID(), type: 'double', name: '', value: '', description: '' })}
-                className="text-xs px-2 py-0.5 rounded"
-                style={{ backgroundColor: 'var(--color-primary)', color: 'white' }}
-              >
-                + Add
-              </button>
-            </div>
-            {variables.map((v) => (
-              <div key={v.id} className="flex gap-1 mb-1">
-                <select value={v.type} className="text-xs px-1 py-1 rounded border flex-shrink-0" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)', width: '70px' }}
-                  onChange={() => {}}>
-                  <option>double</option><option>int</option><option>string</option><option>bool</option>
-                </select>
-                <input value={v.name} placeholder="name" className="text-xs px-1 py-1 rounded border flex-1" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }} onChange={() => {}} />
-                <input value={v.value} placeholder="value" className="text-xs px-1 py-1 rounded border flex-1" style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }} onChange={() => {}} />
-                <button onClick={() => removeVariable(v.id)} className="text-xs px-1" style={{ color: '#ef4444' }}>x</button>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

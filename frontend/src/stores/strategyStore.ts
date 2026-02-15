@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import type { Variable, Constant, ProjectOptions } from '../types';
 
+export type SelectedVarConst = { kind: 'variable' | 'constant'; id: string } | null;
+
 interface StrategyState {
   name: string;
   variables: Variable[];
   constants: Constant[];
   projectOptions: ProjectOptions;
+  selectedVarConst: SelectedVarConst;
 
   setName: (name: string) => void;
   setVariables: (vars: Variable[]) => void;
@@ -13,8 +16,11 @@ interface StrategyState {
   setProjectOptions: (opts: ProjectOptions) => void;
   addVariable: (v: Variable) => void;
   removeVariable: (id: string) => void;
+  updateVariable: (id: string, data: Partial<Variable>) => void;
   addConstant: (c: Constant) => void;
   removeConstant: (id: string) => void;
+  updateConstant: (id: string, data: Partial<Constant>) => void;
+  selectVarConst: (sel: SelectedVarConst) => void;
 }
 
 const defaultProjectOptions: ProjectOptions = {
@@ -30,6 +36,7 @@ export const useStrategyStore = create<StrategyState>((set) => ({
   variables: [],
   constants: [],
   projectOptions: defaultProjectOptions,
+  selectedVarConst: null,
 
   setName: (name) => set({ name }),
   setVariables: (variables) => set({ variables }),
@@ -37,6 +44,9 @@ export const useStrategyStore = create<StrategyState>((set) => ({
   setProjectOptions: (projectOptions) => set({ projectOptions }),
   addVariable: (v) => set((s) => ({ variables: [...s.variables, v] })),
   removeVariable: (id) => set((s) => ({ variables: s.variables.filter((v) => v.id !== id) })),
+  updateVariable: (id, data) => set((s) => ({ variables: s.variables.map((v) => v.id === id ? { ...v, ...data } : v) })),
   addConstant: (c) => set((s) => ({ constants: [...s.constants, c] })),
   removeConstant: (id) => set((s) => ({ constants: s.constants.filter((c) => c.id !== id) })),
+  updateConstant: (id, data) => set((s) => ({ constants: s.constants.map((c) => c.id === id ? { ...c, ...data } : c) })),
+  selectVarConst: (sel) => set({ selectedVarConst: sel }),
 }));

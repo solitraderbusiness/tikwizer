@@ -1,3 +1,6 @@
+import { ParamInput } from './ParamInput';
+import { getFieldOptions } from './fieldOptions';
+
 interface TimeFilterConfigProps {
   params: Record<string, any>;
   onChange: (params: Record<string, any>) => void;
@@ -6,28 +9,36 @@ interface TimeFilterConfigProps {
 export function TimeFilterConfig({ params, onChange }: TimeFilterConfigProps) {
   return (
     <div className="space-y-3">
-      <div>
-        <label className="block text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>Start Time</label>
-        <input
-          type="text"
-          value={params.timestr_start || '00:00'}
-          onChange={(e) => onChange({ timestr_start: e.target.value })}
-          placeholder="HH:MM"
-          className="w-full text-sm px-2 py-1.5 rounded border"
-          style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
-        />
-      </div>
-      <div>
-        <label className="block text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>End Time</label>
-        <input
-          type="text"
-          value={params.timestr_end || '23:59'}
-          onChange={(e) => onChange({ timestr_end: e.target.value })}
-          placeholder="HH:MM"
-          className="w-full text-sm px-2 py-1.5 rounded border"
-          style={{ backgroundColor: 'var(--color-surface-light)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
-        />
-      </div>
+      <ParamInput
+        label="Time Reference"
+        value={params.server_or_local_time || 'TIME_SERVER'}
+        onChange={(v) => onChange({ server_or_local_time: v })}
+        options={getFieldOptions('server_or_local_time', params.server_or_local_time || '') ?? undefined}
+      />
+      <ParamInput
+        label="Start Time Mode"
+        value={params.time_start_mode || 'TIME_MODE_TEXT'}
+        onChange={(v) => onChange({ time_start_mode: v })}
+        options={getFieldOptions('time_start_mode', params.time_start_mode || '') ?? undefined}
+      />
+      <ParamInput
+        label="Start Time"
+        value={params.time_start || '00:00'}
+        onChange={(v) => onChange({ time_start: v })}
+        placeholder="HH:MM"
+      />
+      <ParamInput
+        label="End Time Mode"
+        value={params.time_end_mode || 'TIME_MODE_TEXT'}
+        onChange={(v) => onChange({ time_end_mode: v })}
+        options={getFieldOptions('time_end_mode', params.time_end_mode || '') ?? undefined}
+      />
+      <ParamInput
+        label="End Time"
+        value={params.time_end || '00:01'}
+        onChange={(v) => onChange({ time_end: v })}
+        placeholder="HH:MM"
+      />
     </div>
   );
 }
